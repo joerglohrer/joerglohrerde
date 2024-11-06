@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <title>Auf Google Cloud Platform mit Ubuntu Desktop via Chrome Remote Desktop OBS und Zoom fernsteuern :: Jörg Lohrer - Example site for hugo-theme-tailwind</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="Auf Google Cloud Platform mit Ubuntu Desktop via Chrome Remote Desktop OBS und Zoom fernsteuern Instanz erstellen auf https://console.cloud.google.com/ Name, Region und Zone auswählen E2 4 vCPU, 16GB Arbeitsspeicher - 0,17$ pro Stunde Betriebssystem Ubuntu 20.04 LTS Ubuntu Desktop auf Google Cloud Plattform installieren https://ubuntu.com/blog/launch-ubuntu-desktop-on-google-cloud https://cloud.google.com/architecture/chrome-desktop-remote-on-compute-engine#gnome https://bytexd.com/install-chrome-remote-desktop-headless/ https://cloud.google.com/architecture/chrome-desktop-remote-on-compute-engine#automating_the_installation_process Via SSH/Terminal Update, Tasksel und Google Remote Desktop installieren: sudo apt update sudo apt install --assume-yes wget tasksel wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb sudo apt-get install --assume-yes ./chrome-remote-desktop_current_amd64.deb Cinnamon Desktop installieren sudo DEBIAN_FRONTEND=noninteractive \ apt install --assume-yes cinnamon-core desktop-base dbus-x11 sudo bash -c &#39;echo &quot;exec /etc/X11/Xsession /usr/bin/cinnamon-session-cinnamon2d&quot; &gt; /etc/chrome-remote-desktop-session&#39;
+"
+/>
+<meta
+  name="keywords"
+  content="hugo, tailwind, tailwindcss, hugo theme, hugo theme tailwind"
+/>
+<meta name="robots" content="noodp" /><link rel="manifest" href="/manifest.json" /><meta property="og:url" content="http://localhost:1313/2022/03/19/ob-virtualcam.html/">
+  <meta property="og:site_name" content="Jörg Lohrer">
+  <meta property="og:title" content="Auf Google Cloud Platform mit Ubuntu Desktop via Chrome Remote Desktop OBS und Zoom fernsteuern">
+  <meta property="og:description" content="Via Konsole Instanz in aufsetzen, Desktop-Linux installieren, Apps einrichten und konfigurieren">
+  <meta property="og:locale" content="de">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2022-03-19T00:00:00+00:00">
+    <meta property="article:modified_time" content="2022-03-19T00:00:00+00:00">
+    <meta property="article:tag" content="Ubuntu">
+    <meta property="article:tag" content="Google Remote Desktop">
+    <meta property="article:tag" content="OBS">
+    <meta property="article:tag" content="Zoom">
+    <meta property="article:tag" content="Relilabtutorial">
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Auf Google Cloud Platform mit Ubuntu Desktop via Chrome Remote Desktop OBS und Zoom fernsteuern">
+  <meta name="twitter:description" content="Via Konsole Instanz in aufsetzen, Desktop-Linux installieren, Apps einrichten und konfigurieren">
+
+
+<link rel="canonical" href="http://localhost:1313/2022/03/19/ob-virtualcam.html/" />
+
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="stylesheet" href="/css/index.f2b5b9c8e4e9b03048601ca9eedc29df44c3a73343f4538f41785e16f13c341a.css">
+
+
+
+
+
+
+
+
+
+  
+  
+
+</head>
+<body class="flex flex-col min-h-screen w-full bg-slate-50 dark:bg-gray-800">
+    
+<div class="fixed right-0 top-0 z-50 flex items-center justify-center bg-gray-200 p-2 text-sm uppercase text-black sm:bg-red-200 md:bg-yellow-200 lg:bg-green-200 xl:bg-blue-200 2xl:bg-pink-200">
+  <span class="block sm:hidden">all</span>
+  <span class="hidden sm:block md:hidden">sm</span>
+  <span class="hidden md:block lg:hidden">md</span>
+  <span class="hidden lg:block xl:hidden">lg</span>
+  <span class="hidden xl:block 2xl:hidden">xl</span>
+  <span class="hidden 2xl:block">2xl</span>
+</div>
+
+  <header class="flex flex-none justify-center z-10">
+    <div class="flex flex-row gap justify-between w-full max-w-4xl lg:max-w-5xl h-12 mt-3">
+  <div class="flex-none ml-2 md:ml-0">
+    <a href="/" class="">
+      <img class="h-12 w-12 rounded-full object-cover bg-gray-100" src="/joerg-profil-2024.webp" alt="logo">
+    </a>
+  </div>
+  <div class="flex-1"></div>
+  <div class="flex-none">
+    
+
+
+
+<nav class="h-full static">
+  <button id="navbar-menu-toggle" type="button" class="inline-flex items-center p-2 text-sm text-slate-800 dark:text-slate-200 rounded-lg md:hidden" aria-controls="navbar-menu" aria-expanded="false">
+    <span class="sr-only">Hauptmenü öffnen</span>
+    <i class="w-8 h-8">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 6l16 0" />
+  <path d="M4 12l16 0" />
+  <path d="M4 18l16 0" />
+</svg>
+
+    </i>
+  </button>
+  <div class="absolute md:static top-16 left-0 right-0 z-50 hidden w-full md:block md:w-auto" id="navbar-menu">
+    <ul class="flex flex-col mx-2 md:mx-0 md:flex-row md:border-0 rounded-sm md:rounded-full px-3 text-base font-medium text-slate-800 dark:text-slate-200 shadow-lg bg-white dark:bg-gray-600 shadow-slate-800/5 dark:shadow-slate-200/5 ring-1 ring-slate-900/5 dark:ring-slate-100/5">
+    
+        <li id="" class="">
+          <a class="block px-3 py-3 hover:text-emerald-600"
+            href="/" title="Home">Home</a>
+        </li>
+      
+    
+        <li id="" class="">
+          <a class="block px-3 py-3 hover:text-emerald-600"
+            href="/tags/" title="Schlagworte">Schlagworte</a>
+        </li>
+      
+    
+        <li id="" class="">
+          <a class="block px-3 py-3 hover:text-emerald-600"
+            href="/impressum/" title="Impressum">Impressum</a>
+        </li>
+      
+    
+        <li id="" class="">
+          <a class="block px-3 py-3 hover:text-emerald-600"
+            href="https://reliverse.social/@joerglohrer" title="Mastodon">Mastodon</a>
+        </li>
+      
+    
+    </ul>
+  </div>
+</nav>
+
+
+  </div>
+  
+  <div class="flex-none mx-1"></div>
+  
+  <div class="flex-none md:hidden">
+    <a href=/search/ class="inline-flex items-center p-2 text-sm text-slate-800 dark:text-slate-200 rounded-lg" aria-controls="navbar-menu" aria-expanded="false">
+      <span class="sr-only">Suche</span>
+      <i class="w-8 h-8">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+    <path d="M21 21l-6 -6" />
+</svg>
+
+      </i>
+    </a>
+  </div>
+  <div class="darkmode-toggle flex flex-none mr-2 md:mr-0">
+    <label for="darkmode-toggle" class="flex items-center px-3 cursor-pointer rounded-full bg-gray-100 dark:bg-gray-600" title="Dark Mode umschalten">
+      <input name="darkmode-toggle" id="darkmode-toggle" type="checkbox" class="sr-only peer" aria-label="Dark Mode umschalten">
+      <div class="group flex flex-row gap-1 justify-center h-8 px-1 rounded-full bg-white dark:bg-gray-700">
+        <i class="h-6 w-6 flex-none rounded-full bg-yellow-400 place-self-center peer-checked:group-[]:invisible">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brightness-down" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+   <path d="M12 5l0 .01"></path>
+   <path d="M17 7l0 .01"></path>
+   <path d="M19 12l0 .01"></path>
+   <path d="M17 17l0 .01"></path>
+   <path d="M12 19l0 .01"></path>
+   <path d="M7 17l0 .01"></path>
+   <path d="M5 12l0 .01"></path>
+   <path d="M7 7l0 .01"></path>
+</svg>
+
+        </i>
+        <i class="h-6 w-6 flex-none rounded-full place-self-center invisible peer-checked:group-[]:visible">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon-stars" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path>
+   <path d="M17 4a2 2 0 0 0 2 2a2 2 0 0 0 -2 2a2 2 0 0 0 -2 -2a2 2 0 0 0 2 -2"></path>
+   <path d="M19 11h2m-1 -1v2"></path>
+</svg>
+
+        </i>
+      </div>
+    </label>
+  </div>
+</div>
+
+  </header>
+  <main class="flex flex-auto justify-center">
+    
+<div class="w-full max-w-4xl lg:max-w-5xl">
+  <div class="flex flex-col mt-6 mx-2 md:mx-0 rounded-lg overflow-hidden shadow-md bg-white dark:bg-gray-700">
+    <div>
+      <a href="/2022/03/19/ob-virtualcam.html/">
+        <picture>
+    <source type="image/webp" srcset="/2022/03/19/ob-virtualcam.html/29-autostartordner_hu757134893708700917.webp 960w, /2022/03/19/ob-virtualcam.html/29-autostartordner_hu5348513433344205483.webp 1600w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2022/03/19/ob-virtualcam.html/29-autostartordner_hu8947380218944878913.jpg 960w, /2022/03/19/ob-virtualcam.html/29-autostartordner_hu15498383256037113375.jpg 1600w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="w-full object-cover h-36 md:h-48 xl:h-60" src="/2022/03/19/ob-virtualcam.html/29-autostartordner_hu3228479104877654635.jpg" width="1999" height="1373" alt="Auf Google Cloud Platform mit Ubuntu Desktop via Chrome Remote Desktop OBS und Zoom fernsteuern" title="Auf Google Cloud Platform mit Ubuntu Desktop via Chrome Remote Desktop OBS und Zoom fernsteuern" loading="lazy" />
+  </picture>
+      </a>
+    </div>
+    <div class="flex flex-col gap-y-3 p-6">
+      <h1 class="text-4xl font-semibold text-slate-800 dark:text-slate-100">
+        <a href="/2022/03/19/ob-virtualcam.html/">Auf Google Cloud Platform mit Ubuntu Desktop via Chrome Remote Desktop OBS und Zoom fernsteuern</a>
+      </h1>
+
+      
+      <h2 class="my-4 text-large text-slate-600 dark:text-slate-300">
+        Via Konsole Instanz in aufsetzen, Desktop-Linux installieren, Apps einrichten und konfigurieren
+      </h2>
+      
+      
+  <ul class="flex flex-row flex-wrap text-slate-500 dark:text-slate-300">
+    
+    
+      
+      <li>
+        <a href="/tags/ubuntu/"
+          class="flex flex-row text-sm mr-2 py-1">
+          <i class="h-5 w-5 flex-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M5 9l14 0"></path>
+   <path d="M5 15l14 0"></path>
+   <path d="M11 4l-4 16"></path>
+   <path d="M17 4l-4 16"></path>
+</svg>
+
+          </i>
+          <span class="ml-0">Ubuntu</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags/google-remote-desktop/"
+          class="flex flex-row text-sm mr-2 py-1">
+          <i class="h-5 w-5 flex-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M5 9l14 0"></path>
+   <path d="M5 15l14 0"></path>
+   <path d="M11 4l-4 16"></path>
+   <path d="M17 4l-4 16"></path>
+</svg>
+
+          </i>
+          <span class="ml-0">Google Remote Desktop</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags/obs/"
+          class="flex flex-row text-sm mr-2 py-1">
+          <i class="h-5 w-5 flex-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M5 9l14 0"></path>
+   <path d="M5 15l14 0"></path>
+   <path d="M11 4l-4 16"></path>
+   <path d="M17 4l-4 16"></path>
+</svg>
+
+          </i>
+          <span class="ml-0">OBS</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags/zoom/"
+          class="flex flex-row text-sm mr-2 py-1">
+          <i class="h-5 w-5 flex-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M5 9l14 0"></path>
+   <path d="M5 15l14 0"></path>
+   <path d="M11 4l-4 16"></path>
+   <path d="M17 4l-4 16"></path>
+</svg>
+
+          </i>
+          <span class="ml-0">Zoom</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags/relilabtutorial/"
+          class="flex flex-row text-sm mr-2 py-1">
+          <i class="h-5 w-5 flex-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M5 9l14 0"></path>
+   <path d="M5 15l14 0"></path>
+   <path d="M11 4l-4 16"></path>
+   <path d="M17 4l-4 16"></path>
+</svg>
+
+          </i>
+          <span class="ml-0">Relilabtutorial</span>
+        </a>
+      </li>
+      
+    
+  </ul>
+
+
+
+      <div class="flex flex-col gap-y-1 md:flex-row md:gap-y-0 md:gap-x-4 text-slate-500 dark:text-slate-300">
+  
+  
+  <div class="flex flex-row text-base gap-x-1">
+    <i class="h-6 w-6 flex-none">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"></path>
+   <path d="M16 3v4"></path>
+   <path d="M8 3v4"></path>
+   <path d="M4 11h16"></path>
+   <path d="M11 15h1"></path>
+   <path d="M12 15v3"></path>
+</svg>
+
+    </i>
+    <time datetime="2022-03-19T00:00:00&#43;00:00">
+      2022-03-19
+    </time>
+  </div>
+
+  <div class="flex flex-row text-base gap-x-1">
+    <i class="h-6 w-6 flex-none">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hourglass-high" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M6.5 7h11"></path>
+   <path d="M6 20v-2a6 6 0 1 1 12 0v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1z"></path>
+   <path d="M6 4v2a6 6 0 1 0 12 0v-2a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1z"></path>
+</svg>
+
+    </i>
+    <span>
+      Lesezeit 3 Minuten
+    </span>
+  </div>
+</div>
+
+      
+
+      
+        
+        <section class="prose prose-slate dark:prose-invert w-full max-w-4xl lg:max-w-5xl mt-6">
+          <h2>Inhaltsverzeichnis</h2>
+          <aside><nav id="TableOfContents">
+  <ul>
+    <li><a href="#instanz-erstellen-auf-httpsconsolecloudgooglecomhttpsconsolecloudgooglecom">Instanz erstellen auf <a href="https://console.cloud.google.com/">https://console.cloud.google.com/</a></a></li>
+    <li><a href="#ubuntu-desktop-auf-google-cloud-plattform-installieren">Ubuntu Desktop auf Google Cloud Plattform installieren</a>
+      <ul>
+        <li><a href="#via-sshterminal-update-tasksel-und-google-remote-desktop-installieren">Via SSH/Terminal Update, Tasksel und Google Remote Desktop installieren:</a></li>
+        <li><a href="#cinnamon-desktop-installieren">Cinnamon Desktop installieren</a></li>
+        <li><a href="#zusätzliche-einstellungen">Zusätzliche Einstellungen:</a></li>
+        <li><a href="#optional-google-chrome-browser-installieren">Optional: Google Chrome Browser installieren</a></li>
+      </ul>
+    </li>
+    <li><a href="#chrome-remote-desktop-konfiguieren-und-starten">Chrome Remote Desktop konfiguieren und starten</a>
+      <ul>
+        <li><a href="#instanzzeitplan-festlegen">Instanzzeitplan festlegen</a></li>
+      </ul>
+    </li>
+    <li><a href="#obs-installation">OBS Installation</a>
+      <ul>
+        <li><a href="#problem">Problem:</a></li>
+        <li><a href="#lösung-für-virtuelle-kamera-auf-virtueller-maschine">Lösung für virtuelle Kamera auf virtueller Maschine:</a></li>
+        <li><a href="#problem-trotzdem-nach-jedem-reboot-wird-die-virtuelle-kamera-nicht-geladen">Problem: Trotzdem nach jedem Reboot wird die virtuelle Kamera nicht geladen:</a></li>
+        <li><a href="#lösung-v4l2loopback-bei-start-laden">Lösung v4l2loopback bei Start laden:</a></li>
+      </ul>
+    </li>
+    <li><a href="#zoom-installation">Zoom Installation</a></li>
+    <li><a href="#inbetriebnahme-des-remote-desktop">Inbetriebnahme des Remote Desktop</a>
+      <ul>
+        <li><a href="#verbindung-zur-vm-instanz-herstellen">Verbindung zur VM-Instanz herstellen</a></li>
+        <li><a href="#keyboard--tastatur-auf-deutsch-umstellen">Keyboard / Tastatur auf deutsch umstellen:</a></li>
+        <li><a href="#apps-auf-dem-desktop-verknüpfen">Apps auf dem Desktop verknüpfen:</a></li>
+        <li><a href="#obs-einrichten">OBS einrichten</a></li>
+        <li><a href="#google-chrome-einrichten">Google Chrome einrichten</a></li>
+        <li><a href="#zoom-einrichten">Zoom einrichten</a></li>
+      </ul>
+    </li>
+    <li><a href="#problemlösungen">Problemlösungen</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#autostart-obs-inkl-virtueller-kamera--zoom">Autostart OBS inkl virtueller Kamera &amp; Zoom</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></aside>
+        </section>
+        
+      
+
+      <article class="mt-6 w-full max-w-4xl lg:max-w-5xl prose prose-slate dark:prose-invert prose-quoteless post-content">
+        <h1 id="auf-google-cloud-platform-mit-ubuntu-desktop-via-chrome-remote-desktop-obs-und-zoom-fernsteuern">Auf Google Cloud Platform mit Ubuntu Desktop via Chrome Remote Desktop OBS und Zoom fernsteuern</h1>
+<h2 id="instanz-erstellen-auf-httpsconsolecloudgooglecomhttpsconsolecloudgooglecom">Instanz erstellen auf <a href="https://console.cloud.google.com/" target="_blank" rel="noopener">https://console.cloud.google.com/</a>
+</h2>
+<ul>
+<li>Name, Region und Zone auswählen</li>
+<li>E2 4 vCPU, 16GB Arbeitsspeicher - 0,17$ pro Stunde</li>
+<li></li>
+<li>Betriebssystem Ubuntu 20.04 LTS</li>
+</ul>
+<h2 id="ubuntu-desktop-auf-google-cloud-plattform-installieren">Ubuntu Desktop auf Google Cloud Plattform installieren</h2>
+<p><a href="https://ubuntu.com/blog/launch-ubuntu-desktop-on-google-cloud" target="_blank" rel="noopener">https://ubuntu.com/blog/launch-ubuntu-desktop-on-google-cloud</a>
+
+<a href="https://cloud.google.com/architecture/chrome-desktop-remote-on-compute-engine#gnome" target="_blank" rel="noopener">https://cloud.google.com/architecture/chrome-desktop-remote-on-compute-engine#gnome</a>
+
+<a href="https://bytexd.com/install-chrome-remote-desktop-headless/" target="_blank" rel="noopener">https://bytexd.com/install-chrome-remote-desktop-headless/</a>
+
+<a href="https://cloud.google.com/architecture/chrome-desktop-remote-on-compute-engine#automating_the_installation_process" target="_blank" rel="noopener">https://cloud.google.com/architecture/chrome-desktop-remote-on-compute-engine#automating_the_installation_process</a>
+</p>
+<h3 id="via-sshterminal-update-tasksel-und-google-remote-desktop-installieren">Via SSH/Terminal Update, Tasksel und Google Remote Desktop installieren:</h3>
+<pre tabindex="0"><code class="language-shell=" data-lang="shell=">sudo apt update
+sudo apt install --assume-yes wget tasksel
+wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb
+sudo apt-get install --assume-yes ./chrome-remote-desktop_current_amd64.deb
+</code></pre><h3 id="cinnamon-desktop-installieren">Cinnamon Desktop installieren</h3>
+<pre tabindex="0"><code class="language-shell=" data-lang="shell=">sudo DEBIAN_FRONTEND=noninteractive \
+    apt install --assume-yes cinnamon-core desktop-base dbus-x11
+</code></pre><p><code>sudo bash -c 'echo &quot;exec /etc/X11/Xsession /usr/bin/cinnamon-session-cinnamon2d&quot; &gt; /etc/chrome-remote-desktop-session'</code></p>
+<h3 id="zusätzliche-einstellungen">Zusätzliche Einstellungen:</h3>
+<pre tabindex="0"><code>sudo systemctl disable lightdm.service
+</code></pre><h4 id="deutsche-tastatur-in-der-ubuntu-konsole-festlegenhttpspraxistippschipdedeutsche-tastatur-in-der-ubuntu-konsole-einrichten_28691"><a href="https://praxistipps.chip.de/deutsche-tastatur-in-der-ubuntu-konsole-einrichten_28691" target="_blank" rel="noopener">Deutsche Tastatur in der Ubuntu-Konsole festlegen</a>
+:</h4>
+<pre tabindex="0"><code>sudo dpkg-reconfigure keyboard-configuration
+</code></pre><p><div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2022/03/19/ob-virtualcam.html/01-deutsche-tastatur-ubuntu_hu10569391525887875908.webp 320w, /2022/03/19/ob-virtualcam.html/01-deutsche-tastatur-ubuntu_hu14398080118120205282.webp 640w, /2022/03/19/ob-virtualcam.html/01-deutsche-tastatur-ubuntu_hu8207467633984624433.webp 960w, /2022/03/19/ob-virtualcam.html/01-deutsche-tastatur-ubuntu_hu13202914458810372438.webp 1280w, /2022/03/19/ob-virtualcam.html/01-deutsche-tastatur-ubuntu_hu15036270009981345193.webp 1600w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2022/03/19/ob-virtualcam.html/01-deutsche-tastatur-ubuntu_hu7369196836612915422.jpg 320w, /2022/03/19/ob-virtualcam.html/01-deutsche-tastatur-ubuntu_hu11955730707504014479.jpg 640w, /2022/03/19/ob-virtualcam.html/01-deutsche-tastatur-ubuntu_hu11261852814664882763.jpg 960w, /2022/03/19/ob-virtualcam.html/01-deutsche-tastatur-ubuntu_hu4164949338114065510.jpg 1280w, /2022/03/19/ob-virtualcam.html/01-deutsche-tastatur-ubuntu_hu4187169901159567352.jpg 1600w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2022/03/19/ob-virtualcam.html/01-deutsche-tastatur-ubuntu_hu11955730707504014479.jpg" width="1734" height="222" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+
+<div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2022/03/19/ob-virtualcam.html/02-chrome-remote-desktop_hu9534664327632896233.webp 320w, /2022/03/19/ob-virtualcam.html/02-chrome-remote-desktop_hu3159616825577296713.webp 640w, /2022/03/19/ob-virtualcam.html/02-chrome-remote-desktop_hu4814187590322380220.webp 960w, /2022/03/19/ob-virtualcam.html/02-chrome-remote-desktop_hu17101258290996804594.webp 1280w, /2022/03/19/ob-virtualcam.html/02-chrome-remote-desktop_hu7336498973718512725.webp 1600w, /2022/03/19/ob-virtualcam.html/02-chrome-remote-desktop_hu12597104209254618399.webp 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2022/03/19/ob-virtualcam.html/02-chrome-remote-desktop_hu8801018646737939558.jpg 320w, /2022/03/19/ob-virtualcam.html/02-chrome-remote-desktop_hu18116254715136444174.jpg 640w, /2022/03/19/ob-virtualcam.html/02-chrome-remote-desktop_hu9154488924639964373.jpg 960w, /2022/03/19/ob-virtualcam.html/02-chrome-remote-desktop_hu12270561902899841630.jpg 1280w, /2022/03/19/ob-virtualcam.html/02-chrome-remote-desktop_hu1845551415317310365.jpg 1600w, /2022/03/19/ob-virtualcam.html/02-chrome-remote-desktop_hu2368403729193861848.jpg 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2022/03/19/ob-virtualcam.html/02-chrome-remote-desktop_hu18116254715136444174.jpg" width="3408" height="918" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+</p>
+<h3 id="optional-google-chrome-browser-installieren">Optional: Google Chrome Browser installieren</h3>
+<pre tabindex="0"><code class="language-shell=" data-lang="shell=">wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo apt install --assume-yes ./google-chrome-stable_current_amd64.deb
+</code></pre><h2 id="chrome-remote-desktop-konfiguieren-und-starten">Chrome Remote Desktop konfiguieren und starten</h2>
+<p><a href="https://cloud.google.com/architecture/chrome-desktop-remote-on-compute-engine#configuring_and_starting_the_chrome_remote_desktop_service" target="_blank" rel="noopener">https://cloud.google.com/architecture/chrome-desktop-remote-on-compute-engine#configuring_and_starting_the_chrome_remote_desktop_service</a>
+)
+Mit Google-Konto, das zur Remote-Stuerung benutzt werden soll, <a href="https://remotedesktop.google.com/headless" target="_blank" rel="noopener">https://remotedesktop.google.com/headless</a>
+ aufrufen und den SSH-Befehl in der Konsole ausführen. 6-Stellige PIN festlegen.
+<div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2022/03/19/ob-virtualcam.html/04-remotezugriff_hu9534664327632896233.webp 320w, /2022/03/19/ob-virtualcam.html/04-remotezugriff_hu3159616825577296713.webp 640w, /2022/03/19/ob-virtualcam.html/04-remotezugriff_hu4814187590322380220.webp 960w, /2022/03/19/ob-virtualcam.html/04-remotezugriff_hu17101258290996804594.webp 1280w, /2022/03/19/ob-virtualcam.html/04-remotezugriff_hu7336498973718512725.webp 1600w, /2022/03/19/ob-virtualcam.html/04-remotezugriff_hu12597104209254618399.webp 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2022/03/19/ob-virtualcam.html/04-remotezugriff_hu8801018646737939558.jpg 320w, /2022/03/19/ob-virtualcam.html/04-remotezugriff_hu18116254715136444174.jpg 640w, /2022/03/19/ob-virtualcam.html/04-remotezugriff_hu9154488924639964373.jpg 960w, /2022/03/19/ob-virtualcam.html/04-remotezugriff_hu12270561902899841630.jpg 1280w, /2022/03/19/ob-virtualcam.html/04-remotezugriff_hu1845551415317310365.jpg 1600w, /2022/03/19/ob-virtualcam.html/04-remotezugriff_hu2368403729193861848.jpg 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2022/03/19/ob-virtualcam.html/04-remotezugriff_hu18116254715136444174.jpg" width="3408" height="918" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+
+Prüfen ob der Dienst ausgeführt wird:</p>
+<pre tabindex="0"><code>sudo systemctl status chrome-remote-desktop@$USER
+</code></pre><p><div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2022/03/19/ob-virtualcam.html/05-systemctl-status_hu1564930616784661228.webp 320w, /2022/03/19/ob-virtualcam.html/05-systemctl-status_hu18139917174440933366.webp 640w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2022/03/19/ob-virtualcam.html/05-systemctl-status_hu989766465288380146.jpg 320w, /2022/03/19/ob-virtualcam.html/05-systemctl-status_hu4366046168614380430.jpg 640w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2022/03/19/ob-virtualcam.html/05-systemctl-status_hu4366046168614380430.jpg" width="820" height="70" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+</p>
+<h3 id="instanzzeitplan-festlegen">Instanzzeitplan festlegen</h3>
+<p><a href="https://rominirani.com/hands-on-guide-to-scheduling-vm-instances-to-start-and-stop-a079a50e16c6" target="_blank" rel="noopener">https://rominirani.com/hands-on-guide-to-scheduling-vm-instances-to-start-and-stop-a079a50e16c6</a>
+</p>
+<h2 id="obs-installation">OBS Installation</h2>
+<p><a href="https://obsproject.com/wiki/install-instructions#ubuntumint-installation" target="_blank" rel="noopener">https://obsproject.com/wiki/install-instructions#ubuntumint-installation</a>
+</p>
+<pre tabindex="0"><code>sudo apt install ffmpeg
+sudo apt install v4l2loopback-dkms
+sudo add-apt-repository ppa:obsproject/obs-studio
+sudo apt update
+sudo apt install obs-studio
+</code></pre><h3 id="problem">Problem:</h3>
+<p>Test mit <code>v4l2-ctl --list-devices</code> bringt Fehlermeldung:</p>
+<blockquote>
+<p>Cannot open device /dev/video0, exiting.
+<div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2022/03/19/ob-virtualcam.html/06-cannot-open-video-device_hu17149750559390373366.webp 320w, /2022/03/19/ob-virtualcam.html/06-cannot-open-video-device_hu397456814613812415.webp 640w, /2022/03/19/ob-virtualcam.html/06-cannot-open-video-device_hu17487384355015733884.webp 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2022/03/19/ob-virtualcam.html/06-cannot-open-video-device_hu3164021219044595989.jpg 320w, /2022/03/19/ob-virtualcam.html/06-cannot-open-video-device_hu12082800326007690306.jpg 640w, /2022/03/19/ob-virtualcam.html/06-cannot-open-video-device_hu2781466789083651844.jpg 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2022/03/19/ob-virtualcam.html/06-cannot-open-video-device_hu12082800326007690306.jpg" width="1004" height="62" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+</p>
+</blockquote>
+<h3 id="lösung-für-virtuelle-kamera-auf-virtueller-maschine">Lösung für virtuelle Kamera auf virtueller Maschine:</h3>
+<pre tabindex="0"><code>sudo apt -y install v4l2loopback-dkms v4l2loopback-utils linux-modules-extra-$(uname -r)
+</code></pre><pre tabindex="0"><code>sudo modprobe v4l2loopback
+</code></pre><p>Jetzt:
+<div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2022/03/19/ob-virtualcam.html/07-jetzt-v412-ctl_hu7609514343537552961.webp 320w, /2022/03/19/ob-virtualcam.html/07-jetzt-v412-ctl_hu12262526722178030470.webp 640w, /2022/03/19/ob-virtualcam.html/07-jetzt-v412-ctl_hu9698681575332182742.webp 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2022/03/19/ob-virtualcam.html/07-jetzt-v412-ctl_hu4708915623163627420.jpg 320w, /2022/03/19/ob-virtualcam.html/07-jetzt-v412-ctl_hu917523055163500143.jpg 640w, /2022/03/19/ob-virtualcam.html/07-jetzt-v412-ctl_hu2816650847820620201.jpg 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2022/03/19/ob-virtualcam.html/07-jetzt-v412-ctl_hu917523055163500143.jpg" width="1004" height="90" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+</p>
+<h3 id="problem-trotzdem-nach-jedem-reboot-wird-die-virtuelle-kamera-nicht-geladen">Problem: Trotzdem nach jedem Reboot wird die virtuelle Kamera nicht geladen:</h3>
+<p><div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2022/03/19/ob-virtualcam.html/08-dummy-video-device_hu8511571539661379312.webp 320w, /2022/03/19/ob-virtualcam.html/08-dummy-video-device_hu16551821589930105392.webp 640w, /2022/03/19/ob-virtualcam.html/08-dummy-video-device_hu15103888074991995622.webp 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2022/03/19/ob-virtualcam.html/08-dummy-video-device_hu11875468981481613168.jpg 320w, /2022/03/19/ob-virtualcam.html/08-dummy-video-device_hu6146959678094360168.jpg 640w, /2022/03/19/ob-virtualcam.html/08-dummy-video-device_hu8603866309381510125.jpg 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2022/03/19/ob-virtualcam.html/08-dummy-video-device_hu6146959678094360168.jpg" width="988" height="322" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+</p>
+<h3 id="lösung-v4l2loopback-bei-start-laden">Lösung v4l2loopback bei Start laden:</h3>
+<p><a href="https://askubuntu.com/questions/1245212/how-do-i-automatically-run-modprobe-v4l2loopback-on-boot" target="_blank" rel="noopener">https://askubuntu.com/questions/1245212/how-do-i-automatically-run-modprobe-v4l2loopback-on-boot</a>
+</p>
+<pre tabindex="0"><code>sudo nano /etc/modules
+</code></pre><p>hinzufügen: <code>v4l2loopback</code></p>
+<h2 id="zoom-installation">Zoom Installation</h2>
+<p><a href="https://support.zoom.us/hc/de/articles/204206269-IZoom-unter-Linux-installieren-oder-aktualisieren" target="_blank" rel="noopener">https://support.zoom.us/hc/de/articles/204206269-IZoom-unter-Linux-installieren-oder-aktualisieren</a>
+</p>
+<pre tabindex="0"><code>sudo apt install gdebi
+sudo apt update
+sudo apt upgrade
+</code></pre><pre tabindex="0"><code>sudo snap install zoom-client
+</code></pre><h2 id="inbetriebnahme-des-remote-desktop">Inbetriebnahme des Remote Desktop</h2>
+<h3 id="verbindung-zur-vm-instanz-herstellen">Verbindung zur VM-Instanz herstellen</h3>
+<p>Via <a href="https://remotedesktop.google.com/access" target="_blank" rel="noopener">https://remotedesktop.google.com/access</a>
+ auf das Remote Gerät zugreifen.:
+<div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2022/03/19/ob-virtualcam.html/09-relilab-technical-host_hu4893294962154816280.webp 320w, /2022/03/19/ob-virtualcam.html/09-relilab-technical-host_hu11660807969578310819.webp 640w, /2022/03/19/ob-virtualcam.html/09-relilab-technical-host_hu13361595063831126017.webp 960w, /2022/03/19/ob-virtualcam.html/09-relilab-technical-host_hu8059541946140209576.webp 1280w, /2022/03/19/ob-virtualcam.html/09-relilab-technical-host_hu16847097658151781220.webp 1600w, /2022/03/19/ob-virtualcam.html/09-relilab-technical-host_hu17199586208103325004.webp 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2022/03/19/ob-virtualcam.html/09-relilab-technical-host_hu11065292838375588309.jpg 320w, /2022/03/19/ob-virtualcam.html/09-relilab-technical-host_hu10129374718505232990.jpg 640w, /2022/03/19/ob-virtualcam.html/09-relilab-technical-host_hu11706264931611337742.jpg 960w, /2022/03/19/ob-virtualcam.html/09-relilab-technical-host_hu1457424264339641357.jpg 1280w, /2022/03/19/ob-virtualcam.html/09-relilab-technical-host_hu6207728658613357261.jpg 1600w, /2022/03/19/ob-virtualcam.html/09-relilab-technical-host_hu17194725236336104687.jpg 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2022/03/19/ob-virtualcam.html/09-relilab-technical-host_hu10129374718505232990.jpg" width="3418" height="658" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+
+Sechsstelligen PIN eingeben:
+<div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2022/03/19/ob-virtualcam.html/10-pin-remote-desktop_hu8892283317339696429.webp 320w, /2022/03/19/ob-virtualcam.html/10-pin-remote-desktop_hu14813549622219051144.webp 640w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2022/03/19/ob-virtualcam.html/10-pin-remote-desktop_hu15486883450782395848.jpg 320w, /2022/03/19/ob-virtualcam.html/10-pin-remote-desktop_hu10683607576749368051.jpg 640w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2022/03/19/ob-virtualcam.html/10-pin-remote-desktop_hu10683607576749368051.jpg" width="766" height="796" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+</p>
+<h3 id="keyboard--tastatur-auf-deutsch-umstellen">Keyboard / Tastatur auf deutsch umstellen:</h3>
+<p><div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2022/03/19/ob-virtualcam.html/11-keyboard-tastatur-umstellen_hu10369541316105016518.webp 320w, /2022/03/19/ob-virtualcam.html/11-keyboard-tastatur-umstellen_hu6565608990205872020.webp 640w, /2022/03/19/ob-virtualcam.html/11-keyboard-tastatur-umstellen_hu16967578381180284789.webp 960w, /2022/03/19/ob-virtualcam.html/11-keyboard-tastatur-umstellen_hu3473438162007621530.webp 1280w, /2022/03/19/ob-virtualcam.html/11-keyboard-tastatur-umstellen_hu6958375096758542594.webp 1600w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2022/03/19/ob-virtualcam.html/11-keyboard-tastatur-umstellen_hu8344558428684117991.jpg 320w, /2022/03/19/ob-virtualcam.html/11-keyboard-tastatur-umstellen_hu17416744816212457321.jpg 640w, /2022/03/19/ob-virtualcam.html/11-keyboard-tastatur-umstellen_hu3010426116958493621.jpg 960w, /2022/03/19/ob-virtualcam.html/11-keyboard-tastatur-umstellen_hu12935071698605833782.jpg 1280w, /2022/03/19/ob-virtualcam.html/11-keyboard-tastatur-umstellen_hu13762339271011152807.jpg 1600w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2022/03/19/ob-virtualcam.html/11-keyboard-tastatur-umstellen_hu17416744816212457321.jpg" width="1766" height="1022" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+</p>
+<h3 id="apps-auf-dem-desktop-verknüpfen">Apps auf dem Desktop verknüpfen:</h3>
+<p><div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2022/03/19/ob-virtualcam.html/12-apps-verknuepfen_hu14302374620082064580.webp 320w, /2022/03/19/ob-virtualcam.html/12-apps-verknuepfen_hu7287519152367254044.webp 640w, /2022/03/19/ob-virtualcam.html/12-apps-verknuepfen_hu3625632116083125605.webp 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2022/03/19/ob-virtualcam.html/12-apps-verknuepfen_hu3251531766408419015.jpg 320w, /2022/03/19/ob-virtualcam.html/12-apps-verknuepfen_hu9971208270485989362.jpg 640w, /2022/03/19/ob-virtualcam.html/12-apps-verknuepfen_hu11082974088554719736.jpg 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2022/03/19/ob-virtualcam.html/12-apps-verknuepfen_hu9971208270485989362.jpg" width="1224" height="1532" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+</p>
+<h3 id="obs-einrichten">OBS einrichten</h3>
+<h4 id="obs-mit-virtueller-kamera-automatisch-starten">OBS mit virtueller Kamera automatisch starten:</h4>
+<p>Rechtsklick auf die Verknüpfung und dann beim Startbefehl <code>--startvirtualcam</code> ergänzen.
+<div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2022/03/19/ob-virtualcam.html/15-obs-mit-virtual-cam-starten_hu12918285071501138693.webp 320w, /2022/03/19/ob-virtualcam.html/15-obs-mit-virtual-cam-starten_hu7358558189276255936.webp 640w, /2022/03/19/ob-virtualcam.html/15-obs-mit-virtual-cam-starten_hu15237936128125635312.webp 960w, /2022/03/19/ob-virtualcam.html/15-obs-mit-virtual-cam-starten_hu15072004078495718936.webp 1280w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2022/03/19/ob-virtualcam.html/15-obs-mit-virtual-cam-starten_hu17615132542188271680.jpg 320w, /2022/03/19/ob-virtualcam.html/15-obs-mit-virtual-cam-starten_hu3984370323160839964.jpg 640w, /2022/03/19/ob-virtualcam.html/15-obs-mit-virtual-cam-starten_hu18157818885251474438.jpg 960w, /2022/03/19/ob-virtualcam.html/15-obs-mit-virtual-cam-starten_hu1451637421935720767.jpg 1280w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2022/03/19/ob-virtualcam.html/15-obs-mit-virtual-cam-starten_hu3984370323160839964.jpg" width="1372" height="1126" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+</p>
+<h4 id="beim-systemstart-mit-virtueller-kamera-starten">Beim Systemstart mit virtueller Kamera starten:</h4>
+<p><code>startup Applications</code> wählen
+<div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2022/03/19/ob-virtualcam.html/16-startup-application_hu3702899241544876611.webp 320w, /2022/03/19/ob-virtualcam.html/16-startup-application_hu11038316214385541497.webp 640w, /2022/03/19/ob-virtualcam.html/16-startup-application_hu14671365912440328651.webp 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2022/03/19/ob-virtualcam.html/16-startup-application_hu3594916485261160261.jpg 320w, /2022/03/19/ob-virtualcam.html/16-startup-application_hu289289600312197247.jpg 640w, /2022/03/19/ob-virtualcam.html/16-startup-application_hu1774598208603629650.jpg 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2022/03/19/ob-virtualcam.html/16-startup-application_hu289289600312197247.jpg" width="1222" height="1168" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+
+ebenfalls <code>--startvirtualcam</code> ergänzen
+<div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2022/03/19/ob-virtualcam.html/15-obs-mit-virtual-cam-starten_hu12918285071501138693.webp 320w, /2022/03/19/ob-virtualcam.html/15-obs-mit-virtual-cam-starten_hu7358558189276255936.webp 640w, /2022/03/19/ob-virtualcam.html/15-obs-mit-virtual-cam-starten_hu15237936128125635312.webp 960w, /2022/03/19/ob-virtualcam.html/15-obs-mit-virtual-cam-starten_hu15072004078495718936.webp 1280w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2022/03/19/ob-virtualcam.html/15-obs-mit-virtual-cam-starten_hu17615132542188271680.jpg 320w, /2022/03/19/ob-virtualcam.html/15-obs-mit-virtual-cam-starten_hu3984370323160839964.jpg 640w, /2022/03/19/ob-virtualcam.html/15-obs-mit-virtual-cam-starten_hu18157818885251474438.jpg 960w, /2022/03/19/ob-virtualcam.html/15-obs-mit-virtual-cam-starten_hu1451637421935720767.jpg 1280w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2022/03/19/ob-virtualcam.html/15-obs-mit-virtual-cam-starten_hu3984370323160839964.jpg" width="1372" height="1126" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+</p>
+<h4 id="beim-ersten-start-von-obs">Beim ersten Start von OBS</h4>
+<p>&ldquo;I will only be using the virtual camera&rdquo; wählen:
+<div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2022/03/19/ob-virtualcam.html/17-i-will-only-be-using-OBS_hu584948223704127090.webp 320w, /2022/03/19/ob-virtualcam.html/17-i-will-only-be-using-OBS_hu11459579982242490251.webp 640w, /2022/03/19/ob-virtualcam.html/17-i-will-only-be-using-OBS_hu12132860283324679038.webp 960w, /2022/03/19/ob-virtualcam.html/17-i-will-only-be-using-OBS_hu17455722396516577824.webp 1280w, /2022/03/19/ob-virtualcam.html/17-i-will-only-be-using-OBS_hu6441247501928091449.webp 1600w, /2022/03/19/ob-virtualcam.html/17-i-will-only-be-using-OBS_hu428911944267999602.webp 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2022/03/19/ob-virtualcam.html/17-i-will-only-be-using-OBS_hu6476275160611521111.jpg 320w, /2022/03/19/ob-virtualcam.html/17-i-will-only-be-using-OBS_hu7515995573678727684.jpg 640w, /2022/03/19/ob-virtualcam.html/17-i-will-only-be-using-OBS_hu18327611207819590935.jpg 960w, /2022/03/19/ob-virtualcam.html/17-i-will-only-be-using-OBS_hu15327275770876781287.jpg 1280w, /2022/03/19/ob-virtualcam.html/17-i-will-only-be-using-OBS_hu11422722922644534920.jpg 1600w, /2022/03/19/ob-virtualcam.html/17-i-will-only-be-using-OBS_hu13409031552984387627.jpg 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2022/03/19/ob-virtualcam.html/17-i-will-only-be-using-OBS_hu7515995573678727684.jpg" width="2378" height="1458" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+
+In den Einstellungen die Sprache auf Deutsch umstellen:
+<div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2022/03/19/ob-virtualcam.html/14-OBS-deutsch-umstellen_hu13033550531076536244.webp 320w, /2022/03/19/ob-virtualcam.html/14-OBS-deutsch-umstellen_hu10661938428918123814.webp 640w, /2022/03/19/ob-virtualcam.html/14-OBS-deutsch-umstellen_hu15603102922723013505.webp 960w, /2022/03/19/ob-virtualcam.html/14-OBS-deutsch-umstellen_hu15103857734504610308.webp 1280w, /2022/03/19/ob-virtualcam.html/14-OBS-deutsch-umstellen_hu16685653991092477227.webp 1600w, /2022/03/19/ob-virtualcam.html/14-OBS-deutsch-umstellen_hu15587310765983668525.webp 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2022/03/19/ob-virtualcam.html/14-OBS-deutsch-umstellen_hu4147808585669238821.jpg 320w, /2022/03/19/ob-virtualcam.html/14-OBS-deutsch-umstellen_hu10165124666020520061.jpg 640w, /2022/03/19/ob-virtualcam.html/14-OBS-deutsch-umstellen_hu12589859194325723606.jpg 960w, /2022/03/19/ob-virtualcam.html/14-OBS-deutsch-umstellen_hu16755391646119660930.jpg 1280w, /2022/03/19/ob-virtualcam.html/14-OBS-deutsch-umstellen_hu4322106696562390207.jpg 1600w, /2022/03/19/ob-virtualcam.html/14-OBS-deutsch-umstellen_hu7629936289241251117.jpg 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2022/03/19/ob-virtualcam.html/14-OBS-deutsch-umstellen_hu10165124666020520061.jpg" width="1930" height="254" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+
+Videoauflösung auf 1920x1080 umstellen:
+<div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2022/03/19/ob-virtualcam.html/18-video1920_hu10813034897568198374.webp 320w, /2022/03/19/ob-virtualcam.html/18-video1920_hu10096379309632064446.webp 640w, /2022/03/19/ob-virtualcam.html/18-video1920_hu1460439908874124874.webp 960w, /2022/03/19/ob-virtualcam.html/18-video1920_hu1136918444250929267.webp 1280w, /2022/03/19/ob-virtualcam.html/18-video1920_hu1381141639040602700.webp 1600w, /2022/03/19/ob-virtualcam.html/18-video1920_hu10588709231277446764.webp 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2022/03/19/ob-virtualcam.html/18-video1920_hu7462448983956554622.jpg 320w, /2022/03/19/ob-virtualcam.html/18-video1920_hu81445593616786333.jpg 640w, /2022/03/19/ob-virtualcam.html/18-video1920_hu9995053404561734631.jpg 960w, /2022/03/19/ob-virtualcam.html/18-video1920_hu2659601501844318573.jpg 1280w, /2022/03/19/ob-virtualcam.html/18-video1920_hu14083348693854746302.jpg 1600w, /2022/03/19/ob-virtualcam.html/18-video1920_hu4543089598179931074.jpg 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2022/03/19/ob-virtualcam.html/18-video1920_hu81445593616786333.jpg" width="1930" height="494" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+
+Szenensammlung importieren
+<div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2022/03/19/ob-virtualcam.html/19-szenensammlung-importieren-OBS_hu3722007860515062499.webp 320w, /2022/03/19/ob-virtualcam.html/19-szenensammlung-importieren-OBS_hu15411120154324334737.webp 640w, /2022/03/19/ob-virtualcam.html/19-szenensammlung-importieren-OBS_hu4224003554594232876.webp 960w, /2022/03/19/ob-virtualcam.html/19-szenensammlung-importieren-OBS_hu15751743882186431347.webp 1280w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2022/03/19/ob-virtualcam.html/19-szenensammlung-importieren-OBS_hu13184812308105773870.jpg 320w, /2022/03/19/ob-virtualcam.html/19-szenensammlung-importieren-OBS_hu10115186430087303517.jpg 640w, /2022/03/19/ob-virtualcam.html/19-szenensammlung-importieren-OBS_hu14894603756411738976.jpg 960w, /2022/03/19/ob-virtualcam.html/19-szenensammlung-importieren-OBS_hu7245809263891624158.jpg 1280w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2022/03/19/ob-virtualcam.html/19-szenensammlung-importieren-OBS_hu10115186430087303517.jpg" width="1400" height="520" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+
+(Vorkonfigurierte Szenen für das relilab-Café <a href="https://github.com/rpi-virtuell/relilab/blob/main/zoom/relilab-cafe-obs-json.json" target="_blank" rel="noopener">immer aktuell auf Github</a>
+)
+- <a href="https://raw.githubusercontent.com/rpi-virtuell/relilab/main/zoom/relilab-cafe-obs-json.json" target="_blank" rel="noopener">relilab-cafe-obs-json.json</a>
+</p>
+<h3 id="google-chrome-einrichten">Google Chrome einrichten</h3>
+<h4 id="beim-ersten-systemstart-password-for-new-keyring-erstellen">Beim ersten Systemstart Password for new Keyring erstellen:</h4>
+<p><div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2022/03/19/ob-virtualcam.html/20-chrome-einrichten_hu13254568676934483692.webp 320w, /2022/03/19/ob-virtualcam.html/20-chrome-einrichten_hu2418843110705097628.webp 640w, /2022/03/19/ob-virtualcam.html/20-chrome-einrichten_hu7166266219527411300.webp 960w, /2022/03/19/ob-virtualcam.html/20-chrome-einrichten_hu2572796797238430448.webp 1280w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2022/03/19/ob-virtualcam.html/20-chrome-einrichten_hu16862769656315085612.jpg 320w, /2022/03/19/ob-virtualcam.html/20-chrome-einrichten_hu8930244405575081604.jpg 640w, /2022/03/19/ob-virtualcam.html/20-chrome-einrichten_hu4682880526547408246.jpg 960w, /2022/03/19/ob-virtualcam.html/20-chrome-einrichten_hu2239635092420456022.jpg 1280w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2022/03/19/ob-virtualcam.html/20-chrome-einrichten_hu8930244405575081604.jpg" width="1562" height="460" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+</p>
+<h4 id="chrome-zum-standardbrowser-machen">Chrome zum Standardbrowser machen</h4>
+<p><div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2022/03/19/ob-virtualcam.html/21-chrome-standard_hu9911497158498711511.webp 320w, /2022/03/19/ob-virtualcam.html/21-chrome-standard_hu6638624116323315284.webp 640w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2022/03/19/ob-virtualcam.html/21-chrome-standard_hu8819218084383319413.jpg 320w, /2022/03/19/ob-virtualcam.html/21-chrome-standard_hu9213136305318437942.jpg 640w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2022/03/19/ob-virtualcam.html/21-chrome-standard_hu9213136305318437942.jpg" width="908" height="378" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+</p>
+<h4 id="google-chrome-anmelden-und-sync-inkl-lesezeichen-aktivieren">Google Chrome anmelden und Sync inkl. Lesezeichen aktivieren</h4>
+<p><div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2022/03/19/ob-virtualcam.html/22-chrome-anmeldung_hu17431691054562416606.webp 320w, /2022/03/19/ob-virtualcam.html/22-chrome-anmeldung_hu18299821701762741012.webp 640w, /2022/03/19/ob-virtualcam.html/22-chrome-anmeldung_hu7268355263679224362.webp 960w, /2022/03/19/ob-virtualcam.html/22-chrome-anmeldung_hu1321431604092382710.webp 1280w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2022/03/19/ob-virtualcam.html/22-chrome-anmeldung_hu17290619391479254388.jpg 320w, /2022/03/19/ob-virtualcam.html/22-chrome-anmeldung_hu17706562200688342289.jpg 640w, /2022/03/19/ob-virtualcam.html/22-chrome-anmeldung_hu9041158891236796337.jpg 960w, /2022/03/19/ob-virtualcam.html/22-chrome-anmeldung_hu13720292587187554812.jpg 1280w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2022/03/19/ob-virtualcam.html/22-chrome-anmeldung_hu17706562200688342289.jpg" width="1580" height="660" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+</p>
+<h3 id="zoom-einrichten">Zoom einrichten</h3>
+<h4 id="zoom-account-anmelden">Zoom-Account anmelden</h4>
+<p><div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2022/03/19/ob-virtualcam.html/23-zoom-anmeldung_hu9714867961656250697.webp 320w, /2022/03/19/ob-virtualcam.html/23-zoom-anmeldung_hu16785815025063182761.webp 640w, /2022/03/19/ob-virtualcam.html/23-zoom-anmeldung_hu14738856405759028512.webp 960w, /2022/03/19/ob-virtualcam.html/23-zoom-anmeldung_hu15476232053622201632.webp 1280w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2022/03/19/ob-virtualcam.html/23-zoom-anmeldung_hu15009882654519015507.jpg 320w, /2022/03/19/ob-virtualcam.html/23-zoom-anmeldung_hu14009759569475794731.jpg 640w, /2022/03/19/ob-virtualcam.html/23-zoom-anmeldung_hu10335546104037757954.jpg 960w, /2022/03/19/ob-virtualcam.html/23-zoom-anmeldung_hu17159694272023165848.jpg 1280w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2022/03/19/ob-virtualcam.html/23-zoom-anmeldung_hu14009759569475794731.jpg" width="1452" height="322" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+</p>
+<h4 id="sprache-ändern-in-zoomhttpssupportzoomushcdearticles209982306-c384nderung-der-sprache-in-zoom"><a href="https://support.zoom.us/hc/de/articles/209982306-%C3%84nderung-der-Sprache-in-Zoom" target="_blank" rel="noopener">Sprache ändern in Zoom</a>
+</h4>
+<p>Zoom starten und dann das Zoom-Symbol rechts in der unteren Leiste  mit Rechtsklick der Maus das Menü zur Sprachänderung aufrufen:
+<div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2022/03/19/ob-virtualcam.html/24-zoom-sprache-aendern_hu15277476922520741364.webp 320w, /2022/03/19/ob-virtualcam.html/24-zoom-sprache-aendern_hu13579043883862598118.webp 640w, /2022/03/19/ob-virtualcam.html/24-zoom-sprache-aendern_hu9225399661067905050.webp 960w, /2022/03/19/ob-virtualcam.html/24-zoom-sprache-aendern_hu8054666360341704218.webp 1280w, /2022/03/19/ob-virtualcam.html/24-zoom-sprache-aendern_hu541987400477727773.webp 1600w, /2022/03/19/ob-virtualcam.html/24-zoom-sprache-aendern_hu9577490241567917249.webp 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2022/03/19/ob-virtualcam.html/24-zoom-sprache-aendern_hu10392946529092819781.jpg 320w, /2022/03/19/ob-virtualcam.html/24-zoom-sprache-aendern_hu1596371568767451453.jpg 640w, /2022/03/19/ob-virtualcam.html/24-zoom-sprache-aendern_hu12165925379632408205.jpg 960w, /2022/03/19/ob-virtualcam.html/24-zoom-sprache-aendern_hu2166590611209044677.jpg 1280w, /2022/03/19/ob-virtualcam.html/24-zoom-sprache-aendern_hu1504898571338367139.jpg 1600w, /2022/03/19/ob-virtualcam.html/24-zoom-sprache-aendern_hu1832628573849844579.jpg 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2022/03/19/ob-virtualcam.html/24-zoom-sprache-aendern_hu1596371568767451453.jpg" width="4010" height="612" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+</p>
+<h2 id="problemlösungen">Problemlösungen</h2>
+<h4 id="problem---keine-emojis-in-den-slides">Problem - keine Emojis in den Slides</h4>
+<p><div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2022/03/19/ob-virtualcam.html/25-slides-emojis_hu9577576378806943138.webp 320w, /2022/03/19/ob-virtualcam.html/25-slides-emojis_hu4882981320424080901.webp 640w, /2022/03/19/ob-virtualcam.html/25-slides-emojis_hu8151133095199693486.webp 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2022/03/19/ob-virtualcam.html/25-slides-emojis_hu15174858358592893305.jpg 320w, /2022/03/19/ob-virtualcam.html/25-slides-emojis_hu5947832417503532881.jpg 640w, /2022/03/19/ob-virtualcam.html/25-slides-emojis_hu17554694194509190397.jpg 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2022/03/19/ob-virtualcam.html/25-slides-emojis_hu5947832417503532881.jpg" width="988" height="322" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+</p>
+<h4 id="lösung-httpsmediumcomharshmauremojis-missing-from-chrome-in-ubuntu-9c25fe10867chttpsmediumcomharshmauremojis-missing-from-chrome-in-ubuntu-9c25fe10867c">Lösung: <a href="https://medium.com/@harshmaur/emojis-missing-from-chrome-in-ubuntu-9c25fe10867c" target="_blank" rel="noopener">https://medium.com/@harshmaur/emojis-missing-from-chrome-in-ubuntu-9c25fe10867c</a>
+</h4>
+<pre tabindex="0"><code>sudo apt-get remove fonts-noto-color-emoji
+sudo apt-get install fonts-noto-color-emoji
+</code></pre><h4 id="problem---kein-font-yanone-kaffeesatz-in-den-slides">Problem - kein Font Yanone Kaffeesatz in den Slides</h4>
+<h4 id="lösung-httpszoomadmincomhowtoinstallubuntupackagefonts-yanone-kaffeesatzhttpszoomadmincomhowtoinstallubuntupackagefonts-yanone-kaffeesatz">Lösung: <a href="https://zoomadmin.com/HowToInstall/UbuntuPackage/fonts-yanone-kaffeesatz" target="_blank" rel="noopener">https://zoomadmin.com/HowToInstall/UbuntuPackage/fonts-yanone-kaffeesatz</a>
+</h4>
+<pre tabindex="0"><code>sudo apt-get update -y
+sudo apt-get install -y fonts-yanone-kaffeesatz
+</code></pre><h4 id="mögliches-problem">Mögliches Problem</h4>
+<blockquote>
+<p>GUI (Ubuntu Desktop) has its own security layer which blocks the root account from login. So, even we have a properly enabled root account with password, it does not work in GUI interface.
+<div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2022/03/19/ob-virtualcam.html/26-keyring-problem_hu9814672177792498097.webp 320w, /2022/03/19/ob-virtualcam.html/26-keyring-problem_hu11302630110253987818.webp 640w, /2022/03/19/ob-virtualcam.html/26-keyring-problem_hu5763779865512222410.webp 960w, /2022/03/19/ob-virtualcam.html/26-keyring-problem_hu5396612868472545772.webp 1280w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2022/03/19/ob-virtualcam.html/26-keyring-problem_hu9055551765825433062.jpg 320w, /2022/03/19/ob-virtualcam.html/26-keyring-problem_hu16181293090499203452.jpg 640w, /2022/03/19/ob-virtualcam.html/26-keyring-problem_hu14646909185389656239.jpg 960w, /2022/03/19/ob-virtualcam.html/26-keyring-problem_hu9709874512878469585.jpg 1280w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2022/03/19/ob-virtualcam.html/26-keyring-problem_hu16181293090499203452.jpg" width="1320" height="456" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+
+<a href="https://askubuntu.com/questions/1192471/login-as-root-on-ubuntu-desktop" target="_blank" rel="noopener">https://askubuntu.com/questions/1192471/login-as-root-on-ubuntu-desktop</a>
+</p>
+</blockquote>
+<p><a href="https://www.computernetworkingnotes.com/linux-tutorials/how-to-enable-and-disable-root-login-in-ubuntu.html#:~:text=Enabling%20and%20disable%20root%20login%20in%20nutshell&amp;text=Use%20the%20sudo%20%E2%80%93i%20passwd,root%20password%2C%20when%20it%20asks.&amp;text=CLI%20%26%20GUI%20both-,Use%20the%20sudo%20%E2%80%93i%20passwd%20root%20command.,root%20password%2C%20when%20it%20asks" target="_blank" rel="noopener">https://www.computernetworkingnotes.com/linux-tutorials/how-to-enable-and-disable-root-login-in-ubuntu.html</a>
+</p>
+<h1 id="anstatt-auf-cloud-plattform-mit-linux-auf-lokalem-windows-pc">Anstatt auf Cloud-Plattform mit Linux auf lokalem Windows-PC</h1>
+<h3 id="autostart-obs-inkl-virtueller-kamera--zoom">Autostart OBS inkl virtueller Kamera &amp; Zoom</h3>
+<h4 id="vorbereiten-obs-inkl-virtueller-kamera">Vorbereiten OBS inkl Virtueller Kamera</h4>
+<p>Hinzufügen von <code>--startvirtualcam</code> zur OBS-Verknüpfung:
+<div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2022/03/19/ob-virtualcam.html/27-startvirtualcam-verknuepft-OBS_hu4392949834387420022.webp 320w, /2022/03/19/ob-virtualcam.html/27-startvirtualcam-verknuepft-OBS_hu8306192853010390847.webp 640w, /2022/03/19/ob-virtualcam.html/27-startvirtualcam-verknuepft-OBS_hu9782265843717245588.webp 960w, /2022/03/19/ob-virtualcam.html/27-startvirtualcam-verknuepft-OBS_hu984030123960951293.webp 1280w, /2022/03/19/ob-virtualcam.html/27-startvirtualcam-verknuepft-OBS_hu4551341485116157305.webp 1600w, /2022/03/19/ob-virtualcam.html/27-startvirtualcam-verknuepft-OBS_hu11548527682876438058.webp 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2022/03/19/ob-virtualcam.html/27-startvirtualcam-verknuepft-OBS_hu7911657357810891168.jpg 320w, /2022/03/19/ob-virtualcam.html/27-startvirtualcam-verknuepft-OBS_hu4120690381185952403.jpg 640w, /2022/03/19/ob-virtualcam.html/27-startvirtualcam-verknuepft-OBS_hu803823715330380294.jpg 960w, /2022/03/19/ob-virtualcam.html/27-startvirtualcam-verknuepft-OBS_hu1495366266216460048.jpg 1280w, /2022/03/19/ob-virtualcam.html/27-startvirtualcam-verknuepft-OBS_hu3087187378226125690.jpg 1600w, /2022/03/19/ob-virtualcam.html/27-startvirtualcam-verknuepft-OBS_hu15433610216144200157.jpg 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2022/03/19/ob-virtualcam.html/27-startvirtualcam-verknuepft-OBS_hu4120690381185952403.jpg" width="2732" height="2048" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+</p>
+<p>open the start menu/tile thing and type in:
+<code>Run</code> and hit enter. Then type in <code>shell:startup</code>
+<div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2022/03/19/ob-virtualcam.html/28-shell-startup_hu2093251616728328118.webp 320w, /2022/03/19/ob-virtualcam.html/28-shell-startup_hu7796324771832606610.webp 640w, /2022/03/19/ob-virtualcam.html/28-shell-startup_hu16727985458434462145.webp 960w, /2022/03/19/ob-virtualcam.html/28-shell-startup_hu11249994679179300749.webp 1280w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2022/03/19/ob-virtualcam.html/28-shell-startup_hu8384980903806406832.jpg 320w, /2022/03/19/ob-virtualcam.html/28-shell-startup_hu4786464521374707063.jpg 640w, /2022/03/19/ob-virtualcam.html/28-shell-startup_hu8830790582575806585.jpg 960w, /2022/03/19/ob-virtualcam.html/28-shell-startup_hu2004493474451858148.jpg 1280w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2022/03/19/ob-virtualcam.html/28-shell-startup_hu4786464521374707063.jpg" width="1368" height="957" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+
+Dann die Verknüpfungen in den Autostartordner kopieren:
+<div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2022/03/19/ob-virtualcam.html/29-autostartordner_hu13451149955787823377.webp 320w, /2022/03/19/ob-virtualcam.html/29-autostartordner_hu14922361528312683646.webp 640w, /2022/03/19/ob-virtualcam.html/29-autostartordner_hu757134893708700917.webp 960w, /2022/03/19/ob-virtualcam.html/29-autostartordner_hu3309831336549502097.webp 1280w, /2022/03/19/ob-virtualcam.html/29-autostartordner_hu5348513433344205483.webp 1600w, /2022/03/19/ob-virtualcam.html/29-autostartordner_hu10892503044001771998.webp 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2022/03/19/ob-virtualcam.html/29-autostartordner_hu15363978774215922730.jpg 320w, /2022/03/19/ob-virtualcam.html/29-autostartordner_hu3228479104877654635.jpg 640w, /2022/03/19/ob-virtualcam.html/29-autostartordner_hu8947380218944878913.jpg 960w, /2022/03/19/ob-virtualcam.html/29-autostartordner_hu8145531152345091463.jpg 1280w, /2022/03/19/ob-virtualcam.html/29-autostartordner_hu15498383256037113375.jpg 1600w, /2022/03/19/ob-virtualcam.html/29-autostartordner_hu14633819273053306720.jpg 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2022/03/19/ob-virtualcam.html/29-autostartordner_hu3228479104877654635.jpg" width="1999" height="1373" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+</p>
+<p>Weitere Schritte wie oben</p>
+
+      </article>
+
+      
+
+
+
+
+    </div>
+  </div>
+</div>
+
+  </main>
+  <footer class="flex flex-none justify-center">
+    <section class="flex flex-col md:flex-row mx-2 md:mx-0 gap-2 md:gap-0 justify-between w-full max-w-4xl lg:max-w-5xl py-6 text-slate-500 dark:text-slate-300">
+  <div class="flex flex-row">
+    
+  
+  
+    <a href="https://reliverse.social/@joerglohrer" target="_blank" title="Mastodon" class="flex flex-row mr-2">
+      <span class="hidden">Mastodon</span>
+      <i class="h-6 w-6 flex-none"> <svg  xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-mastodon"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18.648 15.254c-1.816 1.763 -6.648 1.626 -6.648 1.626a18.262 18.262 0 0 1 -3.288 -.256c1.127 1.985 4.12 2.81 8.982 2.475c-1.945 2.013 -13.598 5.257 -13.668 -7.636l-.026 -1.154c0 -3.036 .023 -4.115 1.352 -5.633c1.671 -1.91 6.648 -1.666 6.648 -1.666s4.977 -.243 6.648 1.667c1.329 1.518 1.352 2.597 1.352 5.633s-.456 4.074 -1.352 4.944z" /><path d="M12 11.204v-2.926c0 -1.258 -.895 -2.278 -2 -2.278s-2 1.02 -2 2.278v4.722m4 -4.722c0 -1.258 .895 -2.278 2 -2.278s2 1.02 2 2.278v4.722" /></svg> </i>
+    </a>
+  
+  
+  
+    <a href="https://nostrrr.com/p/npub1mmful66pyasny86vdxtm0d2v9v572hjtmx0ufaa2t4m9hxartuxs4wu69w" target="_blank" title="nostr" class="flex flex-row mr-2">
+      <span class="hidden">nostr</span>
+      <i class="h-6 w-6 flex-none"> <?xml version="1.0" encoding="UTF-8"?>
+<svg id="_8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><defs><style>.cls-1{fill:none;}.cls-2{fill:#fff;}.cls-3{fill:#662482;}</style></defs><path class="cls-2" d="m231.16,159.49c0,20.71,0,31.07-3.53,42.22-4.43,12.17-14.02,21.76-26.19,26.19-11.15,3.53-21.5,3.53-42.22,3.53h-62.46c-20.71,0-31.06,0-42.21-3.53-12.17-4.43-21.76-14.02-26.19-26.19-3.53-11.15-3.53-21.5-3.53-42.22v-62.46c0-20.71,0-31.07,3.53-42.22,4.43-12.17,14.02-21.76,26.19-26.19,11.15-3.52,21.5-3.52,42.21-3.52h62.46c20.71,0,31.07,0,42.22,3.52,12.17,4.43,21.76,14.02,26.19,26.19,3.53,11.15,3.53,21.5,3.53,42.22v62.46Z"/><path class="cls-3" d="m210.81,116.2v83.23c0,3.13-2.54,5.67-5.67,5.67h-68.04c-3.13,0-5.67-2.54-5.67-5.67v-15.5c.31-19,2.32-37.2,6.54-45.48,2.53-4.98,6.7-7.69,11.49-9.14,9.05-2.72,24.93-.86,31.67-1.18,0,0,20.36.81,20.36-10.72,0-9.28-9.1-8.55-9.1-8.55-10.03.26-17.67-.42-22.62-2.37-8.29-3.26-8.57-9.24-8.6-11.24-.41-23.1-34.47-25.87-64.48-20.14-32.81,6.24.36,53.27.36,116.05v8.38c-.06,3.08-2.55,5.57-5.65,5.57h-33.69c-3.13,0-5.67-2.54-5.67-5.67V55.49c0-3.13,2.54-5.67,5.67-5.67h31.67c3.13,0,5.67,2.54,5.67,5.67,0,4.65,5.23,7.24,9.01,4.53,11.39-8.16,26.01-12.51,42.37-12.51,36.65,0,64.36,21.36,64.36,68.69Zm-60.84-16.89c0-6.7-5.43-12.13-12.13-12.13s-12.13,5.43-12.13,12.13,5.43,12.13,12.13,12.13,12.13-5.43,12.13-12.13Z"/><rect class="cls-1" /></svg> </i>
+    </a>
+  
+  
+  
+    <a href="https://bsky.app/profile/joerglohrer.bsky.social" target="_blank" title="Bluesky" class="flex flex-row mr-2">
+      <span class="hidden">Bluesky</span>
+      <i class="h-6 w-6 flex-none"> <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-bluesky"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6.335 5.144c-1.654 -1.199 -4.335 -2.127 -4.335 .826c0 .59 .35 4.953 .556 5.661c.713 2.463 3.13 2.75 5.444 2.369c-4.045 .665 -4.889 3.208 -2.667 5.41c1.03 1.018 1.913 1.59 2.667 1.59c2 0 3.134 -2.769 3.5 -3.5c.333 -.667 .5 -1.167 .5 -1.5c0 .333 .167 .833 .5 1.5c.366 .731 1.5 3.5 3.5 3.5c.754 0 1.637 -.571 2.667 -1.59c2.222 -2.203 1.378 -4.746 -2.667 -5.41c2.314 .38 4.73 .094 5.444 -2.369c.206 -.708 .556 -5.072 .556 -5.661c0 -2.953 -2.68 -2.025 -4.335 -.826c-2.293 1.662 -4.76 5.048 -5.665 6.856c-.905 -1.808 -3.372 -5.194 -5.665 -6.856z" /></svg> </i>
+    </a>
+  
+  
+  
+    <a href="https://www.instagram.com/joerglohrer" target="_blank" title="Instagram" class="flex flex-row mr-2">
+      <span class="hidden">Instagram</span>
+      <i class="h-6 w-6 flex-none"> <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-instagram" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M4 4m0 4a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z"></path>
+   <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+   <path d="M16.5 7.5l0 .01"></path>
+</svg>
+ </i>
+    </a>
+  
+  
+
+
+  </div>
+  <div class="grow"></div>
+  <div class="flex flex-row">
+    <i class="h-6 w-6 flex-none"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
+   <path d="M14 9.75a3.016 3.016 0 0 0 -4.163 .173a2.993 2.993 0 0 0 0 4.154a3.016 3.016 0 0 0 4.163 .173"></path>
+</svg>
+</i> 2023 - 2024 
+    
+  </div>
+  
+  <div class="flex flex-row">
+    <span class="ml-0 pl-0 md:ml-2 md:pl-2 border-l-0 md:border-l border-slate-300 dark:border-slate-400">
+      Powered by <a href="https://gohugo.io" target="_blank" rel="noopener" class="underline">Hugo</a> <span class="text-red-600">&hearts;</span> <a href="https://github.com/tomowang/hugo-theme-tailwind" target="_blank" rel="noopener" class="underline">Tailwind</a>
+    </span>
+  </div>
+  
+</section>
+
+  </footer>
+  <script src="/main.js"></script>
+
+<div class="hidden top-1 right-1" id="code-copy">
+  <i class="h-6 w-6 block">
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copy" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" />
+  <path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" />
+</svg>
+
+  </i>
+</div>
+<div class="hidden top-1 right-1" id="code-copy-done">
+  <i class="h-6 w-6 block">
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M5 12l5 5l10 -10" />
+</svg>
+
+  </i>
+</div><script src="/code-copy.js"></script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+baseURL = 'https://joerg-lohrer.de/'
+languageCode = 'de'
+defaultContentLanguage = 'de'
+title = 'Jörg Lohrer'
+theme = 'tailwind'
+[permalinks]
+  posts = "/:year/:month/:day/:slug.html"
+
+[outputs]
+home = ["HTML", "RSS"]
+
+
+[menus]
+[[menus.main]]
+    name = 'Home'
+    pageRef = '/'
+    weight = 10
+[[menus.main]]
+    name = 'Impressum'
+    pageRef = '/Impressum'
+    weight = 30
+[[menus.main]]
+    name = 'Schlagworte'
+    pageRef = '/tags'
+    weight = 20
+[[menus.main]]
+    name = 'Mastodon'
+    pre = '<i class="fa fa-heart"></i>'
+    url = 'https://reliverse.social/@joerglohrer'
+    weight = 40
+[menus.main.params]
+      rel = 'external'
+
+[params.header]
+logo = "joerg-profil-2024.webp"
+
+
+[params]
+  [params.social_media]
+
+    [[params.social_media.items]]
+    enabled = true
+    title = 'Mastodon'
+    icon = 'brand-mastodon'
+    link = 'https://reliverse.social/@joerglohrer'
+
+    [[params.social_media.items]]
+    enabled = true
+    title = 'nostr'
+    icon = 'nostr-icon-purple-on-white'
+    link = 'https://nostrrr.com/p/npub1mmful66pyasny86vdxtm0d2v9v572hjtmx0ufaa2t4m9hxartuxs4wu69w'
+
+    [[params.social_media.items]]
+    enabled = true
+    title = 'Bluesky'
+    icon = 'brand-bluesky'
+    link = 'https://bsky.app/profile/joerglohrer.bsky.social'
+
+    [[params.social_media.items]]
+    enabled = true
+    title = 'Instagram'
+    icon = 'brand-instagram'
+    link = 'https://www.instagram.com/joerglohrer'
+
+
+[markup.goldmark.renderer]
+unsafe = true
+
+[markup.highlight]
+noClasses = false

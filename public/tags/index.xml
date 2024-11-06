@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Jörg Lohrer</title>
+    <link>http://localhost:1313/tags/</link>
+    <description>Recent content in Tags on Jörg Lohrer</description>
+    <generator>Hugo</generator>
+    <language>de</language>
+    <managingEditor>user@example.com (Hugo Author)</managingEditor>
+    <webMaster>user@example.com (Hugo Author)</webMaster>
+    <lastBuildDate>Wed, 03 Apr 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Bewusstsein</title>
+      <link>http://localhost:1313/tags/bewusstsein/</link>
+      <pubDate>Wed, 03 Apr 2024 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/bewusstsein/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Community</title>
+      <link>http://localhost:1313/tags/community/</link>
+      <pubDate>Wed, 03 Apr 2024 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/community/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Künstliche Intelligenz</title>
+      <link>http://localhost:1313/tags/k%C3%BCnstliche-intelligenz/</link>
+      <pubDate>Wed, 03 Apr 2024 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/k%C3%BCnstliche-intelligenz/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Religionspädagogik</title>
+      <link>http://localhost:1313/tags/religionsp%C3%A4dagogik/</link>
+      <pubDate>Wed, 03 Apr 2024 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/religionsp%C3%A4dagogik/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>MarkDown</title>
+      <link>http://localhost:1313/tags/markdown/</link>
+      <pubDate>Tue, 05 Mar 2024 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/markdown/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>OER</title>
+      <link>http://localhost:1313/tags/oer/</link>
+      <pubDate>Tue, 05 Mar 2024 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/oer/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Offenheit</title>
+      <link>http://localhost:1313/tags/offenheit/</link>
+      <pubDate>Tue, 05 Mar 2024 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/offenheit/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Element</title>
+      <link>http://localhost:1313/tags/element/</link>
+      <pubDate>Fri, 26 Jan 2024 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/element/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Nextcloud</title>
+      <link>http://localhost:1313/tags/nextcloud/</link>
+      <pubDate>Fri, 26 Jan 2024 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/nextcloud/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>WordPress</title>
+      <link>http://localhost:1313/tags/wordpress/</link>
+      <pubDate>Fri, 26 Jan 2024 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/wordpress/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Horizontales Scrollen</title>
+      <link>http://localhost:1313/tags/horizontales-scrollen/</link>
+      <pubDate>Tue, 25 Jul 2023 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/horizontales-scrollen/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Kanban</title>
+      <link>http://localhost:1313/tags/kanban/</link>
+      <pubDate>Tue, 25 Jul 2023 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/kanban/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Padlet</title>
+      <link>http://localhost:1313/tags/padlet/</link>
+      <pubDate>Tue, 25 Jul 2023 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/padlet/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>TaskCards</title>
+      <link>http://localhost:1313/tags/taskcards/</link>
+      <pubDate>Tue, 25 Jul 2023 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/taskcards/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dampfnudel</title>
+      <link>http://localhost:1313/tags/dampfnudel/</link>
+      <pubDate>Fri, 07 Apr 2023 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/dampfnudel/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hefeteig</title>
+      <link>http://localhost:1313/tags/hefeteig/</link>
+      <pubDate>Fri, 07 Apr 2023 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/hefeteig/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hefezopf</title>
+      <link>http://localhost:1313/tags/hefezopf/</link>
+      <pubDate>Fri, 07 Apr 2023 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/hefezopf/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Bibel</title>
+      <link>http://localhost:1313/tags/bibel/</link>
+      <pubDate>Thu, 23 Mar 2023 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/bibel/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>ChatGPT</title>
+      <link>http://localhost:1313/tags/chatgpt/</link>
+      <pubDate>Thu, 23 Mar 2023 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/chatgpt/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Deepl</title>
+      <link>http://localhost:1313/tags/deepl/</link>
+      <pubDate>Thu, 23 Mar 2023 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/deepl/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Eric Carle</title>
+      <link>http://localhost:1313/tags/eric-carle/</link>
+      <pubDate>Thu, 23 Mar 2023 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/eric-carle/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Gleichnis</title>
+      <link>http://localhost:1313/tags/gleichnis/</link>
+      <pubDate>Thu, 23 Mar 2023 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/gleichnis/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Jesus</title>
+      <link>http://localhost:1313/tags/jesus/</link>
+      <pubDate>Thu, 23 Mar 2023 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/jesus/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Midjourney</title>
+      <link>http://localhost:1313/tags/midjourney/</link>
+      <pubDate>Thu, 23 Mar 2023 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/midjourney/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Sämann</title>
+      <link>http://localhost:1313/tags/s%C3%A4mann/</link>
+      <pubDate>Thu, 23 Mar 2023 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/s%C3%A4mann/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Schneckennudel</title>
+      <link>http://localhost:1313/tags/schneckennudel/</link>
+      <pubDate>Sun, 26 Feb 2023 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/schneckennudel/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Schoko</title>
+      <link>http://localhost:1313/tags/schoko/</link>
+      <pubDate>Sun, 26 Feb 2023 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/schoko/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Zimt</title>
+      <link>http://localhost:1313/tags/zimt/</link>
+      <pubDate>Sun, 26 Feb 2023 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/zimt/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Google Remote Desktop</title>
+      <link>http://localhost:1313/tags/google-remote-desktop/</link>
+      <pubDate>Sat, 19 Mar 2022 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/google-remote-desktop/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>OBS</title>
+      <link>http://localhost:1313/tags/obs/</link>
+      <pubDate>Sat, 19 Mar 2022 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/obs/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Relilabtutorial</title>
+      <link>http://localhost:1313/tags/relilabtutorial/</link>
+      <pubDate>Sat, 19 Mar 2022 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/relilabtutorial/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ubuntu</title>
+      <link>http://localhost:1313/tags/ubuntu/</link>
+      <pubDate>Sat, 19 Mar 2022 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/ubuntu/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Zoom</title>
+      <link>http://localhost:1313/tags/zoom/</link>
+      <pubDate>Sat, 19 Mar 2022 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/zoom/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Datenbank</title>
+      <link>http://localhost:1313/tags/datenbank/</link>
+      <pubDate>Wed, 16 Feb 2022 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/datenbank/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Iomad</title>
+      <link>http://localhost:1313/tags/iomad/</link>
+      <pubDate>Wed, 16 Feb 2022 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/iomad/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Linux</title>
+      <link>http://localhost:1313/tags/linux/</link>
+      <pubDate>Wed, 16 Feb 2022 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/linux/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Moodle</title>
+      <link>http://localhost:1313/tags/moodle/</link>
+      <pubDate>Wed, 16 Feb 2022 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/moodle/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>MySql</title>
+      <link>http://localhost:1313/tags/mysql/</link>
+      <pubDate>Wed, 16 Feb 2022 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/mysql/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Server</title>
+      <link>http://localhost:1313/tags/server/</link>
+      <pubDate>Wed, 16 Feb 2022 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/server/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Fussball</title>
+      <link>http://localhost:1313/tags/fussball/</link>
+      <pubDate>Fri, 03 Dec 2021 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/fussball/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Quiz</title>
+      <link>http://localhost:1313/tags/quiz/</link>
+      <pubDate>Fri, 03 Dec 2021 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/quiz/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tafel</title>
+      <link>http://localhost:1313/tags/tafel/</link>
+      <pubDate>Fri, 03 Dec 2021 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/tafel/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>ACF</title>
+      <link>http://localhost:1313/tags/acf/</link>
+      <pubDate>Wed, 17 Nov 2021 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/acf/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Formulare</title>
+      <link>http://localhost:1313/tags/formulare/</link>
+      <pubDate>Wed, 17 Nov 2021 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/formulare/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>JSON</title>
+      <link>http://localhost:1313/tags/json/</link>
+      <pubDate>Wed, 17 Nov 2021 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/json/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Plugin</title>
+      <link>http://localhost:1313/tags/plugin/</link>
+      <pubDate>Wed, 17 Nov 2021 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/plugin/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Immersion</title>
+      <link>http://localhost:1313/tags/immersion/</link>
+      <pubDate>Sun, 15 Aug 2021 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/immersion/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Meta</title>
+      <link>http://localhost:1313/tags/meta/</link>
+      <pubDate>Sun, 15 Aug 2021 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/meta/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Oculus</title>
+      <link>http://localhost:1313/tags/oculus/</link>
+      <pubDate>Sun, 15 Aug 2021 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/oculus/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Präsenz</title>
+      <link>http://localhost:1313/tags/pr%C3%A4senz/</link>
+      <pubDate>Sun, 15 Aug 2021 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/pr%C3%A4senz/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Sidequest</title>
+      <link>http://localhost:1313/tags/sidequest/</link>
+      <pubDate>Sun, 15 Aug 2021 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/sidequest/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Virtuelle Realität</title>
+      <link>http://localhost:1313/tags/virtuelle-realit%C3%A4t/</link>
+      <pubDate>Sun, 15 Aug 2021 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/virtuelle-realit%C3%A4t/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>3DDruck</title>
+      <link>http://localhost:1313/tags/3ddruck/</link>
+      <pubDate>Tue, 26 Mar 2019 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/3ddruck/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>QR-Code</title>
+      <link>http://localhost:1313/tags/qr-code/</link>
+      <pubDate>Tue, 26 Mar 2019 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/qr-code/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Halloween</title>
+      <link>http://localhost:1313/tags/halloween/</link>
+      <pubDate>Tue, 31 Oct 2017 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/halloween/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Luther</title>
+      <link>http://localhost:1313/tags/luther/</link>
+      <pubDate>Tue, 31 Oct 2017 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/luther/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Lutherrose</title>
+      <link>http://localhost:1313/tags/lutherrose/</link>
+      <pubDate>Tue, 31 Oct 2017 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/lutherrose/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Reformation</title>
+      <link>http://localhost:1313/tags/reformation/</link>
+      <pubDate>Tue, 31 Oct 2017 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/reformation/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Octopi</title>
+      <link>http://localhost:1313/tags/octopi/</link>
+      <pubDate>Mon, 23 Oct 2017 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/octopi/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Raspberry</title>
+      <link>http://localhost:1313/tags/raspberry/</link>
+      <pubDate>Mon, 23 Oct 2017 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/raspberry/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Telegram</title>
+      <link>http://localhost:1313/tags/telegram/</link>
+      <pubDate>Mon, 23 Oct 2017 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/telegram/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Erlebnispädagogik</title>
+      <link>http://localhost:1313/tags/erlebnisp%C3%A4dagogik/</link>
+      <pubDate>Wed, 29 May 2013 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/erlebnisp%C3%A4dagogik/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Jugendliche</title>
+      <link>http://localhost:1313/tags/jugendliche/</link>
+      <pubDate>Wed, 29 May 2013 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/jugendliche/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Freemium</title>
+      <link>http://localhost:1313/tags/freemium/</link>
+      <pubDate>Thu, 07 Feb 2013 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/freemium/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>MOOC</title>
+      <link>http://localhost:1313/tags/mooc/</link>
+      <pubDate>Thu, 07 Feb 2013 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/tags/mooc/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

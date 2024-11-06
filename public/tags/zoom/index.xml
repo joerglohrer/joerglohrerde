@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Zoom on Jörg Lohrer</title>
+    <link>http://localhost:1313/tags/zoom/</link>
+    <description>Recent content in Zoom on Jörg Lohrer</description>
+    <generator>Hugo</generator>
+    <language>de</language>
+    <managingEditor>user@example.com (Hugo Author)</managingEditor>
+    <webMaster>user@example.com (Hugo Author)</webMaster>
+    <lastBuildDate>Sat, 19 Mar 2022 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/zoom/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Auf Google Cloud Platform mit Ubuntu Desktop via Chrome Remote Desktop OBS und Zoom fernsteuern</title>
+      <link>http://localhost:1313/2022/03/19/ob-virtualcam.html/</link>
+      <pubDate>Sat, 19 Mar 2022 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
+      <guid>http://localhost:1313/2022/03/19/ob-virtualcam.html/</guid>
+      <description>&lt;h1 id=&#34;auf-google-cloud-platform-mit-ubuntu-desktop-via-chrome-remote-desktop-obs-und-zoom-fernsteuern&#34;&gt;Auf Google Cloud Platform mit Ubuntu Desktop via Chrome Remote Desktop OBS und Zoom fernsteuern&lt;/h1&gt;&#xA;&lt;h2 id=&#34;instanz-erstellen-auf-httpsconsolecloudgooglecomhttpsconsolecloudgooglecom&#34;&gt;Instanz erstellen auf &lt;a href=&#34;https://console.cloud.google.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://console.cloud.google.com/&lt;/a&gt;&#xA;&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Name, Region und Zone auswählen&lt;/li&gt;&#xA;&lt;li&gt;E2 4 vCPU, 16GB Arbeitsspeicher - 0,17$ pro Stunde&lt;/li&gt;&#xA;&lt;li&gt;&lt;/li&gt;&#xA;&lt;li&gt;Betriebssystem Ubuntu 20.04 LTS&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;ubuntu-desktop-auf-google-cloud-plattform-installieren&#34;&gt;Ubuntu Desktop auf Google Cloud Plattform installieren&lt;/h2&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://ubuntu.com/blog/launch-ubuntu-desktop-on-google-cloud&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://ubuntu.com/blog/launch-ubuntu-desktop-on-google-cloud&lt;/a&gt;&#xA;&#xA;&lt;a href=&#34;https://cloud.google.com/architecture/chrome-desktop-remote-on-compute-engine#gnome&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://cloud.google.com/architecture/chrome-desktop-remote-on-compute-engine#gnome&lt;/a&gt;&#xA;&#xA;&lt;a href=&#34;https://bytexd.com/install-chrome-remote-desktop-headless/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://bytexd.com/install-chrome-remote-desktop-headless/&lt;/a&gt;&#xA;&#xA;&lt;a href=&#34;https://cloud.google.com/architecture/chrome-desktop-remote-on-compute-engine#automating_the_installation_process&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://cloud.google.com/architecture/chrome-desktop-remote-on-compute-engine#automating_the_installation_process&lt;/a&gt;&#xA;&lt;/p&gt;&#xA;&lt;h3 id=&#34;via-sshterminal-update-tasksel-und-google-remote-desktop-installieren&#34;&gt;Via SSH/Terminal Update, Tasksel und Google Remote Desktop installieren:&lt;/h3&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-shell=&#34; data-lang=&#34;shell=&#34;&gt;sudo apt update&#xA;sudo apt install --assume-yes wget tasksel&#xA;wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb&#xA;sudo apt-get install --assume-yes ./chrome-remote-desktop_current_amd64.deb&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;cinnamon-desktop-installieren&#34;&gt;Cinnamon Desktop installieren&lt;/h3&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-shell=&#34; data-lang=&#34;shell=&#34;&gt;sudo DEBIAN_FRONTEND=noninteractive \&#xA;    apt install --assume-yes cinnamon-core desktop-base dbus-x11&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;sudo bash -c &#39;echo &amp;quot;exec /etc/X11/Xsession /usr/bin/cinnamon-session-cinnamon2d&amp;quot; &amp;gt; /etc/chrome-remote-desktop-session&#39;&lt;/code&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

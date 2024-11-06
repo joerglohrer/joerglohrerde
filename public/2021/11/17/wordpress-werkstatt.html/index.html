@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <title>WordPress Werkstatt PHP :: Jörg Lohrer - Example site for hugo-theme-tailwind</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="WordPress Werkstatt PHP Zunächst wird auf relilab.org das kostenfreie Plugin ACF - Advanced Custom Fields installiert und aktiviert. Dies ermöglicht weitere individuelle Beitragsfelder für die Beiträge. Nun kann manuell aktiviert oder eine Feldgruppe importiert werden - hier mittels dieser JSON-Datei , die das abkürzt: mit dem Ergebnis, dass unter allen WordPress-Beiträgen jetzt zwei Terminfelder erscheinen, die ausgefüllt werden können: Zudem gibt es neu eine Kategorie &ldquo;Termine&rdquo;, die aktiviert werden kann mit Unterkategorien, die später Übersichtsseiten ermöglichen: Jetzt wird das Plugin relilab-termine installiert und aktiviert Nun kann mittels Shortcode [relilab_termine] eine Terminübersicht als WordPress-Block erzeugt werden: "
+/>
+<meta
+  name="keywords"
+  content="hugo, tailwind, tailwindcss, hugo theme, hugo theme tailwind"
+/>
+<meta name="robots" content="noodp" /><link rel="manifest" href="/manifest.json" /><meta property="og:url" content="http://localhost:1313/2021/11/17/wordpress-werkstatt.html/">
+  <meta property="og:site_name" content="Jörg Lohrer">
+  <meta property="og:title" content="WordPress Werkstatt PHP">
+  <meta property="og:description" content="Advanced Custom Fields und Formulareingaben">
+  <meta property="og:locale" content="de">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2021-11-17T00:00:00+00:00">
+    <meta property="article:modified_time" content="2021-11-17T00:00:00+00:00">
+    <meta property="article:tag" content="ACF">
+    <meta property="article:tag" content="WordPress">
+    <meta property="article:tag" content="Formulare">
+    <meta property="article:tag" content="JSON">
+    <meta property="article:tag" content="Plugin">
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="WordPress Werkstatt PHP">
+  <meta name="twitter:description" content="Advanced Custom Fields und Formulareingaben">
+
+
+<link rel="canonical" href="http://localhost:1313/2021/11/17/wordpress-werkstatt.html/" />
+
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="stylesheet" href="/css/index.f2b5b9c8e4e9b03048601ca9eedc29df44c3a73343f4538f41785e16f13c341a.css">
+
+
+
+
+
+
+
+
+
+  
+  
+
+</head>
+<body class="flex flex-col min-h-screen w-full bg-slate-50 dark:bg-gray-800">
+    
+<div class="fixed right-0 top-0 z-50 flex items-center justify-center bg-gray-200 p-2 text-sm uppercase text-black sm:bg-red-200 md:bg-yellow-200 lg:bg-green-200 xl:bg-blue-200 2xl:bg-pink-200">
+  <span class="block sm:hidden">all</span>
+  <span class="hidden sm:block md:hidden">sm</span>
+  <span class="hidden md:block lg:hidden">md</span>
+  <span class="hidden lg:block xl:hidden">lg</span>
+  <span class="hidden xl:block 2xl:hidden">xl</span>
+  <span class="hidden 2xl:block">2xl</span>
+</div>
+
+  <header class="flex flex-none justify-center z-10">
+    <div class="flex flex-row gap justify-between w-full max-w-4xl lg:max-w-5xl h-12 mt-3">
+  <div class="flex-none ml-2 md:ml-0">
+    <a href="/" class="">
+      <img class="h-12 w-12 rounded-full object-cover bg-gray-100" src="/joerg-profil-2024.webp" alt="logo">
+    </a>
+  </div>
+  <div class="flex-1"></div>
+  <div class="flex-none">
+    
+
+
+
+<nav class="h-full static">
+  <button id="navbar-menu-toggle" type="button" class="inline-flex items-center p-2 text-sm text-slate-800 dark:text-slate-200 rounded-lg md:hidden" aria-controls="navbar-menu" aria-expanded="false">
+    <span class="sr-only">Hauptmenü öffnen</span>
+    <i class="w-8 h-8">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 6l16 0" />
+  <path d="M4 12l16 0" />
+  <path d="M4 18l16 0" />
+</svg>
+
+    </i>
+  </button>
+  <div class="absolute md:static top-16 left-0 right-0 z-50 hidden w-full md:block md:w-auto" id="navbar-menu">
+    <ul class="flex flex-col mx-2 md:mx-0 md:flex-row md:border-0 rounded-sm md:rounded-full px-3 text-base font-medium text-slate-800 dark:text-slate-200 shadow-lg bg-white dark:bg-gray-600 shadow-slate-800/5 dark:shadow-slate-200/5 ring-1 ring-slate-900/5 dark:ring-slate-100/5">
+    
+        <li id="" class="">
+          <a class="block px-3 py-3 hover:text-emerald-600"
+            href="/" title="Home">Home</a>
+        </li>
+      
+    
+        <li id="" class="">
+          <a class="block px-3 py-3 hover:text-emerald-600"
+            href="/tags/" title="Schlagworte">Schlagworte</a>
+        </li>
+      
+    
+        <li id="" class="">
+          <a class="block px-3 py-3 hover:text-emerald-600"
+            href="/impressum/" title="Impressum">Impressum</a>
+        </li>
+      
+    
+        <li id="" class="">
+          <a class="block px-3 py-3 hover:text-emerald-600"
+            href="https://reliverse.social/@joerglohrer" title="Mastodon">Mastodon</a>
+        </li>
+      
+    
+    </ul>
+  </div>
+</nav>
+
+
+  </div>
+  
+  <div class="flex-none mx-1"></div>
+  
+  <div class="flex-none md:hidden">
+    <a href=/search/ class="inline-flex items-center p-2 text-sm text-slate-800 dark:text-slate-200 rounded-lg" aria-controls="navbar-menu" aria-expanded="false">
+      <span class="sr-only">Suche</span>
+      <i class="w-8 h-8">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+    <path d="M21 21l-6 -6" />
+</svg>
+
+      </i>
+    </a>
+  </div>
+  <div class="darkmode-toggle flex flex-none mr-2 md:mr-0">
+    <label for="darkmode-toggle" class="flex items-center px-3 cursor-pointer rounded-full bg-gray-100 dark:bg-gray-600" title="Dark Mode umschalten">
+      <input name="darkmode-toggle" id="darkmode-toggle" type="checkbox" class="sr-only peer" aria-label="Dark Mode umschalten">
+      <div class="group flex flex-row gap-1 justify-center h-8 px-1 rounded-full bg-white dark:bg-gray-700">
+        <i class="h-6 w-6 flex-none rounded-full bg-yellow-400 place-self-center peer-checked:group-[]:invisible">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brightness-down" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+   <path d="M12 5l0 .01"></path>
+   <path d="M17 7l0 .01"></path>
+   <path d="M19 12l0 .01"></path>
+   <path d="M17 17l0 .01"></path>
+   <path d="M12 19l0 .01"></path>
+   <path d="M7 17l0 .01"></path>
+   <path d="M5 12l0 .01"></path>
+   <path d="M7 7l0 .01"></path>
+</svg>
+
+        </i>
+        <i class="h-6 w-6 flex-none rounded-full place-self-center invisible peer-checked:group-[]:visible">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon-stars" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path>
+   <path d="M17 4a2 2 0 0 0 2 2a2 2 0 0 0 -2 2a2 2 0 0 0 -2 -2a2 2 0 0 0 2 -2"></path>
+   <path d="M19 11h2m-1 -1v2"></path>
+</svg>
+
+        </i>
+      </div>
+    </label>
+  </div>
+</div>
+
+  </header>
+  <main class="flex flex-auto justify-center">
+    
+<div class="w-full max-w-4xl lg:max-w-5xl">
+  <div class="flex flex-col mt-6 mx-2 md:mx-0 rounded-lg overflow-hidden shadow-md bg-white dark:bg-gray-700">
+    <div>
+      <a href="/2021/11/17/wordpress-werkstatt.html/">
+        <picture>
+    <source type="image/webp" srcset="/2021/11/17/wordpress-werkstatt.html/04-termine-neu_hu8944884994434855314.webp 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2021/11/17/wordpress-werkstatt.html/04-termine-neu_hu7610248239459608004.jpg 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="w-full object-cover h-36 md:h-48 xl:h-60" src="/2021/11/17/wordpress-werkstatt.html/04-termine-neu_hu8045952101686690525.jpg" width="1350" height="590" alt="WordPress Werkstatt PHP" title="WordPress Werkstatt PHP" loading="lazy" />
+  </picture>
+      </a>
+    </div>
+    <div class="flex flex-col gap-y-3 p-6">
+      <h1 class="text-4xl font-semibold text-slate-800 dark:text-slate-100">
+        <a href="/2021/11/17/wordpress-werkstatt.html/">WordPress Werkstatt PHP</a>
+      </h1>
+
+      
+      <h2 class="my-4 text-large text-slate-600 dark:text-slate-300">
+        Advanced Custom Fields und Formulareingaben
+      </h2>
+      
+      
+  <ul class="flex flex-row flex-wrap text-slate-500 dark:text-slate-300">
+    
+    
+      
+      <li>
+        <a href="/tags/acf/"
+          class="flex flex-row text-sm mr-2 py-1">
+          <i class="h-5 w-5 flex-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M5 9l14 0"></path>
+   <path d="M5 15l14 0"></path>
+   <path d="M11 4l-4 16"></path>
+   <path d="M17 4l-4 16"></path>
+</svg>
+
+          </i>
+          <span class="ml-0">ACF</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags/wordpress/"
+          class="flex flex-row text-sm mr-2 py-1">
+          <i class="h-5 w-5 flex-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M5 9l14 0"></path>
+   <path d="M5 15l14 0"></path>
+   <path d="M11 4l-4 16"></path>
+   <path d="M17 4l-4 16"></path>
+</svg>
+
+          </i>
+          <span class="ml-0">WordPress</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags/formulare/"
+          class="flex flex-row text-sm mr-2 py-1">
+          <i class="h-5 w-5 flex-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M5 9l14 0"></path>
+   <path d="M5 15l14 0"></path>
+   <path d="M11 4l-4 16"></path>
+   <path d="M17 4l-4 16"></path>
+</svg>
+
+          </i>
+          <span class="ml-0">Formulare</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags/json/"
+          class="flex flex-row text-sm mr-2 py-1">
+          <i class="h-5 w-5 flex-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M5 9l14 0"></path>
+   <path d="M5 15l14 0"></path>
+   <path d="M11 4l-4 16"></path>
+   <path d="M17 4l-4 16"></path>
+</svg>
+
+          </i>
+          <span class="ml-0">JSON</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags/plugin/"
+          class="flex flex-row text-sm mr-2 py-1">
+          <i class="h-5 w-5 flex-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M5 9l14 0"></path>
+   <path d="M5 15l14 0"></path>
+   <path d="M11 4l-4 16"></path>
+   <path d="M17 4l-4 16"></path>
+</svg>
+
+          </i>
+          <span class="ml-0">Plugin</span>
+        </a>
+      </li>
+      
+    
+  </ul>
+
+
+
+      <div class="flex flex-col gap-y-1 md:flex-row md:gap-y-0 md:gap-x-4 text-slate-500 dark:text-slate-300">
+  
+  
+  <div class="flex flex-row text-base gap-x-1">
+    <i class="h-6 w-6 flex-none">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"></path>
+   <path d="M16 3v4"></path>
+   <path d="M8 3v4"></path>
+   <path d="M4 11h16"></path>
+   <path d="M11 15h1"></path>
+   <path d="M12 15v3"></path>
+</svg>
+
+    </i>
+    <time datetime="2021-11-17T00:00:00&#43;00:00">
+      2021-11-17
+    </time>
+  </div>
+
+  <div class="flex flex-row text-base gap-x-1">
+    <i class="h-6 w-6 flex-none">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hourglass-high" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M6.5 7h11"></path>
+   <path d="M6 20v-2a6 6 0 1 1 12 0v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1z"></path>
+   <path d="M6 4v2a6 6 0 1 0 12 0v-2a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1z"></path>
+</svg>
+
+    </i>
+    <span>
+      Lesezeit 2 Minuten
+    </span>
+  </div>
+</div>
+
+      
+
+      
+        
+        <section class="prose prose-slate dark:prose-invert w-full max-w-4xl lg:max-w-5xl mt-6">
+          <h2>Inhaltsverzeichnis</h2>
+          <aside><nav id="TableOfContents">
+  <ul>
+    <li><a href="#json">JSON</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#php">PHP</a>
+      <ul>
+        <li><a href="#software">Software</a></li>
+        <li><a href="#plugin">Plugin</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></aside>
+        </section>
+        
+      
+
+      <article class="mt-6 w-full max-w-4xl lg:max-w-5xl prose prose-slate dark:prose-invert prose-quoteless post-content">
+        <h1 id="wordpress-werkstatt-php">WordPress Werkstatt PHP</h1>
+<p>Zunächst wird auf relilab.org das kostenfreie <a href="https://de.wordpress.org/plugins/advanced-custom-fields/" target="_blank" rel="noopener">Plugin ACF - Advanced Custom Fields</a>
+ installiert und aktiviert.
+Dies ermöglicht weitere individuelle Beitragsfelder für die Beiträge.
+Nun kann manuell aktiviert oder eine Feldgruppe importiert werden - hier mittels <a href="#ACF-JSON-Export">dieser JSON-Datei</a>
+, die das abkürzt:
+<div class="not-prose">
+<figure>
+    <img src="h01-json-import.png"
+      alt="" 
+      loading="lazy"
+    >
+  </figure></div>
+
+mit dem Ergebnis, dass unter allen WordPress-Beiträgen jetzt zwei Terminfelder erscheinen, die ausgefüllt werden können:
+<div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2021/11/17/wordpress-werkstatt.html/02-terminfelder_hu10638503955594110412.webp 320w, /2021/11/17/wordpress-werkstatt.html/02-terminfelder_hu11641354830712878815.webp 640w, /2021/11/17/wordpress-werkstatt.html/02-terminfelder_hu6270597460248840189.webp 960w, /2021/11/17/wordpress-werkstatt.html/02-terminfelder_hu13710124356862619841.webp 1280w, /2021/11/17/wordpress-werkstatt.html/02-terminfelder_hu2344405227287193927.webp 1600w, /2021/11/17/wordpress-werkstatt.html/02-terminfelder_hu9906208054346259959.webp 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2021/11/17/wordpress-werkstatt.html/02-terminfelder_hu15892755219989258069.jpg 320w, /2021/11/17/wordpress-werkstatt.html/02-terminfelder_hu13260414893189478009.jpg 640w, /2021/11/17/wordpress-werkstatt.html/02-terminfelder_hu7070739399017478355.jpg 960w, /2021/11/17/wordpress-werkstatt.html/02-terminfelder_hu1227262159146907970.jpg 1280w, /2021/11/17/wordpress-werkstatt.html/02-terminfelder_hu10680859010074027683.jpg 1600w, /2021/11/17/wordpress-werkstatt.html/02-terminfelder_hu16535648422837812005.jpg 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2021/11/17/wordpress-werkstatt.html/02-terminfelder_hu13260414893189478009.jpg" width="2550" height="1080" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+
+Zudem gibt es neu eine Kategorie &ldquo;Termine&rdquo;, die aktiviert werden kann mit Unterkategorien, die später Übersichtsseiten ermöglichen:
+<div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2021/11/17/wordpress-werkstatt.html/03-kategorien_hu808294735421259194.webp 320w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2021/11/17/wordpress-werkstatt.html/03-kategorien_hu15796485438129464958.jpg 320w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2021/11/17/wordpress-werkstatt.html/03-kategorien_hu1630272154010610305.jpg" width="634" height="532" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+
+Jetzt wird das <a href="https://github.com/rpi-virtuell/relilab-termine" target="_blank" rel="noopener">Plugin relilab-termine</a>
+ installiert und aktiviert
+Nun kann mittels Shortcode <code>[relilab_termine]</code> eine Terminübersicht als WordPress-Block erzeugt werden:
+<div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2021/11/17/wordpress-werkstatt.html/04-termine-neu_hu8030273912502346087.webp 320w, /2021/11/17/wordpress-werkstatt.html/04-termine-neu_hu12287844731339598663.webp 640w, /2021/11/17/wordpress-werkstatt.html/04-termine-neu_hu8944884994434855314.webp 960w, /2021/11/17/wordpress-werkstatt.html/04-termine-neu_hu17252675307486064342.webp 1280w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2021/11/17/wordpress-werkstatt.html/04-termine-neu_hu6159681432606967888.jpg 320w, /2021/11/17/wordpress-werkstatt.html/04-termine-neu_hu8045952101686690525.jpg 640w, /2021/11/17/wordpress-werkstatt.html/04-termine-neu_hu7610248239459608004.jpg 960w, /2021/11/17/wordpress-werkstatt.html/04-termine-neu_hu2555311404445053940.jpg 1280w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2021/11/17/wordpress-werkstatt.html/04-termine-neu_hu8045952101686690525.jpg" width="1350" height="590" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+</p>
+<h2 id="json">JSON</h2>
+<h4 id="acf-json-export">ACF-JSON-Export:</h4>
+<pre tabindex="0"><code class="language-json=" data-lang="json=">[
+    {
+        &#34;key&#34;: &#34;group_6193936e4f12c&#34;,
+        &#34;title&#34;: &#34;Termin&#34;,
+        &#34;fields&#34;: [
+            {
+                &#34;key&#34;: &#34;field_619393f8e62e0&#34;,
+                &#34;label&#34;: &#34;Startet am&#34;,
+                &#34;name&#34;: &#34;relilab_startdate&#34;,
+                &#34;type&#34;: &#34;date_time_picker&#34;,
+                &#34;instructions&#34;: &#34;&#34;,
+                &#34;required&#34;: 0,
+                &#34;conditional_logic&#34;: 0,
+                &#34;wrapper&#34;: {
+                    &#34;width&#34;: &#34;&#34;,
+                    &#34;class&#34;: &#34;&#34;,
+                    &#34;id&#34;: &#34;&#34;
+                },
+                &#34;display_format&#34;: &#34;d.m.Y H:i&#34;,
+                &#34;return_format&#34;: &#34;Y-m-d H:i&#34;,
+                &#34;first_day&#34;: 1
+            },
+            {
+                &#34;key&#34;: &#34;field_619394a3e62e1&#34;,
+                &#34;label&#34;: &#34;Endet am&#34;,
+                &#34;name&#34;: &#34;relilab_enddate&#34;,
+                &#34;type&#34;: &#34;date_time_picker&#34;,
+                &#34;instructions&#34;: &#34;&#34;,
+                &#34;required&#34;: 0,
+                &#34;conditional_logic&#34;: 0,
+                &#34;wrapper&#34;: {
+                    &#34;width&#34;: &#34;&#34;,
+                    &#34;class&#34;: &#34;&#34;,
+                    &#34;id&#34;: &#34;&#34;
+                },
+                &#34;display_format&#34;: &#34;d.m.Y H:i&#34;,
+                &#34;return_format&#34;: &#34;Y-m-d H:i&#34;,
+                &#34;first_day&#34;: 1
+            }
+        ],
+        &#34;location&#34;: [
+            [
+                {
+                    &#34;param&#34;: &#34;post_type&#34;,
+                    &#34;operator&#34;: &#34;==&#34;,
+                    &#34;value&#34;: &#34;post&#34;
+                }
+            ]
+        ],
+        &#34;menu_order&#34;: 0,
+        &#34;position&#34;: &#34;normal&#34;,
+        &#34;style&#34;: &#34;default&#34;,
+        &#34;label_placement&#34;: &#34;left&#34;,
+        &#34;instruction_placement&#34;: &#34;label&#34;,
+        &#34;hide_on_screen&#34;: &#34;&#34;,
+        &#34;active&#34;: true,
+        &#34;description&#34;: &#34;&#34;,
+        &#34;show_in_rest&#34;: 0,
+        &#34;acfe_display_title&#34;: &#34;&#34;,
+        &#34;acfe_autosync&#34;: &#34;&#34;,
+        &#34;acfe_form&#34;: 0,
+        &#34;acfe_meta&#34;: &#34;&#34;,
+        &#34;acfe_note&#34;: &#34;&#34;
+    }
+]
+</code></pre><h2 id="php">PHP</h2>
+<h3 id="software">Software</h3>
+<h4 id="php-storm">PHP-Storm</h4>
+<p><a href="https://www.jetbrains.com/de-de/phpstorm/" target="_blank" rel="noopener">https://www.jetbrains.com/de-de/phpstorm/</a>
+</p>
+<h5 id="shortcode-zum-sprechen-bringen">Shortcode zum Sprechen bringen</h5>
+<p><a href="https://developer.wordpress.org/reference/functions/add_shortcode/" target="_blank" rel="noopener">https://developer.wordpress.org/reference/functions/add_shortcode/</a>
+
+In PhpStorm
+<div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2021/11/17/wordpress-werkstatt.html/05-php-storm_hu12982377581929914418.webp 320w, /2021/11/17/wordpress-werkstatt.html/05-php-storm_hu1807805532182105225.webp 640w, /2021/11/17/wordpress-werkstatt.html/05-php-storm_hu12851634901879346989.webp 960w, /2021/11/17/wordpress-werkstatt.html/05-php-storm_hu4955437441532289849.webp 1280w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2021/11/17/wordpress-werkstatt.html/05-php-storm_hu4827462863840096259.jpg 320w, /2021/11/17/wordpress-werkstatt.html/05-php-storm_hu7249465117598012049.jpg 640w, /2021/11/17/wordpress-werkstatt.html/05-php-storm_hu5578401266170252106.jpg 960w, /2021/11/17/wordpress-werkstatt.html/05-php-storm_hu2428058475642649309.jpg 1280w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2021/11/17/wordpress-werkstatt.html/05-php-storm_hu7249465117598012049.jpg" width="1308" height="434" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+
+<code>add_shortcode( string $tag, callable $callback )</code></p>
+<p>alle Termine listen, die
+<a href="https://www.advancedcustomfields.com/resources/orde-posts-by-custom-fields/" target="_blank" rel="noopener">https://www.advancedcustomfields.com/resources/orde-posts-by-custom-fields/</a>
+</p>
+<p><div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2021/11/17/wordpress-werkstatt.html/06-termine-listen_hu15910472035871987496.webp 320w, /2021/11/17/wordpress-werkstatt.html/06-termine-listen_hu6320772522747024829.webp 640w, /2021/11/17/wordpress-werkstatt.html/06-termine-listen_hu8899028715853228845.webp 960w, /2021/11/17/wordpress-werkstatt.html/06-termine-listen_hu8541953622335408994.webp 1280w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2021/11/17/wordpress-werkstatt.html/06-termine-listen_hu14094622832384974442.jpg 320w, /2021/11/17/wordpress-werkstatt.html/06-termine-listen_hu346329118464991948.jpg 640w, /2021/11/17/wordpress-werkstatt.html/06-termine-listen_hu5153037850317064482.jpg 960w, /2021/11/17/wordpress-werkstatt.html/06-termine-listen_hu15751608568345164690.jpg 1280w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2021/11/17/wordpress-werkstatt.html/06-termine-listen_hu346329118464991948.jpg" width="1308" height="566" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+</p>
+<p>PHP-Storm nutzt als External Library dann WordPress
+<div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2021/11/17/wordpress-werkstatt.html/07-external-library_hu5672708490841325158.webp 320w, /2021/11/17/wordpress-werkstatt.html/07-external-library_hu3122361097728923937.webp 640w, /2021/11/17/wordpress-werkstatt.html/07-external-library_hu1038200181717264693.webp 960w, /2021/11/17/wordpress-werkstatt.html/07-external-library_hu4432101327127392969.webp 1280w, /2021/11/17/wordpress-werkstatt.html/07-external-library_hu15717209123459359926.webp 1600w, /2021/11/17/wordpress-werkstatt.html/07-external-library_hu1607681631105581445.webp 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2021/11/17/wordpress-werkstatt.html/07-external-library_hu18072628208523803056.jpg 320w, /2021/11/17/wordpress-werkstatt.html/07-external-library_hu12358302643887400072.jpg 640w, /2021/11/17/wordpress-werkstatt.html/07-external-library_hu52637165153801375.jpg 960w, /2021/11/17/wordpress-werkstatt.html/07-external-library_hu11558250619649644197.jpg 1280w, /2021/11/17/wordpress-werkstatt.html/07-external-library_hu15446451875138159557.jpg 1600w, /2021/11/17/wordpress-werkstatt.html/07-external-library_hu13328731026979326442.jpg 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2021/11/17/wordpress-werkstatt.html/07-external-library_hu12358302643887400072.jpg" width="2092" height="952" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+</p>
+<h3 id="plugin">Plugin</h3>
+<p>Unsere Funktion:</p>
+<pre tabindex="0"><code>/**
+*Plugin Name: relilab Termine
+*/
+add_shortcode(&#39;termine&#39;,&#39;termineAusgeben&#39;);
+
+function   termineAusgeben( $atts ) {
+
+$posts = get_posts(array(
+    &#39;post_type&#39;			=&gt; &#39;post&#39;,
+    &#39;posts_per_page&#39;	=&gt; -1,
+    &#39;category&#39;          =&gt; &#39;termine&#39;,
+    &#39;meta_key&#39;			=&gt; &#39;relilab_startdate&#39;,
+    &#39;orderby&#39;			=&gt; &#39;meta_value&#39;,
+    &#39;order&#39;				=&gt; &#39;DESC&#39;
+));
+
+
+// ob_start();
+global $post;
+?&gt;
+&lt;ul&gt;
+&lt;?php
+foreach ($posts as $post) {
+setup_postdata( $post )
+?&gt;
+&lt;li&gt;
+&lt;a href=&#34;&lt;?php the_permalink(); ?&gt;&#34;&gt;&lt;?php the_title(); ?&gt; (date: &lt;?php the_field(&#39;relilab_startdate&#39;); ?&gt;)&lt;/a&gt;
+&lt;/li&gt;
+&lt;?php
+}
+?&gt;
+
+    &lt;/ul&gt;
+&lt;?php
+wp_reset_postdata();
+
+
+//  return ob_get_clean();
+}
+</code></pre>
+      </article>
+
+      
+
+
+
+
+    </div>
+  </div>
+</div>
+
+  </main>
+  <footer class="flex flex-none justify-center">
+    <section class="flex flex-col md:flex-row mx-2 md:mx-0 gap-2 md:gap-0 justify-between w-full max-w-4xl lg:max-w-5xl py-6 text-slate-500 dark:text-slate-300">
+  <div class="flex flex-row">
+    
+  
+  
+    <a href="https://reliverse.social/@joerglohrer" target="_blank" title="Mastodon" class="flex flex-row mr-2">
+      <span class="hidden">Mastodon</span>
+      <i class="h-6 w-6 flex-none"> <svg  xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-mastodon"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18.648 15.254c-1.816 1.763 -6.648 1.626 -6.648 1.626a18.262 18.262 0 0 1 -3.288 -.256c1.127 1.985 4.12 2.81 8.982 2.475c-1.945 2.013 -13.598 5.257 -13.668 -7.636l-.026 -1.154c0 -3.036 .023 -4.115 1.352 -5.633c1.671 -1.91 6.648 -1.666 6.648 -1.666s4.977 -.243 6.648 1.667c1.329 1.518 1.352 2.597 1.352 5.633s-.456 4.074 -1.352 4.944z" /><path d="M12 11.204v-2.926c0 -1.258 -.895 -2.278 -2 -2.278s-2 1.02 -2 2.278v4.722m4 -4.722c0 -1.258 .895 -2.278 2 -2.278s2 1.02 2 2.278v4.722" /></svg> </i>
+    </a>
+  
+  
+  
+    <a href="https://nostrrr.com/p/npub1mmful66pyasny86vdxtm0d2v9v572hjtmx0ufaa2t4m9hxartuxs4wu69w" target="_blank" title="nostr" class="flex flex-row mr-2">
+      <span class="hidden">nostr</span>
+      <i class="h-6 w-6 flex-none"> <?xml version="1.0" encoding="UTF-8"?>
+<svg id="_8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><defs><style>.cls-1{fill:none;}.cls-2{fill:#fff;}.cls-3{fill:#662482;}</style></defs><path class="cls-2" d="m231.16,159.49c0,20.71,0,31.07-3.53,42.22-4.43,12.17-14.02,21.76-26.19,26.19-11.15,3.53-21.5,3.53-42.22,3.53h-62.46c-20.71,0-31.06,0-42.21-3.53-12.17-4.43-21.76-14.02-26.19-26.19-3.53-11.15-3.53-21.5-3.53-42.22v-62.46c0-20.71,0-31.07,3.53-42.22,4.43-12.17,14.02-21.76,26.19-26.19,11.15-3.52,21.5-3.52,42.21-3.52h62.46c20.71,0,31.07,0,42.22,3.52,12.17,4.43,21.76,14.02,26.19,26.19,3.53,11.15,3.53,21.5,3.53,42.22v62.46Z"/><path class="cls-3" d="m210.81,116.2v83.23c0,3.13-2.54,5.67-5.67,5.67h-68.04c-3.13,0-5.67-2.54-5.67-5.67v-15.5c.31-19,2.32-37.2,6.54-45.48,2.53-4.98,6.7-7.69,11.49-9.14,9.05-2.72,24.93-.86,31.67-1.18,0,0,20.36.81,20.36-10.72,0-9.28-9.1-8.55-9.1-8.55-10.03.26-17.67-.42-22.62-2.37-8.29-3.26-8.57-9.24-8.6-11.24-.41-23.1-34.47-25.87-64.48-20.14-32.81,6.24.36,53.27.36,116.05v8.38c-.06,3.08-2.55,5.57-5.65,5.57h-33.69c-3.13,0-5.67-2.54-5.67-5.67V55.49c0-3.13,2.54-5.67,5.67-5.67h31.67c3.13,0,5.67,2.54,5.67,5.67,0,4.65,5.23,7.24,9.01,4.53,11.39-8.16,26.01-12.51,42.37-12.51,36.65,0,64.36,21.36,64.36,68.69Zm-60.84-16.89c0-6.7-5.43-12.13-12.13-12.13s-12.13,5.43-12.13,12.13,5.43,12.13,12.13,12.13,12.13-5.43,12.13-12.13Z"/><rect class="cls-1" /></svg> </i>
+    </a>
+  
+  
+  
+    <a href="https://bsky.app/profile/joerglohrer.bsky.social" target="_blank" title="Bluesky" class="flex flex-row mr-2">
+      <span class="hidden">Bluesky</span>
+      <i class="h-6 w-6 flex-none"> <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-bluesky"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6.335 5.144c-1.654 -1.199 -4.335 -2.127 -4.335 .826c0 .59 .35 4.953 .556 5.661c.713 2.463 3.13 2.75 5.444 2.369c-4.045 .665 -4.889 3.208 -2.667 5.41c1.03 1.018 1.913 1.59 2.667 1.59c2 0 3.134 -2.769 3.5 -3.5c.333 -.667 .5 -1.167 .5 -1.5c0 .333 .167 .833 .5 1.5c.366 .731 1.5 3.5 3.5 3.5c.754 0 1.637 -.571 2.667 -1.59c2.222 -2.203 1.378 -4.746 -2.667 -5.41c2.314 .38 4.73 .094 5.444 -2.369c.206 -.708 .556 -5.072 .556 -5.661c0 -2.953 -2.68 -2.025 -4.335 -.826c-2.293 1.662 -4.76 5.048 -5.665 6.856c-.905 -1.808 -3.372 -5.194 -5.665 -6.856z" /></svg> </i>
+    </a>
+  
+  
+  
+    <a href="https://www.instagram.com/joerglohrer" target="_blank" title="Instagram" class="flex flex-row mr-2">
+      <span class="hidden">Instagram</span>
+      <i class="h-6 w-6 flex-none"> <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-instagram" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M4 4m0 4a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z"></path>
+   <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+   <path d="M16.5 7.5l0 .01"></path>
+</svg>
+ </i>
+    </a>
+  
+  
+
+
+  </div>
+  <div class="grow"></div>
+  <div class="flex flex-row">
+    <i class="h-6 w-6 flex-none"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
+   <path d="M14 9.75a3.016 3.016 0 0 0 -4.163 .173a2.993 2.993 0 0 0 0 4.154a3.016 3.016 0 0 0 4.163 .173"></path>
+</svg>
+</i> 2023 - 2024 
+    
+  </div>
+  
+  <div class="flex flex-row">
+    <span class="ml-0 pl-0 md:ml-2 md:pl-2 border-l-0 md:border-l border-slate-300 dark:border-slate-400">
+      Powered by <a href="https://gohugo.io" target="_blank" rel="noopener" class="underline">Hugo</a> <span class="text-red-600">&hearts;</span> <a href="https://github.com/tomowang/hugo-theme-tailwind" target="_blank" rel="noopener" class="underline">Tailwind</a>
+    </span>
+  </div>
+  
+</section>
+
+  </footer>
+  <script src="/main.js"></script>
+
+<div class="hidden top-1 right-1" id="code-copy">
+  <i class="h-6 w-6 block">
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copy" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" />
+  <path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" />
+</svg>
+
+  </i>
+</div>
+<div class="hidden top-1 right-1" id="code-copy-done">
+  <i class="h-6 w-6 block">
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M5 12l5 5l10 -10" />
+</svg>
+
+  </i>
+</div><script src="/code-copy.js"></script>
+
+
+
+
+
+</body>
+</html>

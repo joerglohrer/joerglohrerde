@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <title>VR - Virtual Reality :: Jörg Lohrer - Example site for hugo-theme-tailwind</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="VR - Virtual Reality Ausschreibung Torsten &amp; Jörg Ausgehend vom Lernbaustein https://relilab.org/vr/ beschäftigen wir uns in diesem Workshop mit Immersion und praktischen Beispielen im Themenbereich VR/AR. Neben der Vermittlung von theoretischen Grundlagen besprechen wir die Einsatzmöglichkeit im Religionsunterricht am Beispiel einer Reihe zu Schöpfungsmythen. Darüber hinnaus bieten wir die Gelegenheit zu Erfahrungsaustausch, Diskussion und exemplarischen Erlebnismöglichkeiten in der virtuellen Realität.
+Theorie Immersion &amp; Präsenz https://www.immersivelearning.institute/ https://omnia360.de/blog/was-ist-immersion/ https://en.wikipedia.org/wiki/Immersive_learning https://www.sciencedirect.com/science/article/pii/S0360131519303276 "
+/>
+<meta
+  name="keywords"
+  content="hugo, tailwind, tailwindcss, hugo theme, hugo theme tailwind"
+/>
+<meta name="robots" content="noodp" /><link rel="manifest" href="/manifest.json" /><meta property="og:url" content="http://localhost:1313/2021/08/15/virtual-reality.html/">
+  <meta property="og:site_name" content="Jörg Lohrer">
+  <meta property="og:title" content="VR - Virtual Reality">
+  <meta property="og:description" content="Tutorials der Oculus Quest 2">
+  <meta property="og:locale" content="de">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2021-08-15T00:00:00+00:00">
+    <meta property="article:modified_time" content="2021-08-15T00:00:00+00:00">
+    <meta property="article:tag" content="Immersion">
+    <meta property="article:tag" content="Präsenz">
+    <meta property="article:tag" content="Virtuelle Realität">
+    <meta property="article:tag" content="Sidequest">
+    <meta property="article:tag" content="Oculus">
+    <meta property="article:tag" content="Meta">
+
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="VR - Virtual Reality">
+  <meta name="twitter:description" content="Tutorials der Oculus Quest 2">
+
+
+<link rel="canonical" href="http://localhost:1313/2021/08/15/virtual-reality.html/" />
+
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="stylesheet" href="/css/index.f2b5b9c8e4e9b03048601ca9eedc29df44c3a73343f4538f41785e16f13c341a.css">
+
+
+
+
+
+
+
+
+
+  
+  
+
+</head>
+<body class="flex flex-col min-h-screen w-full bg-slate-50 dark:bg-gray-800">
+    
+<div class="fixed right-0 top-0 z-50 flex items-center justify-center bg-gray-200 p-2 text-sm uppercase text-black sm:bg-red-200 md:bg-yellow-200 lg:bg-green-200 xl:bg-blue-200 2xl:bg-pink-200">
+  <span class="block sm:hidden">all</span>
+  <span class="hidden sm:block md:hidden">sm</span>
+  <span class="hidden md:block lg:hidden">md</span>
+  <span class="hidden lg:block xl:hidden">lg</span>
+  <span class="hidden xl:block 2xl:hidden">xl</span>
+  <span class="hidden 2xl:block">2xl</span>
+</div>
+
+  <header class="flex flex-none justify-center z-10">
+    <div class="flex flex-row gap justify-between w-full max-w-4xl lg:max-w-5xl h-12 mt-3">
+  <div class="flex-none ml-2 md:ml-0">
+    <a href="/" class="">
+      <img class="h-12 w-12 rounded-full object-cover bg-gray-100" src="/joerg-profil-2024.webp" alt="logo">
+    </a>
+  </div>
+  <div class="flex-1"></div>
+  <div class="flex-none">
+    
+
+
+
+<nav class="h-full static">
+  <button id="navbar-menu-toggle" type="button" class="inline-flex items-center p-2 text-sm text-slate-800 dark:text-slate-200 rounded-lg md:hidden" aria-controls="navbar-menu" aria-expanded="false">
+    <span class="sr-only">Hauptmenü öffnen</span>
+    <i class="w-8 h-8">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 6l16 0" />
+  <path d="M4 12l16 0" />
+  <path d="M4 18l16 0" />
+</svg>
+
+    </i>
+  </button>
+  <div class="absolute md:static top-16 left-0 right-0 z-50 hidden w-full md:block md:w-auto" id="navbar-menu">
+    <ul class="flex flex-col mx-2 md:mx-0 md:flex-row md:border-0 rounded-sm md:rounded-full px-3 text-base font-medium text-slate-800 dark:text-slate-200 shadow-lg bg-white dark:bg-gray-600 shadow-slate-800/5 dark:shadow-slate-200/5 ring-1 ring-slate-900/5 dark:ring-slate-100/5">
+    
+        <li id="" class="">
+          <a class="block px-3 py-3 hover:text-emerald-600"
+            href="/" title="Home">Home</a>
+        </li>
+      
+    
+        <li id="" class="">
+          <a class="block px-3 py-3 hover:text-emerald-600"
+            href="/tags/" title="Schlagworte">Schlagworte</a>
+        </li>
+      
+    
+        <li id="" class="">
+          <a class="block px-3 py-3 hover:text-emerald-600"
+            href="/impressum/" title="Impressum">Impressum</a>
+        </li>
+      
+    
+        <li id="" class="">
+          <a class="block px-3 py-3 hover:text-emerald-600"
+            href="https://reliverse.social/@joerglohrer" title="Mastodon">Mastodon</a>
+        </li>
+      
+    
+    </ul>
+  </div>
+</nav>
+
+
+  </div>
+  
+  <div class="flex-none mx-1"></div>
+  
+  <div class="flex-none md:hidden">
+    <a href=/search/ class="inline-flex items-center p-2 text-sm text-slate-800 dark:text-slate-200 rounded-lg" aria-controls="navbar-menu" aria-expanded="false">
+      <span class="sr-only">Suche</span>
+      <i class="w-8 h-8">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+    <path d="M21 21l-6 -6" />
+</svg>
+
+      </i>
+    </a>
+  </div>
+  <div class="darkmode-toggle flex flex-none mr-2 md:mr-0">
+    <label for="darkmode-toggle" class="flex items-center px-3 cursor-pointer rounded-full bg-gray-100 dark:bg-gray-600" title="Dark Mode umschalten">
+      <input name="darkmode-toggle" id="darkmode-toggle" type="checkbox" class="sr-only peer" aria-label="Dark Mode umschalten">
+      <div class="group flex flex-row gap-1 justify-center h-8 px-1 rounded-full bg-white dark:bg-gray-700">
+        <i class="h-6 w-6 flex-none rounded-full bg-yellow-400 place-self-center peer-checked:group-[]:invisible">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brightness-down" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+   <path d="M12 5l0 .01"></path>
+   <path d="M17 7l0 .01"></path>
+   <path d="M19 12l0 .01"></path>
+   <path d="M17 17l0 .01"></path>
+   <path d="M12 19l0 .01"></path>
+   <path d="M7 17l0 .01"></path>
+   <path d="M5 12l0 .01"></path>
+   <path d="M7 7l0 .01"></path>
+</svg>
+
+        </i>
+        <i class="h-6 w-6 flex-none rounded-full place-self-center invisible peer-checked:group-[]:visible">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon-stars" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path>
+   <path d="M17 4a2 2 0 0 0 2 2a2 2 0 0 0 -2 2a2 2 0 0 0 -2 -2a2 2 0 0 0 2 -2"></path>
+   <path d="M19 11h2m-1 -1v2"></path>
+</svg>
+
+        </i>
+      </div>
+    </label>
+  </div>
+</div>
+
+  </header>
+  <main class="flex flex-auto justify-center">
+    
+<div class="w-full max-w-4xl lg:max-w-5xl">
+  <div class="flex flex-col mt-6 mx-2 md:mx-0 rounded-lg overflow-hidden shadow-md bg-white dark:bg-gray-700">
+    <div>
+      <a href="/2021/08/15/virtual-reality.html/">
+        <picture>
+    <source type="image/webp" srcset="/2021/08/15/virtual-reality.html/04-aframe_hu4783136555098909517.webp 960w, /2021/08/15/virtual-reality.html/04-aframe_hu1405711134435320747.webp 1600w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2021/08/15/virtual-reality.html/04-aframe_hu5962186504347944682.jpg 960w, /2021/08/15/virtual-reality.html/04-aframe_hu4594121494656825586.jpg 1600w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="w-full object-cover h-36 md:h-48 xl:h-60" src="/2021/08/15/virtual-reality.html/04-aframe_hu5551583972311331355.jpg" width="2490" height="1344" alt="VR - Virtual Reality" title="VR - Virtual Reality" loading="lazy" />
+  </picture>
+      </a>
+    </div>
+    <div class="flex flex-col gap-y-3 p-6">
+      <h1 class="text-4xl font-semibold text-slate-800 dark:text-slate-100">
+        <a href="/2021/08/15/virtual-reality.html/">VR - Virtual Reality</a>
+      </h1>
+
+      
+      <h2 class="my-4 text-large text-slate-600 dark:text-slate-300">
+        Tutorials der Oculus Quest 2
+      </h2>
+      
+      
+  <ul class="flex flex-row flex-wrap text-slate-500 dark:text-slate-300">
+    
+    
+      
+      <li>
+        <a href="/tags/immersion/"
+          class="flex flex-row text-sm mr-2 py-1">
+          <i class="h-5 w-5 flex-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M5 9l14 0"></path>
+   <path d="M5 15l14 0"></path>
+   <path d="M11 4l-4 16"></path>
+   <path d="M17 4l-4 16"></path>
+</svg>
+
+          </i>
+          <span class="ml-0">Immersion</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags/pr%C3%A4senz/"
+          class="flex flex-row text-sm mr-2 py-1">
+          <i class="h-5 w-5 flex-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M5 9l14 0"></path>
+   <path d="M5 15l14 0"></path>
+   <path d="M11 4l-4 16"></path>
+   <path d="M17 4l-4 16"></path>
+</svg>
+
+          </i>
+          <span class="ml-0">Präsenz</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags/virtuelle-realit%C3%A4t/"
+          class="flex flex-row text-sm mr-2 py-1">
+          <i class="h-5 w-5 flex-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M5 9l14 0"></path>
+   <path d="M5 15l14 0"></path>
+   <path d="M11 4l-4 16"></path>
+   <path d="M17 4l-4 16"></path>
+</svg>
+
+          </i>
+          <span class="ml-0">Virtuelle Realität</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags/sidequest/"
+          class="flex flex-row text-sm mr-2 py-1">
+          <i class="h-5 w-5 flex-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M5 9l14 0"></path>
+   <path d="M5 15l14 0"></path>
+   <path d="M11 4l-4 16"></path>
+   <path d="M17 4l-4 16"></path>
+</svg>
+
+          </i>
+          <span class="ml-0">Sidequest</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags/oculus/"
+          class="flex flex-row text-sm mr-2 py-1">
+          <i class="h-5 w-5 flex-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M5 9l14 0"></path>
+   <path d="M5 15l14 0"></path>
+   <path d="M11 4l-4 16"></path>
+   <path d="M17 4l-4 16"></path>
+</svg>
+
+          </i>
+          <span class="ml-0">Oculus</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags/meta/"
+          class="flex flex-row text-sm mr-2 py-1">
+          <i class="h-5 w-5 flex-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M5 9l14 0"></path>
+   <path d="M5 15l14 0"></path>
+   <path d="M11 4l-4 16"></path>
+   <path d="M17 4l-4 16"></path>
+</svg>
+
+          </i>
+          <span class="ml-0">Meta</span>
+        </a>
+      </li>
+      
+    
+  </ul>
+
+
+
+      <div class="flex flex-col gap-y-1 md:flex-row md:gap-y-0 md:gap-x-4 text-slate-500 dark:text-slate-300">
+  
+  
+  <div class="flex flex-row text-base gap-x-1">
+    <i class="h-6 w-6 flex-none">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"></path>
+   <path d="M16 3v4"></path>
+   <path d="M8 3v4"></path>
+   <path d="M4 11h16"></path>
+   <path d="M11 15h1"></path>
+   <path d="M12 15v3"></path>
+</svg>
+
+    </i>
+    <time datetime="2021-08-15T00:00:00&#43;00:00">
+      2021-08-15
+    </time>
+  </div>
+
+  <div class="flex flex-row text-base gap-x-1">
+    <i class="h-6 w-6 flex-none">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hourglass-high" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M6.5 7h11"></path>
+   <path d="M6 20v-2a6 6 0 1 1 12 0v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1z"></path>
+   <path d="M6 4v2a6 6 0 1 0 12 0v-2a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1z"></path>
+</svg>
+
+    </i>
+    <span>
+      Lesezeit 4 Minuten
+    </span>
+  </div>
+</div>
+
+      
+
+      
+        
+        <section class="prose prose-slate dark:prose-invert w-full max-w-4xl lg:max-w-5xl mt-6">
+          <h2>Inhaltsverzeichnis</h2>
+          <aside><nav id="TableOfContents">
+  <ul>
+    <li><a href="#immersion--präsenz">Immersion &amp; Präsenz</a></li>
+    <li><a href="#forschung">Forschung</a></li>
+    <li><a href="#religionen">Religionen</a></li>
+    <li><a href="#empathie">Empathie</a></li>
+    <li><a href="#therapie">Therapie</a></li>
+    <li><a href="#theater">Theater</a></li>
+    <li><a href="#körperlichkeit">Körperlichkeit</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#padlets">Padlets</a></li>
+    <li><a href="#artikel">Artikel</a></li>
+    <li><a href="#unterricht">Unterricht</a></li>
+    <li><a href="#communities">Communities</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#im-oculus-store">im Oculus Store</a>
+      <ul>
+        <li><a href="#wander">Wander</a></li>
+      </ul>
+    </li>
+    <li><a href="#filme">Filme</a></li>
+    <li><a href="#in-sidequest">In Sidequest</a>
+      <ul>
+        <li><a href="#vanishing-grace">Vanishing Grace</a></li>
+        <li><a href="#cubism">Cubism</a></li>
+        <li><a href="#deism">Deism</a></li>
+        <li><a href="#liminal">Liminal</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#avatare">Avatare</a></li>
+    <li><a href="#erfahrungswelten">Erfahrungswelten:</a>
+      <ul>
+        <li><a href="#360-grad-filme">360 Grad Filme</a></li>
+        <li><a href="#anne-frank-vr">Anne Frank VR</a></li>
+        <li><a href="#within">Within</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#mozilla-hubs">Mozilla Hubs</a>
+      <ul>
+        <li><a href="#dokumentation-httpshubsmozillacomdocswelcomehtmlhttpshubsmozillacomdocswelcomehtml">Dokumentation [https://hubs.mozilla.com/docs/welcome.html(https://hubs.mozilla.com/docs/welcome.html)]</a></li>
+        <li><a href="#vorlagen">Vorlagen</a></li>
+        <li><a href="#avatare-erstellen">Avatare erstellen</a></li>
+        <li><a href="#mozilla-hubs---glb">Mozilla Hubs - GLB</a></li>
+        <li><a href="#tutorials-altspace--blender--unity">Tutorials Altspace / Blender / Unity</a></li>
+      </ul>
+    </li>
+    <li><a href="#sidequest">Sidequest</a></li>
+    <li><a href="#aframe">Aframe</a></li>
+    <li><a href="#threejs">ThreeJS</a></li>
+    <li><a href="#tour-creator-google"><del>Tour Creator Google</del></a></li>
+    <li><a href="#unity">Unity</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#pupillendistanz-pd-messen---ipd-interpupillary-distance">Pupillendistanz (PD) messen - IPD (interpupillary distance)</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#tutorials">Tutorials</a>
+      <ul>
+        <li><a href="#deutsch">Deutsch</a></li>
+        <li><a href="#englisch">Englisch</a></li>
+      </ul>
+    </li>
+    <li><a href="#streaming--playthrough--livecasting--obs">Streaming / Playthrough / Livecasting / OBS</a></li>
+    <li><a href="#file-transfer">File Transfer</a></li>
+    <li><a href="#brillenträger">Brillenträger</a></li>
+    <li><a href="#not-to-do">Not to do</a>
+      <ul>
+        <li><a href="#sonnenlicht-in-die-linse">Sonnenlicht in die Linse)</a></li>
+        <li><a href="#linsen-reinigen">Linsen reinigen</a></li>
+        <li><a href="#grips---handhalterungen">Grips - Handhalterungen</a></li>
+        <li><a href="#headstrap">Headstrap</a></li>
+        <li><a href="#lens-adaptor">Lens Adaptor</a></li>
+        <li><a href="#batterie">Batterie</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></aside>
+        </section>
+        
+      
+
+      <article class="mt-6 w-full max-w-4xl lg:max-w-5xl prose prose-slate dark:prose-invert prose-quoteless post-content">
+        <h1 id="vr---virtual-reality">VR - Virtual Reality</h1>
+<h1 id="ausschreibung-torsten--jörg">Ausschreibung Torsten &amp; Jörg</h1>
+<p>Ausgehend vom Lernbaustein <a href="https://relilab.org/vr/" target="_blank" rel="noopener">https://relilab.org/vr/</a>
+ beschäftigen wir uns in diesem Workshop mit Immersion und praktischen Beispielen im Themenbereich VR/AR. Neben der Vermittlung von theoretischen Grundlagen besprechen wir die Einsatzmöglichkeit im Religionsunterricht am Beispiel einer Reihe zu Schöpfungsmythen. Darüber hinnaus bieten wir die Gelegenheit zu Erfahrungsaustausch, Diskussion und exemplarischen Erlebnismöglichkeiten in der virtuellen Realität.</p>
+<h1 id="theorie">Theorie</h1>
+<h2 id="immersion--präsenz">Immersion &amp; Präsenz</h2>
+<p><a href="https://www.immersivelearning.institute/" target="_blank" rel="noopener">https://www.immersivelearning.institute/</a>
+
+<a href="https://omnia360.de/blog/was-ist-immersion/" target="_blank" rel="noopener">https://omnia360.de/blog/was-ist-immersion/</a>
+
+<a href="https://en.wikipedia.org/wiki/Immersive_learning" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Immersive_learning</a>
+
+<div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2021/08/15/virtual-reality.html/01-immersion-wikipedia_hu6985166281023899732.webp 320w, /2021/08/15/virtual-reality.html/01-immersion-wikipedia_hu5267597962372536755.webp 640w, /2021/08/15/virtual-reality.html/01-immersion-wikipedia_hu15727462901067534721.webp 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2021/08/15/virtual-reality.html/01-immersion-wikipedia_hu3453851812166741137.jpg 320w, /2021/08/15/virtual-reality.html/01-immersion-wikipedia_hu4992765515201999853.jpg 640w, /2021/08/15/virtual-reality.html/01-immersion-wikipedia_hu5882060956031213509.jpg 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2021/08/15/virtual-reality.html/01-immersion-wikipedia_hu4992765515201999853.jpg" width="1080" height="1656" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+
+<a href="https://www.sciencedirect.com/science/article/pii/S0360131519303276" target="_blank" rel="noopener">https://www.sciencedirect.com/science/article/pii/S0360131519303276</a>
+</p>
+<h2 id="forschung">Forschung</h2>
+<p>A Public Database of 360 Videos with Corresponding Ratings of Arousal and Valence
+<a href="https://vhil.stanford.edu/360-video-database/" target="_blank" rel="noopener">https://vhil.stanford.edu/360-video-database/</a>
+</p>
+<p><a href="https://www.researchgate.net/publication/335733502_Getting_your_game_on_Using_virtual_reality_to_improve_real_table_tennis_skills" target="_blank" rel="noopener">https://www.researchgate.net/publication/335733502_Getting_your_game_on_Using_virtual_reality_to_improve_real_table_tennis_skills</a>
+</p>
+<blockquote>
+<p>&ldquo;Diese Studie ergänzt die spärliche, aber wachsende Literatur, indem sie den Transfer von Fertigkeiten aus der realen Welt durch Virtual Reality in einer sportlichen Aufgabe demonstriert.&rdquo;</p>
+</blockquote>
+<p><a href="https://mixed.de/vr-und-philosophie-youtuber-zeigt-ungewoehnliche-vr-apps/amp/" target="_blank" rel="noopener">https://mixed.de/vr-und-philosophie-youtuber-zeigt-ungewoehnliche-vr-apps/amp/</a>
+
+Der norwegische Forscher Joakim Vindenes unterhält einen Blog, Podcast und Youtube-Kanal, in denen er außergewöhnliche VR-Apps vorstellt und sich mit der philosophischen Dimension des Mediums auseinandersetzt.</p>
+<p><a href="https://www.youtube.com/watch?v=VY5HaEhUm2Q" target="_blank" rel="noopener">https://www.youtube.com/watch?v=VY5HaEhUm2Q</a>
+
+A look at what it would be like to plug into an infinite VR experience machine.</p>
+<h2 id="religionen">Religionen</h2>
+<p><a href="https://www.matrise.no/2019/06/hinduism-and-virtual-reality/" target="_blank" rel="noopener">https://www.matrise.no/2019/06/hinduism-and-virtual-reality/</a>
+</p>
+<p><a href="https://www.matrise.no/2020/01/the-existential-problem-of-vr-existentialism/" target="_blank" rel="noopener">https://www.matrise.no/2020/01/the-existential-problem-of-vr-existentialism/</a>
+</p>
+<h2 id="empathie">Empathie</h2>
+<p><a href="https://www.youtube.com/watch?v=L6m79wqNiMA&amp;feature=youtu.be&amp;t=150" target="_blank" rel="noopener">https://www.youtube.com/watch?v=L6m79wqNiMA&amp;feature=youtu.be&amp;t=150</a>
+</p>
+<blockquote>
+<p>&ldquo;VR is a storytelling vehicle, but it&rsquo;s an empathy vehicle.&rdquo;</p>
+</blockquote>
+<h2 id="therapie">Therapie</h2>
+<p>Feeling Good during the COVID19 Epidemic
+Virtual Reality Can Help Us to Overcome the Psychological Burden of Coronavirus - <a href="https://www.covidfeelgood.com/home" target="_blank" rel="noopener">https://www.covidfeelgood.com/home</a>
+</p>
+<p>Die Verkörperung von Mitgefühl in der virtuellen Realität und ihre Auswirkungen auf Patienten mit Depressionen
+<a href="https://scitec-media.ch/2016/03/04/game-technologien-helfen-gegen-depressionen/" target="_blank" rel="noopener">https://scitec-media.ch/2016/03/04/game-technologien-helfen-gegen-depressionen/</a>
+
+<a href="https://www.youtube.com/watch?v=GwxJVCESc-E" target="_blank" rel="noopener">https://www.youtube.com/watch?v=GwxJVCESc-E</a>
+
+<a href="https://www.cambridge.org/core/journals/bjpsych-open/article/embodying-selfcompassion-within-virtual-reality-and-its-effects-on-patients-with-depression/1A1217651159D085145A7999CFFFF772" target="_blank" rel="noopener">https://www.cambridge.org/core/journals/bjpsych-open/article/embodying-selfcompassion-within-virtual-reality-and-its-effects-on-patients-with-depression/</a>
+</p>
+<h2 id="theater">Theater</h2>
+<p><a href="https://www.brendanabradley.com/futurestages" target="_blank" rel="noopener">https://www.brendanabradley.com/futurestages</a>
+</p>
+<h2 id="körperlichkeit">Körperlichkeit</h2>
+<p><a href="https://www.matrise.no/2018/07/virtual-embodiment/" target="_blank" rel="noopener">https://www.matrise.no/2018/07/virtual-embodiment/</a>
+
+<a href="https://www.matrise.no/2020/10/virtual-reality-depersonalization-derealization/" target="_blank" rel="noopener">https://www.matrise.no/2020/10/virtual-reality-depersonalization-derealization/</a>
+</p>
+<h1 id="praxis">Praxis</h1>
+<h2 id="padlets">Padlets</h2>
+<ul>
+<li>[https://padlet.com/petiteprof79/xrinfo(https://padlet.com/petiteprof79/xrinfo)] XR-Info - Stephanie Wössner | CC BY-SA @petiteprof79</li>
+<li><a href="https://padlet.com/strsa/ar" target="_blank" rel="noopener">https://padlet.com/strsa/ar</a>
+ Augmented Reality (AR) &amp; 360°, (VR) | Gestartet von Tobias Erles (@Mr_Airless) und Sabine Strauss (@Sallythechin) beim Barcamp #wildcampen18, erweitert bei #wildcampen19 zusammen mit Jan Hartwig (@hartifical)</li>
+</ul>
+<h2 id="artikel">Artikel</h2>
+<ul>
+<li><a href="https://www.bpb.de/lernen/digitale-bildung/werkstatt/298516/virtual-und-augmented-reality-im-klassenraum-ein-ueberblick-bildungsrelevanter-angebote" target="_blank" rel="noopener">Virtual und Augmented Reality im Klassenraum? Ein Überblick bildungsrelevanter Angebote - Steffen Jauch am 16.10.2029 bei bpb</a>
+</li>
+</ul>
+<h2 id="unterricht">Unterricht</h2>
+<ul>
+<li>Eine <a href="https://www.lmz-bw.de/medien-und-bildung/medienwissen/virtual-und-augmented-reality/virtual-reality-unterrichtsbeispiele/" target="_blank" rel="noopener">Auswahl an Unterrichtsbeispielen mit Virtual Reality Szenarien</a>
+ von Stephanie Wössner <a href="https://twitter.com/petiteprof79" target="_blank" rel="noopener">@petiteprof79</a>
+</li>
+</ul>
+<h2 id="communities">Communities</h2>
+<p><a href="https://educatorsinvr.com/" target="_blank" rel="noopener">https://educatorsinvr.com/</a>
+</p>
+<h1 id="religiöse-erfahrungsräume">Religiöse Erfahrungsräume</h1>
+<h2 id="im-oculus-store">im Oculus Store</h2>
+<h3 id="wander">Wander</h3>
+<p><a href="https://www.oculus.com/experiences/quest/2078376005587859/" target="_blank" rel="noopener">https://www.oculus.com/experiences/quest/2078376005587859/</a>
+</p>
+<h2 id="filme">Filme</h2>
+<p>[https://mixed.de/beruehrender-oculus-film-zeigt-worauf-es-im-leben-ankommt/(https://mixed.de/beruehrender-oculus-film-zeigt-worauf-es-im-leben-ankommt/)]</p>
+<h2 id="in-sidequest">In Sidequest</h2>
+<h3 id="vanishing-grace">Vanishing Grace</h3>
+<p>[https://sidequestvr.com/app/772/vanishing-grace-pre-alpha-demo(https://sidequestvr.com/app/772/vanishing-grace-pre-alpha-demo)]</p>
+<blockquote>
+<p>Vanishing Grace ist eine emotionale Reise über die Opfer, die wir bringen müssen, um unseren Platz in der Welt einzunehmen.</p>
+</blockquote>
+<h3 id="cubism">Cubism</h3>
+<p>[https://sidequestvr.com/app/403/cubism-demo(https://sidequestvr.com/app/403/cubism-demo)]</p>
+<h3 id="deism">Deism</h3>
+<blockquote>
+<p>The virtual reality god simulator
+[https://sidequestvr.com/app/85/deisim(https://sidequestvr.com/app/85/deisim)]</p>
+</blockquote>
+<h3 id="liminal">Liminal</h3>
+<p><a href="https://sidequestvr.com/app/1042/liminal" target="_blank" rel="noopener">https://sidequestvr.com/app/1042/liminal</a>
+
+Wählen Sie aus, wie Sie sich fühlen und was Sie leisten wollen: Ruhe, Energie, Schmerzlinderung und Ehrfurcht.</p>
+<h1 id="3d-modelle">3D-Modelle</h1>
+<p><a href="https://sketchfab.com/3d-models/abandoned-warehouse-interior-scene-1d5285f2e0fd4211a27c8042496d5959#" target="_blank" rel="noopener">https://sketchfab.com/3d-models/abandoned-warehouse-interior-scene-1d5285f2e0fd4211a27c8042496d5959#</a>
+</p>
+<p><div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2021/08/15/virtual-reality.html/02-mittelalterliche-kirche_hu253870378993297780.webp 320w, /2021/08/15/virtual-reality.html/02-mittelalterliche-kirche_hu4420295027609013564.webp 640w, /2021/08/15/virtual-reality.html/02-mittelalterliche-kirche_hu17433880118793174931.webp 960w, /2021/08/15/virtual-reality.html/02-mittelalterliche-kirche_hu8293616640240810167.webp 1280w, /2021/08/15/virtual-reality.html/02-mittelalterliche-kirche_hu1896499248191260027.webp 1600w, /2021/08/15/virtual-reality.html/02-mittelalterliche-kirche_hu4998949602915829908.webp 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2021/08/15/virtual-reality.html/02-mittelalterliche-kirche_hu13176968432993461695.jpg 320w, /2021/08/15/virtual-reality.html/02-mittelalterliche-kirche_hu9359899629680423202.jpg 640w, /2021/08/15/virtual-reality.html/02-mittelalterliche-kirche_hu9504864347527241524.jpg 960w, /2021/08/15/virtual-reality.html/02-mittelalterliche-kirche_hu17520575874661420824.jpg 1280w, /2021/08/15/virtual-reality.html/02-mittelalterliche-kirche_hu6842502810952888671.jpg 1600w, /2021/08/15/virtual-reality.html/02-mittelalterliche-kirche_hu6579120093751175179.jpg 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2021/08/15/virtual-reality.html/02-mittelalterliche-kirche_hu9359899629680423202.jpg" width="1982" height="1230" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+
+<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC</a>
+ Medieval Church, Calatrava la Nueva, Spain
+Processed in Reality Capture from 76 Faro laser scans and 4100 photographs
+<a href="https://sketchfab.com/3d-models/medieval-church-calatrava-la-nueva-spain-171a047c08bc4dd588cca5ac744e8065" target="_blank" rel="noopener">https://sketchfab.com/3d-models/medieval-church-calatrava-la-nueva-spain-171a047c08bc4dd588cca5ac744e8065</a>
+</p>
+<h2 id="avatare">Avatare</h2>
+<h2 id="erfahrungswelten">Erfahrungswelten:</h2>
+<h3 id="360-grad-filme">360 Grad Filme</h3>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=dMZfIUr0gEs" target="_blank" rel="noopener">Kölner Dom in 360°: Privatkonzert | WDR</a>
+
+Der Domchor gibt ein nächtliches Konzert – und der einzige Zuschauer bist du. Unter Leitung des Domkapellmeisters Professor Eberhard Metternich singt der Chor das Ave Maria von Franz Biebl in einer eher ungewöhnlichen Aufstellung. Und du stehst mittendrin. <a href="https://dom360.wdr.de/privatkonzert-bei-nacht/" target="_blank" rel="noopener">https://dom360.wdr.de/privatkonzert-bei-nacht/</a>
+]</li>
+<li><a href="https://www.youtube.com/watch?v=QwC5d75iTcA" target="_blank" rel="noopener">INSIDE AUSCHWITZ - Das ehemalige Konzentrationslager in 360° | WDR
+</a>
+</li>
+</ul>
+<h3 id="anne-frank-vr">Anne Frank VR</h3>
+<p><a href="https://www.annefrank.org/de/uber-uns/was-wir-tun/unsere-publikationen/das-anne-frank-haus-virtual-reality/" target="_blank" rel="noopener">https://www.annefrank.org/</a>
+</p>
+<h3 id="within">Within</h3>
+<p>[https://www.with.in/watch/the-ellen-fund-presents-gorillas-in-vr(https://www.with.in/watch/the-ellen-fund-presents-gorillas-in-vr)]
+[https://account.altvr.com/channels/VRChurch(https://account.altvr.com/channels/VRChurch)]</p>
+<h1 id="programmierung">Programmierung</h1>
+<ul>
+<li><a href="https://circuitstream.com/blog/programming-development-guides/" target="_blank" rel="noopener">Learn VR Development: Tips, tricks, and guides to develop VR and AR applications</a>
+</li>
+<li><a href="https://www.reddit.com/r/learnVRdev/" target="_blank" rel="noopener">Reddit - Learn Virtual Reality Development</a>
+</li>
+</ul>
+<h2 id="mozilla-hubs">Mozilla Hubs</h2>
+<h3 id="dokumentation-httpshubsmozillacomdocswelcomehtmlhttpshubsmozillacomdocswelcomehtml">Dokumentation [https://hubs.mozilla.com/docs/welcome.html(https://hubs.mozilla.com/docs/welcome.html)]</h3>
+<h3 id="vorlagen">Vorlagen</h3>
+<p><a href="https://v3l.de/relilabvr" target="_blank" rel="noopener">https://v3l.de/relilabvr</a>
+ (relilab-VR-Hub mit Videos, Bildern, &hellip;)</p>
+<p>[https://hubs.mozilla.com/Av38AUU/detailed-tinted-room(https://hubs.mozilla.com/Av38AUU/detailed-tinted-room)]
+[https://hubs.mozilla.com/scenes/juMbRem/dramainvrhome(https://hubs.mozilla.com/scenes/juMbRem/dramainvrhome)]</p>
+<h3 id="avatare-erstellen">Avatare erstellen</h3>
+<h3 id="mozilla-hubs---glb">Mozilla Hubs - GLB</h3>
+<h4 id="online-dienst---readyplayer">Online Dienst - Readyplayer</h4>
+<p><a href="https://twitter.com/joerglohrer/status/1388023150626099201" target="_blank" rel="noopener">https://twitter.com/joerglohrer/status/1388023150626099201</a>
+
+<div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2021/08/15/virtual-reality.html/03-avatare-erstellen_hu14217808481705165342.webp 320w, /2021/08/15/virtual-reality.html/03-avatare-erstellen_hu17598033519844981943.webp 640w, /2021/08/15/virtual-reality.html/03-avatare-erstellen_hu4742591572314014123.webp 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2021/08/15/virtual-reality.html/03-avatare-erstellen_hu11051416159270598987.jpg 320w, /2021/08/15/virtual-reality.html/03-avatare-erstellen_hu9079008582681978993.jpg 640w, /2021/08/15/virtual-reality.html/03-avatare-erstellen_hu1867796777202162480.jpg 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2021/08/15/virtual-reality.html/03-avatare-erstellen_hu9079008582681978993.jpg" width="1024" height="1024" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+</p>
+<p>[https://readyplayer.me/(https://readyplayer.me/)]</p>
+<p>Beispiel: (<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA - Wolfprint 3D</a>
+)
+<a href="https://d1a370nemizbjq.cloudfront.net/10b05c49-593a-4616-82e9-adcea09aa66c.glb" target="_blank" rel="noopener">https://d1a370nemizbjq.cloudfront.net/10b05c49-593a-4616-82e9-adcea09aa66c.glb</a>
+</p>
+<p>Hubs by Mozilla</p>
+<ul>
+<li><a href="https://hubs.mozilla.com/docs/intro-avatars.html" target="_blank" rel="noopener">Creating Custom Avatars</a>
+</li>
+<li><a href="https://hubs.mozilla.com/docs/creators-advanced-avatar-customization.html" target="_blank" rel="noopener">Advanced Avatar Customization</a>
+</li>
+</ul>
+<p><a href="http://tryquilt.io/" target="_blank" rel="noopener">http://tryquilt.io/</a>
+]</p>
+<p><a href="https://github.com/MozillaReality/hubs-avatar-pipelines/tree/master/Blender/AvatarBot" target="_blank" rel="noopener">Blender files for AvatarBot</a>
+
+<a href="https://youtube.com/playlist?list=PLCxaiaRxTL6-3pxUsfSa7lzKruGu5UEat" target="_blank" rel="noopener">Creating an Avatar using Hubs components in Blender</a>
+</p>
+<h4 id="online-editoren">Online Editoren</h4>
+<p>[https://modelviewer.dev/editor/(https://modelviewer.dev/editor/)]</p>
+<h4 id="software">Software</h4>
+<h5 id="makehuman">MakeHuman</h5>
+<p><a href="http://makehumancommunity.org/" target="_blank" rel="noopener">http://makehumancommunity.org/</a>
+</p>
+<p><a href="https://www.youtube.com/watch?v=kQjp5DYsR_c&amp;t=86s" target="_blank" rel="noopener">https://www.youtube.com/watch?v=kQjp5DYsR_c&amp;t=86s</a>
+</p>
+<h3 id="tutorials-altspace--blender--unity">Tutorials Altspace / Blender / Unity</h3>
+<p><a href="http://edvschwab.de/Altspace/Kurz%20Doku%20Blender.pdf" target="_blank" rel="noopener">http://edvschwab.de/Altspace/Kurz%20Doku%20Blender.pdf</a>
+
+[http://edvschwab.de/Altspace/Kurz%20Doku%20Unity.pdf(http://edvschwab.de/Altspace/Kurz%20Doku%20Unity.pdf)]</p>
+<h2 id="sidequest">Sidequest</h2>
+<p><a href="https://sidequestvr.com/" target="_blank" rel="noopener">https://sidequestvr.com/</a>
+
+Installation:
+<a href="https://sidequestvr.com/setup-howto" target="_blank" rel="noopener">https://sidequestvr.com/setup-howto</a>
+</p>
+<p><a href="https://www.google.com/amp/s/www.androidcentral.com/how-put-custom-songs-beat-saber-oculus-quest%3famp" target="_blank" rel="noopener">How to put custom songs onto Beat Saber on Oculus Quest</a>
+</p>
+<h2 id="aframe">Aframe</h2>
+<p><div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2021/08/15/virtual-reality.html/04-aframe_hu4941900545381380076.webp 320w, /2021/08/15/virtual-reality.html/04-aframe_hu4278690053232966445.webp 640w, /2021/08/15/virtual-reality.html/04-aframe_hu4783136555098909517.webp 960w, /2021/08/15/virtual-reality.html/04-aframe_hu4611066088407774125.webp 1280w, /2021/08/15/virtual-reality.html/04-aframe_hu1405711134435320747.webp 1600w, /2021/08/15/virtual-reality.html/04-aframe_hu9117822803509041766.webp 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2021/08/15/virtual-reality.html/04-aframe_hu8310873790788920307.jpg 320w, /2021/08/15/virtual-reality.html/04-aframe_hu5551583972311331355.jpg 640w, /2021/08/15/virtual-reality.html/04-aframe_hu5962186504347944682.jpg 960w, /2021/08/15/virtual-reality.html/04-aframe_hu13404350582613794181.jpg 1280w, /2021/08/15/virtual-reality.html/04-aframe_hu4594121494656825586.jpg 1600w, /2021/08/15/virtual-reality.html/04-aframe_hu11371768068744657593.jpg 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2021/08/15/virtual-reality.html/04-aframe_hu5551583972311331355.jpg" width="2490" height="1344" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+
+<a href="https://codepen.io/joerglohrer/full/dyXQqWG" target="_blank" rel="noopener">https://codepen.io/joerglohrer/full/dyXQqWG</a>
+
+<a href="https://aframe.io/" target="_blank" rel="noopener">https://aframe.io/</a>
+
+<a href="https://www.codecademy.com/learn/learn-a-frame" target="_blank" rel="noopener">https://www.codecademy.com/learn/learn-a-frame</a>
+
+VR development within VR with Oculus Quest + Firefox Reality + Glitch +
+<a href="https://rocketvirtual.com/index.html" target="_blank" rel="noopener">https://rocketvirtual.com/index.html</a>
+
+<a href="https://michael-mcanally.medium.com/where-to-begin-with-vr-in-a-browser-d818f713a8a8" target="_blank" rel="noopener">Where to begin with VR in a browser?</a>
+
+<a href="https://www.reddit.com/r/WebVR/comments/equgdt/vr_development_within_vr_with_oculus_quest/" target="_blank" rel="noopener">https://www.reddit.com/r/WebVR/comments/equgdt/vr_development_within_vr_with_oculus_quest/</a>
+</p>
+<p><a href="https://aframe-model-viewer.glitch.me/" target="_blank" rel="noopener">https://aframe-model-viewer.glitch.me/</a>
+</p>
+<p><a href="https://klausw.github.io/a-frame-car-sample/index.html" target="_blank" rel="noopener">https://klausw.github.io/a-frame-car-sample/index.html</a>
+</p>
+<h2 id="threejs">ThreeJS</h2>
+<p><a href="https://threejs.org/" target="_blank" rel="noopener">https://threejs.org/</a>
+
+<a href="https://www.jesuisundev.com/en/understand-threejs/" target="_blank" rel="noopener">https://www.jesuisundev.com/en/understand-threejs/</a>
+</p>
+<h2 id="tour-creator-google"><del>Tour Creator Google</del></h2>
+<p>&ldquo;Starting June 30, 2021, the Google Expeditions and Tour Creator <a href="https://support.google.com/tourcreator/?hl=en" target="_blank" rel="noopener">will no longer be accessible</a>
+.&rdquo;</p>
+<h2 id="unity">Unity</h2>
+<p><a href="https://unity.com/de/learn/get-started" target="_blank" rel="noopener">https://unity.com/de/learn/get-started</a>
+</p>
+<h1 id="optik">Optik</h1>
+<h2 id="pupillendistanz-pd-messen---ipd-interpupillary-distance">Pupillendistanz (PD) messen - IPD (interpupillary distance)</h2>
+<p><a href="https://apps.apple.com/de/app/eyemeasure/id1417435049" target="_blank" rel="noopener">https://apps.apple.com/de/app/eyemeasure/id1417435049</a>
+
+Die kostenfreie App misst den Augenabstand auf 0,5 mm genau ab iPhoneX oder iPadPro
+<div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2021/08/15/virtual-reality.html/05-pupillendistanz_hu17775161039230260353.webp 320w, /2021/08/15/virtual-reality.html/05-pupillendistanz_hu3024585835706923378.webp 640w, /2021/08/15/virtual-reality.html/05-pupillendistanz_hu2610008114775181822.webp 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2021/08/15/virtual-reality.html/05-pupillendistanz_hu13607451820719421490.jpg 320w, /2021/08/15/virtual-reality.html/05-pupillendistanz_hu3134231705006486639.jpg 640w, /2021/08/15/virtual-reality.html/05-pupillendistanz_hu1243748882364763499.jpg 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2021/08/15/virtual-reality.html/05-pupillendistanz_hu3134231705006486639.jpg" width="1246" height="1646" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+
+Oder einfach mit Lineal:
+<a href="https://imgur.com/a/gyYKB" target="_blank" rel="noopener">https://imgur.com/a/gyYKB</a>
+</p>
+<h1 id="oculus-quest">Oculus Quest</h1>
+<h2 id="tutorials">Tutorials</h2>
+<h3 id="deutsch">Deutsch</h3>
+<p><a href="https://twitter.com/StubeDie" target="_blank" rel="noopener">https://twitter.com/StubeDie</a>
+</p>
+<h3 id="englisch">Englisch</h3>
+<h4 id="foren">Foren</h4>
+<p><a href="https://www.reddit.com/r/OculusQuest/" target="_blank" rel="noopener">https://www.reddit.com/r/OculusQuest/</a>
+
+<a href="https://www.reddit.com/r/OculusQuest2/" target="_blank" rel="noopener">https://www.reddit.com/r/OculusQuest2/</a>
+</p>
+<h2 id="streaming--playthrough--livecasting--obs">Streaming / Playthrough / Livecasting / OBS</h2>
+<p><a href="https://bsaber.com/queststreamingguide/" target="_blank" rel="noopener">Oculus Quest Recording / Live Streaming Guide</a>
+
+<a href="https://restream.io/blog/ultimate-guide-to-twitch/" target="_blank" rel="noopener">How to stream on Twitch: the ultimate guide</a>
+</p>
+<h2 id="file-transfer">File Transfer</h2>
+<p>3 different ways
+<a href="https://www.youtube.com/watch?v=APbbuJF4Ma4" target="_blank" rel="noopener">https://www.youtube.com/watch?v=APbbuJF4Ma4</a>
+
+<a href="https://www.android.com/filetransfer/" target="_blank" rel="noopener">https://www.android.com/filetransfer/</a>
+
+<a href="https://support.oculus.com/2255729571307786/" target="_blank" rel="noopener">Wie übertrage ich Bilder oder Videos von meinem Computer auf mein Oculus Quest 2 oder Quest?</a>
+</p>
+<p>Facebook video downloader here - <a href="https://fbdown.net/" target="_blank" rel="noopener">https://fbdown.net/</a>
+</p>
+<h2 id="brillenträger">Brillenträger</h2>
+<p>Sehstärke-Linsen Einsätze
+<a href="https://mixed.de/vr-optiker-sehstaerke-linsen-test/" target="_blank" rel="noopener">https://mixed.de/vr-optiker-sehstaerke-linsen-test/</a>
+</p>
+<ul>
+<li><a href="https://vroptiker.de/sehstaerke-linsen-einsaetze/oculus-quest2/" target="_blank" rel="noopener">https://vroptiker.de/sehstaerke-linsen-einsaetze/oculus-quest2/</a>
+</li>
+<li><a href="https://widmovr.com/product/oculus-quest-2-prescription-lens-adapters/" target="_blank" rel="noopener">https://widmovr.com/product/oculus-quest-2-prescription-lens-adapters/</a>
+</li>
+</ul>
+<h2 id="not-to-do">Not to do</h2>
+<h3 id="sonnenlicht-in-die-linse">Sonnenlicht in die Linse)</h3>
+<p>Sonnenlicht kann durch die Linsen gebündelt werden und das Display beschödigen.</p>
+<h3 id="linsen-reinigen">Linsen reinigen</h3>
+<h3 id="grips---handhalterungen">Grips - Handhalterungen</h3>
+<p><a href="https://www.youtube.com/watch?v=_52xWr_R4uM&amp;feature=youtu.be&amp;t=388" target="_blank" rel="noopener">https://www.youtube.com/watch?v=_52xWr_R4uM&amp;feature=youtu.be&amp;t=388</a>
+</p>
+<h3 id="headstrap">Headstrap</h3>
+<h4 id="vive-deluxe-audio-strap">VIVE DELUXE AUDIO STRAP</h4>
+<p><a href="https://www.vive.com/de/accessory/vive-deluxe-audio-strap/" target="_blank" rel="noopener">https://www.vive.com/de/accessory/vive-deluxe-audio-strap/</a>
+</p>
+<p>FrankenQuest 2
+<a href="https://uploadvr.com/frankenquest-2-quest-2/" target="_blank" rel="noopener">https://uploadvr.com/frankenquest-2-quest-2/</a>
+
+Adapter zum 3D-Druck:
+<a href="https://www.thingiverse.com/thing:4622970" target="_blank" rel="noopener">https://www.thingiverse.com/thing:4622970</a>
+
+Variante mit Kabelklemme (oben oder unten):
+<a href="https://www.thingiverse.com/thing:4628600/files" target="_blank" rel="noopener">https://www.thingiverse.com/thing:4628600/files</a>
+
+<div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2021/08/15/virtual-reality.html/06-vr-adapter-3ddruck_hu10963531882999620947.webp 320w, /2021/08/15/virtual-reality.html/06-vr-adapter-3ddruck_hu6798572277576863476.webp 640w, /2021/08/15/virtual-reality.html/06-vr-adapter-3ddruck_hu2886136079209661335.webp 960w, /2021/08/15/virtual-reality.html/06-vr-adapter-3ddruck_hu16161510171512974410.webp 1280w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2021/08/15/virtual-reality.html/06-vr-adapter-3ddruck_hu4221829634324721845.jpg 320w, /2021/08/15/virtual-reality.html/06-vr-adapter-3ddruck_hu13593546361354330313.jpg 640w, /2021/08/15/virtual-reality.html/06-vr-adapter-3ddruck_hu9280877172221165479.jpg 960w, /2021/08/15/virtual-reality.html/06-vr-adapter-3ddruck_hu1298722298506119350.jpg 1280w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2021/08/15/virtual-reality.html/06-vr-adapter-3ddruck_hu13593546361354330313.jpg" width="1432" height="1570" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+
+:::success
+Druck skaliert auf 101%
+:::
+Install guide
+Remove the Quest 2 straps following this guide: <a href="https://www.youtube.com/watch?v=PejiYjR7_44&amp;feature=youtu.be&amp;t=110" target="_blank" rel="noopener">https://www.youtube.com/watch?v=PejiYjR7_44&amp;feature=youtu.be&amp;t=110</a>
+
+Snap the DAS onto the adaptor (pushing the round front section in first like in the picture).
+Snap the adaptor onto Quest 2.
+Use the velcro loop to attach the head strap to the headset.
+<div class="not-prose">
+<picture>
+    <source type="image/webp" srcset="/2021/08/15/virtual-reality.html/07-vive-straps-3ddruck_hu12934420603123243684.webp 320w, /2021/08/15/virtual-reality.html/07-vive-straps-3ddruck_hu8691986054027966141.webp 640w, /2021/08/15/virtual-reality.html/07-vive-straps-3ddruck_hu9915537139655971777.webp 960w, /2021/08/15/virtual-reality.html/07-vive-straps-3ddruck_hu3630187055066769808.webp 1280w, /2021/08/15/virtual-reality.html/07-vive-straps-3ddruck_hu5821475543642661903.webp 1600w, /2021/08/15/virtual-reality.html/07-vive-straps-3ddruck_hu6325327409019019234.webp 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <source type="image/jpeg" srcset="/2021/08/15/virtual-reality.html/07-vive-straps-3ddruck_hu17343320576662197483.jpg 320w, /2021/08/15/virtual-reality.html/07-vive-straps-3ddruck_hu1669861691181018125.jpg 640w, /2021/08/15/virtual-reality.html/07-vive-straps-3ddruck_hu6826008418985280458.jpg 960w, /2021/08/15/virtual-reality.html/07-vive-straps-3ddruck_hu10199099759400450528.jpg 1280w, /2021/08/15/virtual-reality.html/07-vive-straps-3ddruck_hu17023939791490423009.jpg 1600w, /2021/08/15/virtual-reality.html/07-vive-straps-3ddruck_hu17747981052107160718.jpg 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+    <img class="h-auto max-w-full rounded-lg" src="/2021/08/15/virtual-reality.html/07-vive-straps-3ddruck_hu1669861691181018125.jpg" width="2048" height="1152" alt="" title="" loading="lazy" />
+  </picture>
+</div>
+</p>
+<p>Oculus Quest 2 Comfort Head Strap Mods!</p>
+<h4 id="3ddruck">3DDruck</h4>
+<p>Oculus Quest 2 Elite Strap_V2_NAVIDA DESIGN
+[https://www.thingiverse.com/thing:4630780/files(https://www.thingiverse.com/thing:4630780/files)]
+Oculus Link Cable Clip for Deluxe Audio Strap &ldquo;DAS&rdquo;
+<a href="https://www.thingiverse.com/thing:4666749" target="_blank" rel="noopener">https://www.thingiverse.com/thing:4666749</a>
+</p>
+<p>Überblick:
+<a href="https://www.youtube.com/watch?v=sUhMk19PVq4" target="_blank" rel="noopener">https://www.youtube.com/watch?v=sUhMk19PVq4</a>
+
+<a href="https://www.youtube.com/watch?v=CN9fYlUGVtk" target="_blank" rel="noopener">https://www.youtube.com/watch?v=CN9fYlUGVtk</a>
+</p>
+<h3 id="lens-adaptor">Lens Adaptor</h3>
+<h4 id="für-brillen">Für Brillen</h4>
+<p>[https://www.thingiverse.com/thing:3653631(https://www.thingiverse.com/thing:3653631)]
+Für Linsen
+[https://www.thingiverse.com/thing:3642004(https://www.thingiverse.com/thing:3642004)]</p>
+<p>Esimen Upgrade K3</p>
+<h3 id="batterie">Batterie</h3>
+<p><a href="https://www.androidcentral.com/best-oculus-quest-battery-pack" target="_blank" rel="noopener">https://www.androidcentral.com/best-oculus-quest-battery-pack</a>
+</p>
+
+      </article>
+
+      
+
+
+
+
+    </div>
+  </div>
+</div>
+
+  </main>
+  <footer class="flex flex-none justify-center">
+    <section class="flex flex-col md:flex-row mx-2 md:mx-0 gap-2 md:gap-0 justify-between w-full max-w-4xl lg:max-w-5xl py-6 text-slate-500 dark:text-slate-300">
+  <div class="flex flex-row">
+    
+  
+  
+    <a href="https://reliverse.social/@joerglohrer" target="_blank" title="Mastodon" class="flex flex-row mr-2">
+      <span class="hidden">Mastodon</span>
+      <i class="h-6 w-6 flex-none"> <svg  xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-mastodon"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18.648 15.254c-1.816 1.763 -6.648 1.626 -6.648 1.626a18.262 18.262 0 0 1 -3.288 -.256c1.127 1.985 4.12 2.81 8.982 2.475c-1.945 2.013 -13.598 5.257 -13.668 -7.636l-.026 -1.154c0 -3.036 .023 -4.115 1.352 -5.633c1.671 -1.91 6.648 -1.666 6.648 -1.666s4.977 -.243 6.648 1.667c1.329 1.518 1.352 2.597 1.352 5.633s-.456 4.074 -1.352 4.944z" /><path d="M12 11.204v-2.926c0 -1.258 -.895 -2.278 -2 -2.278s-2 1.02 -2 2.278v4.722m4 -4.722c0 -1.258 .895 -2.278 2 -2.278s2 1.02 2 2.278v4.722" /></svg> </i>
+    </a>
+  
+  
+  
+    <a href="https://nostrrr.com/p/npub1mmful66pyasny86vdxtm0d2v9v572hjtmx0ufaa2t4m9hxartuxs4wu69w" target="_blank" title="nostr" class="flex flex-row mr-2">
+      <span class="hidden">nostr</span>
+      <i class="h-6 w-6 flex-none"> <?xml version="1.0" encoding="UTF-8"?>
+<svg id="_8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><defs><style>.cls-1{fill:none;}.cls-2{fill:#fff;}.cls-3{fill:#662482;}</style></defs><path class="cls-2" d="m231.16,159.49c0,20.71,0,31.07-3.53,42.22-4.43,12.17-14.02,21.76-26.19,26.19-11.15,3.53-21.5,3.53-42.22,3.53h-62.46c-20.71,0-31.06,0-42.21-3.53-12.17-4.43-21.76-14.02-26.19-26.19-3.53-11.15-3.53-21.5-3.53-42.22v-62.46c0-20.71,0-31.07,3.53-42.22,4.43-12.17,14.02-21.76,26.19-26.19,11.15-3.52,21.5-3.52,42.21-3.52h62.46c20.71,0,31.07,0,42.22,3.52,12.17,4.43,21.76,14.02,26.19,26.19,3.53,11.15,3.53,21.5,3.53,42.22v62.46Z"/><path class="cls-3" d="m210.81,116.2v83.23c0,3.13-2.54,5.67-5.67,5.67h-68.04c-3.13,0-5.67-2.54-5.67-5.67v-15.5c.31-19,2.32-37.2,6.54-45.48,2.53-4.98,6.7-7.69,11.49-9.14,9.05-2.72,24.93-.86,31.67-1.18,0,0,20.36.81,20.36-10.72,0-9.28-9.1-8.55-9.1-8.55-10.03.26-17.67-.42-22.62-2.37-8.29-3.26-8.57-9.24-8.6-11.24-.41-23.1-34.47-25.87-64.48-20.14-32.81,6.24.36,53.27.36,116.05v8.38c-.06,3.08-2.55,5.57-5.65,5.57h-33.69c-3.13,0-5.67-2.54-5.67-5.67V55.49c0-3.13,2.54-5.67,5.67-5.67h31.67c3.13,0,5.67,2.54,5.67,5.67,0,4.65,5.23,7.24,9.01,4.53,11.39-8.16,26.01-12.51,42.37-12.51,36.65,0,64.36,21.36,64.36,68.69Zm-60.84-16.89c0-6.7-5.43-12.13-12.13-12.13s-12.13,5.43-12.13,12.13,5.43,12.13,12.13,12.13,12.13-5.43,12.13-12.13Z"/><rect class="cls-1" /></svg> </i>
+    </a>
+  
+  
+  
+    <a href="https://bsky.app/profile/joerglohrer.bsky.social" target="_blank" title="Bluesky" class="flex flex-row mr-2">
+      <span class="hidden">Bluesky</span>
+      <i class="h-6 w-6 flex-none"> <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-bluesky"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6.335 5.144c-1.654 -1.199 -4.335 -2.127 -4.335 .826c0 .59 .35 4.953 .556 5.661c.713 2.463 3.13 2.75 5.444 2.369c-4.045 .665 -4.889 3.208 -2.667 5.41c1.03 1.018 1.913 1.59 2.667 1.59c2 0 3.134 -2.769 3.5 -3.5c.333 -.667 .5 -1.167 .5 -1.5c0 .333 .167 .833 .5 1.5c.366 .731 1.5 3.5 3.5 3.5c.754 0 1.637 -.571 2.667 -1.59c2.222 -2.203 1.378 -4.746 -2.667 -5.41c2.314 .38 4.73 .094 5.444 -2.369c.206 -.708 .556 -5.072 .556 -5.661c0 -2.953 -2.68 -2.025 -4.335 -.826c-2.293 1.662 -4.76 5.048 -5.665 6.856c-.905 -1.808 -3.372 -5.194 -5.665 -6.856z" /></svg> </i>
+    </a>
+  
+  
+  
+    <a href="https://www.instagram.com/joerglohrer" target="_blank" title="Instagram" class="flex flex-row mr-2">
+      <span class="hidden">Instagram</span>
+      <i class="h-6 w-6 flex-none"> <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-instagram" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M4 4m0 4a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z"></path>
+   <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+   <path d="M16.5 7.5l0 .01"></path>
+</svg>
+ </i>
+    </a>
+  
+  
+
+
+  </div>
+  <div class="grow"></div>
+  <div class="flex flex-row">
+    <i class="h-6 w-6 flex-none"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
+   <path d="M14 9.75a3.016 3.016 0 0 0 -4.163 .173a2.993 2.993 0 0 0 0 4.154a3.016 3.016 0 0 0 4.163 .173"></path>
+</svg>
+</i> 2023 - 2024 
+    
+  </div>
+  
+  <div class="flex flex-row">
+    <span class="ml-0 pl-0 md:ml-2 md:pl-2 border-l-0 md:border-l border-slate-300 dark:border-slate-400">
+      Powered by <a href="https://gohugo.io" target="_blank" rel="noopener" class="underline">Hugo</a> <span class="text-red-600">&hearts;</span> <a href="https://github.com/tomowang/hugo-theme-tailwind" target="_blank" rel="noopener" class="underline">Tailwind</a>
+    </span>
+  </div>
+  
+</section>
+
+  </footer>
+  <script src="/main.js"></script>
+
+
+
+
+</body>
+</html>
