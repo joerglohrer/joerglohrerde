@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Freemium on Jörg Lohrer</title>
-    <link>http://localhost:1313/tags/freemium/</link>
+    <link>https://joerg-lohrer.de/tags/freemium/</link>
     <description>Recent content in Freemium on Jörg Lohrer</description>
     <generator>Hugo</generator>
     <language>de</language>
     <managingEditor>user@example.com (Hugo Author)</managingEditor>
     <webMaster>user@example.com (Hugo Author)</webMaster>
     <lastBuildDate>Thu, 07 Feb 2013 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/freemium/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://joerg-lohrer.de/tags/freemium/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Premium, Freemium, Mium mium mium</title>
-      <link>http://localhost:1313/2013/02/07/premium-freemium-mium-mium-mium.html/</link>
+      <link>https://joerg-lohrer.de/2013/02/07/premium-freemium-mium-mium-mium.html/</link>
       <pubDate>Thu, 07 Feb 2013 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
-      <guid>http://localhost:1313/2013/02/07/premium-freemium-mium-mium-mium.html/</guid>
+      <guid>https://joerg-lohrer.de/2013/02/07/premium-freemium-mium-mium-mium.html/</guid>
       <description>&lt;h1 id=&#34;premium-freemium-mium-mium-mium&#34;&gt;Premium, Freemium, Mium mium mium&lt;/h1&gt;&#xA;&lt;p&gt;Wer leckere Bildungsangebote macht, findet immer reichlich Abnehmer. Und im digitalen Zeitalter kann ein einzelnes Produkt dank der vorhandenen Replikatormaschinen unendlich vervielfacht konsumiert werden. Das ist kein Traum mehr, sondern längst cloudgewordene Wirklichkeit.&lt;/p&gt;&#xA;&lt;p&gt;Nun wird versucht über ein komplexes Rechtemanagement den Produzenten ein lukratives Einkommen zu sichern. Doch während im Dienstleitungssektor der Bildung die einen noch an Vertriebswegen tüfteln, sind die Teilnehmenden in den offenen und massiven Online-Kursen (MOOCs) schon einen Schritt weiter. Hier wird allmählich begriffen, dass nicht die Her- und Bereitstellung, Aufbereitung und didaktische Darbietung von Bildung sich in barer Münze auszahlt, sondern das vernetzende Lernen selbst, also der Prozess, die eigentliche Qualität darstellt, die ihr Geld wirklich wert wäre.&lt;/p&gt;</description>
     </item>
   </channel>

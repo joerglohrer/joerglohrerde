@@ -47,7 +47,7 @@ logo = "joerg-profil-2024.webp"
     [[params.social_media.items]]
     enabled = true
     title = 'nostr'
-    icon = 'nostr-icon-purple-on-white'
+    icon = 'brand-nostr'
     link = 'https://nostrrr.com/p/npub1mmful66pyasny86vdxtm0d2v9v572hjtmx0ufaa2t4m9hxartuxs4wu69w'
 
     [[params.social_media.items]]

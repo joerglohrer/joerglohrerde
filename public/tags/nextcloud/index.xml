@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Nextcloud on Jörg Lohrer</title>
-    <link>http://localhost:1313/tags/nextcloud/</link>
+    <link>https://joerg-lohrer.de/tags/nextcloud/</link>
     <description>Recent content in Nextcloud on Jörg Lohrer</description>
     <generator>Hugo</generator>
     <language>de</language>
     <managingEditor>user@example.com (Hugo Author)</managingEditor>
     <webMaster>user@example.com (Hugo Author)</webMaster>
     <lastBuildDate>Fri, 26 Jan 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/nextcloud/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://joerg-lohrer.de/tags/nextcloud/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Offenheit - das Wesentliche</title>
-      <link>http://localhost:1313/2024/01/26/offenheit-das-wesentliche.html/</link>
+      <link>https://joerg-lohrer.de/2024/01/26/offenheit-das-wesentliche.html/</link>
       <pubDate>Fri, 26 Jan 2024 00:00:00 +0000</pubDate><author>user@example.com (Hugo Author)</author>
-      <guid>http://localhost:1313/2024/01/26/offenheit-das-wesentliche.html/</guid>
+      <guid>https://joerg-lohrer.de/2024/01/26/offenheit-das-wesentliche.html/</guid>
       <description>&lt;h1 id=&#34;offenheit---das-wesentliche&#34;&gt;Offenheit - das Wesentliche&lt;/h1&gt;&#xA;&lt;h3 id=&#34;1-einleitung-persönliche-reflexion-über-offenheit&#34;&gt;1. Einleitung: Persönliche Reflexion über Offenheit&lt;/h3&gt;&#xA;&lt;p&gt;Wenn ich auf das Jahr 2023 zurückblicke, gewinne ich den Eindruck, dass das Wesentliche in meinem Berufs- und Privatleben in den Verbindungen mit anderen Menschen liegt.&#xA;Dashalb ist die Offenheit für Andere, mit und an denen ich lerne nicht nur ein abstraktes Ideal oder eine berufliche Anforderung, sondern ein wesentlicher Bestandteil meiner täglichen Existenz. Dieses Bewusstsein hat mich dazu inspiriert, meine Neujahrsvorsätze für 2024 um das Thema Offenheit herum zu gestalten.&lt;/p&gt;</description>
     </item>
   </channel>
