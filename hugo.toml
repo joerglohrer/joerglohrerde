@@ -3,6 +3,12 @@ languageCode = 'de'
 defaultContentLanguage = 'de'
 title = 'Jörg Lohrer'
 theme = 'tailwind'
+# SEO keywords and description for your site.
+keywords = "OER, Religionspädagogik, Bildung, Religion, Hugo"
+subtitle = "Jörg Lohrer - Webseite"
+
+
+
 [permalinks]
   posts = "/:year/:month/:day/:slug.html"
 
@@ -36,6 +42,9 @@ logo = "joerg-profil-2024.webp"
 
 
 [params]
+  [[params.jsonLD]]
+  enabled = true
+
   [params.social_media]
 
     [[params.social_media.items]]
@@ -48,7 +57,7 @@ logo = "joerg-profil-2024.webp"
     enabled = true
     title = 'nostr'
     icon = 'brand-nostr'
-    link = 'https://nostrrr.com/p/npub1mmful66pyasny86vdxtm0d2v9v572hjtmx0ufaa2t4m9hxartuxs4wu69w'
+    link = 'https://nostter.app/npub1f7jar3qnu269uyx5p0e4v24hqxjnxysxudvujza2ur5ehltvdeqsly2fx9'
 
     [[params.social_media.items]]
     enabled = true
@@ -62,9 +71,25 @@ logo = "joerg-profil-2024.webp"
     icon = 'brand-instagram'
     link = 'https://www.instagram.com/joerglohrer'
 
+[taxonomies]
+category = "Kategorien"
+tag = "Schlagworte"
+series = "Serien"
 
 [markup.goldmark.renderer]
 unsafe = true
 
 [markup.highlight]
 noClasses = false
+
+
+[pwa]
+  enabled = false
+  icon = "logo.png" # should be in assets
+  icon_sizes = [192, 512]
+
+  # will be used as the manifest.json file and merge the default one
+  # https://developer.mozilla.org/en-US/docs/Web/Manifest
+  # https://web.dev/add-manifest/
+  [pwa.manifest]
+  description = "Webseite Jörg Lohrer"
