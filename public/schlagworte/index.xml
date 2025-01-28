@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Schlagworte on Jörg Lohrer</title>
-    <link>https://joerg-lohrer.de/schlagworte/</link>
+    <link>http://localhost:1313/schlagworte/</link>
     <description>Recent content in Schlagworte on Jörg Lohrer</description>
-    <generator>Hugo</generator>
+    <generator>Hugo -- gohugo.io</generator>
     <language>de</language>
-    <managingEditor>user@example.com (Hugo Author)</managingEditor>
-    <webMaster>user@example.com (Hugo Author)</webMaster>
-    <atom:link href="https://joerg-lohrer.de/schlagworte/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/schlagworte/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

@@ -1,1016 +1,280 @@
 <!DOCTYPE html>
-<html lang="de" dir="ltr">
+<html lang="de" dir="auto">
+
 <head>
-	<meta name="generator" content="Hugo 0.134.3">
-  <title>Jörg Lohrer - Example site for hugo-theme-tailwind</title>
-  
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta
-  name="description"
-  content="Example site for hugo-theme-tailwind"
-/>
-<meta
-  name="keywords"
-  content="hugo, tailwind, tailwindcss, hugo theme, hugo theme tailwind"
-/>
-<meta name="robots" content="noodp" /><link rel="manifest" href="/manifest.json" /><meta property="og:url" content="https://joerg-lohrer.de/">
-  <meta property="og:site_name" content="Jörg Lohrer">
-  <meta property="og:title" content="Jörg Lohrer">
-  <meta property="og:locale" content="de">
-  <meta property="og:type" content="website">
+	<meta name="generator" content="Hugo 0.139.3"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Jörg Lohrer</title>
 
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="http://localhost:1313/index.xml">
+<link rel="alternate" type="application/json" href="http://localhost:1313/index.json">
+<link rel="alternate" hreflang="de" href="http://localhost:1313/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
 
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Jörg Lohrer">
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
 
+            .list {
+                background: var(--theme);
+            }
 
-<link rel="canonical" href="https://joerg-lohrer.de/" />
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
 
-<link rel="shortcut icon" href="/favicon.ico" />
-<link rel="stylesheet" href="/css/index.min.c860e17f20d9f258820c02bf7ab3f57c9595d0bc21dede7eda08ccd63ba3f4cc.css">
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
 
-
-
-
-
-
-
-
-
-  
+    </style>
+</noscript>
 </head>
-<body class="flex flex-col min-h-screen w-full bg-slate-50 dark:bg-gray-800"><header class="flex flex-none justify-center z-10">
-    <div class="flex flex-row gap justify-between w-full max-w-4xl lg:max-w-5xl h-12 mt-3">
-  <div class="flex-none ml-2 md:ml-0">
-    <a href="/" class="">
-      <img class="h-12 w-12 rounded-full object-cover bg-gray-100" src="/joerg-profil-2024.webp" alt="logo">
+
+<body class="list" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="Jörg Lohrer (Alt + H)">Jörg Lohrer</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                <ul class="lang-switch"><li>|</li>
+                </ul>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/" title="Home">
+                    <span class="active">Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/archives/" title="Blog">
+                    <span>Blog</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/impressum/" title="Impressum">
+                    <span>Impressum</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://reliverse.social/@joerglohrer" title="Mastodon">
+                    <span><i class="fa fa-heart"></i>Mastodon</span>&nbsp;
+                    <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                        <path d="M15 3h6v6"></path>
+                        <path d="M10 14L21 3"></path>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main"><div class="profile">
+    <div class="profile_inner">
+        <img draggable="false" src="http://localhost:1313/joerg-profil-2024.webp" alt="Mein Profilbild" title="Mein Profilbild"
+            height="120" width="120" />
+        <h1>Hi 🖖</h1>
+        <span>Willkommen auf meinem Blog 🤗</span><div class="social-icons" >
+    <a href="https://reliverse.social/@joerglohrer" target="_blank" rel="noopener noreferrer me"
+        title="Mastodon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+    stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M21.58 13.913c-.29 1.469-2.592 3.121-5.238 3.396-1.379.184-2.737.368-4.185.276-2.368-.092-4.237-.551-4.237-.551 0 .184.014.459.043.643.308 2.294 2.317 2.478 4.22 2.57 1.922 0 3.633-.46 3.633-.46l.079 1.653s-1.344.734-3.738.918c-1.32.091-2.96-.092-4.869-.551-4.14-1.102-4.853-5.507-4.961-10.005-.034-1.285-.013-2.57-.013-3.58 0-4.589 3-5.966 3-5.966 1.513-.734 4.11-1.01 6.808-1.01h.067c2.699 0 5.296.276 6.81 1.01 0 0 3 1.377 3 5.967 0 0 .037 3.304-.419 5.69"
+        stroke="currentColor" />
+    <path
+        d="M17.832 8.633v5h-1.978V8.78c0-1.023-.43-1.542-1.29-1.542-.95 0-1.427.616-1.427 1.834v2.655H11.17V9.072c0-1.218-.476-1.834-1.427-1.834-.86 0-1.29.52-1.29 1.542v4.852H6.475V8.633c0-1.022.26-1.834.782-2.434.538-.6 1.243-.909 2.118-.909 1.012 0 1.779.39 2.286 1.169l.492.827.493-.827c.507-.78 1.274-1.169 2.286-1.169.875 0 1.58.308 2.118.909.522.6.782 1.412.782 2.434"
+        fill="currentColor" stroke="none" />
+</svg>
     </a>
-  </div>
-  <div class="flex-1"></div>
-  <div class="flex-none">
-    
-
-
-
-<nav class="h-full static">
-  <button id="navbar-menu-toggle" type="button" class="inline-flex items-center p-2 text-sm text-slate-800 dark:text-slate-200 rounded-lg md:hidden" aria-controls="navbar-menu" aria-expanded="false">
-    <span class="sr-only">Hauptmenü öffnen</span>
-    <i class="w-8 h-8">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-  <path d="M4 6l16 0" />
-  <path d="M4 12l16 0" />
-  <path d="M4 18l16 0" />
+    <a href="mailto:lohrer@comenius?subject=Kontakt%20%C3%BCber%20joerg-lohrer.de&amp;body=Hallo%20J%C3%B6rg,%0D%0A%0D%0Aich%20nehme%20%C3%BCber%20deine%20Webseite%20Kontakt%20mit%20dir%20auf." target="_blank" rel="noopener noreferrer me"
+        title="Email">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 21" fill="none" stroke="currentColor" stroke-width="2"
+    stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+    <polyline points="22,6 12,13 2,6"></polyline>
 </svg>
-
-    </i>
-  </button>
-  <div class="absolute md:static top-16 left-0 right-0 z-50 hidden w-full md:block md:w-auto" id="navbar-menu">
-    <ul class="flex flex-col mx-2 md:mx-0 md:flex-row md:border-0 rounded-sm md:rounded-full px-3 text-base font-medium text-slate-800 dark:text-slate-200 shadow-lg bg-white dark:bg-gray-600 shadow-slate-800/5 dark:shadow-slate-200/5 ring-1 ring-slate-900/5 dark:ring-slate-100/5">
-    
-        <li id="" class="">
-          <a class="block px-3 py-3 hover:text-emerald-600 text-emerald-600"
-            href="/" title="Home">Home</a>
-        </li>
-      
-    
-        <li id="" class="">
-          <a class="block px-3 py-3 hover:text-emerald-600"
-            href="" title="Schlagworte">Schlagworte</a>
-        </li>
-      
-    
-        <li id="" class="">
-          <a class="block px-3 py-3 hover:text-emerald-600"
-            href="/impressum/" title="Impressum">Impressum</a>
-        </li>
-      
-    
-        <li id="" class="">
-          <a class="block px-3 py-3 hover:text-emerald-600"
-            href="https://reliverse.social/@joerglohrer" title="Mastodon">Mastodon</a>
-        </li>
-      
-    
-    </ul>
-  </div>
-</nav>
-
-
-  </div>
-  
-  <div class="flex-none mx-1"></div>
-  
-  <div class="flex-none md:hidden">
-    <a href=/search/ class="inline-flex items-center p-2 text-sm text-slate-800 dark:text-slate-200 rounded-lg" aria-controls="navbar-menu" aria-expanded="false">
-      <span class="sr-only">Suche</span>
-      <i class="w-8 h-8">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-    <path d="M21 21l-6 -6" />
-</svg>
-
-      </i>
     </a>
-  </div>
-  <div class="darkmode-toggle flex flex-none mr-2 md:mr-0">
-    <label for="darkmode-toggle" class="flex items-center px-3 cursor-pointer rounded-full bg-gray-100 dark:bg-gray-600" title="Dark Mode umschalten">
-      <input name="darkmode-toggle" id="darkmode-toggle" type="checkbox" class="sr-only peer" aria-label="Dark Mode umschalten">
-      <div class="group flex flex-row gap-1 justify-center h-8 px-1 rounded-full bg-white dark:bg-gray-700">
-        <i class="h-6 w-6 flex-none rounded-full bg-yellow-400 place-self-center peer-checked:group-[]:invisible">
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brightness-down" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
-   <path d="M12 5l0 .01"></path>
-   <path d="M17 7l0 .01"></path>
-   <path d="M19 12l0 .01"></path>
-   <path d="M17 17l0 .01"></path>
-   <path d="M12 19l0 .01"></path>
-   <path d="M7 17l0 .01"></path>
-   <path d="M5 12l0 .01"></path>
-   <path d="M7 7l0 .01"></path>
+    <a href="https://www.linkedin.com/in/joerglohrer" target="_blank" rel="noopener noreferrer me"
+        title="Linkedin">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+    stroke-linecap="round" stroke-linejoin="round">
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+    <rect x="2" y="9" width="4" height="12"></rect>
+    <circle cx="4" cy="4" r="2"></circle>
 </svg>
-
-        </i>
-        <i class="h-6 w-6 flex-none rounded-full place-self-center invisible peer-checked:group-[]:visible">
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon-stars" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path>
-   <path d="M17 4a2 2 0 0 0 2 2a2 2 0 0 0 -2 2a2 2 0 0 0 -2 -2a2 2 0 0 0 2 -2"></path>
-   <path d="M19 11h2m-1 -1v2"></path>
+    </a>
+    <a href="/index.xml" target="_blank" rel="noopener noreferrer me"
+        title="Rss">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+    stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 11a9 9 0 0 1 9 9" />
+    <path d="M4 4a16 16 0 0 1 16 16" />
+    <circle cx="5" cy="19" r="1" />
 </svg>
-
-        </i>
-      </div>
-    </label>
-  </div>
+    </a>
+    <a href="/index.json" target="_blank" rel="noopener noreferrer me"
+        title="Cv">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+    stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M4 4v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8.342a2 2 0 0 0-.602-1.43l-4.44-4.342A2 2 0 0 0 13.56 2H6a2 2 0 0 0-2 2z" />
+    <path d="M9 13h6" />
+    <path d="M9 17h3" />
+    <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+</svg>
+    </a>
 </div>
 
-  </header>
-  <main class="flex flex-auto justify-center">
-    
-
-  
-  
-
-  
-  
-  
-  
-    
-    
-  
-
-  <div class="flex flex-col w-full max-w-4xl lg:max-w-5xl relative">
-    <div class="flex flex-row">
-      <section class="flex flex-col w-full md:w-2/3">
-        
-          <article class="flex flex-col mt-6 mx-2 md:mx-0 rounded-lg overflow-hidden shadow-md bg-white dark:bg-gray-700">
-            <div>
-              <a href="/2024/04/03/kibedenken-bewusstsein.html/">
-                <picture>
-    <source type="image/webp" srcset="/2024/04/03/kibedenken-bewusstsein.html/kibedenken_hu15342743605700046038.webp 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
-    <source type="image/jpeg" srcset="/2024/04/03/kibedenken-bewusstsein.html/kibedenken_hu13247411987547960460.jpg 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
-    <img class="w-full object-cover h-36 md:h-48 xl:h-60" src="/2024/04/03/kibedenken-bewusstsein.html/kibedenken_hu1083428759863546496.jpg" width="1024" height="1024" alt="KIBedenken - Bewusstsein" title="KIBedenken - Bewusstsein" loading="lazy" />
-  </picture>
-              </a>
-            </div>
-            <div class="flex flex-col gap-y-3 p-6">
-              <h2 class="text-4xl font-semibold text-slate-800 dark:text-slate-200">
-                <a href="/2024/04/03/kibedenken-bewusstsein.html/">KIBedenken - Bewusstsein</a>
-              </h2>
-
-              
-  <div class="my-4 text-large text-slate-600 dark:text-slate-300">
-    Intelligenz oder Bewusstsein?
-  </div>
-
-
-              
-  <ul class="flex flex-row flex-wrap text-slate-500 dark:text-slate-300">
-    
-    
-      
-    
-  </ul>
-
-
-
-              <div class="flex flex-col gap-y-1 md:flex-row md:gap-y-0 md:gap-x-4 text-slate-500 dark:text-slate-300">
-  
-  
-  <div class="flex flex-row text-base gap-x-1">
-    <i class="h-6 w-6 flex-none">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"></path>
-   <path d="M16 3v4"></path>
-   <path d="M8 3v4"></path>
-   <path d="M4 11h16"></path>
-   <path d="M11 15h1"></path>
-   <path d="M12 15v3"></path>
-</svg>
-
-    </i>
-    <time datetime="2024-04-03T00:00:00&#43;00:00">
-      2024-04-03
-    </time>
-  </div>
-
-  <div class="flex flex-row text-base gap-x-1">
-    <i class="h-6 w-6 flex-none">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hourglass-high" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M6.5 7h11"></path>
-   <path d="M6 20v-2a6 6 0 1 1 12 0v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1z"></path>
-   <path d="M6 4v2a6 6 0 1 0 12 0v-2a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1z"></path>
-</svg>
-
-    </i>
-    <span>
-      Lesezeit 4 Minuten
-    </span>
-  </div>
-</div>
-
-              
-            </div>
-          </article>
-        
-          <article class="flex flex-col mt-6 mx-2 md:mx-0 rounded-lg overflow-hidden shadow-md bg-white dark:bg-gray-700">
-            <div>
-              <a href="/2024/03/05/bottomup-markdown.html/">
-                <picture>
-    <source type="image/webp" srcset="/2024/03/05/bottomup-markdown.html/bottomup-markdown_hu10177670039046064318.webp 960w, /2024/03/05/bottomup-markdown.html/bottomup-markdown_hu13399510185464128399.webp 1600w" sizes="(min-width: 1024px) 100vw, 50vw" />
-    <source type="image/jpeg" srcset="/2024/03/05/bottomup-markdown.html/bottomup-markdown_hu4956335918204206773.jpg 960w, /2024/03/05/bottomup-markdown.html/bottomup-markdown_hu13832637153479794961.jpg 1600w" sizes="(min-width: 1024px) 100vw, 50vw" />
-    <img class="w-full object-cover h-36 md:h-48 xl:h-60" src="/2024/03/05/bottomup-markdown.html/bottomup-markdown_hu546307839614069620.jpg" width="1938" height="1044" alt="BottomUp -&gt; MarkDown - 5V-Power für deine OER!" title="BottomUp -&gt; MarkDown - 5V-Power für deine OER!" loading="lazy" />
-  </picture>
-              </a>
-            </div>
-            <div class="flex flex-col gap-y-3 p-6">
-              <h2 class="text-4xl font-semibold text-slate-800 dark:text-slate-200">
-                <a href="/2024/03/05/bottomup-markdown.html/">BottomUp -&gt; MarkDown - 5V-Power für deine OER!</a>
-              </h2>
-
-              
-  <div class="my-4 text-large text-slate-600 dark:text-slate-300">
-    Open Educational Resources mit MarkDown
-  </div>
-
-
-              
-  <ul class="flex flex-row flex-wrap text-slate-500 dark:text-slate-300">
-    
-    
-      
-    
-  </ul>
-
-
-
-              <div class="flex flex-col gap-y-1 md:flex-row md:gap-y-0 md:gap-x-4 text-slate-500 dark:text-slate-300">
-  
-  
-  <div class="flex flex-row text-base gap-x-1">
-    <i class="h-6 w-6 flex-none">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"></path>
-   <path d="M16 3v4"></path>
-   <path d="M8 3v4"></path>
-   <path d="M4 11h16"></path>
-   <path d="M11 15h1"></path>
-   <path d="M12 15v3"></path>
-</svg>
-
-    </i>
-    <time datetime="2024-03-05T00:00:00&#43;00:00">
-      2024-03-05
-    </time>
-  </div>
-
-  <div class="flex flex-row text-base gap-x-1">
-    <i class="h-6 w-6 flex-none">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hourglass-high" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M6.5 7h11"></path>
-   <path d="M6 20v-2a6 6 0 1 1 12 0v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1z"></path>
-   <path d="M6 4v2a6 6 0 1 0 12 0v-2a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1z"></path>
-</svg>
-
-    </i>
-    <span>
-      Lesezeit 2 Minuten
-    </span>
-  </div>
-</div>
-
-              
-            </div>
-          </article>
-        
-          <article class="flex flex-col mt-6 mx-2 md:mx-0 rounded-lg overflow-hidden shadow-md bg-white dark:bg-gray-700">
-            <div>
-              <a href="/2024/01/26/offenheit-das-wesentliche.html/">
-                <picture>
-    <source type="image/webp" srcset="/2024/01/26/offenheit-das-wesentliche.html/offenheit-wesentlich_hu11480375316359321740.webp 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
-    <source type="image/jpeg" srcset="/2024/01/26/offenheit-das-wesentliche.html/offenheit-wesentlich_hu116850419109472784.jpg 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
-    <img class="w-full object-cover h-36 md:h-48 xl:h-60" src="/2024/01/26/offenheit-das-wesentliche.html/offenheit-wesentlich_hu6831832035028359509.jpg" width="1024" height="1024" alt="Offenheit - das Wesentliche" title="Offenheit - das Wesentliche" loading="lazy" />
-  </picture>
-              </a>
-            </div>
-            <div class="flex flex-col gap-y-3 p-6">
-              <h2 class="text-4xl font-semibold text-slate-800 dark:text-slate-200">
-                <a href="/2024/01/26/offenheit-das-wesentliche.html/">Offenheit - das Wesentliche</a>
-              </h2>
-
-              
-  <div class="my-4 text-large text-slate-600 dark:text-slate-300">
-    Ein Beitrag zu Teil 1 “Mein (schulisches) Motto für 2024” der EduBlogparade
-  </div>
-
-
-              
-  <ul class="flex flex-row flex-wrap text-slate-500 dark:text-slate-300">
-    
-    
-      
-    
-  </ul>
-
-
-
-              <div class="flex flex-col gap-y-1 md:flex-row md:gap-y-0 md:gap-x-4 text-slate-500 dark:text-slate-300">
-  
-  
-  <div class="flex flex-row text-base gap-x-1">
-    <i class="h-6 w-6 flex-none">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"></path>
-   <path d="M16 3v4"></path>
-   <path d="M8 3v4"></path>
-   <path d="M4 11h16"></path>
-   <path d="M11 15h1"></path>
-   <path d="M12 15v3"></path>
-</svg>
-
-    </i>
-    <time datetime="2024-01-26T00:00:00&#43;00:00">
-      2024-01-26
-    </time>
-  </div>
-
-  <div class="flex flex-row text-base gap-x-1">
-    <i class="h-6 w-6 flex-none">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hourglass-high" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M6.5 7h11"></path>
-   <path d="M6 20v-2a6 6 0 1 1 12 0v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1z"></path>
-   <path d="M6 4v2a6 6 0 1 0 12 0v-2a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1z"></path>
-</svg>
-
-    </i>
-    <span>
-      Lesezeit 11 Minuten
-    </span>
-  </div>
-</div>
-
-              
-            </div>
-          </article>
-        
-          <article class="flex flex-col mt-6 mx-2 md:mx-0 rounded-lg overflow-hidden shadow-md bg-white dark:bg-gray-700">
-            <div>
-              <a href="/2023/07/25/wordpress-statt-padlet-oder-taskcards.html/">
-                <picture>
-    <source type="image/webp" srcset="" sizes="(min-width: 1024px) 100vw, 50vw" />
-    <source type="image/jpeg" srcset="" sizes="(min-width: 1024px) 100vw, 50vw" />
-    <img class="w-full object-cover h-36 md:h-48 xl:h-60" src="/2023/07/25/wordpress-statt-padlet-oder-taskcards.html/wordpress-horizontales-scrollen_hu8993432013457519753.jpg" width="320" height="180" alt="WordPress statt Padlet oder TaskCards" title="WordPress statt Padlet oder TaskCards" loading="lazy" />
-  </picture>
-              </a>
-            </div>
-            <div class="flex flex-col gap-y-3 p-6">
-              <h2 class="text-4xl font-semibold text-slate-800 dark:text-slate-200">
-                <a href="/2023/07/25/wordpress-statt-padlet-oder-taskcards.html/">WordPress statt Padlet oder TaskCards</a>
-              </h2>
-
-              
-  <div class="my-4 text-large text-slate-600 dark:text-slate-300">
-    Mit WordPress, horizontalem Scrolling und Beitragskategorien Sammlungen im Kanban-Style erstellen
-  </div>
-
-
-              
-  <ul class="flex flex-row flex-wrap text-slate-500 dark:text-slate-300">
-    
-    
-      
-    
-  </ul>
-
-
-
-              <div class="flex flex-col gap-y-1 md:flex-row md:gap-y-0 md:gap-x-4 text-slate-500 dark:text-slate-300">
-  
-  
-  <div class="flex flex-row text-base gap-x-1">
-    <i class="h-6 w-6 flex-none">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"></path>
-   <path d="M16 3v4"></path>
-   <path d="M8 3v4"></path>
-   <path d="M4 11h16"></path>
-   <path d="M11 15h1"></path>
-   <path d="M12 15v3"></path>
-</svg>
-
-    </i>
-    <time datetime="2023-07-25T00:00:00&#43;00:00">
-      2023-07-25
-    </time>
-  </div>
-
-  <div class="flex flex-row text-base gap-x-1">
-    <i class="h-6 w-6 flex-none">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hourglass-high" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M6.5 7h11"></path>
-   <path d="M6 20v-2a6 6 0 1 1 12 0v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1z"></path>
-   <path d="M6 4v2a6 6 0 1 0 12 0v-2a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1z"></path>
-</svg>
-
-    </i>
-    <span>
-      Lesezeit 2 Minuten
-    </span>
-  </div>
-</div>
-
-              
-            </div>
-          </article>
-        
-          <article class="flex flex-col mt-6 mx-2 md:mx-0 rounded-lg overflow-hidden shadow-md bg-white dark:bg-gray-700">
-            <div>
-              <a href="/2023/04/07/dampfnudeln.html/">
-                <picture>
-    <source type="image/webp" srcset="/2023/04/07/dampfnudeln.html/Hefefreuden_hu7821130166783535991.webp 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
-    <source type="image/jpeg" srcset="/2023/04/07/dampfnudeln.html/Hefefreuden_hu11359129013864221912.jpg 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
-    <img class="w-full object-cover h-36 md:h-48 xl:h-60" src="/2023/04/07/dampfnudeln.html/Hefefreuden_hu17894683376227858432.jpg" width="1080" height="1920" alt="Hefefreuden - Dampfnudeln &amp; Minihefezopf" title="Hefefreuden - Dampfnudeln &amp; Minihefezopf" loading="lazy" />
-  </picture>
-              </a>
-            </div>
-            <div class="flex flex-col gap-y-3 p-6">
-              <h2 class="text-4xl font-semibold text-slate-800 dark:text-slate-200">
-                <a href="/2023/04/07/dampfnudeln.html/">Hefefreuden - Dampfnudeln &amp; Minihefezopf</a>
-              </h2>
-
-              
-  <div class="my-4 text-large text-slate-600 dark:text-slate-300">
-    Rezept und Backanleitung
-  </div>
-
-
-              
-  <ul class="flex flex-row flex-wrap text-slate-500 dark:text-slate-300">
-    
-    
-      
-    
-  </ul>
-
-
-
-              <div class="flex flex-col gap-y-1 md:flex-row md:gap-y-0 md:gap-x-4 text-slate-500 dark:text-slate-300">
-  
-  
-  <div class="flex flex-row text-base gap-x-1">
-    <i class="h-6 w-6 flex-none">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"></path>
-   <path d="M16 3v4"></path>
-   <path d="M8 3v4"></path>
-   <path d="M4 11h16"></path>
-   <path d="M11 15h1"></path>
-   <path d="M12 15v3"></path>
-</svg>
-
-    </i>
-    <time datetime="2023-04-07T00:00:00&#43;00:00">
-      2023-04-07
-    </time>
-  </div>
-
-  <div class="flex flex-row text-base gap-x-1">
-    <i class="h-6 w-6 flex-none">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hourglass-high" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M6.5 7h11"></path>
-   <path d="M6 20v-2a6 6 0 1 1 12 0v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1z"></path>
-   <path d="M6 4v2a6 6 0 1 0 12 0v-2a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1z"></path>
-</svg>
-
-    </i>
-    <span>
-      Lesezeit eine Minute
-    </span>
-  </div>
-</div>
-
-              
-            </div>
-          </article>
-        
-          <article class="flex flex-col mt-6 mx-2 md:mx-0 rounded-lg overflow-hidden shadow-md bg-white dark:bg-gray-700">
-            <div>
-              <a href="/2023/03/23/gleichnis-vom-saemann.html/">
-                <picture>
-    <source type="image/webp" srcset="/2023/03/23/gleichnis-vom-saemann.html/saemann-title_hu104458900384719774.webp 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
-    <source type="image/jpeg" srcset="/2023/03/23/gleichnis-vom-saemann.html/saemann-title_hu2444220126132725318.jpg 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
-    <img class="w-full object-cover h-36 md:h-48 xl:h-60" src="/2023/03/23/gleichnis-vom-saemann.html/saemann-title_hu9436144317669752987.jpg" width="1024" height="1024" alt="Das Gleichnis vom Sämann" title="Das Gleichnis vom Sämann" loading="lazy" />
-  </picture>
-              </a>
-            </div>
-            <div class="flex flex-col gap-y-3 p-6">
-              <h2 class="text-4xl font-semibold text-slate-800 dark:text-slate-200">
-                <a href="/2023/03/23/gleichnis-vom-saemann.html/">Das Gleichnis vom Sämann</a>
-              </h2>
-
-              
-  <div class="my-4 text-large text-slate-600 dark:text-slate-300">
-    erstellt mit ChatGPT, Deepl und Midjourney Prompts im Stil von Eric Carle
-  </div>
-
-
-              
-  <ul class="flex flex-row flex-wrap text-slate-500 dark:text-slate-300">
-    
-    
-      
-    
-  </ul>
-
-
-
-              <div class="flex flex-col gap-y-1 md:flex-row md:gap-y-0 md:gap-x-4 text-slate-500 dark:text-slate-300">
-  
-  
-  <div class="flex flex-row text-base gap-x-1">
-    <i class="h-6 w-6 flex-none">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"></path>
-   <path d="M16 3v4"></path>
-   <path d="M8 3v4"></path>
-   <path d="M4 11h16"></path>
-   <path d="M11 15h1"></path>
-   <path d="M12 15v3"></path>
-</svg>
-
-    </i>
-    <time datetime="2023-03-23T00:00:00&#43;00:00">
-      2023-03-23
-    </time>
-  </div>
-
-  <div class="flex flex-row text-base gap-x-1">
-    <i class="h-6 w-6 flex-none">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hourglass-high" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M6.5 7h11"></path>
-   <path d="M6 20v-2a6 6 0 1 1 12 0v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1z"></path>
-   <path d="M6 4v2a6 6 0 1 0 12 0v-2a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1z"></path>
-</svg>
-
-    </i>
-    <span>
-      Lesezeit 5 Minuten
-    </span>
-  </div>
-</div>
-
-              
-            </div>
-          </article>
-        
-          <article class="flex flex-col mt-6 mx-2 md:mx-0 rounded-lg overflow-hidden shadow-md bg-white dark:bg-gray-700">
-            <div>
-              <a href="/2023/02/26/jojos-schoko-zimt-schnecken.html/">
-                <picture>
-    <source type="image/webp" srcset="/2023/02/26/jojos-schoko-zimt-schnecken.html/schneckennudeln-titel_hu12255186277946610706.webp 960w, /2023/02/26/jojos-schoko-zimt-schnecken.html/schneckennudeln-titel_hu4666334687069260933.webp 1600w" sizes="(min-width: 1024px) 100vw, 50vw" />
-    <source type="image/jpeg" srcset="/2023/02/26/jojos-schoko-zimt-schnecken.html/schneckennudeln-titel_hu7805100232770969007.jpg 960w, /2023/02/26/jojos-schoko-zimt-schnecken.html/schneckennudeln-titel_hu12209983917560222609.jpg 1600w" sizes="(min-width: 1024px) 100vw, 50vw" />
-    <img class="w-full object-cover h-36 md:h-48 xl:h-60" src="/2023/02/26/jojos-schoko-zimt-schnecken.html/schneckennudeln-titel_hu13675809399321121671.jpg" width="2117" height="2822" alt="Jojos Schoko-Zimt-Schnecken" title="Jojos Schoko-Zimt-Schnecken" loading="lazy" />
-  </picture>
-              </a>
-            </div>
-            <div class="flex flex-col gap-y-3 p-6">
-              <h2 class="text-4xl font-semibold text-slate-800 dark:text-slate-200">
-                <a href="/2023/02/26/jojos-schoko-zimt-schnecken.html/">Jojos Schoko-Zimt-Schnecken</a>
-              </h2>
-
-              
-  <div class="my-4 text-large text-slate-600 dark:text-slate-300">
-    Rezept und Backanleitung
-  </div>
-
-
-              
-  <ul class="flex flex-row flex-wrap text-slate-500 dark:text-slate-300">
-    
-    
-      
-    
-  </ul>
-
-
-
-              <div class="flex flex-col gap-y-1 md:flex-row md:gap-y-0 md:gap-x-4 text-slate-500 dark:text-slate-300">
-  
-  
-  <div class="flex flex-row text-base gap-x-1">
-    <i class="h-6 w-6 flex-none">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"></path>
-   <path d="M16 3v4"></path>
-   <path d="M8 3v4"></path>
-   <path d="M4 11h16"></path>
-   <path d="M11 15h1"></path>
-   <path d="M12 15v3"></path>
-</svg>
-
-    </i>
-    <time datetime="2023-02-26T00:00:00&#43;00:00">
-      2023-02-26
-    </time>
-  </div>
-
-  <div class="flex flex-row text-base gap-x-1">
-    <i class="h-6 w-6 flex-none">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hourglass-high" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M6.5 7h11"></path>
-   <path d="M6 20v-2a6 6 0 1 1 12 0v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1z"></path>
-   <path d="M6 4v2a6 6 0 1 0 12 0v-2a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1z"></path>
-</svg>
-
-    </i>
-    <span>
-      Lesezeit eine Minute
-    </span>
-  </div>
-</div>
-
-              
-            </div>
-          </article>
-        
-          <article class="flex flex-col mt-6 mx-2 md:mx-0 rounded-lg overflow-hidden shadow-md bg-white dark:bg-gray-700">
-            <div>
-              <a href="/2022/03/19/ob-virtualcam.html/">
-                <picture>
-    <source type="image/webp" srcset="/2022/03/19/ob-virtualcam.html/29-autostartordner_hu757134893708700917.webp 960w, /2022/03/19/ob-virtualcam.html/29-autostartordner_hu5348513433344205483.webp 1600w" sizes="(min-width: 1024px) 100vw, 50vw" />
-    <source type="image/jpeg" srcset="/2022/03/19/ob-virtualcam.html/29-autostartordner_hu8947380218944878913.jpg 960w, /2022/03/19/ob-virtualcam.html/29-autostartordner_hu15498383256037113375.jpg 1600w" sizes="(min-width: 1024px) 100vw, 50vw" />
-    <img class="w-full object-cover h-36 md:h-48 xl:h-60" src="/2022/03/19/ob-virtualcam.html/29-autostartordner_hu3228479104877654635.jpg" width="1999" height="1373" alt="Auf Google Cloud Platform mit Ubuntu Desktop via Chrome Remote Desktop OBS und Zoom fernsteuern" title="Auf Google Cloud Platform mit Ubuntu Desktop via Chrome Remote Desktop OBS und Zoom fernsteuern" loading="lazy" />
-  </picture>
-              </a>
-            </div>
-            <div class="flex flex-col gap-y-3 p-6">
-              <h2 class="text-4xl font-semibold text-slate-800 dark:text-slate-200">
-                <a href="/2022/03/19/ob-virtualcam.html/">Auf Google Cloud Platform mit Ubuntu Desktop via Chrome Remote Desktop OBS und Zoom fernsteuern</a>
-              </h2>
-
-              
-  <div class="my-4 text-large text-slate-600 dark:text-slate-300">
-    Via Konsole Instanz in aufsetzen, Desktop-Linux installieren, Apps einrichten und konfigurieren
-  </div>
-
-
-              
-  <ul class="flex flex-row flex-wrap text-slate-500 dark:text-slate-300">
-    
-    
-      
-    
-  </ul>
-
-
-
-              <div class="flex flex-col gap-y-1 md:flex-row md:gap-y-0 md:gap-x-4 text-slate-500 dark:text-slate-300">
-  
-  
-  <div class="flex flex-row text-base gap-x-1">
-    <i class="h-6 w-6 flex-none">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"></path>
-   <path d="M16 3v4"></path>
-   <path d="M8 3v4"></path>
-   <path d="M4 11h16"></path>
-   <path d="M11 15h1"></path>
-   <path d="M12 15v3"></path>
-</svg>
-
-    </i>
-    <time datetime="2022-03-19T00:00:00&#43;00:00">
-      2022-03-19
-    </time>
-  </div>
-
-  <div class="flex flex-row text-base gap-x-1">
-    <i class="h-6 w-6 flex-none">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hourglass-high" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M6.5 7h11"></path>
-   <path d="M6 20v-2a6 6 0 1 1 12 0v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1z"></path>
-   <path d="M6 4v2a6 6 0 1 0 12 0v-2a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1z"></path>
-</svg>
-
-    </i>
-    <span>
-      Lesezeit 3 Minuten
-    </span>
-  </div>
-</div>
-
-              
-            </div>
-          </article>
-        
-          <article class="flex flex-col mt-6 mx-2 md:mx-0 rounded-lg overflow-hidden shadow-md bg-white dark:bg-gray-700">
-            <div>
-              <a href="/2022/02/16/moodle-iomad-linux.html/">
-                <picture>
-    <source type="image/webp" srcset="/2022/02/16/moodle-iomad-linux.html/title-gif_hu3623969665034820503.webp 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
-    <source type="image/jpeg" srcset="/2022/02/16/moodle-iomad-linux.html/title-gif_hu17894921011820061086.jpg 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
-    <img class="w-full object-cover h-36 md:h-48 xl:h-60" src="/2022/02/16/moodle-iomad-linux.html/title-gif_hu3721531138749118599.jpg" width="1440" height="810" alt="Moodle Server mit Ubuntu 20 LTS und Iomad" title="Moodle Server mit Ubuntu 20 LTS und Iomad" loading="lazy" />
-  </picture>
-              </a>
-            </div>
-            <div class="flex flex-col gap-y-3 p-6">
-              <h2 class="text-4xl font-semibold text-slate-800 dark:text-slate-200">
-                <a href="/2022/02/16/moodle-iomad-linux.html/">Moodle Server mit Ubuntu 20 LTS und Iomad</a>
-              </h2>
-
-              
-  <div class="my-4 text-large text-slate-600 dark:text-slate-300">
-    Installation von Iomad zur Moodle-Instanz-Verwaltung
-  </div>
-
-
-              
-  <ul class="flex flex-row flex-wrap text-slate-500 dark:text-slate-300">
-    
-    
-      
-    
-  </ul>
-
-
-
-              <div class="flex flex-col gap-y-1 md:flex-row md:gap-y-0 md:gap-x-4 text-slate-500 dark:text-slate-300">
-  
-  
-  <div class="flex flex-row text-base gap-x-1">
-    <i class="h-6 w-6 flex-none">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"></path>
-   <path d="M16 3v4"></path>
-   <path d="M8 3v4"></path>
-   <path d="M4 11h16"></path>
-   <path d="M11 15h1"></path>
-   <path d="M12 15v3"></path>
-</svg>
-
-    </i>
-    <time datetime="2022-02-16T00:00:00&#43;00:00">
-      2022-02-16
-    </time>
-  </div>
-
-  <div class="flex flex-row text-base gap-x-1">
-    <i class="h-6 w-6 flex-none">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hourglass-high" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M6.5 7h11"></path>
-   <path d="M6 20v-2a6 6 0 1 1 12 0v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1z"></path>
-   <path d="M6 4v2a6 6 0 1 0 12 0v-2a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1z"></path>
-</svg>
-
-    </i>
-    <span>
-      Lesezeit 2 Minuten
-    </span>
-  </div>
-</div>
-
-              
-            </div>
-          </article>
-        
-          <article class="flex flex-col mt-6 mx-2 md:mx-0 rounded-lg overflow-hidden shadow-md bg-white dark:bg-gray-700">
-            <div>
-              <a href="/2021/12/03/bibelfussball.html/">
-                <picture>
-    <source type="image/webp" srcset="/2021/12/03/bibelfussball.html/bibelfussball1_hu14549478584464405721.webp 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
-    <source type="image/jpeg" srcset="/2021/12/03/bibelfussball.html/bibelfussball1_hu10833856955685728855.jpg 960w" sizes="(min-width: 1024px) 100vw, 50vw" />
-    <img class="w-full object-cover h-36 md:h-48 xl:h-60" src="/2021/12/03/bibelfussball.html/bibelfussball1_hu2267264868206047367.jpg" width="1080" height="1080" alt="Bibelfußball - Nachschlage-Quiz zur Bibel" title="Bibelfußball - Nachschlage-Quiz zur Bibel" loading="lazy" />
-  </picture>
-              </a>
-            </div>
-            <div class="flex flex-col gap-y-3 p-6">
-              <h2 class="text-4xl font-semibold text-slate-800 dark:text-slate-200">
-                <a href="/2021/12/03/bibelfussball.html/">Bibelfußball - Nachschlage-Quiz zur Bibel</a>
-              </h2>
-
-              
-  <div class="my-4 text-large text-slate-600 dark:text-slate-300">
-    Bibelfußball ist ein einfaches und begeisterndes Quizduell, bei dem die Lehrperson die Klasse in zwei Hälften teilt, die wie beim Fußball gegeneinander spielen.
-  </div>
-
-
-              
-  <ul class="flex flex-row flex-wrap text-slate-500 dark:text-slate-300">
-    
-    
-      
-    
-  </ul>
-
-
-
-              <div class="flex flex-col gap-y-1 md:flex-row md:gap-y-0 md:gap-x-4 text-slate-500 dark:text-slate-300">
-  
-  
-  <div class="flex flex-row text-base gap-x-1">
-    <i class="h-6 w-6 flex-none">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"></path>
-   <path d="M16 3v4"></path>
-   <path d="M8 3v4"></path>
-   <path d="M4 11h16"></path>
-   <path d="M11 15h1"></path>
-   <path d="M12 15v3"></path>
-</svg>
-
-    </i>
-    <time datetime="2021-12-03T00:00:00&#43;00:00">
-      2021-12-03
-    </time>
-  </div>
-
-  <div class="flex flex-row text-base gap-x-1">
-    <i class="h-6 w-6 flex-none">
-      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hourglass-high" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M6.5 7h11"></path>
-   <path d="M6 20v-2a6 6 0 1 1 12 0v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1z"></path>
-   <path d="M6 4v2a6 6 0 1 0 12 0v-2a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1z"></path>
-</svg>
-
-    </i>
-    <span>
-      Lesezeit 6 Minuten
-    </span>
-  </div>
-</div>
-
-              
-            </div>
-          </article>
-        
-      </section>
-      <aside class="hidden md:flex flex-col md:w-1/3 ml-3 top-0 sticky self-start">
-        <section class="pl-6 mt-6 w-full max-w-4xl lg:max-w-5xl">
-  <form class="" action=/search/ method="get">
-    <div class="flex">
-      <input type="text" name="search" id="search-input" required placeholder="Suche..." class="rounded-none rounded-s-lg border border-gray-300 text-slate-800 focus:outline-none focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-3  dark:bg-slate-700 dark:border-slate-600 dark:placeholder-slate-400 dark:text-slate-200 dark:focus:ring-blue-500 dark:focus:border-blue-500">
-      <button class="inline-flex items-center px-3 text-sm text-slate-900 bg-slate-200 border border-e-0 border-gray-300 rounded-e-lg dark:bg-slate-600 dark:text-slate-400 dark:border-slate-600">
-        <i class="h-6 w-6 flex-none">
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
-    <path d="M21 21l-6 -6" />
-</svg>
-
-        </i>
-      </button>
+        <div class="buttons">
+            <a class="button" href="/archives" rel="noopener" title="Archiv">
+                <span class="button-inner">
+                    Archiv
+                </span>
+            </a>
+            <a class="button" href="/tag" rel="noopener" title="tag">
+                <span class="button-inner">
+                    tag
+                </span>
+            </a>
+        </div>
     </div>
-  </form>
-</section>
-
-
-  
-
-  
-
-  
-
-
-      </aside>
-    </div>
-
-    
-<div class="flex flex-row justify-center mt-6 gap-2">
-  
-  
-    <a href="/page/2/"
-      class="flex flex-row text-base font-semibold rounded-md text-slate-700 dark:text-slate-300 bg-slate-200 dark:bg-gray-700 p-2 pl-3">
-      <span>Ältere Beiträge</span>
-      <i class="h-6 w-6 flex-none ml-1"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-caret-right" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M10 18l6 -6l-6 -6v12"></path>
-</svg>
-</i>
-    </a>
-  
 </div>
 
-
-  </div>
-
-  </main>
-  <footer class="flex flex-none justify-center">
-    <section class="flex flex-col md:flex-row mx-2 md:mx-0 gap-2 md:gap-0 justify-between w-full max-w-4xl lg:max-w-5xl py-6 text-slate-500 dark:text-slate-300">
-  <div class="flex flex-row">
+    </main>
     
-  
-  
-    <a href="https://reliverse.social/@joerglohrer" target="_blank" title="Mastodon" class="flex flex-row mr-2">
-      <span class="hidden">Mastodon</span>
-      <i class="h-6 w-6 flex-none"> <svg  xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-mastodon"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18.648 15.254c-1.816 1.763 -6.648 1.626 -6.648 1.626a18.262 18.262 0 0 1 -3.288 -.256c1.127 1.985 4.12 2.81 8.982 2.475c-1.945 2.013 -13.598 5.257 -13.668 -7.636l-.026 -1.154c0 -3.036 .023 -4.115 1.352 -5.633c1.671 -1.91 6.648 -1.666 6.648 -1.666s4.977 -.243 6.648 1.667c1.329 1.518 1.352 2.597 1.352 5.633s-.456 4.074 -1.352 4.944z" /><path d="M12 11.204v-2.926c0 -1.258 -.895 -2.278 -2 -2.278s-2 1.02 -2 2.278v4.722m4 -4.722c0 -1.258 .895 -2.278 2 -2.278s2 1.02 2 2.278v4.722" /></svg> </i>
-    </a>
-  
-  
-  
-    <a href="https://nostter.app/npub1f7jar3qnu269uyx5p0e4v24hqxjnxysxudvujza2ur5ehltvdeqsly2fx9" target="_blank" title="nostr" class="flex flex-row mr-2">
-      <span class="hidden">nostr</span>
-      <i class="h-6 w-6 flex-none"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-  <path
-     class="nostro"
-     d="m 21.219688,10.632199 v 9.782376 c 0,0.36788 -0.298537,0.666422 -0.666421,0.666422 h -7.997031 c -0.367884,0 -0.666422,-0.298542 -0.666422,-0.666422 v -1.82178 c 0.03645,-2.233152 0.272682,-4.372276 0.768675,-5.34546 0.297363,-0.58532 0.78748,-0.903839 1.350469,-1.074263 1.063686,-0.319694 2.93013,-0.10108 3.722312,-0.138691 0,0 2.392997,0.09521 2.392997,-1.259967 0,-1.0907187 -1.069562,-1.0049187 -1.069562,-1.0049187 -1.178867,0.03055 -2.076831,-0.04937 -2.658626,-0.278557 C 15.421721,9.1077763 15.388811,8.4049219 15.385285,8.1698534 15.337094,5.4548117 11.333878,5.1292411 7.8066742,5.8027121 3.9503743,6.536127 7.8489842,12.063765 7.8489842,19.44257 v 0.984936 c -0.00706,0.362004 -0.299712,0.654662 -0.6640682,0.654662 h -3.95973 c -0.3678829,0 -0.6664195,-0.298534 -0.6664195,-0.666415 V 3.4966903 c 0,-0.3678822 0.2985366,-0.6664194 0.6664195,-0.6664194 h 3.7223109 c 0.3678822,0 0.6664189,0.2985372 0.6664189,0.6664194 0,0.546534 0.6147044,0.8509478 1.0589839,0.5324305 1.3387143,-0.9590801 3.0570663,-1.4703543 4.9799263,-1.4703543 4.307633,0 7.564508,2.5105327 7.564508,8.0734325 z M 14.068901,8.6470424 c 0,-0.7874805 -0.638211,-1.4256909 -1.425691,-1.4256909 -0.787479,0 -1.425692,0.6382104 -1.425692,1.4256909 0,0.7874809 0.638213,1.4256916 1.425692,1.4256916 0.78748,0 1.425691,-0.6382107 1.425691,-1.4256916 z"
-     id="nostr"
-     style="fill:currentColor;fill-opacity:1;stroke-width:0.5" />
-</svg>
- </i>
-    </a>
-  
-  
-  
-    <a href="https://bsky.app/profile/joerglohrer.bsky.social" target="_blank" title="Bluesky" class="flex flex-row mr-2">
-      <span class="hidden">Bluesky</span>
-      <i class="h-6 w-6 flex-none"> <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-bluesky"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6.335 5.144c-1.654 -1.199 -4.335 -2.127 -4.335 .826c0 .59 .35 4.953 .556 5.661c.713 2.463 3.13 2.75 5.444 2.369c-4.045 .665 -4.889 3.208 -2.667 5.41c1.03 1.018 1.913 1.59 2.667 1.59c2 0 3.134 -2.769 3.5 -3.5c.333 -.667 .5 -1.167 .5 -1.5c0 .333 .167 .833 .5 1.5c.366 .731 1.5 3.5 3.5 3.5c.754 0 1.637 -.571 2.667 -1.59c2.222 -2.203 1.378 -4.746 -2.667 -5.41c2.314 .38 4.73 .094 5.444 -2.369c.206 -.708 .556 -5.072 .556 -5.661c0 -2.953 -2.68 -2.025 -4.335 -.826c-2.293 1.662 -4.76 5.048 -5.665 6.856c-.905 -1.808 -3.372 -5.194 -5.665 -6.856z" /></svg> </i>
-    </a>
-  
-  
-  
-    <a href="https://www.instagram.com/joerglohrer" target="_blank" title="Instagram" class="flex flex-row mr-2">
-      <span class="hidden">Instagram</span>
-      <i class="h-6 w-6 flex-none"> <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-instagram" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M4 4m0 4a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z"></path>
-   <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
-   <path d="M16.5 7.5l0 .01"></path>
-</svg>
- </i>
-    </a>
-  
-  
-
-
-  </div>
-  <div class="grow"></div>
-  <div class="flex flex-row">
-    <i class="h-6 w-6 flex-none"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-   <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
-   <path d="M14 9.75a3.016 3.016 0 0 0 -4.163 .173a2.993 2.993 0 0 0 0 4.154a3.016 3.016 0 0 0 4.163 .173"></path>
-</svg>
-</i> 2023 - 2024 
-    
-  </div>
-  
-  <div class="flex flex-row">
-    <span class="ml-0 pl-0 md:ml-2 md:pl-2 border-l-0 md:border-l border-slate-300 dark:border-slate-400">
-      Powered by <a href="https://gohugo.io" target="_blank" rel="noopener" class="underline">Hugo</a> <span class="text-red-600">&hearts;</span> <a href="https://github.com/tomowang/hugo-theme-tailwind" target="_blank" rel="noopener" class="underline">Tailwind</a>
+<footer class="footer">
+    <span>&copy; 2025 <a href="http://localhost:1313/">Jörg Lohrer</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+        <a rel="me" href="https://reliverse.social/@joerglohrer">Mastodon</a>
     </span>
-  </div>
-  
-</section>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
 
-  </footer>
-  <script src="/main.min.65ca5b0808abf278fcec5d424701ebf0b4bc46a737129cd5e57fdb739f463e79.js"></script>
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
 
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
 
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
 
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
 
+</script>
 </body>
+
 </html>

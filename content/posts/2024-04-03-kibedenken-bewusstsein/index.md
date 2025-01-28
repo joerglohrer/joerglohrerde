@@ -20,7 +20,10 @@ creator:
       name: Comenius-Institut
       id: https://ror.org/025e8aw85
       type: Organization
-
+cover: 
+  image: kibedenken.png
+  caption: "[CC0](https://creativecommons.org/publicdomain/zero/1.0/deed.de) Das Foto des Roboters, der seine Reflexion im Wasser betrachtet referenziert auf Narziss aus der griechischen Mythologie, der die Liebe anderer zurückwies und sich in sein eigenes Spiegelbild verliebte und die Illustration von Caravaggio [(siehe wikipedia #Narziss)](https://de.wikipedia.org/wiki/Narziss#) erstellt mit der KI Midjourney und dem Prompt: *photographed with the Canon EOS 5D Mark IV a young robot boy with his head down, looking at his reflection in water --v6.0* "
+  alt: "Das Foto des Roboters, der seine Reflexion im Wasser betrachtet referenziert auf Narziss aus der griechischen Mythologie, der die Liebe anderer zurückwies und sich in sein eigenes Spiegelbild verliebte und die Illustration von Caravaggio [(siehe wikipedia #Narziss)](https://de.wikipedia.org/wiki/Narziss#) erstellt mit der KI Midjourney und dem Prompt: *photographed with the Canon EOS 5D Mark IV a young robot boy with his head down, looking at his reflection in water --v6.0*"
 ---
 
 # #KIBedenken - Bewusstsein
@@ -36,9 +39,6 @@ Sinn, Seele und Verstand erhalten wir weder aus uns selbst heraus noch von einer
 Liebe, Gnade, Hoffnung, Frieden, Gemeinschaft, Trost, Zuversicht und viele weiteren lebensbedeutsame Erfahrungen gewinnen im Angesicht von Maschinen aus meiner Sicht an elementarer Bedeutung.
 
 Dies ist ein Beitrag zur Blogparade #KIBedenken von [Joscha Falck](https://joschafalck.de/blogparade-kibedenken/) und [Nele Hirsch](https://ebildungslabor.de/blog/aufruf-zur-blogparade-kibedenken/)
-
-![](kibedenken.png)
-Das Foto des Roboters, der seine Reflexion im Wasser betrachtet referenziert auf Narziss aus der griechischen Mythologie, der die Liebe anderer zurückwies und sich in sein eigenes Spiegelbild verliebte und die Illustration von Caravaggio [(siehe wikipedia #Narziss)](https://de.wikipedia.org/wiki/Narziss#) erstellt mit der KI Midjourney und dem Prompt: *"photographed with the Canon EOS 5D Mark IV a young robot boy with his head down, looking at his reflection in water --v6.0"* 
 
 ## Austausch und Diskussion zu diesem Beitrag
 - offen und dezentral 
