@@ -5,6 +5,8 @@ title: "KIBedenken - Bewusstsein"
 slug: "KIBedenken - Bewusstsein"
 description: Intelligenz oder Bewusstsein?
 image: kibedenken.png
+cover:
+  image: kibedenken.png
 date: 2024-04-03
 author: Jörg Lohrer
 tags: [ "Künstliche Intelligenz", "Bewusstsein", "Religionspädagogik", "Community" ] 

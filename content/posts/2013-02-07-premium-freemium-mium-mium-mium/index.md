@@ -3,6 +3,8 @@ layout: post
 title: "Premium, Freemium, Mium mium mium"
 description: Zur Produktion von sattmachenden Bildungsinhalten
 image: my-very-hungry-caterpillar.jpg
+cover:
+  image: my-very-hungry-caterpillar.jpg
 tags: [ "OER", "Freemium", "MOOC" ]
 date: "2013-02-07"
 author: Jörg Lohrer

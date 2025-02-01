@@ -3,6 +3,8 @@ layout: post
 title: "Bibelfußball - Nachschlage-Quiz zur Bibel"
 description: "Bibelfußball ist ein einfaches und begeisterndes Quizduell, bei dem die Lehrperson die Klasse in zwei Hälften teilt, die wie beim Fußball gegeneinander spielen."
 image: bibelfussball1.png
+cover:
+  image: bibelfussball1.png
 tags: [ "Bibel", "Fussball", "Quiz", "Tafel" ]
 date: "2021-12-03"
 author: Jörg Lohrer

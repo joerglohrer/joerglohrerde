@@ -3,6 +3,8 @@ layout: post
 title: "WordPress Werkstatt PHP"
 description: "Advanced Custom Fields und Formulareingaben"
 image: 04-termine-neu.png
+cover:
+  image: 04-termine-neu.png
 tags: [ "ACF", "WordPress", "Formulare", "JSON", "Plugin" ]
 date: "2021-11-17"
 author: Jörg Lohrer

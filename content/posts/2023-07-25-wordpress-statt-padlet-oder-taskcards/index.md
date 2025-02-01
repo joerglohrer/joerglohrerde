@@ -6,6 +6,8 @@ date: 2023-07-25
 author: Jörg Lohrer
 slug: "wordpress-statt-padlet-oder-taskcards"
 image: wordpress-horizontales-scrollen.gif
+cover:
+  image: wordpress-horizontales-scrollen.gif
 tags: [ "WordPress", "Padlet", "Kanban", "TaskCards", "horizontales Scrollen" ] 
 lang: de
 dir: ltr

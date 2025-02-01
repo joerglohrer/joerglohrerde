@@ -3,6 +3,8 @@ layout: post
 title: "Telegram Bot für Octopi"
 description: "Schnittstelle zwischen Telegram und OctoPrint"
 image: octopi1.png
+cover:
+  image: octopi1.png
 tags: [ "Telegram", "Octopi", "Raspberry", "3DDruck" ]
 date: "2017-10-23"
 author: Jörg Lohrer

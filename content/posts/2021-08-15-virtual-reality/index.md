@@ -3,6 +3,8 @@ layout: post
 title: "VR - Virtual Reality"
 description: "Tutorials der Oculus Quest 2"
 image: 04-aframe.jpg
+cover:
+  image: 04-aframe.jpg
 tags: [ "Immersion", "Präsenz", "Virtuelle Realität", "Sidequest", "Oculus", "Meta" ]
 date: "2021-08-15"
 author: Jörg Lohrer

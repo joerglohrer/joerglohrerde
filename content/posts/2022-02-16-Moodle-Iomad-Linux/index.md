@@ -3,6 +3,8 @@ layout: post
 title: "Moodle Server mit Ubuntu 20 LTS und Iomad"
 description: "Installation von Iomad zur Moodle-Instanz-Verwaltung"
 image: title-gif.gif
+cover:
+  image: title-gif.gif
 tags: [ "Moodle", "Ubuntu", "Linux", "Iomad", "Server", "MySql", "Datenbank" ]
 date: "2022-02-16"
 author: Jörg Lohrer

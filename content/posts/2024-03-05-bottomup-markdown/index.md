@@ -4,6 +4,8 @@ title: "BottomUp -> MarkDown - 5V-Power für deine OER!"
 slug: "BottomUp-MarkDown"
 description: Open Educational Resources mit MarkDown
 image: bottomup-markdown.png
+cover:
+  image: bottomup-markdown.png
 date: 2024-03-05
 author: Jörg Lohrer
 tags: [ "Offenheit", "OER", "MarkDown", "Community" ] 

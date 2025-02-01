@@ -4,6 +4,8 @@ title: "Jojos Schoko-Zimt-Schnecken"
 description: "Rezept und Backanleitung"
 author: Jörg Lohrer
 image: schneckennudeln-titel.jpg
+cover:
+  image: schneckennudeln-titel.jpg
 tags: [ "Schneckennudel", "Hefeteig", "Schoko", "Zimt" ]
 date: "2023-02-26"
 slug: "jojos-schoko-zimt-schnecken"

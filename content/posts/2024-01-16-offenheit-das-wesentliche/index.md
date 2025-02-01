@@ -4,6 +4,8 @@ title: "Offenheit - das Wesentliche"
 slug: "offenheit-das-wesentliche"
 description: Ein Beitrag zu Teil 1 “Mein (schulisches) Motto für 2024” der EduBlogparade
 image: offenheit-wesentlich.png
+cover:
+  image: offenheit-wesentlich.png
 date: 2024-01-26
 author: Jörg Lohrer
 tags: [ "Offenheit", "OER", "WordPress", "Nextcloud", "Element", "Community" ] 

@@ -4,6 +4,8 @@ title: "Das Gleichnis vom Sämann"
 description: "erstellt mit ChatGPT, Deepl und Midjourney Prompts im Stil von Eric Carle"
 author: Jörg Lohrer
 image: saemann-title.jpg
+cover:
+  image: saemann-title.jpg
 tags: [ "Gleichnis", "Jesus", "Bibel", "Sämann", "Eric Carle", "Midjourney", "ChatGPT", "Deepl" ]
 date: "2023-03-23"
 slug: "gleichnis-vom-saemann"

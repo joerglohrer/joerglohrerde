@@ -3,6 +3,8 @@ layout: post
 title: "Lutherkürbis - Reformation an Halloween"
 description: "Schablone und Bastelanleitung für einen Kürbis zur Reformation"
 image: kuerbis-titelbild.jpg
+cover:
+  image: kuerbis-titelbild.jpg
 tags: [ "Lutherrose", "Reformation", "Halloween", "Luther" ]
 date: "2017-10-31"
 author: Jörg Lohrer

@@ -4,6 +4,8 @@ title: "Hefefreuden - Dampfnudeln & Minihefezopf"
 description: "Rezept und Backanleitung"
 author: Jörg Lohrer
 image: Hefefreuden.jpg
+cover:
+  image: Hefefreuden.jpg
 tags: [ "Dampfnudel", "Hefeteig", "Hefezopf" ]
 date: "2023-04-07"
 slug: "Dampfnudeln"

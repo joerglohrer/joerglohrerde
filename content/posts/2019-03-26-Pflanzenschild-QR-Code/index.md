@@ -3,6 +3,8 @@ layout: post
 title: "Pflanzenschild mit QR-Code"
 description: "Mit einem QR-Code-Generator lassen sich verlustfrei skalierbare Vektorgrafiken (SVG) erstellen"
 image: cura-plugin-change-filment-at-z.png
+cover:
+  image: cura-plugin-change-filment-at-z.png
 tags: [ "QR-Code", "3DDruck" ]
 date: "2019-03-26"
 slug: "Pflanzenschild-QR-Code"

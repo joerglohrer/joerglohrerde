@@ -4,6 +4,8 @@ title: "Auf Google Cloud Platform mit Ubuntu Desktop via Chrome Remote Desktop O
 description: "Via Konsole Instanz in aufsetzen, Desktop-Linux installieren, Apps einrichten und konfigurieren"
 author: Jörg Lohrer
 image: 29-autostartordner.jpg
+cover:
+  image: 29-autostartordner.jpg
 tags: [ "Ubuntu", "Google Remote Desktop", "OBS", "Zoom", "relilabtutorial" ]
 date: "2022-03-19"
 slug: "OB-virtualcam"
