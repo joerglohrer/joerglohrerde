@@ -45,6 +45,7 @@ logo = "joerg-profil-2024.webp"
 
 [params]
 	social = true
+  comments = true
   [[params.jsonLD]]
   enabled = true
 

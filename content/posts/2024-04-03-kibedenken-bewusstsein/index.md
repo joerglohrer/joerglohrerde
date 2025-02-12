@@ -1,5 +1,4 @@
 ---
-
 layout: post
 title: "KIBedenken - Bewusstsein"
 slug: "KIBedenken - Bewusstsein"
@@ -7,8 +6,14 @@ description: Intelligenz oder Bewusstsein?
 image: kibedenken.png
 cover:
   image: kibedenken.png
+  caption: "[CC0](https://creativecommons.org/publicdomain/zero/1.0/deed.de) Das Foto des Roboters, der seine Reflexion im Wasser betrachtet referenziert auf Narziss aus der griechischen Mythologie, der die Liebe anderer zurückwies und sich in sein eigenes Spiegelbild verliebte und die Illustration von Caravaggio [(siehe wikipedia #Narziss)](https://de.wikipedia.org/wiki/Narziss#) erstellt mit der KI Midjourney und dem Prompt: *photographed with the Canon EOS 5D Mark IV a young robot boy with his head down, looking at his reflection in water --v6.0* "
+  alt: "Das Foto des Roboters, der seine Reflexion im Wasser betrachtet referenziert auf Narziss aus der griechischen Mythologie, der die Liebe anderer zurückwies und sich in sein eigenes Spiegelbild verliebte und die Illustration von Caravaggio [(siehe wikipedia #Narziss)](https://de.wikipedia.org/wiki/Narziss#) erstellt mit der KI Midjourney und dem Prompt: *photographed with the Canon EOS 5D Mark IV a young robot boy with his head down, looking at his reflection in water --v6.0*"
 date: 2024-04-03
 author: Jörg Lohrer
+comments:
+  host: reliverse.social
+  username: joerglohrer
+  id: 112208546053995638
 tags: [ "Künstliche Intelligenz", "Bewusstsein", "Religionspädagogik", "Community" ] 
 lang: de
 dir: ltr
@@ -21,11 +26,7 @@ creator:
     affiliation:
       name: Comenius-Institut
       id: https://ror.org/025e8aw85
-      type: Organization
-cover: 
-  image: kibedenken.png
-  caption: "[CC0](https://creativecommons.org/publicdomain/zero/1.0/deed.de) Das Foto des Roboters, der seine Reflexion im Wasser betrachtet referenziert auf Narziss aus der griechischen Mythologie, der die Liebe anderer zurückwies und sich in sein eigenes Spiegelbild verliebte und die Illustration von Caravaggio [(siehe wikipedia #Narziss)](https://de.wikipedia.org/wiki/Narziss#) erstellt mit der KI Midjourney und dem Prompt: *photographed with the Canon EOS 5D Mark IV a young robot boy with his head down, looking at his reflection in water --v6.0* "
-  alt: "Das Foto des Roboters, der seine Reflexion im Wasser betrachtet referenziert auf Narziss aus der griechischen Mythologie, der die Liebe anderer zurückwies und sich in sein eigenes Spiegelbild verliebte und die Illustration von Caravaggio [(siehe wikipedia #Narziss)](https://de.wikipedia.org/wiki/Narziss#) erstellt mit der KI Midjourney und dem Prompt: *photographed with the Canon EOS 5D Mark IV a young robot boy with his head down, looking at his reflection in water --v6.0*"
+      type: Organization 
 ---
 
 # #KIBedenken - Bewusstsein
