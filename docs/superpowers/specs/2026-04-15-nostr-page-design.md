@@ -327,6 +327,40 @@ Schätzung gzip:
 
 ## 4. Hosting, Deployment, Migrationspfad
 
+### Warum Webspace für SvelteKit ausreicht
+
+Häufige Sorge: „kann mein einfaches Webspace-Paket eine SvelteKit-App hosten, ich habe ja keinen vServer und kein SSH?" Antwort: ja, problemlos. Hier warum.
+
+**SvelteKit produziert reine statische Dateien.** Mit dem `adapter-static` (siehe §3) erzeugt `npm run build` einen Ordner `build/`, der nichts anderes enthält als:
+
+- `index.html` — eine HTML-Datei
+- `_app/` mit JS/CSS-Bundles — kompilierte Dateien
+- weitere statische Files (favicon etc.)
+
+Das ist exakt das gleiche Material, das Hugo bisher in `public/` produziert hat — nur mit JS statt vielen einzelnen HTML-Seiten. **Beides ist statisches Hosting, beides funktioniert auf jedem Webspace, der HTML ausliefern kann.**
+
+**Was du brauchst:**
+- Ordner zum Hochladen ✅ (jeder Webspace)
+- Webserver, der HTML/JS/CSS ausliefert ✅ (jeder Webspace)
+- Apache mit `mod_rewrite` für SPA-Fallback (eine `.htaccess`) ✅ (All-Inkl-Standard)
+
+**Was du nicht brauchst:**
+- ❌ Node.js auf dem Server
+- ❌ Datenbank
+- ❌ vServer/SSH (für *Hosting* nicht; SSH wird nur für komfortablen *Upload* via rsync genutzt — FTP funktioniert genauso)
+- ❌ irgendetwas, das dauerhaft serverseitig läuft
+
+**Unterschied Hugo vs. SvelteKit aus Server-Sicht:**
+
+- Hugo erzeugt **viele HTML-Dateien**, eine pro Post. Server liefert pro URL eine spezifische Datei.
+- SvelteKit (SPA) erzeugt **eine HTML-Datei** und ein JS-Bundle. Server liefert immer dieselben Dateien, der Browser entscheidet per JavaScript, was angezeigt wird (basierend auf der URL).
+
+Für den Server ist Variante 2 sogar **simpler** — er hat weniger Dateien zu verwalten und muss nichts dynamisch generieren.
+
+**Was die `.htaccess` macht:** wenn jemand `https://joerg-lohrer.de/2025/03/04/dezentrale-oep-oer.html/` aufruft, gibt es diese Datei nicht physisch auf dem Server — der Pfad ist eine virtuelle SPA-Route. Apache würde 404 antworten. Eine kleine `.htaccess`-Datei sagt Apache: „wenn die angeforderte Datei nicht existiert, liefere `/index.html` aus." Browser bekommt die SPA-Shell, JavaScript liest die URL, lädt das richtige Event vom Relay, rendert den Post.
+
+**Was am Ende auf dem Webspace liegt** (siehe Dateistruktur weiter unten): ungefähr 30–80 Dateien, zusammen 100–200 KB. Weniger als ein einziges Foto. Komplett statisch, kein Backend.
+
 ### Hosting bei All-Inkl
 
 Webhosting-Paket, Standardfeatures:
