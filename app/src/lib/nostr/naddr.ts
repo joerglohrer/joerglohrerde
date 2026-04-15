@@ -52,14 +52,15 @@ export function buildNjumpProfileUrl(pubkeyHex: string): string {
 /**
  * Liste externer Nostr-Clients für „Post öffnen in …"-Links.
  * Nutzt naddr, damit jeder Client das addressable Event adressieren kann.
+ * EduFeed zuerst — OER/OEP-Bildungscommunity, wichtig für Jörgs Zielgruppe.
  */
 export function externalClientLinks(
 	args: NaddrArgs
 ): { label: string; url: string }[] {
 	const naddr = buildNaddr(args);
 	return [
+		{ label: 'EduFeed', url: `https://edufeed.org/a/${naddr}` },
 		{ label: 'Habla', url: `https://habla.news/a/${naddr}` },
-		{ label: 'Yakihonne', url: `https://yakihonne.com/article/${naddr}` },
-		{ label: 'njump', url: `https://njump.me/${naddr}` }
+		{ label: 'Yakihonne', url: `https://yakihonne.com/article/${naddr}` }
 	];
 }
