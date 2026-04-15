@@ -1,0 +1,13 @@
+RewriteEngine On
+
+# HTTPS forcieren
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Existierende Datei oder Verzeichnis? Direkt ausliefern.
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Alles andere → SPA-Fallback (SvelteKit mit adapter-static)
+RewriteRule ^ /index.html [L]
