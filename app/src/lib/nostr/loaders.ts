@@ -121,3 +121,26 @@ export async function loadProfile(): Promise<Profile | null> {
     return null;
   }
 }
+
+/** Post-Adresse im `a`-Tag-Format: "30023:<pubkey>:<dtag>" */
+function eventAddress(pubkey: string, dtag: string): string {
+  return `30023:${pubkey}:${dtag}`;
+}
+
+/**
+ * Alle kind:1-Replies auf einen Post, chronologisch aufsteigend (älteste zuerst).
+ * Streamt via onEvent, wenn angegeben.
+ */
+export async function loadReplies(
+  dtag: string,
+  onEvent?: (ev: NostrEvent) => void
+): Promise<NostrEvent[]> {
+  const relays = get(readRelays);
+  const address = eventAddress(AUTHOR_PUBKEY_HEX, dtag);
+  const events = await collectEvents(
+    relays,
+    { kinds: [1], '#a': [address], limit: 500 },
+    { onEvent }
+  );
+  return events.sort((a, b) => a.created_at - b.created_at);
+}
