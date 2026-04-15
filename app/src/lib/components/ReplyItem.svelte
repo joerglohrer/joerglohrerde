@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import type { NostrEvent, Profile } from '$lib/nostr/loaders';
 	import { getProfile } from '$lib/nostr/profileCache';
+	import { buildNjumpProfileUrl } from '$lib/nostr/naddr';
 
 	interface Props {
 		event: NostrEvent;
@@ -10,6 +11,7 @@
 
 	const date = $derived(new Date(event.created_at * 1000).toLocaleString('de-DE'));
 	const npubPrefix = $derived(event.pubkey.slice(0, 12) + '…');
+	const profileUrl = $derived(buildNjumpProfileUrl(event.pubkey));
 
 	let profile = $state<Profile | null>(null);
 
@@ -25,7 +27,7 @@
 </script>
 
 <li class="reply">
-	<div class="header">
+	<a class="header" href={profileUrl} target="_blank" rel="noopener">
 		{#if profile?.picture}
 			<img class="avatar" src={profile.picture} alt={displayName} />
 		{:else}
@@ -35,7 +37,7 @@
 			<span class="name">{displayName}</span>
 			<span class="date">{date}</span>
 		</div>
-	</div>
+	</a>
 	<div class="content">{event.content}</div>
 </li>
 
@@ -50,6 +52,17 @@
 		gap: 0.6rem;
 		align-items: center;
 		margin-bottom: 0.4rem;
+		color: inherit;
+		text-decoration: none;
+		border-radius: 4px;
+		padding: 2px;
+		margin-left: -2px;
+	}
+	.header:hover {
+		background: var(--code-bg);
+	}
+	.header:hover .name {
+		color: var(--accent);
 	}
 	.avatar {
 		flex: 0 0 32px;

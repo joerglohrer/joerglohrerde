@@ -5,6 +5,7 @@
 	import Reactions from './Reactions.svelte';
 	import ReplyList from './ReplyList.svelte';
 	import ReplyComposer from './ReplyComposer.svelte';
+	import ExternalClientLinks from './ExternalClientLinks.svelte';
 
 	interface Props {
 		event: NostrEvent;
@@ -71,6 +72,7 @@
 
 {#if dtag}
 	<Reactions {dtag} />
+	<ExternalClientLinks {dtag} />
 	<ReplyComposer {dtag} eventId={event.id} onPublished={handlePublished} />
 	<ReplyList {dtag} optimistic={optimisticReplies} />
 {/if}
