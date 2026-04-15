@@ -55,19 +55,32 @@
 
 ## 2. URL-Struktur, Routing, Event-Kontrakt
 
-### URL-Schema (kompatibel zur bestehenden Hugo-Struktur)
+### URL-Schema
+
+**Kanonische Form — kurz und teilbar:**
 
 | URL | Inhalt |
 |---|---|
 | `/` | SPA-Shell. SPA rendert Startseite (Profilkachel + Post-Liste). |
-| `/YYYY/MM/DD/<dtag>.html/` | SPA-Shell (via `.htaccess`-Fallback). SPA-Router extrahiert `<dtag>` und lädt Event. |
-| `/archives/` | SPA-Shell, SPA rendert chronologische Liste. |
+| `/<dtag>/` | **Kanonische Post-URL.** SPA-Router extrahiert `<dtag>` und lädt Event. |
 | `/tag/<name>/` | SPA-Shell, SPA rendert Tag-Filter. |
 | `/impressum/` | Statisches HTML (rechtlicher Content, liegt wirklich auf Server). |
-| `/YYYY/MM/DD/<dtag>.html/<bildname>` | echte Bilddateien der 18 Altposts, liegen unter dem jeweiligen Post-Permalink. |
 | `/favicon.ico`, `/logo.png`, `/robots.txt` | globale Site-Assets. |
 
-**Datum in der URL** dient nur der Backlink-Kompatibilität. Die SPA benötigt zur Event-Abfrage nur den `dtag`; sie fragt Relays mit `kinds:[30023], authors:[<pubkey>], #d:[<dtag>]`. Das Datum ist URL-Dekoration.
+**Legacy-Form — nur für Backlink-Kompatibilität:**
+
+Die bestehenden Hugo-URLs haben die Form `/YYYY/MM/DD/<dtag>.html/`. Externe Backlinks (Google, Mastodon-Bookmarks etc.) zeigen auf diese URLs. Die SPA behandelt sie so:
+
+1. `.htaccess` rewriet den Pfad auf `index.html` (wie alle SPA-Routen).
+2. Der Client-Router erkennt das Legacy-Muster, extrahiert den `<dtag>` am Ende.
+3. Via `history.replaceState()` wird die URL in der Adressleiste ohne Reload auf die kanonische kurze Form `/<dtag>/` umgeschrieben.
+4. Post wird über normalen kanonischen Weg geladen.
+
+So bleiben alle alten Links funktional, aber die geteilten/bookmarkten URLs konvergieren zur kurzen Form. **Neue Posts werden nur unter der kurzen Form verbreitet** — die Datumsform ist keine aktive URL-Strategie mehr, nur Legacy.
+
+**Datum in der URL** dient nur der Legacy-Kompatibilität. Die SPA benötigt zur Event-Abfrage nur den `dtag`; sie fragt Relays mit `kinds:[30023], authors:[<pubkey>], #d:[<dtag>]`.
+
+**Bildpfade der 18 Altposts** folgen dem historischen Hugo-Schema (`/YYYY/MM/DD/<dtag>.html/<bildname>`), weil die Bilder bereits dort auf All-Inkl liegen und relative Verweise in den Markdown-Bodies auf diese absoluten URLs umgeschrieben werden. Neue Posts nutzen Blossom-URLs (siehe Publish-Spec).
 
 ### `.htaccess`
 
@@ -116,13 +129,12 @@ Die SPA unterscheidet die beiden Eras nicht — sie rendert Markdown, der Browse
 
 SvelteKit mit `adapter-static`, `ssr: false`, Fallback-Page `index.html`. Routen:
 
-- `/` → Home
-- `/[year]/[month]/[day]/[dtag].html/` → PostView (nur `dtag` genutzt)
-- `/archives/` → Archives
+- `/` → Home (Profil + Beitragsliste)
+- `/[dtag]/` → PostView (kanonische Form)
 - `/tag/[name]/` → TagView
-- `/impressum/` → eigener Impressum-Pfad (oder statisch außerhalb der SPA)
+- `/impressum/` → Impressum
 
-**Hinweis zum `.html`-Suffix im Routing:** SvelteKit unterstützt statische Dateiendungen in dynamischen Segmenten nicht direkt. Lösung: Entweder den `.html`-Suffix im Parameter-Wert mitbehandeln (`[dtag]` matched den String inklusive `.html`, davon wird beim Auslesen `.html` abgeschnitten) oder den Pfad als Catch-All-Route `[...slug]` aufnehmen und die Teile im Load-Handler selbst parsen. Details in der Implementation.
+**Legacy-Normalisierung:** Pfade der Form `/YYYY/MM/DD/<dtag>.html/` werden beim Routing erkannt, via `history.replaceState` auf `/<dtag>/` umgeschrieben, danach die reguläre PostView-Route aufgerufen. Kein HTTP-Redirect nötig — rein clientseitig.
 
 ### Relay-Konfiguration
 
