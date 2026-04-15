@@ -1,6 +1,10 @@
 <script lang="ts">
 	import type { NostrEvent } from '$lib/nostr/loaders';
+	import type { SignedEvent } from '$lib/nostr/signer';
 	import { renderMarkdown } from '$lib/render/markdown';
+	import Reactions from './Reactions.svelte';
+	import ReplyList from './ReplyList.svelte';
+	import ReplyComposer from './ReplyComposer.svelte';
 
 	interface Props {
 		event: NostrEvent;
@@ -14,6 +18,7 @@
 		return e.tags.filter((t) => t[0] === name).map((t) => t[1]);
 	}
 
+	const dtag = $derived(tagValue(event, 'd'));
 	const title = $derived(tagValue(event, 'title') || '(ohne Titel)');
 	const summary = $derived(tagValue(event, 'summary'));
 	const image = $derived(tagValue(event, 'image'));
@@ -29,6 +34,13 @@
 	);
 	const tags = $derived(tagsAll(event, 't'));
 	const bodyHtml = $derived(renderMarkdown(event.content));
+
+	// Optimistisch gesendete Replies: der Composer pusht sie rein,
+	// ReplyList merged sie mit den vom Relay geladenen Replies (dedup per id).
+	let optimisticReplies: NostrEvent[] = $state([]);
+	function handlePublished(signed: SignedEvent) {
+		optimisticReplies = [...optimisticReplies, signed as unknown as NostrEvent];
+	}
 
 	$effect(() => {
 		document.title = `${title} – Jörg Lohrer`;
@@ -56,6 +68,12 @@
 {/if}
 
 <article>{@html bodyHtml}</article>
+
+{#if dtag}
+	<Reactions {dtag} />
+	<ReplyComposer {dtag} eventId={event.id} onPublished={handlePublished} />
+	<ReplyList {dtag} optimistic={optimisticReplies} />
+{/if}
 
 <style>
 	.post-title {
