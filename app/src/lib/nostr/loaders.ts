@@ -144,3 +144,31 @@ export async function loadReplies(
   );
   return events.sort((a, b) => a.created_at - b.created_at);
 }
+
+export interface ReactionSummary {
+  /** Emoji oder "+"/"-" */
+  content: string;
+  count: number;
+}
+
+/**
+ * Aggregiert kind:7-Reactions auf einen Post.
+ * Gruppiert nach content, zählt Anzahl.
+ */
+export async function loadReactions(dtag: string): Promise<ReactionSummary[]> {
+  const relays = get(readRelays);
+  const address = eventAddress(AUTHOR_PUBKEY_HEX, dtag);
+  const events = await collectEvents(relays, {
+    kinds: [7],
+    '#a': [address],
+    limit: 500
+  });
+  const counts = new Map<string, number>();
+  for (const ev of events) {
+    const key = ev.content || '+';
+    counts.set(key, (counts.get(key) ?? 0) + 1);
+  }
+  return [...counts.entries()]
+    .map(([content, count]) => ({ content, count }))
+    .sort((a, b) => b.count - a.count);
+}
