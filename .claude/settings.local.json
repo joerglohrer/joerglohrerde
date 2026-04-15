@@ -4,7 +4,10 @@
       "WebFetch(domain:hzrd149.github.io)",
       "Bash(git add:*)",
       "Bash(git commit -m ':*)",
-      "Bash(git rm:*)"
+      "Bash(git rm:*)",
+      "Bash(git commit:*)",
+      "Bash(git checkout:*)",
+      "Bash(git submodule:*)"
     ]
   }
 }
