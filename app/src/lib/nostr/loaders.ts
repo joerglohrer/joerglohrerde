@@ -145,6 +145,19 @@ export async function loadReplies(
   return events.sort((a, b) => a.created_at - b.created_at);
 }
 
+/**
+ * Filtert Post-Liste clientseitig nach Tag-Name.
+ * (Relay-seitige #t-Filter werden nicht von allen Relays unterstützt — safer
+ * ist es, die ganze Liste zu laden und lokal zu filtern.)
+ */
+export async function loadPostsByTag(tagName: string): Promise<NostrEvent[]> {
+  const all = await loadPostList();
+  const norm = tagName.toLowerCase();
+  return all.filter((ev) =>
+    ev.tags.some((t) => t[0] === 't' && t[1]?.toLowerCase() === norm)
+  );
+}
+
 export interface ReactionSummary {
   /** Emoji oder "+"/"-" */
   content: string;
