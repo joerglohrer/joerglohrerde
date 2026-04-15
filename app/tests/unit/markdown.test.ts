@@ -28,10 +28,11 @@ describe('renderMarkdown', () => {
     expect(html).toContain('<hr>');
   });
 
-  it('rendert fenced code blocks', () => {
+  it('rendert fenced code blocks mit hljs-klasse', () => {
     const html = renderMarkdown('```js\nconst x = 1;\n```');
     expect(html).toContain('<pre>');
     expect(html).toContain('<code');
+    expect(html).toContain('class="hljs');
   });
 
   it('rendert GFM tables', () => {
@@ -45,5 +46,36 @@ describe('renderMarkdown', () => {
     const html = renderMarkdown('![alt](https://example.com/img.png)');
     expect(html).toContain('<img');
     expect(html).toContain('src="https://example.com/img.png"');
+  });
+
+  // Erweiterte XSS-Matrix — relevant ab Reply-Komponenten (3rd-party Content).
+  it('entfernt onerror-Attribute auf inline-HTML-img', () => {
+    const html = renderMarkdown('<img src="x" onerror="alert(1)">');
+    expect(html.toLowerCase()).not.toContain('onerror');
+  });
+
+  it('entfernt onclick-Attribute auf inline-HTML', () => {
+    const html = renderMarkdown('<a href="#" onclick="alert(1)">x</a>');
+    expect(html.toLowerCase()).not.toContain('onclick');
+  });
+
+  it('entfernt iframe-Tags', () => {
+    const html = renderMarkdown('<iframe src="https://evil.com"></iframe>');
+    expect(html.toLowerCase()).not.toContain('<iframe');
+  });
+
+  it('entfernt data:text/html-URLs in Links', () => {
+    const html = renderMarkdown('[x](data:text/html,<script>alert(1)</script>)');
+    expect(html.toLowerCase()).not.toMatch(/href="data:text\/html/);
+  });
+
+  it('entfernt vbscript:-URLs', () => {
+    const html = renderMarkdown('<a href="vbscript:msgbox(1)">x</a>');
+    expect(html.toLowerCase()).not.toContain('vbscript:');
+  });
+
+  it('entfernt script-Tag innerhalb svg', () => {
+    const html = renderMarkdown('<svg><script>alert(1)</script></svg>');
+    expect(html.toLowerCase()).not.toContain('<script');
   });
 });
