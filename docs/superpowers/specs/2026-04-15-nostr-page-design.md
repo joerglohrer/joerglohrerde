@@ -126,22 +126,36 @@ SvelteKit mit `adapter-static`, `ssr: false`, Fallback-Page `index.html`. Routen
 
 ### Relay-Konfiguration
 
-Fest im Bundle hinterlegte Default-Liste (Konfig-Datei, nicht hartcodiert):
+Relay-Liste kommt aus dem NIP-65-Outbox-Event (`kind:10002`) des Autors. Das Event wird einmalig manuell publiziert (siehe Publish-Spec, Abschnitt „Pre-Flight-Setup") und enthält die bevorzugten Read- und Write-Relays.
+
+**Auflösung zur Laufzeit:**
+1. SPA kennt genau einen hartcodierten **Bootstrap-Relay** (`wss://relay.damus.io`).
+2. Beim Boot: SPA fragt Bootstrap-Relay nach `{ kinds:[10002], authors:[PUBKEY] }`.
+3. Aus dem Event werden die `["r", <url>]`-Tags extrahiert (Read-Relays für die SPA-Abfragen).
+4. Diese Liste wird für alle weiteren Nostr-Requests genutzt.
+
+**Fallback:** Falls Bootstrap-Relay nicht antwortet oder `kind:10002` nicht existiert, nutzt die SPA eine hartcodierte Fallback-Liste.
 
 ```ts
 // src/lib/nostr/config.ts
-export const READ_RELAYS = [
+export const BOOTSTRAP_RELAY = 'wss://relay.damus.io'
+
+// TODO bei Implementierung: npub1f7jar3qnu269uyx5p0e4v24hqxjnxysxudvujza2ur5ehltvdeqsly2fx9
+// in hex decodieren (nip19.decode) und hier eintragen.
+export const AUTHOR_PUBKEY_HEX = '<hex wird bei Implementierung aus npub abgeleitet>'
+
+// Nur Fallback: wenn kind:10002 nicht geladen werden kann.
+export const FALLBACK_READ_RELAYS = [
   'wss://relay.damus.io',
   'wss://nos.lol',
   'wss://relay.nostr.band',
   'wss://nostr.wine',
 ]
-// TODO bei Implementierung: npub1f7jar3qnu269uyx5p0e4v24hqxjnxysxudvujza2ur5ehltvdeqsly2fx9
-// in hex decodieren (nip19.decode) und hier eintragen.
-export const AUTHOR_PUBKEY_HEX = '<hex wird bei Implementierung aus npub abgeleitet>'
 ```
 
-Später erweiterbar um eigenen Relay per Konfig-Änderung, kein Code-Umbau.
+**Vorteil:** Änderungen an der Relay-Liste (z. B. späteres Hinzufügen eines eigenen Relays) erfordern nur ein neues `kind:10002`-Event, keinen Code-Deploy.
+
+Blossom-Server-Liste wird analog aus `kind:10063` (BUD-03) aufgelöst — siehe Publish-Spec für das normative Schema beider Events.
 
 ---
 
