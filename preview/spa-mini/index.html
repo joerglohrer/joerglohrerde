@@ -587,15 +587,36 @@
     });
   }
 
+  // Erkennt Legacy-Hugo-URL /YYYY/MM/DD/<dtag>.html oder .../<dtag>.html/
+  // Returns <dtag> oder null.
+  function parseLegacyUrl(path) {
+    const m = path.match(/^\d{4}\/\d{2}\/\d{2}\/([^/]+?)\.html\/?$/);
+    return m ? decodeURIComponent(m[1]) : null;
+  }
+
   function route() {
-    // Pfad: "" oder "/" → Liste; "/<dtag>" oder "/<dtag>/" → Einzelpost
+    // Pfad normalisieren: Slashes, "index.html"
     const path = location.pathname.replace(/^\/+|\/+$/g, '');
+
+    // Leer → Liste
     if (path === '' || path === 'index.html') {
       loadList();
-    } else {
-      const dtag = decodeURIComponent(path.split('/')[0]);
-      loadPost(dtag);
+      window.scrollTo(0, 0);
+      return;
     }
+
+    // Legacy-Form YYYY/MM/DD/<dtag>.html/ → auf kurze Form umschreiben
+    const legacyDtag = parseLegacyUrl(path);
+    if (legacyDtag) {
+      history.replaceState(null, '', `/${encodeURIComponent(legacyDtag)}/`);
+      loadPost(legacyDtag);
+      window.scrollTo(0, 0);
+      return;
+    }
+
+    // Kanonische kurze Form /<dtag>/ → Post laden
+    const dtag = decodeURIComponent(path.split('/')[0]);
+    loadPost(dtag);
     window.scrollTo(0, 0);
   }
 
