@@ -1,0 +1,123 @@
+import { get } from 'svelte/store';
+import { lastValueFrom, timeout, toArray, EMPTY, tap } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import type { NostrEvent } from 'applesauce-core/helpers/event';
+import type { Filter as ApplesauceFilter } from 'applesauce-core/helpers/filter';
+import { pool } from './pool';
+import { readRelays } from '$lib/stores/readRelays';
+import { AUTHOR_PUBKEY_HEX, RELAY_HARD_TIMEOUT_MS } from './config';
+
+/** Re-export als sprechenden Alias */
+export type { NostrEvent };
+
+/** Profile-Content (kind:0) */
+export interface Profile {
+  name?: string;
+  display_name?: string;
+  picture?: string;
+  banner?: string;
+  about?: string;
+  website?: string;
+  nip05?: string;
+  lud16?: string;
+}
+
+type Filter = ApplesauceFilter;
+
+interface CollectOpts {
+  onEvent?: (ev: NostrEvent) => void;
+  hardTimeoutMs?: number;
+}
+
+/**
+ * Startet eine Request-Subscription und sammelt alle gelieferten Events
+ * bis EOSE (pool.request completes nach EOSE) oder Hard-Timeout.
+ */
+async function collectEvents(
+  relays: string[],
+  filter: Filter,
+  opts: CollectOpts = {}
+): Promise<NostrEvent[]> {
+  const events = await lastValueFrom(
+    pool.request(relays, filter).pipe(
+      tap((ev: NostrEvent) => opts.onEvent?.(ev)),
+      timeout(opts.hardTimeoutMs ?? RELAY_HARD_TIMEOUT_MS),
+      toArray(),
+      catchError(() => EMPTY)
+    ),
+    { defaultValue: [] as NostrEvent[] }
+  );
+  return events;
+}
+
+/** Dedup per d-Tag: neueste (created_at) wins */
+function dedupByDtag(events: NostrEvent[]): NostrEvent[] {
+  const byDtag = new Map<string, NostrEvent>();
+  for (const ev of events) {
+    const d = ev.tags.find((t) => t[0] === 'd')?.[1];
+    if (!d) continue;
+    const existing = byDtag.get(d);
+    if (!existing || ev.created_at > existing.created_at) {
+      byDtag.set(d, ev);
+    }
+  }
+  return [...byDtag.values()];
+}
+
+/** Alle kind:30023-Posts des Autors, neueste zuerst */
+export async function loadPostList(
+  onEvent?: (ev: NostrEvent) => void
+): Promise<NostrEvent[]> {
+  const relays = get(readRelays);
+  const events = await collectEvents(
+    relays,
+    { kinds: [30023], authors: [AUTHOR_PUBKEY_HEX], limit: 200 },
+    { onEvent }
+  );
+  const deduped = dedupByDtag(events);
+  return deduped.sort((a, b) => {
+    const ap = parseInt(
+      a.tags.find((t) => t[0] === 'published_at')?.[1] ?? `${a.created_at}`,
+      10
+    );
+    const bp = parseInt(
+      b.tags.find((t) => t[0] === 'published_at')?.[1] ?? `${b.created_at}`,
+      10
+    );
+    return bp - ap;
+  });
+}
+
+/** Einzelpost per d-Tag */
+export async function loadPost(dtag: string): Promise<NostrEvent | null> {
+  const relays = get(readRelays);
+  const events = await collectEvents(relays, {
+    kinds: [30023],
+    authors: [AUTHOR_PUBKEY_HEX],
+    '#d': [dtag],
+    limit: 1
+  });
+  if (events.length === 0) return null;
+  return events.reduce((best, cur) =>
+    cur.created_at > best.created_at ? cur : best
+  );
+}
+
+/** Profil-Event kind:0 (neueste Version) */
+export async function loadProfile(): Promise<Profile | null> {
+  const relays = get(readRelays);
+  const events = await collectEvents(relays, {
+    kinds: [0],
+    authors: [AUTHOR_PUBKEY_HEX],
+    limit: 1
+  });
+  if (events.length === 0) return null;
+  const latest = events.reduce((best, cur) =>
+    cur.created_at > best.created_at ? cur : best
+  );
+  try {
+    return JSON.parse(latest.content) as Profile;
+  } catch {
+    return null;
+  }
+}
