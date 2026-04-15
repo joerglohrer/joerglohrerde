@@ -59,7 +59,7 @@ export function externalClientLinks(
 ): { label: string; url: string }[] {
 	const naddr = buildNaddr(args);
 	return [
-		{ label: 'EduFeed', url: `https://edufeed.org/a/${naddr}` },
+		{ label: 'EduFeed', url: `https://edufeed.org/${naddr}` },
 		{ label: 'Habla', url: `https://habla.news/a/${naddr}` },
 		{ label: 'Yakihonne', url: `https://yakihonne.com/article/${naddr}` }
 	];
