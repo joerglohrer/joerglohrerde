@@ -96,6 +96,43 @@
       margin: 0 0 1rem;
       font-size: 1.4rem;
     }
+    .profile {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .profile .avatar {
+      flex: 0 0 80px;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: var(--code-bg);
+    }
+    .profile .info { flex: 1; min-width: 0; }
+    .profile .name {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin: 0 0 0.2rem;
+    }
+    .profile .about {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin: 0 0 0.3rem;
+    }
+    .profile .meta-line {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .profile .meta-line a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .profile .meta-line a:hover { text-decoration: underline; }
+    .profile .meta-line .sep { margin: 0 0.4rem; opacity: 0.5; }
     h1.post-title {
       font-size: 1.5rem;
       line-height: 1.25;
@@ -246,6 +283,68 @@
   const $breadcrumb = document.getElementById('breadcrumb');
   const pool = new SimplePool();
 
+  // Profil-Cache: einmal laden, session-weit wiederverwenden
+  let profilePromise = null;
+  function loadProfile() {
+    if (profilePromise) return profilePromise;
+    profilePromise = new Promise(resolve => {
+      let done = false;
+      const timeout = setTimeout(() => {
+        if (!done) { done = true; try { sub.close(); } catch {} resolve(null); }
+      }, TIMEOUT_MS);
+      const sub = pool.subscribeMany(RELAYS, [
+        { kinds: [0], authors: [PUBKEY], limit: 1 }
+      ], {
+        onevent(ev) {
+          if (done) return;
+          done = true;
+          clearTimeout(timeout);
+          try { sub.close(); } catch {}
+          try {
+            resolve(JSON.parse(ev.content));
+          } catch {
+            resolve(null);
+          }
+        },
+        oneose() {
+          if (done) return;
+          done = true;
+          clearTimeout(timeout);
+          resolve(null);
+        },
+      });
+    });
+    return profilePromise;
+  }
+
+  function profileCardHtml(profile) {
+    if (!profile) return '';
+    const name = profile.display_name || profile.name || '';
+    const avatar = profile.picture || '';
+    const about = profile.about || '';
+    const nip05 = profile.nip05 || '';
+    const website = profile.website || '';
+    const metaBits = [];
+    if (nip05) metaBits.push(escapeHtml(nip05));
+    if (website) metaBits.push(`<a href="${escapeHtml(website)}" target="_blank" rel="noopener">${escapeHtml(website.replace(/^https?:\/\//, ''))}</a>`);
+    const metaHtml = metaBits.length
+      ? `<div class="meta-line">${metaBits.join('<span class="sep">·</span>')}</div>`
+      : '';
+    const avatarHtml = avatar
+      ? `<img class="avatar" src="${escapeHtml(avatar)}" alt="${escapeHtml(name)}">`
+      : `<div class="avatar"></div>`;
+    return `
+      <div class="profile">
+        ${avatarHtml}
+        <div class="info">
+          <div class="name">${escapeHtml(name)}</div>
+          ${about ? `<div class="about">${escapeHtml(about)}</div>` : ''}
+          ${metaHtml}
+        </div>
+      </div>
+    `;
+  }
+
   function escapeHtml(s) {
     return String(s)
       .replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
@@ -313,8 +412,17 @@
     }
   }
 
+  let cachedProfile = null;
+  loadProfile().then(p => {
+    cachedProfile = p;
+    // Falls Liste schon gerendert ist (ohne Profil), nachziehen
+    const placeholder = $content.querySelector('[data-profile-placeholder]');
+    if (placeholder) placeholder.outerHTML = profileCardHtml(p);
+  });
+
   function renderList(events) {
-    document.title = 'Jörg Lohrer – Blog';
+    const name = cachedProfile?.display_name || cachedProfile?.name || 'Jörg Lohrer';
+    document.title = `${name} – Blog`;
     $breadcrumb.hidden = true;
 
     if (!events.length) {
@@ -358,7 +466,12 @@
       `;
     }).join('');
 
+    const profileHtml = cachedProfile
+      ? profileCardHtml(cachedProfile)
+      : '<div data-profile-placeholder></div>';
+
     $content.innerHTML = `
+      ${profileHtml}
       <h1 class="list-title">Beiträge</h1>
       ${itemsHtml}
     `;
