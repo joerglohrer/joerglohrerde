@@ -32,6 +32,14 @@ describe('parseLegacyUrl', () => {
       'mit leerzeichen',
     );
   });
+
+  it('gibt null zurück bei malformed percent-encoding (crash-sicher)', () => {
+    expect(parseLegacyUrl('/2024/01/26/%E0.html/')).toBeNull();
+  });
+
+  it('gibt null zurück für leeren dtag', () => {
+    expect(parseLegacyUrl('/2024/01/26/.html/')).toBeNull();
+  });
 });
 
 describe('canonicalPostPath', () => {
@@ -41,5 +49,13 @@ describe('canonicalPostPath', () => {
 
   it('kodiert Sonderzeichen', () => {
     expect(canonicalPostPath('mit leerzeichen')).toBe('/mit%20leerzeichen/');
+  });
+});
+
+describe('round-trip parseLegacyUrl → canonicalPostPath', () => {
+  it('Legacy-URL wird zur kanonischen kurzen Form', () => {
+    const dtag = parseLegacyUrl('/2025/03/04/dezentrale-oep-oer.html/');
+    expect(dtag).not.toBeNull();
+    expect(canonicalPostPath(dtag!)).toBe('/dezentrale-oep-oer/');
   });
 });
