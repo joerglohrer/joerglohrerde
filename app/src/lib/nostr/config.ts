@@ -12,18 +12,26 @@ export const AUTHOR_PUBKEY_HEX =
 /** Bootstrap-Relay für das initiale Lesen von kind:10002 */
 export const BOOTSTRAP_RELAY = 'wss://relay.damus.io';
 
-/** Fallback, falls kind:10002 nicht geladen werden kann */
+/**
+ * Fallback, falls kind:10002 nicht geladen werden kann.
+ * Bootstrap-Relay ist bewusst als erster Eintrag Teil der Liste — ein Ort der Wahrheit.
+ */
 export const FALLBACK_READ_RELAYS = [
-  'wss://relay.damus.io',
+  BOOTSTRAP_RELAY,
   'wss://nos.lol',
   'wss://relay.primal.net',
   'wss://relay.tchncs.de',
   'wss://relay.edufeed.org',
-];
+] as const;
 
-/** Habla.news-Deep-Link-Basis (für Nutzer ohne JS oder wenn Events fehlen) */
+/**
+ * Habla.news-Route für Addressable Events — URL endet auf `/a/`, der
+ * vollständige Deep-Link wird durch Anhängen des `naddr1…`-Bech32 gebildet.
+ */
 export const HABLA_BASE = 'https://habla.news/a/';
 
-/** Timeout-Werte in ms */
+/** Soft-Timeout: einzelne Relay-Abfrage darf nicht länger als diese Dauer blockieren. */
 export const RELAY_TIMEOUT_MS = 8000;
+
+/** Hard-Timeout: Page-Budget, nach dem eine Route-Abfrage endgültig abbricht. */
 export const RELAY_HARD_TIMEOUT_MS = 15000;
