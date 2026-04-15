@@ -7,7 +7,7 @@ cover:
   image: cura-plugin-change-filment-at-z.png
 tags: [ "QR-Code", "3DDruck" ]
 date: "2019-03-26"
-slug: "Pflanzenschild-QR-Code"
+slug: "pflanzenschild-qr-code"
 author: Jörg Lohrer
 lang: de
 dir: ltr

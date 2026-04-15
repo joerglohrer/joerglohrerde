@@ -8,7 +8,7 @@ cover:
 tags: [ "ACF", "WordPress", "Formulare", "JSON", "Plugin" ]
 date: "2021-11-17"
 author: Jörg Lohrer
-slug: "WordPress-Werkstatt"
+slug: "wordpress-werkstatt"
 lang: de
 dir: ltr
 ---

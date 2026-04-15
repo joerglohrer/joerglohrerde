@@ -8,7 +8,7 @@ cover:
   image: Hefefreuden.jpg
 tags: [ "Dampfnudel", "Hefeteig", "Hefezopf" ]
 date: "2023-04-07"
-slug: "Dampfnudeln"
+slug: "dampfnudeln"
 lang: de
 dir: ltr
 ---

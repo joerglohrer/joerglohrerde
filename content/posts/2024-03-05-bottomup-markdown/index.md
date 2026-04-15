@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "BottomUp -> MarkDown - 5V-Power für deine OER!"
-slug: "BottomUp-MarkDown"
+slug: "bottomup-markdown"
 description: Open Educational Resources mit MarkDown
 image: bottomup-markdown.png
 cover:

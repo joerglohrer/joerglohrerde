@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "KIBedenken - Bewusstsein"
-slug: "KIBedenken - Bewusstsein"
+slug: "kibedenken-bewusstsein"
 description: Intelligenz oder Bewusstsein?
 image: kibedenken.png
 cover:

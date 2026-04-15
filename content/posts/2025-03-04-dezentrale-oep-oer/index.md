@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Gemeinsam die Bildungszukunft gestalten: Dezentrale OEP und OER als Wegbereiter"
-slug: "Gemeinsam die Bildungszukunft gestalten: Dezentrale OEP und OER als Wegbereiter"
+slug: "dezentrale-oep-oer"
 description: "Einladung zum offenen Denken und Handeln in der Bildungsgemeinschaft. Der
   Beitrag diskutiert, warum eine dezentrale Infrastruktur für Open Educational
   Resources (OER) und Open Educational Practices (OEP) notwendig ist, um

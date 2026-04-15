@@ -8,7 +8,7 @@ cover:
   image: 29-autostartordner.jpg
 tags: [ "Ubuntu", "Google Remote Desktop", "OBS", "Zoom", "relilabtutorial" ]
 date: "2022-03-19"
-slug: "OB-virtualcam"
+slug: "ob-virtualcam"
 lang: de
 dir: ltr
 toc: true
