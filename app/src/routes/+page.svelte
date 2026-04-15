@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import type { NostrEvent, Profile } from '$lib/nostr/loaders';
-	import { loadPostList, loadProfile } from '$lib/nostr/loaders';
+	import { loadPostList } from '$lib/nostr/loaders';
+	import { getProfile } from '$lib/nostr/profileCache';
+	import { AUTHOR_PUBKEY_HEX } from '$lib/nostr/config';
 	import ProfileCard from '$lib/components/ProfileCard.svelte';
 	import PostCard from '$lib/components/PostCard.svelte';
 	import LoadingOrError from '$lib/components/LoadingOrError.svelte';
@@ -13,7 +15,7 @@
 
 	onMount(async () => {
 		try {
-			const [p, list] = await Promise.all([loadProfile(), loadPostList()]);
+			const [p, list] = await Promise.all([getProfile(AUTHOR_PUBKEY_HEX), loadPostList()]);
 			profile = p;
 			posts = list;
 			loading = false;

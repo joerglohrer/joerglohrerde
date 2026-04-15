@@ -103,12 +103,16 @@ export async function loadPost(dtag: string): Promise<NostrEvent | null> {
   );
 }
 
-/** Profil-Event kind:0 (neueste Version) */
-export async function loadProfile(): Promise<Profile | null> {
+/**
+ * Profil-Event kind:0 (neueste Version).
+ * Default: Autoren-Pubkey der SPA. Optional: beliebiger Pubkey für
+ * die Anzeige fremder Kommentar-Autoren.
+ */
+export async function loadProfile(pubkey: string = AUTHOR_PUBKEY_HEX): Promise<Profile | null> {
   const relays = get(readRelays);
   const events = await collectEvents(relays, {
     kinds: [0],
-    authors: [AUTHOR_PUBKEY_HEX],
+    authors: [pubkey],
     limit: 1
   });
   if (events.length === 0) return null;
