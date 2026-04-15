@@ -496,6 +496,14 @@ Für externe Links: identische URL, identische Inhaltsanzeige. Backlinks aus Mas
 
 Jeder Phasenwechsel: additiv oder lokal begrenzter Refactor, kein Rewrite.
 
+### Daten-Transparenz vs. defensive Korrektur
+
+Die SPA soll Events **wahrheitsgetreu** rendern und **nicht still Daten korrigieren**. Wenn ein Event Auffälligkeiten enthält (doppelte `t`-Tags, leeres `d`, inkonsistente Groß-/Kleinschreibung gegenüber anderen Events desselben Autors), soll die SPA das sichtbar lassen — nicht transparent wegdedupen. Grund: der Autor merkt sonst nicht, dass seine Events Daten-Mängel haben.
+
+Daten-Bereinigung gehört in **separate Audit-Werkzeuge** (siehe Publish-Spec, z. B. künftiger `deno task audit`), die auf Basis von Relay-Queries einen Report erstellen und mögliche Korrektur-Commits in den Markdown-Quelltext vorschlagen.
+
+Der Mini-SPA-Spike (`preview/spa-mini/`) dedup'te pragmatisch; die produktive SPA tut das nicht.
+
 ### Success-Kriterien Phase 1
 
 - Alle 18 alten Post-URLs liefern korrekten Inhalt (Visual-Parity, nicht pixelgenau).
