@@ -1,8 +1,10 @@
 # Publish-Pipeline für Nostr-Events — Design-Spec
 
-**Datum:** 2026-04-15
+**Datum:** 2026-04-15 (aktualisiert 2026-04-16: Blossom für alle Bilder, kein All-Inkl-rsync-Pfad mehr)
 **Status:** Entwurf, ausstehende User-Freigabe
-**Scope:** Toolchain, die Markdown-Posts aus `content/posts/*/index.md` in signierte Nostr-Events (`kind:30023`, NIP-23) umwandelt, zu Relays publiziert, und die zugehörigen Bilder zum Asset-Host (All-Inkl für Altposts, Blossom für neue) hochlädt.
+**Scope:** Toolchain, die Markdown-Posts aus `content/posts/*/index.md` in signierte Nostr-Events (`kind:30023`, NIP-23) umwandelt, zu Relays publiziert, und die zugehörigen Bilder zu Blossom hochlädt.
+
+**Designentscheidung 2026-04-16:** Alle Bilder (auch die der 18 Altposts) werden zu Blossom hochgeladen. Kein rsync-Legacy-Pfad, kein `image_source`-Flag im Frontmatter. Die SPA rendert alle Posts über denselben Code-Pfad (Event-Text → Bild-URLs aus Blossom). Repo = Source-of-Truth für Content, Pipeline = Nostr-Export-Routine.
 
 Diese Spec ist die Schwester-Spec zu [`2026-04-15-nostr-page-design.md`](2026-04-15-nostr-page-design.md) und teilt sich mit ihr den Event-Kontrakt für `kind:30023` und die Konfiguration über `kind:10002` / `kind:10063`.
 
@@ -34,23 +36,22 @@ Diese Spec ist die Schwester-Spec zu [`2026-04-15-nostr-page-design.md`](2026-04
               │    (Git-Diff oder force)    │
               │ 3. Pro Post:                │
               │    a. Frontmatter parsen    │
-              │    b. Markdown transform    │
-              │    c. Bilder upload         │
-              │       (legacy/blossom)      │
+              │    b. Bilder aus Ordner →   │
+              │       Blossom upload        │
+              │    c. Markdown body: bild-  │
+              │       pfade → Blossom-URLs  │
               │    d. Event bauen           │
               │    e. Via NIP-46 signieren  │
               │    f. Zu Relays pushen      │
               └──────┬──────────────────────┘
                      │
-          ┌──────────┼──────────────┬──────────────┐
-          ▼          ▼              ▼              ▼
-       Amber      Public        Blossom-        All-Inkl
-       (NIP-46    Nostr-        Server          (rsync
-        Signer    Relays        (primal,         over SSH,
-        via       aus           später eigen)   Altbilder
-        Relay)    kind:10002    aus             der 18
-                                kind:10063)     Migrations-
-                                                posts)
+          ┌──────────┼──────────────┐
+          ▼          ▼              ▼
+       Amber      Public        Blossom-
+       (NIP-46    Nostr-        Server
+        Signer    Relays        aus kind:10063
+        via       aus           (primal,
+        Relay)    kind:10002    später eigener)
 ```
 
 ### Kernprinzipien
@@ -152,34 +153,14 @@ Einmalig manuell publizieren. Phase-1-Inhalt: ein Server.
 
 Phase-5-Erweiterung (eigener Blossom-Server): zusätzliches `["server", "https://blossom.joerg-lohrer.de"]` wird vorne in die Liste aufgenommen, neues Event publiziert.
 
-### 2.5 SSH-Deploy-Key für All-Inkl
-
-1. Lokal Keypair erzeugen, **dediziert für Deploys**, nicht persönlicher SSH-Key:
-   ```
-   ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519_joerglohrerde_deploy -C "deploy-joerglohrerde"
-   ```
-   Ohne Passphrase (CI braucht non-interactive Zugang).
-2. Public-Key-Inhalt (`*.pub`) in All-Inkl-KAS unter „SSH-Zugänge" → „Authorized Keys" eintragen.
-3. Verbindung testen: `ssh -i ~/.ssh/id_ed25519_joerglohrerde_deploy w00xxxxx@ssh.all-inkl.com`
-4. Private-Key bereitstellen:
-   - **Lokal:** liegt in `~/.ssh/` und wird von rsync automatisch genutzt.
-   - **CI:** als GitHub-Actions-Secret `SSH_DEPLOY_KEY` (Inhalt der privaten Key-Datei). Im Workflow wird er in `~/.ssh/id_ed25519` gechrieben und `chmod 600` gesetzt.
-
-### 2.6 All-Inkl Deploy-Root
-
-Nach Tarifwechsel auf Premium: Pfad im KAS unter „Dateiverwaltung" ablesen. Typisch: `w00xxxxx@ssh.all-inkl.com:joerg-lohrer.de/`.
-
-- **Lokal:** in `.env` als `ALLINKL_DEPLOY_ROOT`
-- **CI:** als GitHub-Actions-Secret
-
-### 2.7 `deno task check`
+### 2.5 `deno task check`
 
 Dieser Subcommand verifiziert alle obigen Punkte:
 
 - `BUNKER_URL` gesetzt, Bunker antwortet auf Ping, Pubkey stimmt mit `AUTHOR_PUBKEY_HEX` überein.
 - `kind:10002` auf Bootstrap-Relay gefunden, mindestens 1 Relay eingetragen.
 - `kind:10063` auf Bootstrap-Relay gefunden, mindestens 1 Server eingetragen.
-- SSH-Verbindung zu `ALLINKL_DEPLOY_ROOT` erfolgreich (`ssh ... echo ok`).
+- Blossom-Server aus `kind:10063` antwortet auf HEAD / (Healthcheck).
 - Deno-Version und benötigte Permissions.
 
 Bei jedem Fehler: klare Text-Meldung, was zu tun ist (z. B. „kind:10002 fehlt — publiziere es manuell mit folgendem Schema: ...").
@@ -249,72 +230,47 @@ Slug kommt als **lowercase String** aus dem Frontmatter-Feld `slug:`. Ist bereit
 
 ### 4.2 Bild-URL-Transformation
 
-Ziel: alle relativen Bild-Referenzen im Markdown-Body werden zu absoluten URLs.
+Ziel: alle relativen Bild-Referenzen im Markdown-Body werden durch Blossom-URLs ersetzt. Ablauf:
 
-**Erkannte Muster:**
-- `![alt](filename)` — reguläre Markdown-Bild-Syntax.
-- `[![alt](filename)](link)` — Bild-in-Link-Konstrukt.
-- `![alt](filename =WxH)` — mit Größen-Suffix (Obsidian/PaperMod-Erweiterung).
+1. Pipeline sammelt alle Bilder aus dem Post-Ordner (Datei-Scan nach gängigen Bild-Extensions).
+2. Jedes Bild wird zu allen Servern aus `kind:10063` hochgeladen (siehe §5).
+3. Blossom liefert eine hash-basierte URL zurück (Format: `<server>/<sha256>` oder `<server>/<sha256>.<ext>`).
+4. Pipeline baut eine Mapping-Tabelle `<dateiname> → <blossom-url>`.
+5. Markdown-Body wird traversiert, alle erkannten Bild-Patterns werden ersetzt:
+   - `![alt](filename.png)` → `![alt](<blossom-url>)`
+   - `[![alt](filename.png)](link)` → `[![alt](<blossom-url>)](link)`
+   - `![alt](filename.png =WxH)` → `![alt](<blossom-url>)` (Größen-Suffix entfernt; SPA skaliert per CSS)
+6. Wenn `filename` bereits ein Schema enthält (`http://`, `https://`, `//`), bleibt die URL unverändert — ist schon absolut.
 
-**Regeln:**
-1. Wenn `filename` ein Schema enthält (`http://`, `https://`, `//`), nicht transformieren — ist schon absolut.
-2. Ansonsten zu absoluter URL machen; URL-Kodierung pro Pfad-Segment via `encodeURIComponent()`.
-3. `=WxH`-Suffix entfernen; die SPA skaliert Bilder per CSS responsiv.
+**Konsequenz:** Es gibt nur **einen** Upload-Pfad (Blossom). Kein Legacy-Pfad mehr. Kein `image_source`-Flag, keine Datum-basierten URL-Strukturen.
 
-**Basis-URL je nach `image_source`-Frontmatter:**
+### 4.3 Cover-Image-Tag
 
-- Wenn `image_source: legacy` → `https://joerg-lohrer.de/<YYYY>/<MM>/<DD>/<dtag>.html/<encoded-filename>`
-  - `YYYY/MM/DD` aus `date:`-Frontmatter, nicht aus dem Signatur-Zeitpunkt.
-  - `<dtag>` ist identisch mit `slug`.
-- Wenn `image_source` fehlt oder `image_source: blossom` → Blossom-URL; siehe Abschnitt 5.
-
-### 4.3 `image_source`-Flag
-
-**Einmaliger Migrationsschritt (vor erstem Publish-Lauf):** Die 18 Altposts bekommen `image_source: legacy` ins Frontmatter geschrieben. Das ist ein separater Commit, kein Pipeline-Feature.
-
-**Neue Posts:** kein Flag nötig, Default = `blossom`. Wenn ein zukünftiger Post explizit auf All-Inkl zeigen soll (außergewöhnlich), kann `image_source: legacy` gesetzt werden.
-
-### 4.4 Cover-Image-Tag
-
-Das `image`-Tag im Event (für Listen-Previews/OG-Vorschau in Nostr-Clients) kommt aus dem Frontmatter (nicht aus dem Markdown-Body):
+Das `image`-Tag im Event (für Listen-Previews/OG-Vorschau in Nostr-Clients) kommt aus dem Frontmatter:
 
 - Quelle: `cover.image:` (Hugo-Page-Bundle-Konvention); Fallback `image:` auf Top-Level.
-- Ist typischerweise ein relativer Dateiname.
-- Wird durch denselben URL-Bauer wie die Body-Bilder geschickt (Abschnitt 4.2), aber der Input ist ein direkter Dateiname aus YAML, nicht aus Markdown-Syntax. Keine `=WxH`-Suffix-Erkennung nötig.
-- Ergebnis: absolute URL gemäß `image_source`-Policy.
+- Ist typischerweise ein relativer Dateiname, der als Bild auch im Post-Ordner liegt und damit ohnehin zu Blossom hochgeladen wird.
+- Wird nach dem Upload über die Mapping-Tabelle auf die Blossom-URL umgeschrieben.
+- Wenn der Wert bereits absolut ist (http/https), bleibt er unverändert.
 
 ---
 
-## 5. Upload-Pfade
+## 5. Upload-Pfad
 
-### 5.1 Legacy-Upload (All-Inkl)
+### 5.1 Blossom-Upload (einheitlich für alle Posts)
 
-Betrifft: die 18 Altposts, Bilder darin.
-
-**Mechanik:** `rsync` over SSH via `Deno.Command("rsync", [...])`.
-
-**Befehlsschema:**
-
-```
-rsync -avz --no-perms --no-times \
-  -e "ssh -i $DEPLOY_KEY_PATH -o StrictHostKeyChecking=accept-new" \
-  <post-folder>/*.{png,jpg,jpeg,gif,webp,svg} \
-  $ALLINKL_DEPLOY_ROOT<YYYY>/<MM>/<DD>/<dtag>.html/
-```
-
-- **Idempotent:** rsync überträgt nur neue/geänderte Dateien.
-- **Nicht-löschend:** ohne `--delete`. Alte Bilder bleiben auf dem Server liegen, keine automatische Bereinigung. Manueller Aufräum-Bedarf wird hingenommen (Tote Dateien verursachen keinen Schaden, Storage ist billig).
-- **Zielordner erzeugen:** rsync legt fehlende Ordner per `--mkpath` oder (wenn Version zu alt) per vorgeschaltetem `ssh ... mkdir -p` an.
-
-**Neuer Post-Edit mit alten Bildern:** falls jemand mal einen Post editiert, der `image_source: legacy` hat und neue Bilder hinzufügt → diese werden auch zu All-Inkl geschoben. Das ist okay. Das Flag steuert nur den URL-Basispfad, nicht die Intention „nie wieder All-Inkl".
-
-### 5.2 Blossom-Upload
-
-Betrifft: alle neuen Posts (`image_source: blossom` oder fehlend).
+Betrifft: alle Bilder aller Posts, ohne Unterscheidung zwischen Alt- und Neu-Post.
 
 **Mechanik:** BUD-01 HTTP-Upload zu allen Servern aus `kind:10063`-Liste, parallel.
 
-**Schritte pro Bild:**
+**Ablauf pro Post:**
+
+1. Alle Dateien im Post-Ordner mit Bild-Extensions (`.png`, `.jpg`, `.jpeg`, `.gif`, `.webp`, `.svg`) sammeln.
+2. Hugo-generierte Resize-Varianten (`*_hu_*.png` etc.) werden **ignoriert** — das sind Derivate, keine Originale. Nur die Originaldateien, wie sie im Markdown referenziert werden, zählen.
+3. Pro Bild SHA-256 berechnen, zu allen Servern parallel hochladen.
+4. Mapping `<filename> → <primary-blossom-url>` aufbauen (primär = erster Server aus Liste).
+
+**Schritte pro Bild (intern):**
 
 1. SHA256-Hash der Datei berechnen.
 2. Authorization-Event (`kind:24242`) bauen und via Bunker signieren (enthält Hash, Verb `upload`, Expiration).
@@ -328,6 +284,17 @@ Betrifft: alle neuen Posts (`image_source: blossom` oder fehlend).
 - Manche Server OK, manche Fehler → Warnung in Log, Pipeline fährt fort mit erfolgreichem Upload.
 
 **Retry:** 2 Versuche pro Server mit exponentiellem Backoff.
+
+**Idempotenz:** Blossom dedupliziert per SHA-256. Ein erneuter Upload derselben Datei ist ein No-Op (Server antwortet 200 mit derselben URL). Daher ist wiederholtes `--force-all` unproblematisch.
+
+### 5.2 Kein Legacy-Upload mehr
+
+Frühere Versionen dieser Spec sahen einen rsync-Pfad zu All-Inkl für Altposts vor. Das ist entfallen. Begründung:
+
+- Repo ist Source-of-Truth; alle Bilder liegen in `content/posts/<ordner>/`.
+- Einheitlicher Render-Pfad in der SPA (keine Sonderlogik für Altposts).
+- Blossom dedupliziert per Hash; wiederholter Upload ist billig.
+- Nach Cutover verwaisen die alten `joerg-lohrer.de/YYYY/MM/DD/…`-URLs — das ist akzeptiert, da sie nur in der weggehenden Hugo-Site referenziert sind.
 
 ---
 
@@ -406,13 +373,9 @@ Pro Post wird das signierte Event an alle Relays aus der `kind:10002`-Liste para
 
 ### 7.2 Blossom-Upload
 
-Siehe Abschnitt 5.2. Pro Server 2 Retries, mindestens 1 Server muss akzeptieren.
+Siehe Abschnitt 5.1. Pro Server 2 Retries, mindestens 1 Server muss akzeptieren.
 
-### 7.3 Legacy-Upload
-
-rsync-Aufruf wird bei Exit-Code != 0 einmal wiederholt (1 Retry, 3 s Pause). Bleibt der Aufruf fehlerhaft, wird der Post als failed markiert und die Pipeline fährt mit dem nächsten fort.
-
-### 7.4 Bunker-Signing
+### 7.3 Bunker-Signing
 
 - Timeout 30 Sekunden pro Signatur-Request (Handy-Wake-up berücksichtigen).
 - 1 Retry bei Timeout.
@@ -470,7 +433,6 @@ publish/
 │   │   ├── signer.ts             # NIP-46 Bunker-Wrapper
 │   │   ├── relays.ts             # loadOutboxRelays, publishEvent
 │   │   ├── blossom.ts            # loadServerList, uploadBlob
-│   │   ├── legacy-upload.ts      # rsync SSH wrapper
 │   │   ├── change-detection.ts   # gitDiff, allPostFiles, forceMode
 │   │   └── log.ts                # structured logger + JSON writer
 │   └── subcommands/
@@ -548,25 +510,18 @@ jobs:
         with:
           deno-version: v2.x
 
-      - name: Setup SSH-Deploy-Key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_DEPLOY_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan ssh.all-inkl.com >> ~/.ssh/known_hosts
-
       - name: Pre-Flight Check
         env:
           BUNKER_URL: ${{ secrets.BUNKER_URL }}
-          ALLINKL_DEPLOY_ROOT: ${{ secrets.ALLINKL_DEPLOY_ROOT }}
           AUTHOR_PUBKEY_HEX: ${{ secrets.AUTHOR_PUBKEY_HEX }}
+          BOOTSTRAP_RELAY: ${{ secrets.BOOTSTRAP_RELAY }}
         run: deno task check
 
       - name: Publish
         env:
           BUNKER_URL: ${{ secrets.BUNKER_URL }}
-          ALLINKL_DEPLOY_ROOT: ${{ secrets.ALLINKL_DEPLOY_ROOT }}
           AUTHOR_PUBKEY_HEX: ${{ secrets.AUTHOR_PUBKEY_HEX }}
+          BOOTSTRAP_RELAY: ${{ secrets.BOOTSTRAP_RELAY }}
           GITHUB_EVENT_BEFORE: ${{ github.event.before }}
         run: |
           if [ "${{ inputs.force_all }}" = "true" ]; then
@@ -594,7 +549,7 @@ Diese Publish-Pipeline und die SPA sind komplementär, aber voneinander entkoppe
 - `kind:30023` Event-Schema — Publish produziert, SPA konsumiert.
 - `kind:10002` Relay-Liste — Publish liest, SPA liest.
 - `kind:10063` Blossom-Liste — Publish liest beim Upload, SPA liest für Bild-Fallback (zukünftig).
-- Bild-URL-Konvention für Altposts `/YYYY/MM/DD/<dtag>.html/<file>` — Publish schreibt, SPA erwartet.
+- Alle Bild-URLs zeigen auf Blossom (hash-basiert) — einheitlich für alle Posts.
 
 **Unabhängige Entwicklung möglich:**
 
@@ -604,7 +559,7 @@ Diese Publish-Pipeline und die SPA sind komplementär, aber voneinander entkoppe
 **Abhängigkeit beim Cutover (SPA-Migrationsschritte C + D):**
 
 - SPA kann erst live gehen, wenn die 18 Altposts als Events auf Relays liegen.
-- **Schritt C** der SPA-Migration bedeutet konkret: einmaliger lokaler Lauf `deno task publish --force-all` mit dem vollständigen Altbestand. Dieser Schritt liegt zeitlich **vor** Schritt D (dem tatsächlichen Cutover auf All-Inkl).
+- **Schritt C** der SPA-Migration bedeutet konkret: einmaliger lokaler Lauf `deno task publish --force-all` mit dem vollständigen Altbestand. Dieser Schritt liegt zeitlich **vor** Schritt D (dem tatsächlichen Cutover der Hauptdomain).
 - Voraussetzung ist, dass die Publish-Pipeline zu diesem Zeitpunkt vollständig implementiert und durch `deno task check` validiert ist.
 
 **Laufender Betrieb:**
@@ -621,12 +576,11 @@ Diese Publish-Pipeline und die SPA sind komplementär, aber voneinander entkoppe
 |---|---|---|---|
 | Amber offline während CI | mittel | hoch (Pipeline bricht ab) | Clear Error; Nutzer retriggert manuell nachdem Handy verfügbar |
 | Bunker-Secret leakt (Repo-Secret) | niedrig | mittel | Secret rotierbar: in Amber Pairing löschen, neu pairen, Secret aktualisieren |
-| SSH-Deploy-Key leakt | niedrig | mittel | Dedicated Key, in All-Inkl-KAS revokebar |
 | `kind:10002` versehentlich überschrieben (Relay-Liste leer) | niedrig | hoch | check-Subcommand prüft vor jedem Run; Pipeline bricht bei leerer Liste ab |
 | Relay-Zensur (Events werden gelöscht) | niedrig | mittel | Multi-Relay-Push; zusätzlich bezahltes nostr.wine als Durability-Anker |
 | Git-Diff übersieht Post (Rebase, Force-Push) | niedrig | niedrig | `--force-all` als Fallback, dokumentiert |
-| Blossom-Server löscht Bild | mittel | mittel | Multi-Upload zu mehreren Servern sobald kind:10063 erweitert ist |
-| `encodeURIComponent` vs. All-Inkl Apache: URL-Matching fällt auseinander | niedrig | mittel | Tests gegen reale URLs; Normalisierungs-Regel (lowercase Slugs, ASCII-Filenames bevorzugt) |
+| Blossom-Server löscht Bild | mittel | mittel | Multi-Upload zu mehreren Servern sobald kind:10063 erweitert ist; `nak blossom mirror` als Ausgleich |
+| Blossom-Server komplett weg, kein Mirror | niedrig | hoch | eigener Blossom-Server auf Optiplex (Phase 5) als dauerhafter Anker |
 | Privater Schlüssel-Recovery | niedrig | **katastrophal** | Amber hat Backup-Mechanismus; `nsec` zusätzlich offline auf Hardware sichern |
 
 ---
@@ -636,7 +590,7 @@ Diese Publish-Pipeline und die SPA sind komplementär, aber voneinander entkoppe
 **Jetzt (Bunker-Stufe Amber, Phase 1 Blossom):**
 - Handy mit Amber als einziger Signer, online während Publish-Runs.
 - Ein Blossom-Server in `kind:10063` (primal).
-- Legacy-Bilder auf All-Inkl für die 18 Altposts.
+- Alle Bilder (auch die der 18 Altposts) auf Blossom.
 - Relay-Liste mit 4 Public-Relays.
 
 **Bunker-Stufe Optiplex (sobald Proxmox-Container läuft):**
@@ -659,7 +613,7 @@ Diese Publish-Pipeline und die SPA sind komplementär, aber voneinander entkoppe
 - `deno task check` ohne Fehler.
 - 18 Altposts via einmaligem `deno task publish --force-all` publiziert.
 - Jeder Post in mindestens 2 Public-Relays abrufbar, in Habla.news korrekt gerendert.
-- Bilder der 18 Posts via `/YYYY/MM/DD/<dtag>.html/<bildname>` auf All-Inkl erreichbar.
+- Alle Bilder auf Blossom erreichbar (Hash-URL liefert die Datei).
 - Ein neuer Test-Post via CI auf `main`-Push publiziert in unter 90 Sekunden ab Push.
 - `publish-log.json` enthält aussagekräftige Einträge pro Post.
 - Pipeline läuft ohne nsec-Exposition in irgendeiner Umgebung.
