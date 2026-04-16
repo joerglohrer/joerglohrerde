@@ -11,6 +11,43 @@ date: "2023-04-07"
 slug: "dampfnudeln"
 lang: de
 dir: ltr
+images:
+  - file: Hefefreuden.jpg
+    role: cover
+    alt: "Titelbild: Dampfnudeln und Hefezopf auf einem Tisch, frisch aus Dampfgarer und Ofen"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: Hefeteig.jpg
+    alt: "Aufgegangener Hefeteig in einer Rührschüssel, glatt und elastisch, nach 30 Minuten Ruhezeit"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: Dampfnudeln-auf-Lochblech.jpg
+    alt: "Sechs runde Hefeteigstücke zum Dampfgaren auf einem gelochten Dampfgarblech"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: Dampfnudeln-im-Dampfgarer.jpg
+    alt: "Gegarte, aufgegangene Dampfnudeln im geöffneten Dampfgarer, glänzend und flaumig"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: Dampfnudel-mit-Vanillesosse.jpg
+    alt: "Dampfnudel auf Teller angerichtet, übergossen mit goldgelber Vanillesoße"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: Hefezopf.jpg
+    alt: "Frisch gebackener, dreifach geflochtener Hefezopf, goldbraun glänzend nach dem Einpinseln mit Ei"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
 ---
 
 

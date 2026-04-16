@@ -15,6 +15,48 @@ toc: true
 toc_label: "Inhaltsverzeichnis"
 toc_icon: "vr-cardboard"
 toc_sticky: "true"
+images:
+  - file: 04-aframe.jpg
+    role: cover
+    alt: "Screenshot einer A-Frame-WebVR-Szene: 3D-Objekte in einem Browser-Viewport, erstellt mit A-Frame-Framework"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+    source_url: "https://codepen.io/joerglohrer/full/dyXQqWG"
+
+  - file: 01-immersion-wikipedia.jpg
+    alt: "Screenshot des Wikipedia-Artikels 'Immersive learning' mit Einstiegsdefinition"
+    license: UNKNOWN
+    authors: UNKNOWN
+    source_url: "https://en.wikipedia.org/wiki/Immersive_learning"
+
+  - file: 02-mittelalterliche-kirche.jpg
+    alt: "Screenshot eines 3D-Modells einer mittelalterlichen Kirche (Calatrava la Nueva, Spanien) auf Sketchfab, erstellt aus 76 Laser-Scans und 4100 Fotos"
+    license: "https://creativecommons.org/licenses/by-nc/4.0/"
+    authors: UNKNOWN
+    source_url: "https://sketchfab.com/3d-models/medieval-church-calatrava-la-nueva-spain-171a047c08bc4dd588cca5ac744e8065"
+
+  - file: 03-avatare-erstellen.jpg
+    alt: "Screenshot der Avatar-Erstellung im Ready Player Me Web-Interface"
+    license: UNKNOWN
+    authors: UNKNOWN
+
+  - file: 05-pupillendistanz.jpg
+    alt: "Screenshot der iOS-App 'EyeMeasure' bei der Messung des Pupillenabstands mittels iPhone-Kamera"
+    license: UNKNOWN
+    authors: UNKNOWN
+
+  - file: 06-vr-adapter-3ddruck.jpg
+    alt: "3D-gedruckter Adapter zur Befestigung einer VIVE Deluxe Audio Strap an der Oculus Quest 2, frisch aus dem 3D-Drucker"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 07-vive-straps-3ddruck.jpg
+    alt: "3D-gedruckte Halterungen der VIVE Deluxe Audio Strap, montiert an der Oculus Quest 2"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
 ---
 
 

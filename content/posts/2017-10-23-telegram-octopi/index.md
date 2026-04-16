@@ -11,6 +11,31 @@ author: Jörg Lohrer
 slug: "telegram-octopi"
 lang: de
 dir: ltr
+images:
+  - file: octopi1.png
+    role: cover
+    alt: "Screenshot der OctoPrint-Plugin-Verwaltung während der Installation des Telegram-Plugins — Fortschrittsanzeige läuft"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: octopi2.png
+    alt: "Screenshot der Konfigurationsmaske des OctoPrint-Telegram-Plugins mit Eingabefeld für den Telegram-Bot-Token"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: octopi3.png
+    alt: "Screenshot der OctoPrint-Telegram-Plugin-Oberfläche nach erfolgreichem Token-Eintrag — Benutzerliste wird angezeigt, Rechte fehlen noch"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: octopi4.png
+    alt: "Screenshot der Benutzer-Rechte-Konfiguration mit gesetzten Häkchen bei 'Command' und 'Notify'"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
 ---
 
 

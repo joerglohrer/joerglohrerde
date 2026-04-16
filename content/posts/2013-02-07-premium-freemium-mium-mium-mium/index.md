@@ -11,6 +11,14 @@ author: Jörg Lohrer
 slug: "premium-freemium-mium-mium-mium"
 lang: de
 dir: ltr
+images:
+  - file: my-very-hungry-caterpillar.jpg
+    role: cover
+    alt: "Kleine Raupe aus Papier gefaltet, Anspielung auf das Kinderbuch 'Die kleine Raupe Nimmersatt'"
+    license: "https://creativecommons.org/licenses/by-nc-sa/3.0/"
+    authors:
+      - name: "Relly Annett-Baker"
+    source_url: "https://www.flickr.com/photos/fizzkitten/4454153264/"
 ---
 
 

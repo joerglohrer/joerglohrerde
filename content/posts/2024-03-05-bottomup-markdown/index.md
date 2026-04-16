@@ -11,6 +11,13 @@ author: Jörg Lohrer
 tags: [ "Offenheit", "OER", "MarkDown", "Community" ] 
 lang: de
 dir: ltr
+images:
+  - file: bottomup-markdown.png
+    role: cover
+    alt: "Titelbild zur OER-Camp-Session 'BottomUp MarkDown' — Symbol für die 5V-Freiheiten von Open Content in Verbindung mit der Markdown-Sprache"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
 ---
 
 ## Eine Session-Idee auf dem #OERcamp 24 in Hamburg

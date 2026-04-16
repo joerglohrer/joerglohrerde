@@ -11,6 +11,70 @@ date: "2023-03-23"
 slug: "gleichnis-vom-saemann"
 lang: de
 dir: ltr
+images:
+  - file: saemann-title.jpg
+    role: cover
+    alt: "Titelbild zum Gleichnis vom Sämann: Collage der fünf KI-generierten Illustrationen im Stil von Eric Carle"
+    license: "https://creativecommons.org/licenses/by-sa/3.0/de/"
+    authors:
+      - name: "Jörg Lohrer"
+    modifications: "Collage aus Midjourney-generierten Bildern im Stil von Eric Carle, Prompts siehe Artikel"
+
+  - file: bild1-saemann.jpeg
+    alt: "Illustration im Stil von Eric Carle: Ein freundlicher Bauer streut Samen in einem offenen Feld, im Hintergrund vier Böden — felsig, dornig, vogelreich und fruchtbar"
+    license: "https://creativecommons.org/licenses/by-sa/3.0/de/"
+    authors:
+      - name: "Jörg Lohrer"
+    modifications: "KI-generiert mit Midjourney v5, Prompt im Stil von Eric Carle"
+
+  - file: bild1-alternativ-saemann.jpeg
+    alt: "Alternative Illustration im Stil von Eric Carle: Bauer beim Säen mit verschiedenen Bodenarten im Hintergrund"
+    license: "https://creativecommons.org/licenses/by-sa/3.0/de/"
+    authors:
+      - name: "Jörg Lohrer"
+    modifications: "KI-generiert mit Midjourney v5, alternative Variante zu Bild 1"
+
+  - file: bild2-saemann.jpeg
+    alt: "Illustration im Stil von Eric Carle: Kleine, schwache Pflanzen, die mit wenig Erde auf felsigem Boden zu wachsen beginnen"
+    license: "https://creativecommons.org/licenses/by-sa/3.0/de/"
+    authors:
+      - name: "Jörg Lohrer"
+    modifications: "KI-generiert mit Midjourney v5"
+
+  - file: bild2-alternativ-saemann.jpeg
+    alt: "Alternative Illustration im Stil von Eric Carle: Keimende Pflanzen auf steinigem Grund"
+    license: "https://creativecommons.org/licenses/by-sa/3.0/de/"
+    authors:
+      - name: "Jörg Lohrer"
+    modifications: "KI-generiert mit Midjourney v5, alternative Variante zu Bild 2"
+
+  - file: bild3-saemann.jpeg
+    alt: "Illustration im Stil von Eric Carle: Junge Pflanzen werden von Dornen umklammert und erstickt"
+    license: "https://creativecommons.org/licenses/by-sa/3.0/de/"
+    authors:
+      - name: "Jörg Lohrer"
+    modifications: "KI-generiert mit Midjourney v5"
+
+  - file: bild4-saemann.jpeg
+    alt: "Illustration im Stil von Eric Carle: Fröhliche Vögel picken Samen vom Boden und fressen sie, bevor sie keimen können"
+    license: "https://creativecommons.org/licenses/by-sa/3.0/de/"
+    authors:
+      - name: "Jörg Lohrer"
+    modifications: "KI-generiert mit Midjourney v5"
+
+  - file: bild5-saemann.jpeg
+    alt: "Illustration im Stil von Eric Carle: Große, gesunde Pflanzen tragen reiche Früchte auf fruchtbarem Boden, der Bauer steht lächelnd daneben"
+    license: "https://creativecommons.org/licenses/by-sa/3.0/de/"
+    authors:
+      - name: "Jörg Lohrer"
+    modifications: "KI-generiert mit Midjourney v5"
+
+  - file: screen-chatgpt-saemann.png
+    alt: "Screenshot des ChatGPT-Dialogs: Eingabe der Anfrage zum Gleichnis vom Sämann für einen 8-Jährigen und KI-generierte Antwort in fünf Bildbeschreibungen"
+    license: "https://creativecommons.org/licenses/by-sa/3.0/de/"
+    authors:
+      - name: "Jörg Lohrer"
+    modifications: "Screenshot einer ChatGPT-4-Interaktion, Prompt vom Autor verfasst"
 ---
 
 # Das Gleichnis vom Sämann

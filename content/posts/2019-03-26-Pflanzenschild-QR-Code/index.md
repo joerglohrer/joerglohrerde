@@ -11,6 +11,19 @@ slug: "pflanzenschild-qr-code"
 author: Jörg Lohrer
 lang: de
 dir: ltr
+images:
+  - file: cura-plugin-change-filment-at-z.png
+    role: cover
+    alt: "Screenshot des Cura-Slicers mit aktiviertem 'Change Filament at Z'-Plugin — Konfiguration eines Filamentwechsels in bestimmten Layern"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: qr-code-pflanzenschild.jpg
+    alt: "Dreieckiges 3D-gedrucktes Pflanzenschild mit aufgedrucktem zweifarbigem QR-Code, steckt in einem Pflanztopf"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
 ---
 
 

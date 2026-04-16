@@ -11,7 +11,25 @@ cover:
 tags: [ "WordPress", "Padlet", "Kanban", "TaskCards", "horizontales Scrollen" ] 
 lang: de
 dir: ltr
+images:
+  - file: wordpress-horizontales-scrollen.gif
+    role: cover
+    alt: "Animierter Screenshot: WordPress-Seite mit horizontal scrollbaren Spalten, die Beiträge im Kanban-Stil nebeneinander zeigen"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
 
+  - file: spalten-als-posts-block.png
+    alt: "Screenshot des Stackable 'posts block'-Plugins in WordPress mit Spaltenansicht nach Kategorien"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: posts-per-drag-and-drop-sortieren.png
+    alt: "Screenshot der WordPress-Beitragsliste mit aktiviertem 'Intuitive Custom Post Order'-Plugin — Beiträge werden per Drag & Drop sortiert"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
 ---
 
 Eine **Sammlung von Liedern für den Religionsunterricht** ist auf Instagram in Zusammenarbeit von [@relimomente](https://www.instagram.com/relimomente/) [@ezpz.lemon.sqz](https://www.instagram.com/ezpz.lemon.sqz) und [@colibri260](https://www.instagram.com/colibri260) entstanden und wurde zunächst **[hier auf TaskCards](https://www.taskcards.de/#/board/16af7347-ec26-468e-a093-34549dd2dae3/view)** veröffentlicht.

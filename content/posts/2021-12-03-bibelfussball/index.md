@@ -15,6 +15,13 @@ toc: true
 toc_label: "Inhaltsverzeichnis"
 toc_icon: "futbol"
 toc_sticky: "true"
+images:
+  - file: bibelfussball1.png
+    role: cover
+    alt: "Tafel-Skizze eines Fußballfeldes mit Mittellinie, Strafräumen und zwei Toren — Magnetknopf markiert die aktuelle Ballposition"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
 ---
 
 

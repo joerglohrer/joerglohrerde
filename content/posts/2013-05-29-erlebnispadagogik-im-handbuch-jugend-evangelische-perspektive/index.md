@@ -12,9 +12,7 @@ dir: ltr
 
 # Erlebnispädagogik im Handbuch Jugend – Evangelische Perspektiven
 
-Das 
-[![](http://ws.assoc-amazon.de/widgets/q?_encoding=UTF8&ASIN=3847400746&Format=_SL160_&ID=AsinImage&MarketPlace=DE&ServiceVersion=20070822&WS=1&tag=httpwwwjoergl-21)](http://ci-muenster.de/bookshop/artikel/buecher/Bildung-im-Kindes-und-Jugendalter/A40097_Handbuch_Jugend_2013.php)
-**Handbuch Jugend – Evangelische Perspektiven**, welches 2013 erschienen ist, hat auf Seite 343-345 folgenden Artikel von mir zur Erlebnispädagogik abgedruckt.
+Das [**Handbuch Jugend – Evangelische Perspektiven**](http://ci-muenster.de/bookshop/artikel/buecher/Bildung-im-Kindes-und-Jugendalter/A40097_Handbuch_Jugend_2013.php), welches 2013 erschienen ist, hat auf Seite 343-345 folgenden Artikel von mir zur Erlebnispädagogik abgedruckt.
 [CC BY](http://creativecommons.org/licenses/by/2.0/de/) Jörg Lohrer
 
 ## Erlebnispädagogik
@@ -44,14 +42,10 @@ Die Wirkungsforschung erlebnispädagogischer Lernarrangements untersucht deren S
 Im Kontext evangelischer Jugendbildung stellt sich bei der Verwendung erlebnispädagogischer Methoden immer auch die Frage nach einer Verknüpfung von christlichen Inhalten mit der handlungsorientierten Pädagogik. Die Assoziation von Natur und Schöpfung ist beispielsweise ebenso naheliegend wie die Reflexion von religiösen Erfahrungen in erlebnispädagogischen Lernsettings. Inwiefern sich dabei Unverfügbares inszenieren lässt, bleibt dabei ebenso eine Herausforderung, wie bei der oben beschriebenen Wirkungsforschung. In den vergangenen Jahren haben sich einige Konzepte zur Erprobung erlebnispädagogischer Methoden im christlichen Kontext entwickelt, die zunehmend auch theologisch und religionsdidaktisch reflektiert werden. Eine überregionale Organisation dieser Einzelinitiativen auf Bundesebene wäre der nächste Schritt hin zu einem evangelischen Profil erlebnispädagogischer Jugendbildungsarbeit.
 
 ### Literatur
-![](http://ws.assoc-amazon.de/widgets/q?_encoding=UTF8&ASIN=3866870493&Format=_SL160_&ID=AsinImage&MarketPlace=DE&ServiceVersion=20070822&WS=1&tag=httpwwwjoergl-21) 
-Großer, Achim/Oberländer, Rainer/Lohrer, Jörg/Wiedmayer, Jörg (2005/2011): Sinn gesucht – Gott erfahren. Erlebnispädagogik im christlichen Kontext (Band 1 (2005)/Band 2 (2011)). Stuttgart: Buch und Musik.
-![](http://ws.assoc-amazon.de/widgets/q?_encoding=UTF8&ASIN=3497022934&Format=_SL160_&ID=AsinImage&MarketPlace=DE&ServiceVersion=20070822&WS=1&tag=httpwwwjoergl-21)
-Heckmair, Bernd/Michl, Werner (2008): Erleben und Lernen. Einführung in die Erlebnispädagogik. München: Reinhardt.
-![](http://ws.assoc-amazon.de/widgets/q?_encoding=UTF8&ASIN=3940562866&Format=_SL160_&ID=AsinImage&MarketPlace=DE&ServiceVersion=20070822&WS=1&tag=httpwwwjoergl-21)
-Reiners, Annette (2007): Praktische Erlebnispädagogik. Augsburg: ZIEL.
-![](http://ws.assoc-amazon.de/widgets/q?_encoding=UTF8&ASIN=3936369348&Format=_SL160_&ID=AsinImage&MarketPlace=DE&ServiceVersion=20070822&WS=1&tag=httpwwwjoergl-21)
-Pum, Viktoria/Pirner, Manfred L./Lohrer, Jörg (Hrsg.) (2011): Erlebnispädagogik im christlichen Kontext. Dokumentation einer Tagung der Evangelischen Akademie Bad Boll, 2. bis 4. März 2009. Bad Boll: Evangelische Akademie.
+- Großer, Achim/Oberländer, Rainer/Lohrer, Jörg/Wiedmayer, Jörg (2005/2011): Sinn gesucht – Gott erfahren. Erlebnispädagogik im christlichen Kontext (Band 1 (2005)/Band 2 (2011)). Stuttgart: Buch und Musik.
+- Heckmair, Bernd/Michl, Werner (2008): Erleben und Lernen. Einführung in die Erlebnispädagogik. München: Reinhardt.
+- Reiners, Annette (2007): Praktische Erlebnispädagogik. Augsburg: ZIEL.
+- Pum, Viktoria/Pirner, Manfred L./Lohrer, Jörg (Hrsg.) (2011): Erlebnispädagogik im christlichen Kontext. Dokumentation einer Tagung der Evangelischen Akademie Bad Boll, 2. bis 4. März 2009. Bad Boll: Evangelische Akademie.
 
 #### Links
 - Bundesverband Individual- und Erlebnispädagogik e.V. (BE): [https://www.bundesverband-erlebnispaedagogik.de/](https://www.bundesverband-erlebnispaedagogik.de/)

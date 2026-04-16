@@ -60,6 +60,16 @@ learningResourceType:
 educationalLevel:
   - https://w3id.org/kim/educationalLevel/level_A
 datePublished: '2025-03-04'  
+images:
+  - file: dezentrale-oep-oer.png
+    role: cover
+    alt: "Ein in den Sand gezeichneter Strauß mit den Buchstaben 'OER' — Sinnbild für offene Bildung und freien Wissensaustausch, gleichzeitig Wortspiel-Verbindung zu Nostr (Ostrich = Strauß)"
+    caption: "Analog zum Ichthys-Fisch als geheimem Erkennungszeichen: Symbol einer Gemeinschaft, die Wissen offen, unabhängig und widerstandsfähig teilt"
+    license: "https://creativecommons.org/licenses/by/4.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+      - name: "Steffen Rörtgen"
+      - name: "Bastian Granas"
 ---
 
 # Gemeinsam die Bildungszukunft gestalten: Dezentrale OEP und OER als Wegbereiter

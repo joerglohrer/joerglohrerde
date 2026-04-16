@@ -11,6 +11,31 @@ author: Jörg Lohrer
 slug: "moodle-iomad-linux"
 lang: de
 dir: ltr
+images:
+  - file: title-gif.gif
+    role: cover
+    alt: "Animiertes Titelbild des Artikels zur Moodle-Server-Installation mit Iomad unter Ubuntu"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 01-netzwerkbruecke.png
+    alt: "Screenshot der VirtualBox-Netzwerkeinstellungen mit aktivierter Netzwerkbrücke für die Ubuntu-VM"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 02-hosts-eintragen.png
+    alt: "Terminal-Screenshot mit geöffneter /etc/hosts-Datei im nano-Editor, neuer Eintrag 'moodle.local' wird hinzugefügt"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: "03-config generieren.png"
+    alt: "Screenshot des Moodle-Installationsassistenten beim automatischen Generieren der config.php"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
 ---
 
 

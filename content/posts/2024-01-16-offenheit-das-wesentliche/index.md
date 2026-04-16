@@ -11,6 +11,14 @@ author: Jörg Lohrer
 tags: [ "Offenheit", "OER", "WordPress", "Nextcloud", "Element", "Community" ] 
 lang: de
 dir: ltr
+images:
+  - file: offenheit-wesentlich.png
+    role: cover
+    alt: "KI-generierte Aquarell-Illustration: Silhouetten von Menschen aller Geschlechter und Altersgruppen, die ineinander übergehen und sich überlappen — Symbol einer Community of Trust"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+    modifications: "KI-generiert mit Midjourney v6.0, Prompt: A Community of Trust based on Openness, silhouettes of people of all genders and ages that merge into each other and overlap, watercolors --v 6.0 --seed 1235164279"
 ---
 
 # Offenheit - das Wesentliche

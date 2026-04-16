@@ -11,6 +11,43 @@ date: "2023-02-26"
 slug: "jojos-schoko-zimt-schnecken"
 lang: de
 dir: ltr
+images:
+  - file: schneckennudeln-titel.jpg
+    role: cover
+    alt: "Goldbraun gebackene Hefeschnecken in einer Kuchenform, Titelbild des Rezepts"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: Hefeteig-mit-Fuellung.jpg
+    alt: "Ausgerollter Hefeteig, bestrichen mit cremiger Kakao-Zimt-Zucker-Füllung, bereit zum Einrollen"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 16-Schneckennudeln.jpg
+    alt: "16 dicht an dicht aufgestellte, rohe Hefeschnecken in einer runden Kuchenform"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: hefeschnecken-in-capelle-backform.jpg
+    alt: "Gegangene, mit Eimilch bestrichene Hefeschnecken in Kapellen-Backform, bereit für den Ofen"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: schneckennudeln-im-ofen.jpg
+    alt: "Hefeschnecken im Ofen während des Backens, Oberseite beginnt goldbraun zu werden"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: schneckennudeln-fertig.jpg
+    alt: "Fertig gebackene, goldbraune Hefeschnecken in der Kuchenform, bereit zum Servieren"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
 ---
 
 

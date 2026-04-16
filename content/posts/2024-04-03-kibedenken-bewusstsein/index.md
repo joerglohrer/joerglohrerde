@@ -27,6 +27,15 @@ creator:
       name: Comenius-Institut
       id: https://ror.org/025e8aw85
       type: Organization 
+images:
+  - file: kibedenken.png
+    role: cover
+    alt: "Ein junger Roboterjunge mit gesenktem Kopf betrachtet seine Spiegelung im Wasser, im fotorealistischen Stil einer Canon EOS 5D Mark IV"
+    caption: "Referenziert auf Narziss aus der griechischen Mythologie und die Illustration von Caravaggio (siehe [Wikipedia #Narziss](https://de.wikipedia.org/wiki/Narziss#))"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+    modifications: "KI-generiert mit Midjourney v6.0, Prompt: photographed with the Canon EOS 5D Mark IV a young robot boy with his head down, looking at his reflection in water --v6.0"
 ---
 
 # #KIBedenken - Bewusstsein

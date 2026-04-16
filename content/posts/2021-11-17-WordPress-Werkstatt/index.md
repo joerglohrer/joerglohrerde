@@ -11,6 +11,49 @@ author: Jörg Lohrer
 slug: "wordpress-werkstatt"
 lang: de
 dir: ltr
+images:
+  - file: 04-termine-neu.png
+    role: cover
+    alt: "Screenshot der WordPress-Beitragsübersicht mit eingefügtem Shortcode [relilab_termine], der eine Terminliste als Block rendert"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 01-json-import.png
+    alt: "Screenshot der ACF-Plugin-Oberfläche beim Import einer JSON-Datei mit Feldgruppen-Definitionen"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 02-terminfelder.png
+    alt: "Screenshot eines WordPress-Beitrags mit zwei neuen ACF-Terminfeldern 'Startet am' und 'Endet am' als Datum-/Zeit-Picker"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 03-kategorien.png
+    alt: "Screenshot der WordPress-Kategorieverwaltung mit neu angelegter Kategorie 'Termine' samt Unterkategorien"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 05-php-storm.png
+    alt: "Screenshot der PhpStorm-IDE mit geöffneter PHP-Datei zum add_shortcode()-Aufruf"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 06-termine-listen.png
+    alt: "Screenshot des PHP-Codes für die Funktion 'termineAusgeben' mit get_posts()-Abfrage und Shortcode-Registrierung"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 07-external-library.png
+    alt: "Screenshot der PhpStorm-Konfiguration zur Einbindung von WordPress als External Library für Auto-Complete"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
 ---
 
 

@@ -15,6 +15,193 @@ toc: true
 toc_label: "Inhaltsverzeichnis"
 toc_icon: "house-laptop"
 toc_sticky: "true"
+images:
+  - file: 29-autostartordner.jpg
+    role: cover
+    alt: "Screenshot des Windows-Autostart-Ordners mit verknüpften OBS- und Zoom-Startlinks für automatischen Start beim Systemstart"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 01-deutsche-tastatur-ubuntu.png
+    alt: "Screenshot der Ubuntu-Terminal-Dialog zur Konfiguration der deutschen Tastatur via dpkg-reconfigure"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 02-chrome-remote-desktop.png
+    alt: "Screenshot der Chrome-Remote-Desktop-Installation im Ubuntu-Terminal"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 03-status-chrome-remote.png
+    alt: "Screenshot des systemctl-Status des chrome-remote-desktop-Dienstes als 'active (running)'"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 04-remotezugriff.png
+    alt: "Screenshot der Chrome-Remote-Desktop-Konfigurationsseite mit SSH-Befehl und PIN-Eingabe"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 05-systemctl-status.png
+    alt: "Screenshot der systemctl-status-Ausgabe für chrome-remote-desktop mit aktivem Dienst"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 06-cannot-open-video-device.png
+    alt: "Terminal-Screenshot der Fehlermeldung 'Cannot open device /dev/video0' bei v4l2-ctl --list-devices"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 07-jetzt-v412-ctl.png
+    alt: "Terminal-Screenshot der erfolgreichen v4l2-ctl-Geräteliste nach Installation von v4l2loopback"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 08-dummy-video-device.png
+    alt: "Terminal-Screenshot nach Reboot: virtuelle Kamera fehlt, Dummy-Video-Device muss neu geladen werden"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 09-relilab-technical-host.png
+    alt: "Screenshot der Chrome-Remote-Desktop-Geräteübersicht mit dem VM-Eintrag 'relilab-technical-host'"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 10-pin-remote-desktop.png
+    alt: "Screenshot des Chrome-Remote-Desktop-PIN-Eingabefelds für die Remote-Verbindung"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 11-keyboard-tastatur-umstellen.png
+    alt: "Screenshot der Linux-Keyboard-Einstellungen mit Umstellung auf deutsche Tastaturbelegung"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 12-apps-verknuepfen.png
+    alt: "Screenshot der Cinnamon-Desktop-Umgebung mit Drag-and-Drop-Verknüpfung von Anwendungen auf den Desktop"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 13-startvirtualcam.png
+    alt: "Screenshot der OBS-Verknüpfung mit dem Zusatzparameter --startvirtualcam im Startbefehl"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 14-OBS-deutsch-umstellen.png
+    alt: "Screenshot der OBS-Studio-Einstellungen beim Umschalten der Benutzeroberfläche auf Deutsch"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 15-obs-mit-virtual-cam-starten.png
+    alt: "Screenshot der OBS-Startbefehl-Konfiguration mit --startvirtualcam-Parameter für automatischen Kamera-Start"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 16-startup-application.png
+    alt: "Screenshot der Cinnamon-Startup-Applications-Verwaltung mit neu hinzugefügtem OBS-Eintrag"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 17-i-will-only-be-using-OBS.png
+    alt: "Screenshot des OBS-Auto-Configuration-Wizard mit ausgewählter Option 'I will only be using the virtual camera'"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 18-video1920.png
+    alt: "Screenshot der OBS-Video-Einstellungen mit Auflösung 1920x1080"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 19-szenensammlung-importieren-OBS.png
+    alt: "Screenshot des OBS-Menüs 'Szenensammlung importieren' mit Auswahl einer JSON-Datei"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 20-chrome-einrichten.png
+    alt: "Screenshot des Ubuntu-Keyring-Passwort-Dialogs beim ersten Chrome-Start"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 21-chrome-standard.png
+    alt: "Screenshot der Google-Chrome-Einstellungen mit gesetzter Option 'Als Standardbrowser festlegen'"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 22-chrome-anmeldung.png
+    alt: "Screenshot der Google-Account-Anmeldung in Chrome mit aktiviertem Sync"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 23-zoom-anmeldung.png
+    alt: "Screenshot der Zoom-Client-Anmeldemaske unter Linux"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 24-zoom-sprache-aendern.png
+    alt: "Screenshot des Zoom-Tray-Menüs mit Sprachauswahl-Untermenü zur Umstellung auf Deutsch"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 25-slides-emojis.png
+    alt: "Screenshot einer Präsentationsfolie im Chrome-Browser mit fehlenden Emoji-Zeichen als leere Platzhalter"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 26-keyring-problem.png
+    alt: "Screenshot der Ubuntu-GUI-Fehlermeldung beim Versuch, sich als Root einzuloggen"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 27-startvirtualcam-verknuepft-OBS.jpg
+    alt: "Screenshot der Windows-Eigenschaften einer OBS-Desktop-Verknüpfung mit --startvirtualcam-Parameter"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: 28-shell-startup.png
+    alt: "Screenshot des Windows-Run-Dialogs mit Befehl 'shell:startup' zum Öffnen des Autostart-Ordners"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: v412-ctl-fehlermeldung.png
+    alt: "Terminal-Screenshot der v4l2-ctl-Fehlermeldung beim Öffnen des Video-Gerätes"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
+
+  - file: virtueller-desktop-titelbild.jpg
+    alt: "Stilisiertes Titelbild: virtueller Desktop-Arbeitsplatz mit mehreren Bildschirmen und Remote-Verbindung"
+    license: "https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+    authors:
+      - name: "Jörg Lohrer"
 ---
 
 
