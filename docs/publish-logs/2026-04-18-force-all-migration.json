@@ -1,0 +1,372 @@
+{
+  "run_id": "6356c2c9-37c6-4927-b906-7943bb59d3c0",
+  "started_at": "2026-04-18T04:44:43.558Z",
+  "ended_at": "2026-04-18T04:47:34.238Z",
+  "mode": "force-all",
+  "posts": [
+    {
+      "slug": "premium-freemium-mium-mium-mium",
+      "status": "success",
+      "action": "new",
+      "event_id": "7f18e5fbc825f16d118281e4c56ce8a989d2647fedcd3d4e45a8df0e897a395c",
+      "relays_ok": [
+        "wss://nos.lol/",
+        "wss://relay.damus.io/",
+        "wss://relay.primal.net/",
+        "wss://relay.tchncs.de/",
+        "wss://relay.edufeed.org/"
+      ],
+      "relays_failed": [],
+      "blossom_servers_ok": [
+        "https://blossom.edufeed.org",
+        "https://blossom.primal.net"
+      ],
+      "images_uploaded": 1,
+      "duration_ms": 4294
+    },
+    {
+      "slug": "erlebnispadagogik-im-handbuch-jugend-evangelische-perspektive",
+      "status": "success",
+      "action": "new",
+      "event_id": "ee5ecc397b4bfbff268ec3c53187f0b2b4a03958e14df2728c27145a72b85941",
+      "relays_ok": [
+        "wss://nos.lol/",
+        "wss://relay.damus.io/",
+        "wss://relay.primal.net/",
+        "wss://relay.tchncs.de/",
+        "wss://relay.edufeed.org/"
+      ],
+      "relays_failed": [],
+      "blossom_servers_ok": [],
+      "images_uploaded": 0,
+      "duration_ms": 3111
+    },
+    {
+      "slug": "telegram-octopi",
+      "status": "success",
+      "action": "new",
+      "event_id": "bee5a9150ce2055e17d729772b4a998afbd3333e6224beb72fd2152ee2d0c05e",
+      "relays_ok": [
+        "wss://nos.lol/",
+        "wss://relay.damus.io/",
+        "wss://relay.primal.net/",
+        "wss://relay.tchncs.de/",
+        "wss://relay.edufeed.org/"
+      ],
+      "relays_failed": [],
+      "blossom_servers_ok": [
+        "https://blossom.edufeed.org",
+        "https://blossom.primal.net"
+      ],
+      "images_uploaded": 4,
+      "duration_ms": 5169
+    },
+    {
+      "slug": "lutherkuerbis",
+      "status": "success",
+      "action": "new",
+      "event_id": "7715c4359da95c0459a6e65fd25c17c3c8c169e83fe68acb9f98ed34dd44e4e6",
+      "relays_ok": [
+        "wss://nos.lol/",
+        "wss://relay.damus.io/",
+        "wss://relay.primal.net/",
+        "wss://relay.tchncs.de/",
+        "wss://relay.edufeed.org/"
+      ],
+      "relays_failed": [],
+      "blossom_servers_ok": [
+        "https://blossom.edufeed.org",
+        "https://blossom.primal.net"
+      ],
+      "images_uploaded": 6,
+      "duration_ms": 7921
+    },
+    {
+      "slug": "pflanzenschild-qr-code",
+      "status": "success",
+      "action": "new",
+      "event_id": "f66520b363e568bf2714b6d6bd63543dd4f79f8e834d40566656ea35d37ecdf2",
+      "relays_ok": [
+        "wss://nos.lol/",
+        "wss://relay.damus.io/",
+        "wss://relay.primal.net/",
+        "wss://relay.tchncs.de/",
+        "wss://relay.edufeed.org/"
+      ],
+      "relays_failed": [],
+      "blossom_servers_ok": [
+        "https://blossom.edufeed.org",
+        "https://blossom.primal.net"
+      ],
+      "images_uploaded": 2,
+      "duration_ms": 4436
+    },
+    {
+      "slug": "virtual-reality",
+      "status": "success",
+      "action": "new",
+      "event_id": "28b75d85774056e6e59097ebf58c44c9e8badadbd25084d0eebc3f95a9a90439",
+      "relays_ok": [
+        "wss://nos.lol/",
+        "wss://relay.primal.net/",
+        "wss://relay.tchncs.de/",
+        "wss://relay.edufeed.org/"
+      ],
+      "relays_failed": [
+        "wss://relay.damus.io/"
+      ],
+      "blossom_servers_ok": [
+        "https://blossom.edufeed.org",
+        "https://blossom.primal.net"
+      ],
+      "images_uploaded": 7,
+      "duration_ms": 14102
+    },
+    {
+      "slug": "wordpress-werkstatt",
+      "status": "success",
+      "action": "new",
+      "event_id": "5ff5ca9dcc4098e042c7bfe0808f05aea6d7ea871dbb69696594a7d7682b3115",
+      "relays_ok": [
+        "wss://nos.lol/",
+        "wss://relay.damus.io/",
+        "wss://relay.primal.net/",
+        "wss://relay.tchncs.de/",
+        "wss://relay.edufeed.org/"
+      ],
+      "relays_failed": [],
+      "blossom_servers_ok": [
+        "https://blossom.edufeed.org",
+        "https://blossom.primal.net"
+      ],
+      "images_uploaded": 7,
+      "duration_ms": 9300
+    },
+    {
+      "slug": "bibelfussball",
+      "status": "success",
+      "action": "new",
+      "event_id": "ee019e772f2c8e52a3d77041495508f5d65ab34bb46ccaff3a74f34173cc194f",
+      "relays_ok": [
+        "wss://nos.lol/",
+        "wss://relay.primal.net/",
+        "wss://relay.tchncs.de/",
+        "wss://relay.edufeed.org/"
+      ],
+      "relays_failed": [
+        "wss://relay.damus.io/"
+      ],
+      "blossom_servers_ok": [
+        "https://blossom.edufeed.org",
+        "https://blossom.primal.net"
+      ],
+      "images_uploaded": 1,
+      "duration_ms": 8627
+    },
+    {
+      "slug": "moodle-iomad-linux",
+      "status": "success",
+      "action": "new",
+      "event_id": "707e98d43993778d8e5ffb87a29262d32decc6d0518399991ed7e6c7b4dedf1d",
+      "relays_ok": [
+        "wss://nos.lol/",
+        "wss://relay.primal.net/",
+        "wss://relay.tchncs.de/",
+        "wss://relay.edufeed.org/"
+      ],
+      "relays_failed": [
+        "wss://relay.damus.io/"
+      ],
+      "blossom_servers_ok": [
+        "https://blossom.edufeed.org",
+        "https://blossom.primal.net"
+      ],
+      "images_uploaded": 4,
+      "duration_ms": 10653
+    },
+    {
+      "slug": "ob-virtualcam",
+      "status": "success",
+      "action": "new",
+      "event_id": "1e62cf1f6375fc3988024a3f3d02c041a3065ad69f53b32cb085858fff3c8ed0",
+      "relays_ok": [
+        "wss://nos.lol/",
+        "wss://relay.damus.io/",
+        "wss://relay.primal.net/",
+        "wss://relay.tchncs.de/",
+        "wss://relay.edufeed.org/"
+      ],
+      "relays_failed": [],
+      "blossom_servers_ok": [
+        "https://blossom.edufeed.org",
+        "https://blossom.primal.net"
+      ],
+      "images_uploaded": 31,
+      "duration_ms": 32549
+    },
+    {
+      "slug": "jojos-schoko-zimt-schnecken",
+      "status": "success",
+      "action": "new",
+      "event_id": "8561994ee97ebec8775e60106cd8c58b3b24df27c8c0f442e03c2ad384003df2",
+      "relays_ok": [
+        "wss://nos.lol/",
+        "wss://relay.damus.io/",
+        "wss://relay.primal.net/",
+        "wss://relay.tchncs.de/",
+        "wss://relay.edufeed.org/"
+      ],
+      "relays_failed": [],
+      "blossom_servers_ok": [
+        "https://blossom.edufeed.org",
+        "https://blossom.primal.net"
+      ],
+      "images_uploaded": 6,
+      "duration_ms": 9240
+    },
+    {
+      "slug": "gleichnis-vom-saemann",
+      "status": "success",
+      "action": "new",
+      "event_id": "a9b49cbf601b7dba4cb7b63e26c281308fee2f722b4c2c0bb7485d339cd9364e",
+      "relays_ok": [
+        "wss://nos.lol/",
+        "wss://relay.damus.io/",
+        "wss://relay.primal.net/",
+        "wss://relay.tchncs.de/",
+        "wss://relay.edufeed.org/"
+      ],
+      "relays_failed": [],
+      "blossom_servers_ok": [
+        "https://blossom.edufeed.org",
+        "https://blossom.primal.net"
+      ],
+      "images_uploaded": 9,
+      "duration_ms": 14335
+    },
+    {
+      "slug": "dampfnudeln",
+      "status": "success",
+      "action": "new",
+      "event_id": "51e032c62bc228ace874321f4bcb4f872fe4841258aba3d6d7208ce476664b43",
+      "relays_ok": [
+        "wss://nos.lol/",
+        "wss://relay.damus.io/",
+        "wss://relay.primal.net/",
+        "wss://relay.tchncs.de/",
+        "wss://relay.edufeed.org/"
+      ],
+      "relays_failed": [],
+      "blossom_servers_ok": [
+        "https://blossom.edufeed.org",
+        "https://blossom.primal.net"
+      ],
+      "images_uploaded": 6,
+      "duration_ms": 8128
+    },
+    {
+      "slug": "wordpress-statt-padlet-oder-taskcards",
+      "status": "success",
+      "action": "update",
+      "event_id": "8bd17088cb93d4b9868ac4764057f1963c9878a88abc528152649ff2d7b425ef",
+      "relays_ok": [
+        "wss://nos.lol/",
+        "wss://relay.damus.io/",
+        "wss://relay.primal.net/",
+        "wss://relay.tchncs.de/",
+        "wss://relay.edufeed.org/"
+      ],
+      "relays_failed": [],
+      "blossom_servers_ok": [
+        "https://blossom.edufeed.org",
+        "https://blossom.primal.net"
+      ],
+      "images_uploaded": 3,
+      "duration_ms": 7449
+    },
+    {
+      "slug": "offenheit-das-wesentliche",
+      "status": "success",
+      "action": "update",
+      "event_id": "45472a71074ed5fdb2c654c8500a9fb581bcf48221be3d565fb6b9ea088c9ab0",
+      "relays_ok": [
+        "wss://nos.lol/",
+        "wss://relay.primal.net/",
+        "wss://relay.tchncs.de/",
+        "wss://relay.edufeed.org/"
+      ],
+      "relays_failed": [
+        "wss://relay.damus.io/"
+      ],
+      "blossom_servers_ok": [
+        "https://blossom.edufeed.org",
+        "https://blossom.primal.net"
+      ],
+      "images_uploaded": 1,
+      "duration_ms": 8235
+    },
+    {
+      "slug": "bottomup-markdown",
+      "status": "success",
+      "action": "update",
+      "event_id": "a8030ba0f9c62a5787a84c607b11f3eaf9c0c694adcc245b9969522cff9f0e30",
+      "relays_ok": [
+        "wss://nos.lol/",
+        "wss://relay.primal.net/",
+        "wss://relay.tchncs.de/",
+        "wss://relay.edufeed.org/"
+      ],
+      "relays_failed": [
+        "wss://relay.damus.io/"
+      ],
+      "blossom_servers_ok": [
+        "https://blossom.edufeed.org",
+        "https://blossom.primal.net"
+      ],
+      "images_uploaded": 1,
+      "duration_ms": 7143
+    },
+    {
+      "slug": "kibedenken-bewusstsein",
+      "status": "success",
+      "action": "update",
+      "event_id": "a05458fc79f4192fef6902e8c55c465f3d9c26cede5772259d5f2d5879734dd2",
+      "relays_ok": [
+        "wss://nos.lol/",
+        "wss://relay.damus.io/",
+        "wss://relay.primal.net/",
+        "wss://relay.tchncs.de/",
+        "wss://relay.edufeed.org/"
+      ],
+      "relays_failed": [],
+      "blossom_servers_ok": [
+        "https://blossom.edufeed.org",
+        "https://blossom.primal.net"
+      ],
+      "images_uploaded": 1,
+      "duration_ms": 5147
+    },
+    {
+      "slug": "dezentrale-oep-oer",
+      "status": "success",
+      "action": "update",
+      "event_id": "4db003fd8c144fe1b0528c8cfbfb075ff6a8f203fd327c10c4c46e42fcac2a40",
+      "relays_ok": [
+        "wss://nos.lol/",
+        "wss://relay.primal.net/",
+        "wss://relay.tchncs.de/",
+        "wss://relay.edufeed.org/"
+      ],
+      "relays_failed": [
+        "wss://relay.damus.io/"
+      ],
+      "blossom_servers_ok": [
+        "https://blossom.edufeed.org",
+        "https://blossom.primal.net"
+      ],
+      "images_uploaded": 1,
+      "duration_ms": 8489
+    }
+  ],
+  "exit_code": 0
+}

@@ -1,4 +1,4 @@
-import { assertThrows } from '@std/assert'
+import { assertEquals, assertThrows } from '@std/assert'
 import { validatePost, validateSlug } from '../src/core/validation.ts'
 import type { Frontmatter } from '../src/core/frontmatter.ts'
 
@@ -35,7 +35,24 @@ Deno.test('validatePost: fehlt title', () => {
   assertThrows(() => validatePost(fm), Error, 'title')
 })
 
-Deno.test('validatePost: date muss Date sein', () => {
+Deno.test('validatePost: lehnt beliebige strings als date ab', () => {
   const fm = { title: 'T', slug: 'ok', date: 'not-a-date' } as unknown as Frontmatter
   assertThrows(() => validatePost(fm), Error, 'date')
+})
+
+Deno.test('validatePost: akzeptiert YYYY-MM-DD string-date (coerce zu Date)', () => {
+  const fm = { title: 'T', slug: 'ok', date: '2023-02-26' } as unknown as Frontmatter
+  validatePost(fm)
+  assertEquals(fm.date instanceof Date, true)
+  assertEquals((fm.date as Date).toISOString().startsWith('2023-02-26'), true)
+})
+
+Deno.test('validatePost: akzeptiert ISO-string-date', () => {
+  const fm = {
+    title: 'T',
+    slug: 'ok',
+    date: '2024-01-15T10:30:00Z',
+  } as unknown as Frontmatter
+  validatePost(fm)
+  assertEquals(fm.date instanceof Date, true)
 })
