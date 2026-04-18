@@ -4,6 +4,13 @@ RewriteEngine On
 RewriteCond %{HTTPS} !=on
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
+# NIP-05-Verifikation: CORS-Header für .well-known/nostr.json, sonst
+# lehnen nostr-clients die verifizierung ab.
+<FilesMatch "nostr\.json$">
+  Header set Access-Control-Allow-Origin "*"
+  Header set Content-Type "application/json"
+</FilesMatch>
+
 # Existierende Datei oder Verzeichnis? Direkt ausliefern.
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d

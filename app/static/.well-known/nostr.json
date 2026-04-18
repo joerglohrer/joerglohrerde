@@ -1,0 +1,14 @@
+{
+  "names": {
+    "joerglohrer": "4fa5d1c413e2b45e10d40bf3562ab701a5331206e359c90baae0e99bfd6c6e41"
+  },
+  "relays": {
+    "4fa5d1c413e2b45e10d40bf3562ab701a5331206e359c90baae0e99bfd6c6e41": [
+      "wss://relay.damus.io",
+      "wss://nos.lol",
+      "wss://relay.primal.net",
+      "wss://relay.tchncs.de",
+      "wss://relay.edufeed.org"
+    ]
+  }
+}
