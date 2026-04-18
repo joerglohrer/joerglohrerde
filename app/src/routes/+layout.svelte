@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
 	import { bootstrapReadRelays } from '$lib/stores/readRelays';
+	import CcZeroBadge from '$lib/components/CcZeroBadge.svelte';
 
 	let { children } = $props();
 
@@ -37,11 +38,28 @@
 
 <footer class="site-footer">
 	<div class="footer-inner">
-		<span class="footer-copy">© Jörg Lohrer</span>
+		<span class="footer-license">
+			<a
+				href="https://creativecommons.org/publicdomain/zero/1.0/deed.de"
+				target="_blank"
+				rel="license noopener"
+				aria-label="CC0 1.0 Universal Public Domain Dedication"
+				title="CC0 1.0 Universal"
+			>
+				<CcZeroBadge />
+				<span class="cc-label">CC0</span>
+			</a>
+			Jörg Lohrer
+		</span>
 		<span class="footer-sep">·</span>
 		<a href="/impressum/">Impressum</a>
 		<span class="footer-sep">·</span>
-		<span class="footer-meta">Nostr-basiert</span>
+		<a
+			href="https://github.com/joerglohrer/joerglohrerde"
+			target="_blank"
+			rel="noopener"
+			title="Quellcode, Making-of und Nostr-Publish-Pipeline"
+		>Nostr-basiert – Making-of im Repo</a>
 	</div>
 </footer>
 
@@ -129,7 +147,17 @@
 	.footer-sep {
 		opacity: 0.5;
 	}
-	.footer-meta {
-		opacity: 0.7;
+	.footer-license a {
+		color: var(--accent);
+		display: inline-flex;
+		align-items: center;
+		gap: 0.25em;
+		text-decoration: none;
+	}
+	.footer-license a:hover .cc-label {
+		text-decoration: underline;
+	}
+	.cc-label {
+		font-weight: 600;
 	}
 </style>
