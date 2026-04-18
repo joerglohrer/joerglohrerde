@@ -5,69 +5,84 @@ Dieses Dokument sagt: was ist der Zustand, was wartet, wo liegen die Fäden.
 
 ## Zustand (Details in `STATUS.md`)
 
-**Cutover am 2026-04-18 abgeschlossen.** `joerg-lohrer.de` läuft als
-SvelteKit-SPA, rendert 18 Nostr-Langform-Posts live aus 5 Relays, Bilder
-auf 2 Blossom-Servern. Hugo-Altbestand liegt als `hugo-archive`-Branch
-eingefroren.
+**Cutover + Reimport am 2026-04-18 abgeschlossen.** `joerg-lohrer.de`
+läuft als SvelteKit-SPA, rendert 26 Nostr-Langform-Posts live aus 5
+Relays, Bilder auf Blossom. Repo ist alleinige Quelle der Wahrheit.
+Pipeline-Subcommands `publish` + `delete` decken den kompletten
+Content-Lifecycle ab.
 
-Der Rest sind Feinschliff-Aufgaben.
+**Das inhaltliche Kernziel des Gesamtprojekts ist erreicht.** Der Rest
+sind optionale Verbesserungen.
 
-## Was als Nächstes ansteht (priorisiert)
+## Alltags-Workflow: neuen Post veröffentlichen
 
-### Option A — Repo/Nostr-Konflikt-Management (priorisiert)
+**Kompletter Happy-Path, kein manueller Publish nötig:**
 
-**Warum jetzt:** Es gibt **9 Langform-Events auf Nostr, die keine
-Markdown-Entsprechung im Repo haben** — alle via Client (Habla / Yakihonne)
-direkt auf Nostr erstellt, zum Teil mit problematischen d-tags (Emojis,
-Doppelpunkte, Umlaute, Trailing-Dashes, oder leer).
+1. Neuen Ordner anlegen: `content/posts/YYYY-MM-DD-<slug>/`
+2. `index.md` schreiben mit Frontmatter (siehe Template unten).
+3. Bilder in den Ordner legen und im Markdown als `![alt](bildname.jpg)`
+   referenzieren.
+4. Lokal validieren: `cd publish && deno task validate-post ../content/posts/<dir>/index.md`
+5. Commit + `git push origin main` — fertig.
 
-**Liste der verwaisten Nostr-Events** (d-tag → event-id-Prefix):
+**Was automatisch passiert:**
+- Forgejo-Push-Mirror synct nach GitHub.
+- GitHub Actions triggert auf `content/posts/**`-Änderung.
+- Workflow läuft diff-modus: nur geänderte/neue Posts werden publiziert.
+- Pipeline hasht lokale Bilder → Upload auf beide Blossom-Server → URLs
+  im Event ersetzen.
+- Event wird signiert (Amber-Bunker via `CLIENT_SECRET_HEX`) und auf alle
+  5 Write-Relays publiziert.
+- SPA holt den neuen Post beim nächsten Besuch automatisch vom Relay.
 
-| d-tag | event-id | Probleme |
-|---|---|---|
-| `richter-oder-rcher-banksy-als-moderner-prophet-vor-dem-high-court` | `bb2c2cea…` | Umlaut-Abdecker (`Rächer` → `rcher`) |
-| `die-kraft-der-gemeinschaft-wahre-strke-liegt-nicht-in-strukturen-sondern-in-prozessen` | `27d7fbee…` | Umlaut-Abdecker (`Stärke` → `strke`) |
-| `nostr-und-open-educational-practices-oep-` | `0baa3615…` | Trailing-Dash, unschön |
-| `religionsbezogene-bildung-mit-rollenkarten:-ki-bilder-als-impulsgeber` | `3ac719ca…` | `:` ungültig für URL-Slug |
-| `📢-empowering-learners-for-the-age-of-ai-–-der-neue-review-draft-des-ai-literacy-frameworks-für-schule-ist-da!` | `3c005996…` | Emoji + `!` + Umlaute + extrem lang |
-| `🟠-prompts-für-die-religionsbezogene-bildung-posten-und-diskutieren-auf-nostr` | `f726fcd5…` | Emoji + Umlaute |
-| `ki-mitmachen` | `a1368d2e…` | sauber, aber fehlt im Repo |
-| `bibel-selfies` | `00cbe5f3…` | Langform-Version; Duplikat mit Unix-Timestamp wurde bereits gelöscht |
-| `""` (leer!) | `d75857dc…` | leerer d-tag — SPA-kritisch, Event hat keinen Slug |
+**Vorbedingung:** Amber muss für den Client-Key (aus `CLIENT_SECRET_HEX`)
+die Permissions `get_public_key` + `sign_event` auf „Allow + Always"
+gesetzt haben. Das gilt so lange, bis der Client-Key rotiert wird.
 
-**Zielbild:** Repo ist die Quelle der Wahrheit. Jeder Post existiert als
-Markdown mit sauberem Slug. d-tags sind URL-freundlich (ASCII, keine
-Sonderzeichen außer `-`).
+**Minimal-Frontmatter für einen neuen Post:**
 
-**Empfohlener Flow (Reihenfolge nicht tauschen!):**
+```yaml
+---
+title: "Titel des Posts"
+slug: "url-freundlicher-slug"
+date: 2026-04-18
+description: "Kurzbeschreibung für SEO und den summary-Tag im Event."
+image: hauptbild.jpg
+tags:
+  - Tag1
+  - Tag2
+lang: de
+license: https://creativecommons.org/publicdomain/zero/1.0/deed.de
+---
 
-1. **Content exportieren.** Pro Event: `nak req -i <event-id> <relay>` →
-   JSON mit Content + Tags. Manuell in neue Markdown-Datei umwandeln
-   (`content/posts/<YYYY-MM-DD>-<saubererslug>/index.md`). Titel,
-   published_at, ggf. summary und bestehende image-Tags übernehmen.
-   Bilder nach `images/` kopieren (falls noch erreichbar), sonst
-   Blossom-URLs im Markdown belassen und beim Publish neu hashen.
-2. **Slugs bereinigen.** Neue, saubere, ASCII-only d-tags wählen. Doku
-   in `docs/redaktion-bild-metadaten.md` oder einem neuen
-   `docs/nostr-reimport-mapping.md` festhalten (alter d-tag → neuer slug).
-3. **Neu publizieren.** `deno task publish --post <slug>` pro Datei.
-   Pipeline hasht Bilder zu Blossom, signiert mit stabiler Identität.
-4. **Alte Events löschen** via NIP-09 (`kind:5`). Heute noch manuell per
-   `nak event -k 5 -t e=<old-event-id>`, siehe Option D. Oder: erst
-   Option D bauen, dann diesen Schritt per Pipeline-Subcommand.
-5. **Verifikation.** Post-Count pro Relay checken, SPA-Post-Liste
-   visuell prüfen.
+Body in Markdown…
+```
 
-**Edge Cases:**
-- Das leere-d-tag-Event (`d75857dc…`): wenn es noch sinnvoller Content
-  ist, als neuer Post re-importieren. Sonst einfach löschen.
-- Bilder in alten Events zeigen auf externe Server (nicht Blossom). Beim
-  Re-Publish lädt die Pipeline sie herunter und hasht sie neu. Wenn die
-  Quelle tot ist, muss das Bild manuell beschafft oder der Post mit
-  Platzhalter markiert werden.
-- `relay.damus.io` liefert mehr Events als andere Relays — bei
-  Nicht-Auffindbarkeit auf anderen Relays trotzdem löschen, damus.io
-  respektiert den NIP-09.
+Bilder mit voller Attribution (NIP-standardisiert nach unserer Konvention,
+siehe `docs/superpowers/specs/2026-04-16-image-metadata-convention.md`):
+
+```yaml
+images:
+  - file: hauptbild.jpg
+    role: cover
+    alt: "Alt-Text für Barrierefreiheit"
+    caption: "Bildunterschrift (optional)"
+    license: https://creativecommons.org/licenses/by/4.0/deed.de
+    authors:
+      - name: "Autor:in"
+```
+
+**Manuell publizieren** (falls CI aus ist oder einzelner Post nochmal):
+
+```sh
+cd publish
+deno task publish --post <slug>          # einzelner Post
+deno task publish --dry-run              # was würde der diff-modus publisht?
+deno task publish                        # diff-modus real
+deno task publish --force-all            # alle 26 Posts neu
+```
+
+## Was optional als Nächstes ansteht
 
 ### Option B — SPA respektiert NIP-09-Deletion-Events
 
@@ -85,23 +100,22 @@ gefiltert. Defensive Maßnahme für zukünftige Duplikate / Soft-Deletes.
 User-Task: im All-Inkl KAS als Weiterleitung anlegen. Der Link im
 Footer und in den Social-Icons zeigt bereits darauf.
 
-### Option D — NIP-09-Delete als Pipeline-Subcommand
+### Option D — Mehrsprachigkeit (Translation-of)
 
-**Status:** heute einmalig per `nak event -k 5 …` mit neu erzeugter Bunker-
-URL erledigt (Duplikat `1744905463975`). Das war ein Workaround um das
-„already connected"-Problem unserer Pipeline-Signer-Wiederverwendung.
+**Grundlage steht:** Pipeline taggt seit 2026-04-18 jedes Event mit
+NIP-32 `['L', 'ISO-639-1']` + `['l', 'de', 'ISO-639-1']` (default),
+überschreibbar per `lang:`-Frontmatter.
 
-**Zu tun:** in `publish/src/subcommands/` einen `delete`-Subcommand bauen,
-der NIP-09 sauber erledigt und unsere stabile Signer-Identität nutzt.
+**Zu tun für einen bilingualen Post:**
+1. Zweiter Markdown-Ordner, z. B. `content/posts/<date>-<slug>-en/index.md`,
+   mit `slug: <slug>-en`, `lang: en`, englischem Body.
+2. Publish → eigenes `kind:30023`-Event mit `lang=en`.
+3. (Noch zu bauen) Pipeline erweitern: `translation_of:`-Frontmatter-Feld,
+   das ein `['a', '30023:pubkey:<slug-de>']`-Tag ins Event setzt. Damit
+   erkennen Clients wie Habla die Verwandtschaft.
+4. (Optional) SPA bekommt Language-Switcher auf der Post-Detailseite.
 
-```
-deno task publish-delete --slug <slug>
-# oder
-deno task publish-delete --event-id <hex>
-```
-
-**Sinnvollerweise mit Option A kombinieren** — in der Re-Import-Kampagne
-werden 9 NIP-09 hintereinander gebraucht.
+Nicht dringend, erst wenn echter englischer Content entsteht.
 
 ### Option E — Pipeline weg von GitHub (self-hosted CI)
 
@@ -121,9 +135,9 @@ Trigger-Konfiguration ändert sich.
 
 **Wann:** irgendwann, wenn Lust drauf ist.
 
-- Parallax-Effekte, Animations
-- Dark-Mode-Feinschliff (aktuell `prefers-color-scheme`, könnte Toggle bekommen)
-- Typografie-Experimente (Variable Fonts?)
+- Parallax-Effekte, Animationen
+- Dark-Mode-Toggle (aktuell nur `prefers-color-scheme`)
+- Typografie-Experimente (Variable Fonts)
 - Bildergalerie-Komponente für Posts mit vielen Bildern
 
 Alles nicht-blockierend, die SPA funktioniert solide.
@@ -155,6 +169,8 @@ cd publish && deno task publish --dry-run              # diff-modus simulation
 cd publish && deno task publish                        # diff-modus echt
 cd publish && deno task publish --force-all            # alle posts
 cd publish && deno task publish --post <slug>          # einen post
+cd publish && deno task delete --event-id <hex> [--event-id <hex>] [--reason "text"]
+cd publish && deno task validate-post ../content/posts/<dir>/index.md
 cd publish && deno task test                           # tests
 ```
 
@@ -177,6 +193,13 @@ cd publish && deno task test                           # tests
 - **Deploy-Targets:** `svelte` → Entwicklung, `staging` → Pre-Prod,
   `prod` → `joerglohrer26/` (Produktion seit Cutover). Script parst
   `.env.local` per awk (wegen Sonderzeichen in FTP-Passwörtern).
+- **Slug-Hygiene:** nur `[a-z0-9-]`, keine Umlaute/Emojis/Doppelpunkte.
+  Der Slug landet als `d`-Tag im Event und wird zur URL. Einmal
+  publiziert, ist Umbenennen nur über Delete + Re-Publish mit neuem Slug
+  möglich.
+- **Clients, die Markdown ignorieren:** Yakihonne/Habla kennen NIP-32
+  Sprach-Tags; kurzen Text in `description:` halten, damit die Vorschau
+  überall sinnvoll aussieht.
 
 ## Offene UNKNOWN-Einträge zur späteren Recherche
 
@@ -198,7 +221,7 @@ Hilfreich beim Wiedereinstieg mit Claude:
 - Event-Count Repo vs. Relays:
   ```sh
   ls content/posts/ | wc -l
-  nak req -k 30023 -a 4fa5d1c413e2b45e10d40bf3562ab701a5331206e359c90baae0e99bfd6c6e41 wss://relay.edufeed.org 2>/dev/null | jq -s 'length'
+  nak req -k 30023 -a 4fa5d1c413e2b45e10d40bf3562ab701a5331206e359c90baae0e99bfd6c6e41 wss://relay.edufeed.org 2>/dev/null | jq -r '.tags[]|select(.[0]=="d")|.[1]' | sort -u | wc -l
   ```
 - Pipeline-Tests: `cd publish && deno task test`
 

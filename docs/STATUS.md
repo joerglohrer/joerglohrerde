@@ -25,9 +25,13 @@ Altseite ist als `hugo-archive`-Branch eingefroren.
 - **Autoren-Pubkey:** `npub1f7jar3qnu269uyx5p0e4v24hqxjnxysxudvujza2ur5ehltvdeqsly2fx9`
   (hex: `4fa5d1c413e2b45e10d40bf3562ab701a5331206e359c90baae0e99bfd6c6e41`)
 - **NIP-05:** `joerglohrer@joerg-lohrer.de` (via `/.well-known/nostr.json`)
-- **Publizierte Events:** **18 Langform-Posts** (`kind:30023`) aus dem Repo,
-  plus **9 nicht-Repo-Events** (via Client wie Habla/Yakihonne erstellt,
-  siehe HANDOFF → Option 5 für Konflikt-Management-Plan).
+- **Publizierte Events:** **26 Langform-Posts** (`kind:30023`), alle mit
+  sauberen ASCII-slugs, alle aus dem Repo publiziert. 18 Alt-Posts aus der
+  Hugo-Migration plus 8 re-importierte Client-Posts (Habla/Yakihonne), die
+  mit bereinigten d-tags neu publiziert und alte Duplikate per NIP-09
+  gelöscht wurden (Commit `7186c32`).
+- **NIP-32-Sprach-Tags:** Alle Events tragen `['L', 'ISO-639-1']` +
+  `['l', 'de', 'ISO-639-1']`. Grundlage für spätere Mehrsprachigkeit.
 - **Relay-Liste** (`kind:10002`): `relay.damus.io`, `nos.lol`,
   `relay.primal.net`, `relay.tchncs.de`, `relay.edufeed.org`
 - **Blossom-Server** (`kind:10063`): `blossom.edufeed.org`, `blossom.primal.net`
@@ -87,14 +91,12 @@ Einmalig manuell erledigt (gitignored in `.env.local`):
 ## Offene Punkte (Details in HANDOFF.md)
 
 Nach Priorität:
-1. **Repo/Nostr-Konflikt-Management** — 9 verwaiste Nostr-Events haben
-   keine Markdown-Entsprechung. Geplanter Flow: Markdown nachziehen →
-   d-tags bereinigen → neu publizieren → alte löschen (NIP-09).
-2. **Postfach `webmaster@joerg-lohrer.de`** als Weiterleitung in KAS anlegen.
-3. **SPA respektiert NIP-09-Deletion-Events** (defensiver kind:5-Filter).
-4. **NIP-09-Delete als Pipeline-Subcommand** (heute noch `nak event -k 5`).
-5. **Self-hosted CI** (Woodpecker / Cron auf Optiplex), weg von GitHub.
-6. **5 UNKNOWN-Einträge** im VR-Post zur späteren Recherche.
+1. **Postfach `webmaster@joerg-lohrer.de`** als Weiterleitung in KAS anlegen.
+2. **SPA respektiert NIP-09-Deletion-Events** (defensiver kind:5-Filter).
+3. **Mehrsprachigkeit** — parallele `lang:en`-Versionen bei Bedarf anlegen,
+   per `a`-Tag als `translation_of` verlinken (NIP-32-Grundlage steht).
+4. **Self-hosted CI** (Woodpecker / Cron auf Optiplex), weg von GitHub.
+5. **5 UNKNOWN-Einträge** im VR-Post zur späteren Recherche.
 
 ## Erledigt (chronologisch seit 2026-04-15)
 
@@ -116,6 +118,14 @@ Nach Priorität:
 - ✅ **Impressum auf CC0 umgestellt** (mit freundlichem Namensnennungs-Hinweis).
 - ✅ **Cutover 2026-04-18** — `joerg-lohrer.de` von Hugo (`joerglohrer24/`)
   auf SvelteKit-SPA (`joerglohrer26/`) umgehängt.
+- ✅ **Nostr-Reimport 2026-04-18** — 8 direkt-auf-Nostr erstellte Posts
+  (Habla/Yakihonne) mit sauberen ASCII-slugs ins Repo geholt und neu
+  publiziert, alte Events per NIP-09 gelöscht. 26 `kind:30023`-Events
+  aktuell publiziert.
+- ✅ **Delete-Subcommand** in der Pipeline (`deno task delete --event-id …`),
+  nutzt stabile Bunker-Identität via `CLIENT_SECRET_HEX`.
+- ✅ **NIP-32 Sprach-Tags** in `buildKind30023` (Default `de`, über
+  `lang:`-Frontmatter überschreibbar).
 
 ## Live-Verifikation
 
