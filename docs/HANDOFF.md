@@ -15,19 +15,18 @@ Der Rest sind Feinschliff- und Cutover-Aufgaben.
 
 ## Was als Nächstes ansteht
 
-### Option 1 — CI-End-to-End-Test ⬅ kleinstes Offene
+### Option 1 — CI-Push-Auto-Trigger verifizieren (optional)
 
-**Voraussetzung erledigt:** Forgejo → GitHub Push-Mirror läuft, GitHub-Secrets
-gesetzt (Details in `docs/github-ci-setup.md`).
+**Status:** Workflow-Manual-Trigger ist grün (Run #1 am 18.04.2026).
+Automatischer Auto-Trigger bei Content-Push noch nicht ausprobiert —
+kann jederzeit beiläufig mitgenommen werden:
 
-**Noch zu tun:**
-1. In GitHub → Actions → „Publish Nostr Events" → „Run workflow" → Branch
-   `main`. Erwartung: Pre-Flight grün, 0 Posts (kein Content-Diff), Exit 0.
-2. Optional: Minimaler Edit in einem Post → commit → push → warten bis
-   Mirror auf GitHub synct → Workflow triggert automatisch → 1 Post als
-   `update` publiziert → Log-Artefakt prüfen.
+1. Minimaler Edit in einem Post (z. B. Typo) → commit → push `main`
+2. Forgejo synct automatisch zu GitHub → Workflow triggert → 1 Post als
+   `update` publiziert
+3. Log-Artefakt in GitHub Actions prüfen
 
-Danach ist Task 22 komplett abgeschlossen.
+Kein Ziel mehr, nur Bestätigung. Pipeline ist funktional vollständig.
 
 ### Option 2 — Cutover auf `joerg-lohrer.de`
 

@@ -86,16 +86,17 @@ Alles in `.env.local` — gitignored, nicht committet.
 
 ## Offene Punkte
 
-- **CI-Mirror** Forgejo → GitHub eingerichtet, GitHub-Secrets gesetzt.
-  End-to-End-Test (Content-Commit, Workflow-Trigger, CI-Lauf) noch offen.
-  Später: Migration auf Woodpecker oder Cron auf Optiplex möglich
-  (siehe `docs/github-ci-setup.md`).
+- **End-to-End-Test CI mit echtem Content-Push** (Workflow-Manual-Trigger
+  ist grün; automatischer Auto-Trigger via Push-Mirror noch nicht real
+  ausprobiert).
 - **Menü-Navigation** in der SPA (Home / Archiv / Impressum / Kontakt)
 - **Impressum-Seite** (braucht rechtlichen Text)
 - **Cutover auf `joerg-lohrer.de`** (Pipeline läuft, Voraussetzung erfüllt;
   Hauptdomain kann auf SvelteKit-SPA umgestellt werden)
 - **5 UNKNOWN-Einträge** im `virtual-reality`-Post zur späteren Recherche
   (Wikipedia-Screenshot, Sketchfab-Fotograf, Ready-Player-Me, EyeMeasure-App)
+- **CI-Migration** (später): weg von GitHub-Actions zu Woodpecker oder
+  Cron auf Optiplex — siehe `docs/github-ci-setup.md`.
 
 ## Erledigt seit 2026-04-15
 
@@ -116,6 +117,9 @@ Alles in `.env.local` — gitignored, nicht committet.
 - ✅ SPA rendert alle Posts mit Bildern von Blossom (visuell verifiziert).
 - ✅ **GitHub-Actions-Workflow** angelegt (`.github/workflows/publish.yml`).
 - ✅ Forgejo → GitHub Push-Mirror eingerichtet, GitHub-Secrets gesetzt.
+- ✅ **`spa` → `main` gemergt**, GitHub-Actions-Workflow manuell verifiziert
+  (Run #1: signer ok, outbox ok, blossom-liste ok, mode=diff posts=0).
+  **Alle 24 Tasks des Publish-Pipeline-Plans abgeschlossen.**
 
 ## Live-Verifikation
 
