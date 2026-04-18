@@ -43,17 +43,66 @@ läuft ja schon, ob manuell oder via CI ist für den Cutover egal.
 
 Hugo-Altbestand bleibt als Archiv im `hugo-archive`-Branch.
 
-### Option 3 — Menü-Navigation + Impressum in der SPA
+### Option 3 — Startseite + Menü-Navigation + Impressum in der SPA
 
-**Unabhängig von allem anderen**, kann parallel gemacht werden.
+**Unabhängig von Cutover**, aber Voraussetzung für diesen: ohne Design wäre
+die Hauptdomain eine rohe Post-Liste.
 
-- Header-Navigation in `app/src/routes/+layout.svelte` (Home, Archiv, Impressum,
-  Mastodon-Link)
-- `/impressum/`-Route mit rechtlichem Text
+- **Startseite** bekommt ein eigenes Design (nicht nur Post-Liste dump)
+- **Menü-Navigation** in `app/src/routes/+layout.svelte` (Home, Archiv,
+  Impressum, Mastodon-Link)
+- **Impressum** als Static-Page (SvelteKit-Route `/impressum/`), **nicht**
+  als Nostr-Event — soll nicht als Blog-Beitrag in Listen erscheinen.
+  Text ist bereits im `content/`-Ordner (Repo-Quelle); die einzige
+  rechtlich relevante HTML-Datei, die auf dem Server liegt.
 
-**Aufwand:** 30–60 min.
+### Option 4 — SPA respektiert `kind:5`-Deletion-Events
 
-### Option 4 — Pipeline weg von GitHub (self-hosted CI)
+**Status:** aktuell filtert die SPA nicht nach NIP-09. Wenn ein Event per
+`kind:5`-Referenz gelöscht wurde (z. B. `7f5d08b8…` deletet `89609df5…`
+für `d=1744905463975` am 18.04.), zeigen Relays es meist nicht mehr aus —
+aber die SPA würde es trotzdem rendern, falls ein Relay es doch liefert.
+
+**Zu tun:** im `kind:30023`-Loader (`app/src/lib/nostr/...`) einen
+Cross-Check auf `kind:5`-Events einbauen. Events, deren Addressable-Pointer
+(`30023:pubkey:d-tag`) in einem `kind:5` referenziert ist, werden
+gefiltert. Defensive Maßnahme für zukünftige Duplikate / Soft-Deletes.
+
+### Option 5 — Repo/Nostr-Konflikt-Management
+
+**Warum:** aktuell ist die Pipeline eine einseitige Straße — Repo → Nostr.
+Wenn du via Client (Habla, Yakihonne, Amber) auf Nostr editierst,
+überschreibt der nächste Pipeline-Lauf deine Client-Edits mit dem (alten)
+Repo-State. Das ist ein echter Datenverlust-Risikofaktor.
+
+**Zu tun:**
+- **Defensiv (`created_at`-Check):** Pipeline liest vor Publish das
+  aktuelle Event vom Relay und vergleicht `created_at`. Wenn das
+  Remote-Event neuer ist: Abbruch mit Warnung.
+- **Reverse-Sync (`pull-from-nostr`-Subcommand):** liest Events, vergleicht
+  mit Repo, zeigt Diffs. Manuelle Konfliktauflösung.
+
+Keine Eile, solange du nicht parallel editierst. Erst relevant, wenn du
+dich an Habla & Co. gewöhnst.
+
+### Option 6 — NIP-09-Delete als Pipeline-Subcommand
+
+**Status:** heute einmalig per `nak event -k 5 …` mit neu erzeugter Bunker-
+URL erledigt (Duplikat `1744905463975`). Das war ein Workaround um das
+„already connected"-Problem unserer Pipeline-Signer-Wiederverwendung.
+
+**Zu tun:** in `publish/src/subcommands/` einen `delete`-Subcommand bauen,
+der NIP-09 sauber erledigt und unsere stabile Signer-Identität nutzt.
+
+```
+deno task publish-delete --slug <slug>
+# oder
+deno task publish-delete --event-id <hex>
+```
+
+Jetzt nicht dringend — nur bauen, wenn der Fall öfter eintritt.
+
+### Option 7 — Pipeline weg von GitHub (self-hosted CI)
 
 **Wann:** Wenn der Optiplex-Server steht und ein zentraler Ort für Dienste
 existiert.

@@ -120,6 +120,12 @@ Alles in `.env.local` — gitignored, nicht committet.
 - ✅ **`spa` → `main` gemergt**, GitHub-Actions-Workflow manuell verifiziert
   (Run #1: signer ok, outbox ok, blossom-liste ok, mode=diff posts=0).
   **Alle 24 Tasks des Publish-Pipeline-Plans abgeschlossen.**
+- ✅ **Staging-Deploy-Infrastruktur:** `scripts/deploy-svelte.sh` mit
+  drei Targets (`svelte`/`staging`/`prod`), dynamisches `og:url` und
+  `canonical` via `__SITE_URL__`-Platzhalter. Staging-Subdomain
+  `staging.joerg-lohrer.de` bedient jetzt `joerglohrer26/` (Cutover-Ziel).
+- ✅ **Duplikat-Event `1744905463975` via NIP-09 gelöscht** (Delete-Event
+  `7f5d08b8…`, auf alle 5 Relays). Nach Migration nicht mehr auffindbar.
 
 ## Live-Verifikation
 
