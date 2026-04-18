@@ -5,6 +5,7 @@ export interface Config {
   contentRoot: string
   clientTag: string
   minRelayAcks: number
+  clientSecretHex?: string
 }
 
 type EnvReader = (key: string) => string | undefined
@@ -36,6 +37,10 @@ export function loadConfig(read: EnvReader = (k) => Deno.env.get(k)): Config {
   if (!Number.isInteger(minAcks) || minAcks < 1) {
     throw new Error(`MIN_RELAY_ACKS must be a positive integer, got "${minAcksRaw}"`)
   }
+  const clientSecretHex = read('CLIENT_SECRET_HEX')
+  if (clientSecretHex && !/^[0-9a-f]{64}$/.test(clientSecretHex)) {
+    throw new Error('CLIENT_SECRET_HEX must be 64 lowercase hex characters')
+  }
   return {
     bunkerUrl: values.BUNKER_URL,
     authorPubkeyHex: values.AUTHOR_PUBKEY_HEX,
@@ -43,5 +48,6 @@ export function loadConfig(read: EnvReader = (k) => Deno.env.get(k)): Config {
     contentRoot: read('CONTENT_ROOT') ?? DEFAULTS.CONTENT_ROOT,
     clientTag: read('CLIENT_TAG') ?? DEFAULTS.CLIENT_TAG,
     minRelayAcks: minAcks,
+    clientSecretHex,
   }
 }

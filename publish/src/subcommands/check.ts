@@ -12,7 +12,9 @@ export async function runCheck(config: Config): Promise<CheckResult> {
   const issues: string[] = []
 
   try {
-    const signer = await createBunkerSigner(config.bunkerUrl)
+    const signer = await createBunkerSigner(config.bunkerUrl, {
+      clientSecretHex: config.clientSecretHex,
+    })
     const pk = await signer.getPublicKey()
     if (pk !== config.authorPubkeyHex) {
       issues.push(

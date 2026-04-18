@@ -79,9 +79,15 @@ async function cmdPublish(flags: {
   const runId = uuid()
   const logger = createLogger({ mode, runId })
 
-  const signer = await createBunkerSigner(config.bunkerUrl)
+  console.log('[1/3] signer…')
+  const signer = await createBunkerSigner(config.bunkerUrl, {
+    clientSecretHex: config.clientSecretHex,
+  })
+  console.log('[2/3] outbox…')
   const outbox = await loadOutbox(config.bootstrapRelay, config.authorPubkeyHex)
+  console.log('[3/3] blossom-server-liste…')
   const blossomServers = await loadBlossomServers(config.bootstrapRelay, config.authorPubkeyHex)
+  console.log('setup done')
   if (outbox.write.length === 0) {
     console.error('no write relays in kind:10002')
     return 1
