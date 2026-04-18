@@ -1,0 +1,57 @@
+name: Publish Nostr Events
+
+on:
+  push:
+    branches: [main]
+    paths: ['content/posts/**']
+  workflow_dispatch:
+    inputs:
+      force_all:
+        description: 'Publish all posts (--force-all)'
+        type: boolean
+        default: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Pre-Flight Check
+        working-directory: ./publish
+        env:
+          BUNKER_URL: ${{ secrets.BUNKER_URL }}
+          AUTHOR_PUBKEY_HEX: ${{ secrets.AUTHOR_PUBKEY_HEX }}
+          BOOTSTRAP_RELAY: ${{ secrets.BOOTSTRAP_RELAY }}
+          CLIENT_SECRET_HEX: ${{ secrets.CLIENT_SECRET_HEX }}
+        run: |
+          deno run --allow-env --allow-read --allow-net src/cli.ts check
+
+      - name: Publish
+        working-directory: ./publish
+        env:
+          BUNKER_URL: ${{ secrets.BUNKER_URL }}
+          AUTHOR_PUBKEY_HEX: ${{ secrets.AUTHOR_PUBKEY_HEX }}
+          BOOTSTRAP_RELAY: ${{ secrets.BOOTSTRAP_RELAY }}
+          CLIENT_SECRET_HEX: ${{ secrets.CLIENT_SECRET_HEX }}
+          GITHUB_EVENT_BEFORE: ${{ github.event.before }}
+        run: |
+          if [ "${{ github.event.inputs.force_all }}" = "true" ]; then
+            deno run --allow-env --allow-read --allow-write=./logs --allow-net --allow-run=git src/cli.ts publish --force-all
+          else
+            deno run --allow-env --allow-read --allow-write=./logs --allow-net --allow-run=git src/cli.ts publish
+          fi
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: publish-log
+          path: ./publish/logs/publish-*.json
+          retention-days: 30
