@@ -1,63 +1,63 @@
 # Projekt-Status: joerg-lohrer.de → Nostr-basierte SPA
 
-**Stand:** 2026-04-18
+**Stand:** 2026-04-18 (Cutover abgeschlossen)
 
 ## Kurzfassung
 
-Jörg Lohrers persönliche Webseite wird von einem Hugo-basierten statischen
-Site-Generator zu einer dezentralen Nostr-basierten SPA überführt. Posts
-existieren als signierte Events (NIP-23, `kind:30023`) auf Public-Relays und
-werden zur Laufzeit im Browser gerendert.
+`joerg-lohrer.de` läuft als SvelteKit-SPA, die Blog-Posts live aus
+signierten Nostr-Events (NIP-23, `kind:30023`) auf 5 Public-Relays rendert.
+Bilder liegen content-addressed auf 2 Blossom-Servern. Die Hugo-basierte
+Altseite ist als `hugo-archive`-Branch eingefroren.
 
-## Vier parallele Webseiten
+**Das inhaltliche Kernziel des Gesamtprojekts ist erreicht.**
+
+## Live-URLs
 
 | URL | Status | Rolle |
 |---|---|---|
-| `https://joerg-lohrer.de/` | live, unverändert | **Hugo-Altbestand** (bleibt bis Cutover) |
-| `https://spa.joerg-lohrer.de/` | live | **Vanilla-HTML-Mini-Spike** (Proof of Concept) |
-| `https://svelte.joerg-lohrer.de/` | live | **SvelteKit-SPA** (35-Task-Plan komplett) |
-| `https://staging.joerg-lohrer.de/` | live, leer | **Staging** (Webroot `joerglohrer26/` für Pipeline-Entwicklung; FTP-Creds in `.env.local`) |
-
-Die SvelteKit-SPA unter `svelte.joerg-lohrer.de` ist die Ziel-Implementierung.
-`spa.joerg-lohrer.de` bleibt als schlanke Referenz erhalten. Hugo läuft weiter,
-bis die Publish-Pipeline steht und der Cutover auf die Hauptdomain erfolgt.
+| `https://joerg-lohrer.de/` | live | **Produktion**, SvelteKit-SPA (Cutover 2026-04-18) |
+| `https://staging.joerg-lohrer.de/` | live | **Staging**, letzter Pre-Prod-Build |
+| `https://svelte.joerg-lohrer.de/` | live | **Entwicklung**, Deploy-Target der Pipeline |
+| `https://spa.joerg-lohrer.de/` | live | **Historisch**, Vanilla-HTML-Mini-Spike |
 
 ## Was auf Nostr liegt
 
 - **Autoren-Pubkey:** `npub1f7jar3qnu269uyx5p0e4v24hqxjnxysxudvujza2ur5ehltvdeqsly2fx9`
   (hex: `4fa5d1c413e2b45e10d40bf3562ab701a5331206e359c90baae0e99bfd6c6e41`)
-- **Publizierte Events:** **18 Langform-Posts** (`kind:30023`) — alle Altposts
-  via Publish-Pipeline migriert (Commit `0c6fdd1`, Log in
-  `docs/publish-logs/2026-04-18-force-all-migration.json`).
+- **NIP-05:** `joerglohrer@joerg-lohrer.de` (via `/.well-known/nostr.json`)
+- **Publizierte Events:** **18 Langform-Posts** (`kind:30023`) aus dem Repo,
+  plus **9 nicht-Repo-Events** (via Client wie Habla/Yakihonne erstellt,
+  siehe HANDOFF → Option 5 für Konflikt-Management-Plan).
 - **Relay-Liste** (`kind:10002`): `relay.damus.io`, `nos.lol`,
   `relay.primal.net`, `relay.tchncs.de`, `relay.edufeed.org`
 - **Blossom-Server** (`kind:10063`): `blossom.edufeed.org`, `blossom.primal.net`
-
-**91 Bilder** auf beiden Blossom-Servern. Alle Events enthalten hash-basierte
-Blossom-URLs. SPA rendert alle Posts einheitlich — kein Legacy-Pfad, keine
-rsync-Artefakte.
+- **91 Bilder** auf beiden Blossom-Servern, alle Events enthalten
+  hash-basierte Blossom-URLs.
 
 ## Repo-Struktur
 
 ```
 joerglohrerde/
-├── content/posts/             # 18 Markdown-Posts, alle mit structured images: im Frontmatter
-├── app/                       # SvelteKit-SPA (Ziel-Implementation)
-├── preview/spa-mini/          # Vanilla-HTML-Mini-Spike (Referenz)
-├── publish/                   # NOCH NICHT ANGELEGT — Publish-Pipeline (Task 1 aus Plan)
+├── content/posts/             # 18 Markdown-Posts, alle mit strukturierten images:
+├── content/impressum.md       # Statisches Impressum (wird von SPA geladen)
+├── app/                       # SvelteKit-SPA (Laufzeit-Renderer)
+├── publish/                   # Deno-Publish-Pipeline (Blossom + Nostr)
+├── preview/spa-mini/          # Vanilla-HTML-Mini-Spike (historisch)
 ├── scripts/
-│   └── deploy-svelte.sh       # FTPS-Deploy nach svelte.joerg-lohrer.de
+│   └── deploy-svelte.sh       # FTPS-Deploy, Targets: svelte/staging/prod
 ├── docs/
 │   ├── STATUS.md              # Dieses Dokument
 │   ├── HANDOFF.md             # Wie man hier weitermacht
-│   ├── redaktion-bild-metadaten.md           # Checkliste, Bild-Durchgang (abgearbeitet)
-│   ├── wiki-entwurf-nostr-bild-metadaten.md  # Wiki-Konvention deutsch
-│   ├── wiki-draft-nostr-image-metadata.md    # Wiki-Konvention englisch
+│   ├── redaktion-bild-metadaten.md
+│   ├── wiki-entwurf-nostr-bild-metadaten.md
+│   ├── wiki-draft-nostr-image-metadata.md
+│   ├── github-ci-setup.md
 │   └── superpowers/
 │       ├── specs/             # SPA + Publish-Pipeline + Bild-Metadaten-Konvention
 │       └── plans/
-│           ├── 2026-04-15-spa-sveltekit.md             # erledigt
-│           └── 2026-04-16-publish-pipeline.md          # ⬅ als nächstes
+│           ├── 2026-04-15-spa-sveltekit.md       # erledigt
+│           └── 2026-04-16-publish-pipeline.md    # erledigt
+├── .github/workflows/         # publish.yml (Forgejo→GitHub Push-Mirror-Trigger)
 ├── .claude/
 │   ├── skills/                # Repo-spezifischer Claude-Skill
 │   └── settings.local.json    # Claude-Session-State (gitignored)
@@ -66,80 +66,78 @@ joerglohrerde/
 
 ## Branch-Layout (Git)
 
-- **`main`** — kanonischer Zweig.
-- **`spa`** — aktueller Arbeits-Branch, vor `main`. SvelteKit-SPA live,
-  Content-Migration (Bild-Metadaten) abgeschlossen, Publish-Pipeline geplant.
+- **`main`** — kanonischer Zweig, Produktions-Quelle seit Cutover.
+- **`spa`** — historischer SvelteKit-Arbeitszweig, gemerged.
 - **`hugo-archive`** — Orphan-Branch mit Hugo-Zustand, eingefroren.
 
 ## Setup-Zustand
 
-Einmalig manuell erledigt:
-- ✅ Amber-Bunker-URL in `.env.local` als `BUNKER_URL`
-- ✅ FTP-Creds für alle Subdomains (SPA, SVELTE, STAGING) in `.env.local`
-- ✅ `AUTHOR_PUBKEY_HEX` und `BOOTSTRAP_RELAY=wss://relay.primal.net` in `.env.local`
+Einmalig manuell erledigt (gitignored in `.env.local`):
+- ✅ Amber-Bunker-URL als `BUNKER_URL`
+- ✅ FTP-Creds für alle Targets (SVELTE/STAGING/PROD)
+- ✅ `AUTHOR_PUBKEY_HEX` und `BOOTSTRAP_RELAY=wss://relay.primal.net`
+- ✅ `CLIENT_SECRET_HEX` (identisch mit GitHub-Secret für stabile App-ID in Amber)
 - ✅ `kind:10002`-Event publiziert (Relay-Liste)
 - ✅ `kind:10063`-Event publiziert (Blossom-Server)
 - ✅ Subdomains mit TLS + HSTS
-- ✅ Staging-Subdomain `staging.joerg-lohrer.de` → Webroot `joerglohrer26/`
+- ✅ Staging → Webroot `joerglohrer26/`
+- ✅ Prod → Webroot `joerglohrer26/` (Cutover 2026-04-18)
+- ✅ NIP-05-JSON mit CORS-Header via `.htaccess`
 
-Alles in `.env.local` — gitignored, nicht committet.
+## Offene Punkte (Details in HANDOFF.md)
 
-## Offene Punkte
+Nach Priorität:
+1. **Repo/Nostr-Konflikt-Management** — 9 verwaiste Nostr-Events haben
+   keine Markdown-Entsprechung. Geplanter Flow: Markdown nachziehen →
+   d-tags bereinigen → neu publizieren → alte löschen (NIP-09).
+2. **Postfach `webmaster@joerg-lohrer.de`** als Weiterleitung in KAS anlegen.
+3. **SPA respektiert NIP-09-Deletion-Events** (defensiver kind:5-Filter).
+4. **NIP-09-Delete als Pipeline-Subcommand** (heute noch `nak event -k 5`).
+5. **Self-hosted CI** (Woodpecker / Cron auf Optiplex), weg von GitHub.
+6. **5 UNKNOWN-Einträge** im VR-Post zur späteren Recherche.
 
-- **End-to-End-Test CI mit echtem Content-Push** (Workflow-Manual-Trigger
-  ist grün; automatischer Auto-Trigger via Push-Mirror noch nicht real
-  ausprobiert).
-- **Menü-Navigation** in der SPA (Home / Archiv / Impressum / Kontakt)
-- **Impressum-Seite** (braucht rechtlichen Text)
-- **Cutover auf `joerg-lohrer.de`** (Pipeline läuft, Voraussetzung erfüllt;
-  Hauptdomain kann auf SvelteKit-SPA umgestellt werden)
-- **5 UNKNOWN-Einträge** im `virtual-reality`-Post zur späteren Recherche
-  (Wikipedia-Screenshot, Sketchfab-Fotograf, Ready-Player-Me, EyeMeasure-App)
-- **CI-Migration** (später): weg von GitHub-Actions zu Woodpecker oder
-  Cron auf Optiplex — siehe `docs/github-ci-setup.md`.
-
-## Erledigt seit 2026-04-15
+## Erledigt (chronologisch seit 2026-04-15)
 
 - ✅ Content-Migration: alle 18 Posts haben strukturierte `images:`-Liste
-  im Frontmatter (91 Bilder, mit Alt-Text, Lizenz, Autor:innen, ggf. Caption
-  und Modifications). Commit `c023b59`.
-- ✅ Erlebnispädagogik-Post: tote Amazon-Hotlinks entfernt.
+  im Frontmatter (91 Bilder, mit Alt-Text, Lizenz, Autor:innen, ggf.
+  Caption und Modifications).
 - ✅ Spec, Plan und Bild-Metadaten-Konvention geschrieben.
 - ✅ Community-Wiki-Entwürfe (DE + EN) für Nostr-Bildattribution.
-- ✅ **Publish-Pipeline komplett implementiert**, 22 Tasks aus dem Plan:
-  - 18 Code-Tasks (Phase 1–6), 59 Unit-Tests grün
-  - Stabile NIP-46-Anbindung via `CLIENT_SECRET_HEX` für wiederverwendbare
-    App-Identität in Amber
-  - `validatePost` akzeptiert auch string-dates (für Hugo-Kompatibilität)
-- ✅ **Alle 18 Altposts publiziert** als `kind:30023`-Events (Commit `0c6fdd1`,
-  Log in `docs/publish-logs/2026-04-18-force-all-migration.json`).
+- ✅ **Publish-Pipeline komplett implementiert** (24 Tasks, 59 Tests grün).
+- ✅ **Alle 18 Altposts publiziert** als `kind:30023`-Events.
 - ✅ **91 Bilder** auf beiden Blossom-Servern.
-- ✅ SPA rendert alle Posts mit Bildern von Blossom (visuell verifiziert).
-- ✅ **GitHub-Actions-Workflow** angelegt (`.github/workflows/publish.yml`).
-- ✅ Forgejo → GitHub Push-Mirror eingerichtet, GitHub-Secrets gesetzt.
-- ✅ **`spa` → `main` gemergt**, GitHub-Actions-Workflow manuell verifiziert
-  (Run #1: signer ok, outbox ok, blossom-liste ok, mode=diff posts=0).
-  **Alle 24 Tasks des Publish-Pipeline-Plans abgeschlossen.**
-- ✅ **Staging-Deploy-Infrastruktur:** `scripts/deploy-svelte.sh` mit
-  drei Targets (`svelte`/`staging`/`prod`), dynamisches `og:url` und
-  `canonical` via `__SITE_URL__`-Platzhalter. Staging-Subdomain
-  `staging.joerg-lohrer.de` bedient jetzt `joerglohrer26/` (Cutover-Ziel).
-- ✅ **Duplikat-Event `1744905463975` via NIP-09 gelöscht** (Delete-Event
-  `7f5d08b8…`, auf alle 5 Relays). Nach Migration nicht mehr auffindbar.
+- ✅ **GitHub-Actions-Workflow** + Forgejo→GitHub Push-Mirror + Secrets.
+- ✅ **Duplikat-Event via NIP-09 gelöscht** (`bibel-selfies` Unix-Timestamp-dup).
+- ✅ **Staging-Deploy-Infrastruktur** mit `__SITE_URL__`-Templating.
+- ✅ **Homepage** mit Hero, Profilbild, Social-Icons (Nostr/Mastodon/
+  Bluesky/LinkedIn/ORCID/Mail), Latest-Posts.
+- ✅ **Archiv-Seite**, **Impressum-Seite**, Menü-Navigation im Layout.
+- ✅ **CC0-Footer-Badge** (Heart+Zero inline SVG, monochrom).
+- ✅ **Impressum auf CC0 umgestellt** (mit freundlichem Namensnennungs-Hinweis).
+- ✅ **Cutover 2026-04-18** — `joerg-lohrer.de` von Hugo (`joerglohrer24/`)
+  auf SvelteKit-SPA (`joerglohrer26/`) umgehängt.
 
 ## Live-Verifikation
 
 ```sh
-curl -sI https://svelte.joerg-lohrer.de/ | head -3
+curl -sI https://joerg-lohrer.de/ | head -3
 curl -sI https://staging.joerg-lohrer.de/ | head -3
+curl -s https://joerg-lohrer.de/.well-known/nostr.json | jq .
 ```
 
-## Kontakt zur Implementierung
+## Pipeline-Quick-Check
 
-Alle Design-Entscheidungen in:
+```sh
+# Event-Count pro Relay
+for r in wss://relay.damus.io wss://nos.lol wss://relay.primal.net wss://relay.tchncs.de wss://relay.edufeed.org; do
+  echo -n "$r: "; nak req -k 30023 -a 4fa5d1c413e2b45e10d40bf3562ab701a5331206e359c90baae0e99bfd6c6e41 $r 2>/dev/null | wc -l
+done
+```
+
+## Design-Referenzen
+
 - `docs/superpowers/specs/2026-04-15-nostr-page-design.md` (SPA)
 - `docs/superpowers/specs/2026-04-15-publish-pipeline-design.md` (Publish, Blossom-only)
 - `docs/superpowers/specs/2026-04-16-image-metadata-convention.md` (Bild-Metadaten-YAML)
-- `docs/superpowers/plans/2026-04-16-publish-pipeline.md` (24 Tasks, als nächstes)
 
 Für die nächste Session: **`docs/HANDOFF.md`** lesen.

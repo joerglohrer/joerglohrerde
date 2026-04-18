@@ -5,87 +5,87 @@ Dieses Dokument sagt: was ist der Zustand, was wartet, wo liegen die Fäden.
 
 ## Zustand (Details in `STATUS.md`)
 
-**Die Nostr-Publish-Pipeline ist live.** Alle 18 Posts sind publiziert als
-`kind:30023`-Events auf 5 Relays, 91 Bilder auf 2 Blossom-Servern. Die
-SvelteKit-SPA unter `svelte.joerg-lohrer.de` rendert alles ordentlich.
+**Cutover am 2026-04-18 abgeschlossen.** `joerg-lohrer.de` läuft als
+SvelteKit-SPA, rendert 18 Nostr-Langform-Posts live aus 5 Relays, Bilder
+auf 2 Blossom-Servern. Hugo-Altbestand liegt als `hugo-archive`-Branch
+eingefroren.
 
-**Das inhaltliche Kernziel des Gesamtprojekts ist damit erreicht.**
+Der Rest sind Feinschliff-Aufgaben.
 
-Der Rest sind Feinschliff- und Cutover-Aufgaben.
+## Was als Nächstes ansteht (priorisiert)
 
-## Was als Nächstes ansteht
+### Option A — Repo/Nostr-Konflikt-Management (priorisiert)
 
-### Option 1 — CI-Push-Auto-Trigger verifizieren (optional)
+**Warum jetzt:** Es gibt **9 Langform-Events auf Nostr, die keine
+Markdown-Entsprechung im Repo haben** — alle via Client (Habla / Yakihonne)
+direkt auf Nostr erstellt, zum Teil mit problematischen d-tags (Emojis,
+Doppelpunkte, Umlaute, Trailing-Dashes, oder leer).
 
-**Status:** Workflow-Manual-Trigger ist grün (Run #1 am 18.04.2026).
-Automatischer Auto-Trigger bei Content-Push noch nicht ausprobiert —
-kann jederzeit beiläufig mitgenommen werden:
+**Liste der verwaisten Nostr-Events** (d-tag → event-id-Prefix):
 
-1. Minimaler Edit in einem Post (z. B. Typo) → commit → push `main`
-2. Forgejo synct automatisch zu GitHub → Workflow triggert → 1 Post als
-   `update` publiziert
-3. Log-Artefakt in GitHub Actions prüfen
+| d-tag | event-id | Probleme |
+|---|---|---|
+| `richter-oder-rcher-banksy-als-moderner-prophet-vor-dem-high-court` | `bb2c2cea…` | Umlaut-Abdecker (`Rächer` → `rcher`) |
+| `die-kraft-der-gemeinschaft-wahre-strke-liegt-nicht-in-strukturen-sondern-in-prozessen` | `27d7fbee…` | Umlaut-Abdecker (`Stärke` → `strke`) |
+| `nostr-und-open-educational-practices-oep-` | `0baa3615…` | Trailing-Dash, unschön |
+| `religionsbezogene-bildung-mit-rollenkarten:-ki-bilder-als-impulsgeber` | `3ac719ca…` | `:` ungültig für URL-Slug |
+| `📢-empowering-learners-for-the-age-of-ai-–-der-neue-review-draft-des-ai-literacy-frameworks-für-schule-ist-da!` | `3c005996…` | Emoji + `!` + Umlaute + extrem lang |
+| `🟠-prompts-für-die-religionsbezogene-bildung-posten-und-diskutieren-auf-nostr` | `f726fcd5…` | Emoji + Umlaute |
+| `ki-mitmachen` | `a1368d2e…` | sauber, aber fehlt im Repo |
+| `bibel-selfies` | `00cbe5f3…` | Langform-Version; Duplikat mit Unix-Timestamp wurde bereits gelöscht |
+| `""` (leer!) | `d75857dc…` | leerer d-tag — SPA-kritisch, Event hat keinen Slug |
 
-Kein Ziel mehr, nur Bestätigung. Pipeline ist funktional vollständig.
+**Zielbild:** Repo ist die Quelle der Wahrheit. Jeder Post existiert als
+Markdown mit sauberem Slug. d-tags sind URL-freundlich (ASCII, keine
+Sonderzeichen außer `-`).
 
-### Option 2 — Cutover auf `joerg-lohrer.de`
+**Empfohlener Flow (Reihenfolge nicht tauschen!):**
 
-**Voraussetzung:** Option 1 optional, aber nicht blockierend. Die Pipeline
-läuft ja schon, ob manuell oder via CI ist für den Cutover egal.
+1. **Content exportieren.** Pro Event: `nak req -i <event-id> <relay>` →
+   JSON mit Content + Tags. Manuell in neue Markdown-Datei umwandeln
+   (`content/posts/<YYYY-MM-DD>-<saubererslug>/index.md`). Titel,
+   published_at, ggf. summary und bestehende image-Tags übernehmen.
+   Bilder nach `images/` kopieren (falls noch erreichbar), sonst
+   Blossom-URLs im Markdown belassen und beim Publish neu hashen.
+2. **Slugs bereinigen.** Neue, saubere, ASCII-only d-tags wählen. Doku
+   in `docs/redaktion-bild-metadaten.md` oder einem neuen
+   `docs/nostr-reimport-mapping.md` festhalten (alter d-tag → neuer slug).
+3. **Neu publizieren.** `deno task publish --post <slug>` pro Datei.
+   Pipeline hasht Bilder zu Blossom, signiert mit stabiler Identität.
+4. **Alte Events löschen** via NIP-09 (`kind:5`). Heute noch manuell per
+   `nak event -k 5 -t e=<old-event-id>`, siehe Option D. Oder: erst
+   Option D bauen, dann diesen Schritt per Pipeline-Subcommand.
+5. **Verifikation.** Post-Count pro Relay checken, SPA-Post-Liste
+   visuell prüfen.
 
-**Schritte:**
-1. In All-Inkl KAS die Domain `joerg-lohrer.de` auf den SvelteKit-Webroot
-   umhängen (aktuell: `svelte.joerg-lohrer.de` → `/www/htdocs/v109928/joerglohrer28/`
-   oder welcher Ordner auch immer).
-2. SvelteKit-SPA deployen, sofern sie nicht schon dort liegt.
-3. Live-Check: `curl -sI https://joerg-lohrer.de/` → sollte die neue SPA
-   liefern, nicht mehr Hugo.
+**Edge Cases:**
+- Das leere-d-tag-Event (`d75857dc…`): wenn es noch sinnvoller Content
+  ist, als neuer Post re-importieren. Sonst einfach löschen.
+- Bilder in alten Events zeigen auf externe Server (nicht Blossom). Beim
+  Re-Publish lädt die Pipeline sie herunter und hasht sie neu. Wenn die
+  Quelle tot ist, muss das Bild manuell beschafft oder der Post mit
+  Platzhalter markiert werden.
+- `relay.damus.io` liefert mehr Events als andere Relays — bei
+  Nicht-Auffindbarkeit auf anderen Relays trotzdem löschen, damus.io
+  respektiert den NIP-09.
 
-Hugo-Altbestand bleibt als Archiv im `hugo-archive`-Branch.
-
-### Option 3 — Startseite + Menü-Navigation + Impressum in der SPA
-
-**Unabhängig von Cutover**, aber Voraussetzung für diesen: ohne Design wäre
-die Hauptdomain eine rohe Post-Liste.
-
-- **Startseite** bekommt ein eigenes Design (nicht nur Post-Liste dump)
-- **Menü-Navigation** in `app/src/routes/+layout.svelte` (Home, Archiv,
-  Impressum, Mastodon-Link)
-- **Impressum** als Static-Page (SvelteKit-Route `/impressum/`), **nicht**
-  als Nostr-Event — soll nicht als Blog-Beitrag in Listen erscheinen.
-  Text ist bereits im `content/`-Ordner (Repo-Quelle); die einzige
-  rechtlich relevante HTML-Datei, die auf dem Server liegt.
-
-### Option 4 — SPA respektiert `kind:5`-Deletion-Events
+### Option B — SPA respektiert NIP-09-Deletion-Events
 
 **Status:** aktuell filtert die SPA nicht nach NIP-09. Wenn ein Event per
-`kind:5`-Referenz gelöscht wurde (z. B. `7f5d08b8…` deletet `89609df5…`
-für `d=1744905463975` am 18.04.), zeigen Relays es meist nicht mehr aus —
+`kind:5`-Referenz gelöscht wurde, zeigen Relays es meist nicht mehr aus —
 aber die SPA würde es trotzdem rendern, falls ein Relay es doch liefert.
 
-**Zu tun:** im `kind:30023`-Loader (`app/src/lib/nostr/...`) einen
+**Zu tun:** im `kind:30023`-Loader (`app/src/lib/nostr/…`) einen
 Cross-Check auf `kind:5`-Events einbauen. Events, deren Addressable-Pointer
 (`30023:pubkey:d-tag`) in einem `kind:5` referenziert ist, werden
 gefiltert. Defensive Maßnahme für zukünftige Duplikate / Soft-Deletes.
 
-### Option 5 — Repo/Nostr-Konflikt-Management
+### Option C — Postfach `webmaster@joerg-lohrer.de`
 
-**Warum:** aktuell ist die Pipeline eine einseitige Straße — Repo → Nostr.
-Wenn du via Client (Habla, Yakihonne, Amber) auf Nostr editierst,
-überschreibt der nächste Pipeline-Lauf deine Client-Edits mit dem (alten)
-Repo-State. Das ist ein echter Datenverlust-Risikofaktor.
+User-Task: im All-Inkl KAS als Weiterleitung anlegen. Der Link im
+Footer und in den Social-Icons zeigt bereits darauf.
 
-**Zu tun:**
-- **Defensiv (`created_at`-Check):** Pipeline liest vor Publish das
-  aktuelle Event vom Relay und vergleicht `created_at`. Wenn das
-  Remote-Event neuer ist: Abbruch mit Warnung.
-- **Reverse-Sync (`pull-from-nostr`-Subcommand):** liest Events, vergleicht
-  mit Repo, zeigt Diffs. Manuelle Konfliktauflösung.
-
-Keine Eile, solange du nicht parallel editierst. Erst relevant, wenn du
-dich an Habla & Co. gewöhnst.
-
-### Option 6 — NIP-09-Delete als Pipeline-Subcommand
+### Option D — NIP-09-Delete als Pipeline-Subcommand
 
 **Status:** heute einmalig per `nak event -k 5 …` mit neu erzeugter Bunker-
 URL erledigt (Duplikat `1744905463975`). Das war ein Workaround um das
@@ -100,9 +100,10 @@ deno task publish-delete --slug <slug>
 deno task publish-delete --event-id <hex>
 ```
 
-Jetzt nicht dringend — nur bauen, wenn der Fall öfter eintritt.
+**Sinnvollerweise mit Option A kombinieren** — in der Re-Import-Kampagne
+werden 9 NIP-09 hintereinander gebraucht.
 
-### Option 7 — Pipeline weg von GitHub (self-hosted CI)
+### Option E — Pipeline weg von GitHub (self-hosted CI)
 
 **Wann:** Wenn der Optiplex-Server steht und ein zentraler Ort für Dienste
 existiert.
@@ -115,6 +116,17 @@ existiert.
 
 Der Pipeline-Code selbst (`publish/src/**`) ist CI-agnostisch — nur die
 Trigger-Konfiguration ändert sich.
+
+### Option F — Design-Refinements
+
+**Wann:** irgendwann, wenn Lust drauf ist.
+
+- Parallax-Effekte, Animations
+- Dark-Mode-Feinschliff (aktuell `prefers-color-scheme`, könnte Toggle bekommen)
+- Typografie-Experimente (Variable Fonts?)
+- Bildergalerie-Komponente für Posts mit vielen Bildern
+
+Alles nicht-blockierend, die SPA funktioniert solide.
 
 ## Schnell-Orientierung für die nächste Claude-Session
 
@@ -134,7 +146,8 @@ cd app && npm run check
 cd app && npm run dev
 
 # SPA-Build + Deploy
-cd app && npm run build && cd .. && ./scripts/deploy-svelte.sh
+DEPLOY_TARGET=staging ./scripts/deploy-svelte.sh
+DEPLOY_TARGET=prod ./scripts/deploy-svelte.sh
 
 # Publish-Pipeline
 cd publish && deno task check                          # pre-flight
@@ -142,7 +155,7 @@ cd publish && deno task publish --dry-run              # diff-modus simulation
 cd publish && deno task publish                        # diff-modus echt
 cd publish && deno task publish --force-all            # alle posts
 cd publish && deno task publish --post <slug>          # einen post
-cd publish && deno task test                           # 59 tests
+cd publish && deno task test                           # tests
 ```
 
 ## Bekannte Stolperfallen
@@ -161,6 +174,9 @@ cd publish && deno task test                           # 59 tests
 - **Hugo-quotierte Dates:** `date: "2023-02-26"` ist ein YAML-String, nicht
   ein Date-Objekt. `validatePost` coerced das automatisch; in neuen Posts
   am besten ohne Quotes schreiben.
+- **Deploy-Targets:** `svelte` → Entwicklung, `staging` → Pre-Prod,
+  `prod` → `joerglohrer26/` (Produktion seit Cutover). Script parst
+  `.env.local` per awk (wegen Sonderzeichen in FTP-Passwörtern).
 
 ## Offene UNKNOWN-Einträge zur späteren Recherche
 
@@ -177,10 +193,14 @@ Pipeline loggt Warnungen, publisht aber trotzdem. Recherche-Notizen in
 ## Session-Kontext
 
 Hilfreich beim Wiedereinstieg mit Claude:
-- Branch-Check: `git log --oneline -10 spa main`
-- Live-Check SPA: `curl -sI https://svelte.joerg-lohrer.de/`
-- Event-Count: `nak req -k 30023 -a 4fa5d1c413e2b45e10d40bf3562ab701a5331206e359c90baae0e99bfd6c6e41 wss://relay.primal.net 2>/dev/null | jq -s 'length'` → 18
-- Pipeline-Tests: `cd publish && deno task test` → 59 grün
+- Branch-Check: `git log --oneline -10 main`
+- Live-Check: `curl -sI https://joerg-lohrer.de/`
+- Event-Count Repo vs. Relays:
+  ```sh
+  ls content/posts/ | wc -l
+  nak req -k 30023 -a 4fa5d1c413e2b45e10d40bf3562ab701a5331206e359c90baae0e99bfd6c6e41 wss://relay.edufeed.org 2>/dev/null | jq -s 'length'
+  ```
+- Pipeline-Tests: `cd publish && deno task test`
 
 ## Community-Wiki-Entwürfe
 
