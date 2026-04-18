@@ -1,6 +1,6 @@
 # Projekt-Status: joerg-lohrer.de → Nostr-basierte SPA
 
-**Stand:** 2026-04-16
+**Stand:** 2026-04-18
 
 ## Kurzfassung
 
@@ -26,17 +26,16 @@ bis die Publish-Pipeline steht und der Cutover auf die Hauptdomain erfolgt.
 
 - **Autoren-Pubkey:** `npub1f7jar3qnu269uyx5p0e4v24hqxjnxysxudvujza2ur5ehltvdeqsly2fx9`
   (hex: `4fa5d1c413e2b45e10d40bf3562ab701a5331206e359c90baae0e99bfd6c6e41`)
-- **Publizierte Events:** ~10 Langform-Posts (`kind:30023`). Die restlichen
-  8 Posts warten auf die Publish-Pipeline (Events werden beim ersten
-  `deno task publish --force-all`-Lauf erzeugt).
+- **Publizierte Events:** **18 Langform-Posts** (`kind:30023`) — alle Altposts
+  via Publish-Pipeline migriert (Commit `0c6fdd1`, Log in
+  `docs/publish-logs/2026-04-18-force-all-migration.json`).
 - **Relay-Liste** (`kind:10002`): `relay.damus.io`, `nos.lol`,
   `relay.primal.net`, `relay.tchncs.de`, `relay.edufeed.org`
 - **Blossom-Server** (`kind:10063`): `blossom.edufeed.org`, `blossom.primal.net`
 
-Bisher nur die Bilder des `dezentrale-oep-oer`-Posts auf Blossom. **Designentscheidung
-2026-04-16:** Alle Bilder (inkl. der 17 Altpost-Bilder) kommen via Publish-Pipeline
-auf Blossom — kein rsync-Legacy-Pfad mehr, kein `image_source: legacy`-Flag.
-Einheitlicher Render-Pfad in der SPA.
+**91 Bilder** auf beiden Blossom-Servern. Alle Events enthalten hash-basierte
+Blossom-URLs. SPA rendert alle Posts einheitlich — kein Legacy-Pfad, keine
+rsync-Artefakte.
 
 ## Repo-Struktur
 
@@ -87,29 +86,36 @@ Alles in `.env.local` — gitignored, nicht committet.
 
 ## Offene Punkte
 
-- **Publish-Pipeline** — Spec + Plan vollständig, **Implementierung steht an**
-  (Task 1 aus `docs/superpowers/plans/2026-04-16-publish-pipeline.md`).
+- **CI-Mirror** Forgejo → GitHub eingerichtet, GitHub-Secrets gesetzt.
+  End-to-End-Test (Content-Commit, Workflow-Trigger, CI-Lauf) noch offen.
+  Später: Migration auf Woodpecker oder Cron auf Optiplex möglich
+  (siehe `docs/github-ci-setup.md`).
 - **Menü-Navigation** in der SPA (Home / Archiv / Impressum / Kontakt)
 - **Impressum-Seite** (braucht rechtlichen Text)
-- **Cutover auf `joerg-lohrer.de`** (nach Pipeline-Live: Hauptdomain
-  bekommt die SvelteKit-SPA)
+- **Cutover auf `joerg-lohrer.de`** (Pipeline läuft, Voraussetzung erfüllt;
+  Hauptdomain kann auf SvelteKit-SPA umgestellt werden)
+- **5 UNKNOWN-Einträge** im `virtual-reality`-Post zur späteren Recherche
+  (Wikipedia-Screenshot, Sketchfab-Fotograf, Ready-Player-Me, EyeMeasure-App)
 
 ## Erledigt seit 2026-04-15
 
 - ✅ Content-Migration: alle 18 Posts haben strukturierte `images:`-Liste
   im Frontmatter (91 Bilder, mit Alt-Text, Lizenz, Autor:innen, ggf. Caption
   und Modifications). Commit `c023b59`.
-- ✅ Erlebnispädagogik-Post: tote Amazon-Hotlinks entfernt, Literatur-
-  Liste aufgeräumt.
-- ✅ Design-Entscheidung „Blossom-only" dokumentiert in Spec
-  `docs/superpowers/specs/2026-04-15-publish-pipeline-design.md`.
-- ✅ Publish-Pipeline-Plan (24 Tasks, Blaupausen-tauglich) geschrieben:
-  `docs/superpowers/plans/2026-04-16-publish-pipeline.md`.
-- ✅ Bild-Metadaten-Konvention (Phase 1) in Spec:
-  `docs/superpowers/specs/2026-04-16-image-metadata-convention.md`.
-- ✅ Community-Wiki-Entwürfe (DE + EN) für Nostr-Bildattribution:
-  `docs/wiki-entwurf-nostr-bild-metadaten.md` + `-draft-nostr-image-metadata.md`.
-- ✅ 5 `UNKNOWN`-Einträge im VR-Post zur Recherche markiert (bleiben erstmal so).
+- ✅ Erlebnispädagogik-Post: tote Amazon-Hotlinks entfernt.
+- ✅ Spec, Plan und Bild-Metadaten-Konvention geschrieben.
+- ✅ Community-Wiki-Entwürfe (DE + EN) für Nostr-Bildattribution.
+- ✅ **Publish-Pipeline komplett implementiert**, 22 Tasks aus dem Plan:
+  - 18 Code-Tasks (Phase 1–6), 59 Unit-Tests grün
+  - Stabile NIP-46-Anbindung via `CLIENT_SECRET_HEX` für wiederverwendbare
+    App-Identität in Amber
+  - `validatePost` akzeptiert auch string-dates (für Hugo-Kompatibilität)
+- ✅ **Alle 18 Altposts publiziert** als `kind:30023`-Events (Commit `0c6fdd1`,
+  Log in `docs/publish-logs/2026-04-18-force-all-migration.json`).
+- ✅ **91 Bilder** auf beiden Blossom-Servern.
+- ✅ SPA rendert alle Posts mit Bildern von Blossom (visuell verifiziert).
+- ✅ **GitHub-Actions-Workflow** angelegt (`.github/workflows/publish.yml`).
+- ✅ Forgejo → GitHub Push-Mirror eingerichtet, GitHub-Secrets gesetzt.
 
 ## Live-Verifikation
 
