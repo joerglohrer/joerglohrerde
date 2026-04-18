@@ -13,6 +13,7 @@ import { createLogger, type RunMode } from './core/log.ts'
 import { type PostDeps, processPost } from './subcommands/publish.ts'
 import { printCheckResult, runCheck } from './subcommands/check.ts'
 import { validatePostFile } from './subcommands/validate-post.ts'
+import { runDelete } from './subcommands/delete.ts'
 
 function uuid(): string {
   return crypto.randomUUID()
@@ -166,10 +167,46 @@ async function cmdPublish(flags: {
   return exitCode
 }
 
+async function cmdDelete(flags: {
+  eventIds: string[]
+  reason?: string
+}): Promise<number> {
+  if (flags.eventIds.length === 0) {
+    console.error('usage: delete --event-id <hex> [--event-id <hex> ...] [--reason "text"]')
+    return 2
+  }
+  const config = loadConfig()
+  console.log('[1/2] signer…')
+  const signer = await createBunkerSigner(config.bunkerUrl, {
+    clientSecretHex: config.clientSecretHex,
+  })
+  console.log('[2/2] outbox…')
+  const outbox = await loadOutbox(config.bootstrapRelay, config.authorPubkeyHex)
+  if (outbox.write.length === 0) {
+    console.error('no write relays in kind:10002')
+    return 1
+  }
+  console.log(`deleting ${flags.eventIds.length} event(s) on ${outbox.write.length} relay(s)…`)
+  const result = await runDelete({
+    eventIds: flags.eventIds,
+    reason: flags.reason,
+    signer,
+    writeRelays: outbox.write,
+    pubkeyHex: config.authorPubkeyHex,
+    clientTag: config.clientTag,
+    minRelayAcks: config.minRelayAcks,
+  })
+  console.log(`delete-event id: ${result.deleteEventId}`)
+  console.log(`relays ok:     ${result.relaysOk.join(', ')}`)
+  console.log(`relays failed: ${result.relaysFailed.join(', ') || '(none)'}`)
+  return result.ok ? 0 : 1
+}
+
 async function main(): Promise<number> {
   const args = parseArgs(Deno.args, {
     boolean: ['force-all', 'dry-run'],
-    string: ['post'],
+    string: ['post', 'event-id', 'reason'],
+    collect: ['event-id'],
   })
   const sub = args._[0]
   if (sub === 'check') return cmdCheck()
@@ -181,7 +218,13 @@ async function main(): Promise<number> {
       dryRun: args['dry-run'] === true,
     })
   }
-  console.error('usage: cli.ts <publish | check | validate-post> [flags]')
+  if (sub === 'delete') {
+    return cmdDelete({
+      eventIds: (args['event-id'] as string[]) ?? [],
+      reason: args.reason,
+    })
+  }
+  console.error('usage: cli.ts <publish | check | validate-post | delete> [flags]')
   return 2
 }
 

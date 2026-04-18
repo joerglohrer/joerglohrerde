@@ -31,6 +31,11 @@ export function buildKind30023(args: BuildArgs): UnsignedEvent {
   if (Array.isArray(fm.tags)) {
     for (const t of fm.tags) tags.push(['t', String(t)])
   }
+  const lang = (fm.lang ?? 'de').toLowerCase()
+  if (/^[a-z]{2}$/.test(lang)) {
+    tags.push(['L', 'ISO-639-1'])
+    tags.push(['l', lang, 'ISO-639-1'])
+  }
   if (clientTag) tags.push(['client', clientTag])
   if (additionalTags) tags.push(...additionalTags)
   return {

@@ -29,6 +29,7 @@ export interface Frontmatter {
   tags?: string[]
   draft?: boolean
   license?: string
+  lang?: string
   authors?: Author[]
   images?: ImageEntry[]
   [key: string]: unknown
