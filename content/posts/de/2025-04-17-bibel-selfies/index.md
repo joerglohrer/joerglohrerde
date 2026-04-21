@@ -102,3 +102,4 @@ A selfie of an Arab father in simple garments in the time of jesus, embracing an
 <p class="attribution">"<a target="_blank" rel="noopener noreferrer" href="https://git.rpi-virtuell.de/Comenius-Institut/KI-religionsbezogen/src/branch/main/bibel-selfies.md">Bibel-Selfies</a>" von <a target="_blank" rel="noopener noreferrer" href="https://reliverse.social/@joerglohrer">Jörg Lohrer</a> Lizenz: <a target="_blank" rel="noopener noreferrer" href="https://creativecommons.org/publicdomain/zero/1.0/deed.de">CC0 1.0 <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" style="height: 1em; margin-right: 0.125em; display: inline;"></img><img src="https://mirrors.creativecommons.org/presskit/icons/zero.svg" style="height: 1em; margin-right: 0.125em; display: inline;"></img></a>.</p>`
 
 
+
