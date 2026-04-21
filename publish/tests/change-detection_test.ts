@@ -94,7 +94,7 @@ Deno.test('allPostDirs: findet posts in sprach-unterordnern', async () => {
     await Deno.writeTextFile(`${tmp}/de/beta/index.md`, '---\n---')
     await Deno.mkdir(`${tmp}/en/alpha`, { recursive: true })
     await Deno.writeTextFile(`${tmp}/en/alpha/index.md`, '---\n---')
-    await Deno.mkdir(`${tmp}/de/_draft/index`, { recursive: true })
+    await Deno.mkdir(`${tmp}/de/_draft`, { recursive: true })
     await Deno.writeTextFile(`${tmp}/de/_draft/index.md`, '---\n---')
 
     const result = await allPostDirs(tmp)
