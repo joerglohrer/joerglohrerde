@@ -53,3 +53,33 @@ Deno.test('changedPostDirs: nutzt git diff --name-only A..B', async () => {
   })
   assertEquals(dirs, ['content/posts/x'])
 })
+
+Deno.test('filterPostDirs: extrahiert post-ordner mit sprach-ebene', () => {
+  const lines = [
+    'content/posts/de/a/index.md',
+    'content/posts/en/b/image.png',
+    'content/posts/de/c/index.md',
+    'README.md',
+  ]
+  assertEquals(
+    filterPostDirs(lines, 'content/posts').sort(),
+    ['content/posts/de/a', 'content/posts/de/c', 'content/posts/en/b'],
+  )
+})
+
+Deno.test('filterPostDirs: ignoriert dateien direkt unter lang-ordner', () => {
+  const lines = [
+    'content/posts/de/index.md',
+    'content/posts/de/README.md',
+    'content/posts/de/x/index.md',
+  ]
+  assertEquals(filterPostDirs(lines, 'content/posts'), ['content/posts/de/x'])
+})
+
+Deno.test('filterPostDirs: _drafts unter sprach-ebene wird ignoriert', () => {
+  const lines = [
+    'content/posts/de/_drafts/x/index.md',
+    'content/posts/de/real/index.md',
+  ]
+  assertEquals(filterPostDirs(lines, 'content/posts'), ['content/posts/de/real'])
+})
