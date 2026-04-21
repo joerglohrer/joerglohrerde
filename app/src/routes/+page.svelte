@@ -7,6 +7,8 @@
 	import PostCard from '$lib/components/PostCard.svelte';
 	import LoadingOrError from '$lib/components/LoadingOrError.svelte';
 	import SocialIcons from '$lib/components/SocialIcons.svelte';
+	import { t, activeLocale } from '$lib/i18n';
+	import { get } from 'svelte/store';
 
 	// Lokales Profilbild aus static/ — schneller als der Nostr-kind:0-Roundtrip
 	// fürs kind:0 -> picture-Feld (URL wäre identisch, aber Netzwerk-Latenz).
@@ -25,11 +27,11 @@
 			posts = list;
 			loading = false;
 			if (list.length === 0) {
-				error = 'Keine Posts gefunden auf den abgefragten Relays.';
+				error = get(t)('home.empty');
 			}
 		} catch (e) {
 			loading = false;
-			error = e instanceof Error ? e.message : 'Unbekannter Fehler';
+			error = e instanceof Error ? e.message : get(t)('post.unknown_error');
 		}
 	});
 
@@ -46,8 +48,17 @@
 	const avatarSrc = HERO_AVATAR;
 	const about = $derived.by(() => profile?.about ?? '');
 	const website = $derived.by(() => profile?.website ?? '');
-	const latest = $derived(posts.slice(0, LATEST_COUNT));
-	const hasMore = $derived(posts.length > LATEST_COUNT);
+	let currentLocale = $state('de');
+	activeLocale.subscribe((v) => (currentLocale = v));
+
+	const filtered = $derived.by(() =>
+		posts.filter((p) => {
+			const l = p.tags.find((tag) => tag[0] === 'l')?.[1];
+			return (l ?? 'de') === currentLocale;
+		})
+	);
+	const latest = $derived(filtered.slice(0, LATEST_COUNT));
+	const hasMore = $derived(filtered.length > LATEST_COUNT);
 </script>
 
 <section class="hero">
@@ -57,10 +68,7 @@
 	</div>
 	<div class="hero-text">
 		<h1 class="hero-name">{displayName}</h1>
-		<p class="hero-greeting">
-			Hi <span aria-hidden="true">🖖</span> Willkommen auf meinem Blog
-			<span aria-hidden="true">🤗</span>
-		</p>
+		<p class="hero-greeting">{$t('home.greeting')}</p>
 		{#if about}
 			<p class="hero-about">{about}</p>
 		{/if}
@@ -75,14 +83,14 @@
 </section>
 
 <section class="latest">
-	<h2 class="section-title">Neueste Beiträge</h2>
+	<h2 class="section-title">{$t('home.latest')}</h2>
 	<LoadingOrError {loading} {error} />
 	{#each latest as post (post.id)}
 		<PostCard event={post} />
 	{/each}
 	{#if hasMore}
 		<div class="more">
-			<a href="/archiv/" class="more-link">Alle Beiträge im Archiv →</a>
+			<a href="/archiv/" class="more-link">{$t('home.more_archive')}</a>
 		</div>
 	{/if}
 </section>
