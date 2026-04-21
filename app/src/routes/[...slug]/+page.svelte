@@ -5,6 +5,8 @@
 	import { buildHablaLink } from '$lib/nostr/naddr';
 	import PostView from '$lib/components/PostView.svelte';
 	import LoadingOrError from '$lib/components/LoadingOrError.svelte';
+	import { t } from '$lib/i18n';
+	import { get } from 'svelte/store';
 
 	let { data } = $props();
 	const dtag = $derived(data.dtag);
@@ -30,14 +32,14 @@
 			.then((p) => {
 				if (currentDtag !== dtag) return;
 				if (!p) {
-					error = `Post "${currentDtag}" nicht gefunden.`;
+					error = get(t)('post.not_found', { values: { slug: currentDtag } });
 				} else {
 					post = p;
 				}
 			})
 			.catch((e) => {
 				if (currentDtag !== dtag) return;
-				error = e instanceof Error ? e.message : 'Unbekannter Fehler';
+				error = e instanceof Error ? e.message : get(t)('post.unknown_error');
 			})
 			.finally(() => {
 				if (currentDtag === dtag) loading = false;
@@ -45,7 +47,7 @@
 	});
 </script>
 
-<nav class="breadcrumb"><a href="/">← Zurück zur Übersicht</a></nav>
+<nav class="breadcrumb"><a href="/">{$t('post.back_to_overview')}</a></nav>
 
 <LoadingOrError {loading} {error} {hablaLink} />
 

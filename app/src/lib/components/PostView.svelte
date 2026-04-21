@@ -7,6 +7,7 @@
 	import ReplyComposer from './ReplyComposer.svelte';
 	import ExternalClientLinks from './ExternalClientLinks.svelte';
 	import LanguageAvailability from './LanguageAvailability.svelte';
+	import { t, activeLocale } from '$lib/i18n';
 
 	interface Props {
 		event: NostrEvent;
@@ -21,18 +22,20 @@
 	}
 
 	const dtag = $derived(tagValue(event, 'd'));
-	const title = $derived(tagValue(event, 'title') || '(ohne Titel)');
+	let currentLocale = $state('de');
+	activeLocale.subscribe((v) => (currentLocale = v));
+
+	const title = $derived(tagValue(event, 'title') || $t('post.untitled'));
 	const summary = $derived(tagValue(event, 'summary'));
 	const image = $derived(tagValue(event, 'image'));
 	const publishedAt = $derived(
 		parseInt(tagValue(event, 'published_at') || `${event.created_at}`, 10)
 	);
 	const date = $derived(
-		new Date(publishedAt * 1000).toLocaleDateString('de-DE', {
-			year: 'numeric',
-			month: 'long',
-			day: 'numeric'
-		})
+		new Date(publishedAt * 1000).toLocaleDateString(
+			currentLocale === 'en' ? 'en-US' : 'de-DE',
+			{ year: 'numeric', month: 'long', day: 'numeric' }
+		)
 	);
 	const tags = $derived(tagsAll(event, 't'));
 	const bodyHtml = $derived(renderMarkdown(event.content));
@@ -51,7 +54,7 @@
 
 <h1 class="post-title">{title}</h1>
 <div class="meta">
-	Veröffentlicht am {date}
+	{$t('post.published_on', { values: { date } })}
 	{#if tags.length > 0}
 		<div class="tags">
 			{#each tags as t}

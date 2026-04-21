@@ -2,6 +2,7 @@
   import type { NostrEvent, TranslationInfo } from '$lib/nostr/loaders';
   import { loadTranslations } from '$lib/nostr/loaders';
   import { displayLanguage } from '$lib/nostr/languageNames';
+  import { t } from '$lib/i18n';
 
   interface Props {
     event: NostrEvent;
@@ -28,7 +29,7 @@
 
 {#if !loading && translations.length > 0}
   <p class="availability">
-    Auch verfügbar in:
+    {$t('post.also_available_in')}
     {#each translations as t, i}
       <a href="/{t.slug}/" title={t.title}>{displayLanguage(t.lang)}</a>{#if i < translations.length - 1}, {/if}
     {/each}
