@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { renderMarkdown } from '$lib/render/markdown';
 	import impressumRaw from '../../../../content/impressum.md?raw';
+	import { t } from '$lib/i18n';
 
 	// Frontmatter abtrennen, nur Body rendern.
 	// Toleriert trailing spaces auf den ---/--- trenner-zeilen.
@@ -10,7 +11,7 @@
 </script>
 
 <svelte:head>
-	<title>Impressum – Jörg Lohrer</title>
+	<title>{$t('imprint.doc_title')}</title>
 	<meta name="robots" content="index, follow" />
 </svelte:head>
 
