@@ -1,0 +1,35 @@
+{
+  "nav": {
+    "home": "Home",
+    "archive": "Archive",
+    "imprint": "Imprint",
+    "brand_aria": "Go to homepage"
+  },
+  "home": {
+    "greeting": "Hi 🖖 Welcome to my blog 🤗",
+    "latest": "Latest posts",
+    "more_archive": "All posts in the archive →",
+    "empty": "No posts found on the queried relays."
+  },
+  "archive": {
+    "title": "Archive",
+    "subtitle": "All posts, grouped by year.",
+    "doc_title": "Archive – Jörg Lohrer"
+  },
+  "post": {
+    "back_to_overview": "← Back to overview",
+    "untitled": "(untitled)",
+    "published_on": "Published on {date}",
+    "also_available_in": "Also available in:",
+    "not_found": "Post \"{slug}\" not found.",
+    "unknown_error": "Unknown error"
+  },
+  "imprint": {
+    "doc_title": "Imprint – Jörg Lohrer"
+  },
+  "lang": {
+    "de": "German",
+    "en": "English",
+    "switch_aria": "Switch language"
+  }
+}

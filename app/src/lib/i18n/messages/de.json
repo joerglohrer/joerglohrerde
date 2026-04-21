@@ -1,0 +1,35 @@
+{
+  "nav": {
+    "home": "Home",
+    "archive": "Archiv",
+    "imprint": "Impressum",
+    "brand_aria": "Zur Startseite"
+  },
+  "home": {
+    "greeting": "Hi 🖖 Willkommen auf meinem Blog 🤗",
+    "latest": "Neueste Beiträge",
+    "more_archive": "Alle Beiträge im Archiv →",
+    "empty": "Keine Posts gefunden auf den abgefragten Relays."
+  },
+  "archive": {
+    "title": "Archiv",
+    "subtitle": "Alle Beiträge, nach Jahr gruppiert.",
+    "doc_title": "Archiv – Jörg Lohrer"
+  },
+  "post": {
+    "back_to_overview": "← Zurück zur Übersicht",
+    "untitled": "(ohne Titel)",
+    "published_on": "Veröffentlicht am {date}",
+    "also_available_in": "Auch verfügbar in:",
+    "not_found": "Post \"{slug}\" nicht gefunden.",
+    "unknown_error": "Unbekannter Fehler"
+  },
+  "imprint": {
+    "doc_title": "Impressum – Jörg Lohrer"
+  },
+  "lang": {
+    "de": "Deutsch",
+    "en": "English",
+    "switch_aria": "Sprache wechseln"
+  }
+}
