@@ -25,3 +25,24 @@ Deno.test('parseFrontmatter: erhält Leerzeichen in String-Werten', () => {
   const { fm } = parseFrontmatter(md)
   assertEquals(fm.title, 'Hello World')
 })
+
+Deno.test('parseFrontmatter: liest a-tag-liste aus frontmatter', () => {
+  const md = [
+    '---',
+    'title: T',
+    'slug: s',
+    'date: 2024-01-01',
+    'a:',
+    '  - "30023:abc:other-slug"',
+    '---',
+    'body',
+  ].join('\n')
+  const { fm } = parseFrontmatter(md)
+  assertEquals(fm.a, ['30023:abc:other-slug'])
+})
+
+Deno.test('parseFrontmatter: a fehlt → undefined', () => {
+  const md = '---\ntitle: T\nslug: s\ndate: 2024-01-01\n---\nbody'
+  const { fm } = parseFrontmatter(md)
+  assertEquals(fm.a, undefined)
+})

@@ -32,6 +32,7 @@ export interface Frontmatter {
   lang?: string
   authors?: Author[]
   images?: ImageEntry[]
+  a?: string[]
   [key: string]: unknown
 }
 
