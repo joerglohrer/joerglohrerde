@@ -4,6 +4,8 @@
 	import { loadPostList } from '$lib/nostr/loaders';
 	import PostCard from '$lib/components/PostCard.svelte';
 	import LoadingOrError from '$lib/components/LoadingOrError.svelte';
+	import { t, activeLocale } from '$lib/i18n';
+	import { get } from 'svelte/store';
 
 	let posts: NostrEvent[] = $state([]);
 	let loading = $state(true);
@@ -14,19 +16,29 @@
 			posts = await loadPostList();
 			loading = false;
 			if (posts.length === 0) {
-				error = 'Keine Posts gefunden auf den abgefragten Relays.';
+				error = get(t)('home.empty');
 			}
 		} catch (e) {
 			loading = false;
-			error = e instanceof Error ? e.message : 'Unbekannter Fehler';
+			error = e instanceof Error ? e.message : get(t)('post.unknown_error');
 		}
 	});
+
+	let currentLocale = $state('de');
+	activeLocale.subscribe((v) => (currentLocale = v));
+
+	const filtered = $derived.by(() =>
+		posts.filter((p) => {
+			const l = p.tags.find((tag) => tag[0] === 'l')?.[1];
+			return (l ?? 'de') === currentLocale;
+		})
+	);
 
 	// Posts nach Jahr gruppieren (neueste zuerst)
 	type YearGroup = { year: number; posts: NostrEvent[] };
 	const groupsByYear = $derived.by<YearGroup[]>(() => {
 		const byYear = new Map<number, NostrEvent[]>();
-		for (const p of posts) {
+		for (const p of filtered) {
 			const ts = Number(p.tags.find((t) => t[0] === 'published_at')?.[1] ?? p.created_at);
 			const year = new Date(ts * 1000).getUTCFullYear();
 			if (!byYear.has(year)) byYear.set(year, []);
@@ -39,11 +51,11 @@
 </script>
 
 <svelte:head>
-	<title>Archiv – Jörg Lohrer</title>
+	<title>{$t('archive.doc_title')}</title>
 </svelte:head>
 
-<h1 class="title">Archiv</h1>
-<p class="meta">Alle Beiträge, nach Jahr gruppiert.</p>
+<h1 class="title">{$t('archive.title')}</h1>
+<p class="meta">{$t('archive.subtitle')}</p>
 
 <LoadingOrError {loading} {error} />
 
