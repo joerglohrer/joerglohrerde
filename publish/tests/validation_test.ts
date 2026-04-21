@@ -56,3 +56,33 @@ Deno.test('validatePost: akzeptiert ISO-string-date', () => {
   validatePost(fm)
   assertEquals(fm.date instanceof Date, true)
 })
+
+Deno.test('validatePost: akzeptiert a-tag im korrekten format', () => {
+  const fm = {
+    title: 'T',
+    slug: 'abc',
+    date: new Date('2024-01-01'),
+    a: ['30023:abcdef0123456789:other-slug'],
+  } as Frontmatter
+  validatePost(fm) // wirft nicht
+})
+
+Deno.test('validatePost: lehnt a-tag mit falschem format ab', () => {
+  const fm = {
+    title: 'T',
+    slug: 'abc',
+    date: new Date('2024-01-01'),
+    a: ['nur-ein-string'],
+  } as Frontmatter
+  assertThrows(() => validatePost(fm), Error, 'invalid a-tag')
+})
+
+Deno.test('validatePost: lehnt a-tag mit fehlendem d-tag ab', () => {
+  const fm = {
+    title: 'T',
+    slug: 'abc',
+    date: new Date('2024-01-01'),
+    a: ['30023:abcdef:'],
+  } as Frontmatter
+  assertThrows(() => validatePost(fm), Error, 'invalid a-tag')
+})
