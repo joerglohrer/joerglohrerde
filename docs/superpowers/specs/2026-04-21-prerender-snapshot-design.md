@@ -311,16 +311,26 @@ des SvelteKit-Builds sind.
 **Upload-Reihenfolge (kritisch wegen Hash-benannten JS-Bundles):**
 
 1. Zuerst **Assets** hochladen (`_app/immutable/**`, Bilder, CSS) —
-   `lftp mirror` ohne `--delete`, nur Upload
+   reine Upload-Phase ohne Server-seitiges Löschen. Neue Hash-Bundles
+   landen zusätzlich zu den alten auf dem Server.
 2. Danach **HTML-Seiten** hochladen (`index.html`, `<slug>/index.html`,
-   `404.html`), ebenfalls ohne Delete
-3. **Zum Schluss** `lftp mirror --delete --only-missing` auf das
-   Top-Level, um obsolete Dateien zu entfernen (alte Hash-Bundles,
-   gelöschte Post-HTMLs)
+   `404.html`), ebenfalls ohne Löschen. Ab diesem Punkt zeigen die neuen
+   HTMLs auf ihre zugehörigen neuen Asset-Hashes — konsistent.
+3. **Zum Schluss** ein separater **Delete-Pass**, der Server-Dateien
+   entfernt, die im aktuellen Build-Output nicht mehr existieren (alte
+   Hash-Bundles, gelöschte Post-HTMLs, veraltete Snapshot-JSONs). Nichts
+   wird in dieser Phase erneut hochgeladen. Konkrete `lftp`-Flag-Kombi
+   in der Planungsphase festzulegen — wichtig ist nur die
+   Phasen-Trennung: Upload zuerst, Delete zuletzt, kein paralleler
+   Mirror-Call.
 
 Damit ist zu keinem Zeitpunkt ein inkonsistenter Zustand auf dem Server:
 Neue HTMLs referenzieren stets bereits vorhandene Asset-Hashes; alte
 Assets werden erst nach erfolgreichem Upload gelöscht.
+
+Von `--delete` ausgeschlossen bleiben außerhalb des SvelteKit-Builds
+verwaltete Dateien (Hero-Bild, Favicons im Root, `.well-known/`,
+Webspace-Spezifika) via `--exclude-glob`.
 
 Kein weiteres Verhalten ändert sich.
 
@@ -381,12 +391,20 @@ an keiner Stelle einen Big-Bang bildet:
    Änderung an SPA. Rollback: Verzeichnis löschen.
 3. **Snapshot in CI einbauen.** GitHub-Actions-Schritt vor SvelteKit-Build.
    Rollback: Workflow-Schritt entfernen.
-4. **SvelteKit-Route auf Prerender umstellen.** `[...slug]/+page.ts`
-   bekommt `prerender = true` + `entries()` + Load aus JSON.
-   `+page.svelte` rendert `content_markdown` per `renderMarkdown()` zur
-   Build-Zeit. Rollback: Commit revert, alte Runtime-Logik kommt zurück.
-5. **SPA-Relay-Fetch in Detail-Seite komplett abschalten.** Nur noch
-   Snapshot-Content. Rollback: Commit revert.
+4. **SvelteKit-Route auf Prerender umstellen, mit Laufzeit-Fallback.**
+   `[...slug]/+page.ts` bekommt `prerender = true` + `entries()` + Load
+   aus JSON. `+page.svelte` rendert `content_markdown` per
+   `renderMarkdown()` zur Build-Zeit. Der bisherige Runtime-Relay-Fetch
+   bleibt in diesem Schritt noch als Fallback bestehen — falls ein Slug
+   zur Build-Zeit nicht im Snapshot war (z.B. ganz frisch Nostr-first
+   publiziert), kann die SPA ihn über `adapter-static`-`fallback`
+   weiterhin rendern. Rollback: Commit revert, alte Runtime-Logik kommt
+   vollständig zurück.
+5. **Runtime-Relay-Fetch der Detail-Seite entfernen.** Wenn Schritt 4
+   sich stabil zeigt, wird der Fallback-Code-Pfad abgebaut. Die
+   Detail-Seite lebt dann ausschließlich vom Snapshot. Neue Nostr-first-
+   Posts erscheinen erst nach dem nächsten Snapshot+Build-Lauf. Rollback:
+   Commit revert.
 6. **Deploy-Script erweitern.** `lftp mirror --delete` mit
    Upload-Reihenfolge. Rollback: Script revert — Site bleibt, nur
    Obsolete-Cleanup fehlt.
