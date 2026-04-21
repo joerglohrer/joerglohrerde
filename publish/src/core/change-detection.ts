@@ -53,8 +53,13 @@ export interface DiffArgs {
 export async function changedPostDirs(args: DiffArgs): Promise<string[]> {
   const runner = args.runner ?? defaultRunner
   const stdout = await runner(['diff', '--name-only', `${args.from}..${args.to}`])
-  const normalizedRoot = stripParentSegments(args.contentRoot)
-  return filterPostDirs(stdout.split('\n'), normalizedRoot)
+  const normalizedRoot = stripParentSegments(args.contentRoot).replace(/\/$/, '')
+  const originalRoot = args.contentRoot.replace(/\/$/, '')
+  if (normalizedRoot === originalRoot) {
+    return filterPostDirs(stdout.split('\n'), originalRoot)
+  }
+  const matched = filterPostDirs(stdout.split('\n'), normalizedRoot)
+  return matched.map((p) => originalRoot + p.slice(normalizedRoot.length))
 }
 
 export async function allPostDirs(contentRoot: string): Promise<string[]> {

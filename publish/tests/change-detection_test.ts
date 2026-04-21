@@ -94,7 +94,7 @@ Deno.test('changedPostDirs: normalisiert contentRoot mit ../-präfix', async () 
     contentRoot: '../content/posts',
     runner,
   })
-  assertEquals(dirs.sort(), ['content/posts/de/alpha', 'content/posts/en/beta'])
+  assertEquals(dirs.sort(), ['../content/posts/de/alpha', '../content/posts/en/beta'])
 })
 
 Deno.test('changedPostDirs: normalisiert contentRoot mit mehrfachem ../-präfix', async () => {
@@ -106,7 +106,19 @@ Deno.test('changedPostDirs: normalisiert contentRoot mit mehrfachem ../-präfix'
     contentRoot: '../../content/posts',
     runner,
   })
-  assertEquals(dirs, ['content/posts/de/alpha'])
+  assertEquals(dirs, ['../../content/posts/de/alpha'])
+})
+
+Deno.test('changedPostDirs: gibt pfade mit original-contentRoot zurück (CWD-relativ)', async () => {
+  const runner: GitRunner = () =>
+    Promise.resolve('content/posts/de/alpha/index.md\n')
+  const dirs = await changedPostDirs({
+    from: 'HEAD~1',
+    to: 'HEAD',
+    contentRoot: '../content/posts',
+    runner,
+  })
+  assertEquals(dirs, ['../content/posts/de/alpha'])
 })
 
 Deno.test('allPostDirs: findet posts in sprach-unterordnern', async () => {
