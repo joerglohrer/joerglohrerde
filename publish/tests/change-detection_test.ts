@@ -1,5 +1,6 @@
 import { assertEquals } from '@std/assert'
 import {
+  allPostDirs,
   changedPostDirs,
   filterPostDirs,
   type GitRunner,
@@ -82,4 +83,26 @@ Deno.test('filterPostDirs: _drafts unter sprach-ebene wird ignoriert', () => {
     'content/posts/de/real/index.md',
   ]
   assertEquals(filterPostDirs(lines, 'content/posts'), ['content/posts/de/real'])
+})
+
+Deno.test('allPostDirs: findet posts in sprach-unterordnern', async () => {
+  const tmp = await Deno.makeTempDir()
+  try {
+    await Deno.mkdir(`${tmp}/de/alpha`, { recursive: true })
+    await Deno.writeTextFile(`${tmp}/de/alpha/index.md`, '---\n---')
+    await Deno.mkdir(`${tmp}/de/beta`, { recursive: true })
+    await Deno.writeTextFile(`${tmp}/de/beta/index.md`, '---\n---')
+    await Deno.mkdir(`${tmp}/en/alpha`, { recursive: true })
+    await Deno.writeTextFile(`${tmp}/en/alpha/index.md`, '---\n---')
+    await Deno.mkdir(`${tmp}/de/_draft/index`, { recursive: true })
+    await Deno.writeTextFile(`${tmp}/de/_draft/index.md`, '---\n---')
+
+    const result = await allPostDirs(tmp)
+    assertEquals(
+      result.sort(),
+      [`${tmp}/de/alpha`, `${tmp}/de/beta`, `${tmp}/en/alpha`].sort(),
+    )
+  } finally {
+    await Deno.remove(tmp, { recursive: true })
+  }
 })

@@ -54,12 +54,17 @@ export async function changedPostDirs(args: DiffArgs): Promise<string[]> {
 
 export async function allPostDirs(contentRoot: string): Promise<string[]> {
   const result: string[] = []
-  for await (const entry of Deno.readDir(contentRoot)) {
-    if (entry.isDirectory && !entry.name.startsWith('_')) {
-      const indexPath = `${contentRoot}/${entry.name}/index.md`
+  for await (const langEntry of Deno.readDir(contentRoot)) {
+    if (!langEntry.isDirectory) continue
+    if (!/^[a-z]{2}$/.test(langEntry.name)) continue
+    const langDir = `${contentRoot}/${langEntry.name}`
+    for await (const postEntry of Deno.readDir(langDir)) {
+      if (!postEntry.isDirectory) continue
+      if (postEntry.name.startsWith('_')) continue
+      const indexPath = `${langDir}/${postEntry.name}/index.md`
       try {
         const stat = await Deno.stat(indexPath)
-        if (stat.isFile) result.push(`${contentRoot}/${entry.name}`)
+        if (stat.isFile) result.push(`${langDir}/${postEntry.name}`)
       } catch {
         // skip folders without index.md
       }
