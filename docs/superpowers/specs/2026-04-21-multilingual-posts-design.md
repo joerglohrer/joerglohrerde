@@ -1,8 +1,18 @@
 # Multilinguale Posts — Design
 
 **Datum:** 2026-04-21
-**Status:** Design, noch nicht implementiert
+**Status:** Umgesetzt. Live seit 2026-04-21 via drei Pläne (Pipeline, SPA-Resolving, UI-i18n).
 **Scope:** Posts der SPA in mehreren Sprachen anbieten; UI-Chrome lokalisieren; Publish-Pipeline entsprechend anpassen.
+
+## Umsetzungshinweis
+
+Das Design unten beschreibt den angenommenen Produktstand. Während der
+Implementierung gab es eine kleine Abweichung beim Sprach-Hinweis im Post:
+Statt „Auch verfügbar in: English" wird ein kompakter Switcher gerendert
+(`📖 DE | EN`), der Sprachcode + globale Locale-Umschaltung in einem
+Klick kombiniert. Grund: UI-Sprache und Anzeige-Sprache bleiben
+konsistent, Switcher-Stil identisch zum Header. Siehe
+[`docs/HANDOFF.md`](../../HANDOFF.md) für das Nutzer:innen-Verhalten.
 
 ## Ziel
 

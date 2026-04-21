@@ -6,7 +6,7 @@ Blog-Posts live aus signierten Nostr-Events (NIP-23, `kind:30023`) rendert.
 
 ## Aktueller Stand
 
-- **`https://joerg-lohrer.de/`** — SvelteKit-SPA, Cutover am 2026-04-18 erfolgt.
+- **`https://joerg-lohrer.de/`** — SvelteKit-SPA, seit 2026-04-18 live. Seit 2026-04-21 **multilingual** (Deutsch + Englisch via NIP-32 `l`-Tag und NIP-33-`a`-Tag-Verlinkung).
 - **`https://staging.joerg-lohrer.de/`** — Staging (gleicher Build, ein Schritt vor Prod).
 - **`https://svelte.joerg-lohrer.de/`** — Entwicklungs-Deploy-Target der Pipeline.
 - **`https://spa.joerg-lohrer.de/`** — Vanilla-HTML-Mini-Spike (Proof of Concept, historisch).
@@ -15,13 +15,20 @@ Detailliert in [`docs/STATUS.md`](docs/STATUS.md).
 
 ## Wie die Seite funktioniert
 
-1. **Inhalte** liegen als Markdown in `content/posts/<slug>/index.md` mit
+1. **Inhalte** liegen als Markdown in `content/posts/<lang>/<slug>/index.md`
+   (z. B. `content/posts/de/<slug>/` oder `content/posts/en/<slug>/`) mit
    strukturierten Bild-Metadaten im Frontmatter (Alt-Text, Lizenz, Autor:innen).
+   Übersetzungen eines Posts werden über bidirektionale `a:`-Tags im
+   Frontmatter verlinkt — Details in
+   [`docs/superpowers/specs/2026-04-21-multilingual-posts-design.md`](docs/superpowers/specs/2026-04-21-multilingual-posts-design.md).
 2. **Publish-Pipeline** (`publish/`, Deno) lädt Bilder auf Blossom-Server
    (content-addressed) und publiziert signierte `kind:30023`-Events via
-   NIP-46-Bunker (Amber) auf 5 Relays.
+   NIP-46-Bunker (Amber) auf 5 Relays — inkl. NIP-32 `l`-Tag (Sprache) und
+   NIP-33 `a`-Tag (Verlinkung zu anderssprachigen Varianten).
 3. **SvelteKit-SPA** (`app/`) lädt diese Events zur Laufzeit und rendert
-   Post-Liste + Detailseiten. Keine Server-Komponente, Static-Hosting reicht.
+   Post-Liste + Detailseiten. UI-Chrome via `svelte-i18n` (DE/EN), Browser-
+   Locale als Default, Listen nach aktivem Locale gefiltert. Keine
+   Server-Komponente, Static-Hosting reicht.
 4. **CI**: GitHub Actions triggert die Publish-Pipeline bei Push auf `main`
    (via Forgejo→GitHub Push-Mirror).
 
@@ -35,11 +42,16 @@ Identität und Assets:
 
 - 📍 **Stand und Live-URLs:** [`docs/STATUS.md`](docs/STATUS.md)
 - 🔜 **Wie es weitergeht:** [`docs/HANDOFF.md`](docs/HANDOFF.md)
+- 🤖 **Claude-Einstieg:** [`CLAUDE.md`](CLAUDE.md) (Agent-Konventionen, Deploy-Falle, Commit-Stil)
 - 📐 **SPA-Spec:** [`docs/superpowers/specs/2026-04-15-nostr-page-design.md`](docs/superpowers/specs/2026-04-15-nostr-page-design.md)
 - 📐 **Publish-Pipeline-Spec:** [`docs/superpowers/specs/2026-04-15-publish-pipeline-design.md`](docs/superpowers/specs/2026-04-15-publish-pipeline-design.md)
 - 📐 **Bild-Metadaten-Konvention:** [`docs/superpowers/specs/2026-04-16-image-metadata-convention.md`](docs/superpowers/specs/2026-04-16-image-metadata-convention.md)
-- 🛠 **SvelteKit-SPA-Plan:** [`docs/superpowers/plans/2026-04-15-spa-sveltekit.md`](docs/superpowers/plans/2026-04-15-spa-sveltekit.md) (35 Tasks, abgeschlossen)
-- 🛠 **Publish-Pipeline-Plan:** [`docs/superpowers/plans/2026-04-16-publish-pipeline.md`](docs/superpowers/plans/2026-04-16-publish-pipeline.md) (24 Tasks, abgeschlossen)
+- 📐 **Multilinguale Posts:** [`docs/superpowers/specs/2026-04-21-multilingual-posts-design.md`](docs/superpowers/specs/2026-04-21-multilingual-posts-design.md)
+- 🛠 **SvelteKit-SPA-Plan:** [`docs/superpowers/plans/2026-04-15-spa-sveltekit.md`](docs/superpowers/plans/2026-04-15-spa-sveltekit.md) (35 Tasks, erledigt)
+- 🛠 **Publish-Pipeline-Plan:** [`docs/superpowers/plans/2026-04-16-publish-pipeline.md`](docs/superpowers/plans/2026-04-16-publish-pipeline.md) (24 Tasks, erledigt)
+- 🛠 **Multilingual 1/3 — Pipeline:** [`docs/superpowers/plans/2026-04-21-multilingual-posts-pipeline.md`](docs/superpowers/plans/2026-04-21-multilingual-posts-pipeline.md) (10 Tasks, erledigt)
+- 🛠 **Multilingual 2/3 — SPA-Auflösung:** [`docs/superpowers/plans/2026-04-21-multilingual-posts-spa.md`](docs/superpowers/plans/2026-04-21-multilingual-posts-spa.md) (8 Tasks, erledigt)
+- 🛠 **Multilingual 3/3 — UI-i18n:** [`docs/superpowers/plans/2026-04-21-multilingual-posts-i18n.md`](docs/superpowers/plans/2026-04-21-multilingual-posts-i18n.md) (11 Tasks, erledigt)
 - 🤖 **Claude-Workflow-Skill:** [`.claude/skills/joerglohrerde-workflow.md`](.claude/skills/joerglohrerde-workflow.md)
 
 ## Branches
@@ -52,9 +64,11 @@ Identität und Assets:
 ## Repo-Struktur
 
 ```
-content/posts/                  Markdown-Posts (Quelle für Nostr-Events, 18 Stück)
+content/posts/<lang>/<slug>/    Markdown-Posts pro Sprache (26× de, 1× en)
 content/impressum.md            Statisches Impressum (wird von SPA geladen)
 app/                            SvelteKit-SPA (Laufzeit-Renderer)
+  src/lib/i18n/                 UI-Lokalisierung (svelte-i18n + Messages)
+  src/lib/nostr/                Relay-Loader, Translations-Resolving
 publish/                        Deno-Publish-Pipeline (Blossom + Nostr)
 preview/spa-mini/               Vanilla-HTML-Mini-Spike (historische Referenz)
 scripts/deploy-svelte.sh        FTPS-Deploy, Targets: svelte/staging/prod
@@ -62,6 +76,7 @@ static/                         Site-Assets (Favicons, Profilbild, .well-known/)
 docs/                           Specs, Pläne, Status, Handoff, Wiki-Entwürfe
 .github/workflows/              GitHub-Actions CI (Publish-Pipeline-Trigger)
 .claude/                        Claude-Code-Sessions (Transparenz) + Skills
+CLAUDE.md                       Einstiegspunkt für Claude-Sessions
 ```
 
 ## Entwicklung

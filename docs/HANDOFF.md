@@ -5,11 +5,13 @@ Dieses Dokument sagt: was ist der Zustand, was wartet, wo liegen die Fäden.
 
 ## Zustand (Details in `STATUS.md`)
 
-**Cutover + Reimport am 2026-04-18 abgeschlossen.** `joerg-lohrer.de`
-läuft als SvelteKit-SPA, rendert 26 Nostr-Langform-Posts live aus 5
-Relays, Bilder auf Blossom. Repo ist alleinige Quelle der Wahrheit.
-Pipeline-Subcommands `publish` + `delete` decken den kompletten
-Content-Lifecycle ab.
+**Cutover + Reimport 2026-04-18, Mehrsprachigkeit live seit 2026-04-21.**
+`joerg-lohrer.de` läuft als SvelteKit-SPA, rendert 27 Nostr-Langform-Posts
+(26 DE + 1 EN) live aus 5 Relays, Bilder auf Blossom. UI-Chrome via
+`svelte-i18n` in DE/EN, Header-Switcher, Listen-Filter nach aktivem Locale,
+bidirektionale Sprach-Verlinkung der Posts via NIP-33 `a`-Tag mit Marker
+`translation`. Repo ist alleinige Quelle der Wahrheit. Pipeline-
+Subcommands `publish` + `delete` decken den kompletten Content-Lifecycle ab.
 
 **Das inhaltliche Kernziel des Gesamtprojekts ist erreicht.** Der Rest
 sind optionale Verbesserungen.
@@ -18,11 +20,12 @@ sind optionale Verbesserungen.
 
 **Kompletter Happy-Path, kein manueller Publish nötig:**
 
-1. Neuen Ordner anlegen: `content/posts/YYYY-MM-DD-<slug>/`
+1. Neuen Ordner anlegen: `content/posts/de/YYYY-MM-DD-<slug>/` (oder
+   `content/posts/en/<slug>/` für Englisch).
 2. `index.md` schreiben mit Frontmatter (siehe Template unten).
 3. Bilder in den Ordner legen und im Markdown als `![alt](bildname.jpg)`
    referenzieren.
-4. Lokal validieren: `cd publish && deno task validate-post ../content/posts/<dir>/index.md`
+4. Lokal validieren: `cd publish && deno task validate-post ../content/posts/<lang>/<dir>/index.md`
 5. Commit + `git push origin main` — fertig.
 
 **Was automatisch passiert:**
@@ -45,7 +48,7 @@ gesetzt haben. Das gilt so lange, bis der Client-Key rotiert wird.
 ---
 title: "Titel des Posts"
 slug: "url-freundlicher-slug"
-date: 2026-04-18
+date: 2026-04-21
 description: "Kurzbeschreibung für SEO und den summary-Tag im Event."
 image: hauptbild.jpg
 tags:
@@ -53,10 +56,16 @@ tags:
   - Tag2
 lang: de
 license: https://creativecommons.org/publicdomain/zero/1.0/deed.de
+# a:
+#   - "30023:4fa5d1c413e2b45e10d40bf3562ab701a5331206e359c90baae0e99bfd6c6e41:<slug-der-anderssprachigen-variante>"
 ---
 
 Body in Markdown…
 ```
+
+Der auskommentierte `a:`-Block ist **Konvention für alle neuen Posts** — so
+lässt sich später eine Übersetzung dazu verlinken, ohne das Template zu
+suchen. Siehe Abschnitt „Wie man eine Übersetzung anlegt" weiter unten.
 
 Bilder mit voller Attribution (NIP-standardisiert nach unserer Konvention,
 siehe `docs/superpowers/specs/2026-04-16-image-metadata-convention.md`):
@@ -100,24 +109,47 @@ gefiltert. Defensive Maßnahme für zukünftige Duplikate / Soft-Deletes.
 User-Task: im All-Inkl KAS als Weiterleitung anlegen. Der Link im
 Footer und in den Social-Icons zeigt bereits darauf.
 
-### Option D — Mehrsprachigkeit (Translation-of)
+### Wie man eine Übersetzung anlegt (Konvention seit 2026-04-21)
 
-**Grundlage steht:** Pipeline taggt seit 2026-04-18 jedes Event mit
-NIP-32 `['L', 'ISO-639-1']` + `['l', 'de', 'ISO-639-1']` (default),
-überschreibbar per `lang:`-Frontmatter.
+**Kurz:** Pro Sprache ein eigener Unterordner unter `content/posts/<lang>/`,
+pro Sprache ein eigenes `kind:30023`-Event mit eigenem Slug (= `d`-Tag).
+Die Beziehung zwischen Sprach-Varianten kommt ausschließlich über
+bidirektionale `a`-Tags im Frontmatter.
 
-**Zu tun für einen bilingualen Post:**
-1. Zweiter Markdown-Ordner, z. B. `content/posts/<date>-<slug>-en/index.md`,
-   mit `slug: <slug>-en`, `lang: en`, englischem Body.
-2. Publish → eigenes `kind:30023`-Event mit `lang=en`.
-3. (Noch zu bauen) Pipeline erweitern: `translation_of:`-Frontmatter-Feld,
-   das ein `['a', '30023:pubkey:<slug-de>']`-Tag ins Event setzt. Damit
-   erkennen Clients wie Habla die Verwandtschaft.
-4. (Optional) SPA bekommt Language-Switcher auf der Post-Detailseite.
+**Schritt für Schritt:**
 
-Nicht dringend, erst wenn echter englischer Content entsteht.
+1. Neuen Ordner für die Übersetzung anlegen, z. B.
+   `content/posts/en/<eigener-slug>/index.md`. **Der Slug muss global
+   eindeutig sein** — also *nicht* identisch mit dem deutschen Slug. Beispiel:
+   `bibel-selfies` (DE) ↔ `bible-selfies` (EN).
 
-### Option E — Pipeline weg von GitHub (self-hosted CI)
+2. Frontmatter mit `lang: en` (oder jeweiliger Sprach-Code) und aktivem
+   `a:`-Verweis auf den Slug der anderen Sprach-Variante:
+
+   ```yaml
+   a:
+     - "30023:4fa5d1c413e2b45e10d40bf3562ab701a5331206e359c90baae0e99bfd6c6e41:<slug-der-anderen-sprache>"
+   ```
+
+3. **Bidirektional**: im Original-Post den bereits auskommentierten
+   `a:`-Platzhalter aktivieren (Kommentarzeichen entfernen, Slug einsetzen).
+   Beide Posts verweisen dann aufeinander.
+
+4. Commit + Push — die Action re-publisht beide Events, `a`-Tags landen im
+   Nostr-Event als `['a', '<coord>', '', 'translation']`. Die SPA erkennt
+   die Beziehung automatisch und zeigt den Sprach-Switcher (`📖 DE | EN`)
+   unter dem Post-Titel.
+
+**Was die SPA automatisch tut:**
+- Listen-Seiten (Startseite + Archiv) filtern nach aktivem Locale — englische
+  Besucher:innen sehen nur englische Posts.
+- Klick auf den anderen Sprachcode im Switcher setzt `activeLocale` global
+  und navigiert zum verknüpften Slug.
+- UI-Chrome (Menü, Footer, Meta-Zeile, Datumsformat) wechselt mit.
+
+**Details:** [`docs/superpowers/specs/2026-04-21-multilingual-posts-design.md`](superpowers/specs/2026-04-21-multilingual-posts-design.md).
+
+### Option D — Pipeline weg von GitHub (self-hosted CI)
 
 **Wann:** Wenn der Optiplex-Server steht und ein zentraler Ort für Dienste
 existiert.
@@ -131,7 +163,7 @@ existiert.
 Der Pipeline-Code selbst (`publish/src/**`) ist CI-agnostisch — nur die
 Trigger-Konfiguration ändert sich.
 
-### Option F — Design-Refinements
+### Option E — Design-Refinements
 
 **Wann:** irgendwann, wenn Lust drauf ist.
 
@@ -190,20 +222,25 @@ cd publish && deno task test                           # tests
 - **Hugo-quotierte Dates:** `date: "2023-02-26"` ist ein YAML-String, nicht
   ein Date-Objekt. `validatePost` coerced das automatisch; in neuen Posts
   am besten ohne Quotes schreiben.
-- **Deploy-Targets:** `svelte` → Entwicklung, `staging` → Pre-Prod,
+- **Deploy-Targets:** `svelte` (Default!) → Entwicklung, `staging` → Pre-Prod,
   `prod` → `joerglohrer26/` (Produktion seit Cutover). Script parst
   `.env.local` per awk (wegen Sonderzeichen in FTP-Passwörtern).
+  **Für Live-Deploy auf `joerg-lohrer.de` IMMER explizit `DEPLOY_TARGET=prod`
+  setzen** — der Default zielt auf `svelte.joerg-lohrer.de` (historischer
+  Cutover-Stand), ein stummer Fehler wenn man es vergisst.
 - **Slug-Hygiene:** nur `[a-z0-9-]`, keine Umlaute/Emojis/Doppelpunkte.
   Der Slug landet als `d`-Tag im Event und wird zur URL. Einmal
   publiziert, ist Umbenennen nur über Delete + Re-Publish mit neuem Slug
-  möglich.
+  möglich. **Sprach-Varianten brauchen eigene Slugs** (z. B. `bibel-selfies`
+  / `bible-selfies`) — die Sprache kommt über den `l`-Tag, nicht über den
+  `d`-Tag.
 - **Clients, die Markdown ignorieren:** Yakihonne/Habla kennen NIP-32
   Sprach-Tags; kurzen Text in `description:` halten, damit die Vorschau
   überall sinnvoll aussieht.
 
 ## Offene UNKNOWN-Einträge zur späteren Recherche
 
-Im VR-Post (`content/posts/2021-08-15-virtual-reality/index.md`) sind
+Im VR-Post (`content/posts/de/2021-08-15-virtual-reality/index.md`) sind
 4 Bilder als `license: UNKNOWN / authors: UNKNOWN` markiert:
 - `01-immersion-wikipedia.jpg` (Wikipedia-Screenshot)
 - `02-mittelalterliche-kirche.jpg` (Sketchfab — Lizenz ist CC BY-NC, Fotograf fehlt)
@@ -220,7 +257,7 @@ Hilfreich beim Wiedereinstieg mit Claude:
 - Live-Check: `curl -sI https://joerg-lohrer.de/`
 - Event-Count Repo vs. Relays:
   ```sh
-  ls content/posts/ | wc -l
+  find content/posts -mindepth 3 -name index.md | wc -l
   nak req -k 30023 -a 4fa5d1c413e2b45e10d40bf3562ab701a5331206e359c90baae0e99bfd6c6e41 wss://relay.edufeed.org 2>/dev/null | jq -r '.tags[]|select(.[0]=="d")|.[1]' | sort -u | wc -l
   ```
 - Pipeline-Tests: `cd publish && deno task test`

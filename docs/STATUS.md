@@ -1,6 +1,6 @@
 # Projekt-Status: joerg-lohrer.de → Nostr-basierte SPA
 
-**Stand:** 2026-04-18 (Cutover abgeschlossen)
+**Stand:** 2026-04-21 (Mehrsprachigkeit live)
 
 ## Kurzfassung
 
@@ -8,6 +8,14 @@
 signierten Nostr-Events (NIP-23, `kind:30023`) auf 5 Public-Relays rendert.
 Bilder liegen content-addressed auf 2 Blossom-Servern. Die Hugo-basierte
 Altseite ist als `hugo-archive`-Branch eingefroren.
+
+**Seit 2026-04-21 multilingual:** UI-Chrome (Menü, Footer, Post-Meta)
+in Deutsch und Englisch via `svelte-i18n`, mit Browser-Locale-Default,
+`localStorage`-Persistenz und Header-Sprachswitcher. Inhalte pro Sprache
+als eigene `kind:30023`-Events, verlinkt über bidirektionale
+NIP-33-`a`-Tags mit Marker `translation`; Listen-Seiten filtern nach
+aktivem Locale. Eine englische Übersetzung existiert bereits
+(`bible-selfies`) und dient als lebendes Referenzbeispiel.
 
 **Das inhaltliche Kernziel des Gesamtprojekts ist erreicht.**
 
@@ -25,13 +33,15 @@ Altseite ist als `hugo-archive`-Branch eingefroren.
 - **Autoren-Pubkey:** `npub1f7jar3qnu269uyx5p0e4v24hqxjnxysxudvujza2ur5ehltvdeqsly2fx9`
   (hex: `4fa5d1c413e2b45e10d40bf3562ab701a5331206e359c90baae0e99bfd6c6e41`)
 - **NIP-05:** `joerglohrer@joerg-lohrer.de` (via `/.well-known/nostr.json`)
-- **Publizierte Events:** **26 Langform-Posts** (`kind:30023`), alle mit
-  sauberen ASCII-slugs, alle aus dem Repo publiziert. 18 Alt-Posts aus der
-  Hugo-Migration plus 8 re-importierte Client-Posts (Habla/Yakihonne), die
-  mit bereinigten d-tags neu publiziert und alte Duplikate per NIP-09
-  gelöscht wurden (Commit `7186c32`).
+- **Publizierte Events:** **27 Langform-Posts** (`kind:30023`) —
+  26 Deutsch + 1 Englisch. 26 Alt-Posts (18 Hugo-Migration + 8 Client-
+  Reimport) tragen seit 2026-04-21 konsistent `lang: de` im Frontmatter,
+  `bible-selfies` (EN, 2026-04-21) verweist bidirektional auf `bibel-selfies`
+  via NIP-33-`a`-Tag mit Marker `translation`.
 - **NIP-32-Sprach-Tags:** Alle Events tragen `['L', 'ISO-639-1']` +
-  `['l', 'de', 'ISO-639-1']`. Grundlage für spätere Mehrsprachigkeit.
+  `['l', <lang>, 'ISO-639-1']`. Deutsche Events haben `lang=de`, englische
+  `lang=en`. Ergänzt durch `['a', '<kind>:<pubkey>:<d-tag>', '', 'translation']`
+  bei verknüpften Sprach-Varianten.
 - **Relay-Liste** (`kind:10002`): `relay.damus.io`, `nos.lol`,
   `relay.primal.net`, `relay.tchncs.de`, `relay.edufeed.org`
 - **Blossom-Server** (`kind:10063`): `blossom.edufeed.org`, `blossom.primal.net`
@@ -42,30 +52,32 @@ Altseite ist als `hugo-archive`-Branch eingefroren.
 
 ```
 joerglohrerde/
-├── content/posts/             # 18 Markdown-Posts, alle mit strukturierten images:
-├── content/impressum.md       # Statisches Impressum (wird von SPA geladen)
-├── app/                       # SvelteKit-SPA (Laufzeit-Renderer)
-├── publish/                   # Deno-Publish-Pipeline (Blossom + Nostr)
-├── preview/spa-mini/          # Vanilla-HTML-Mini-Spike (historisch)
+├── content/posts/<lang>/<slug>/   # Markdown-Posts pro Sprache (26 de, 1 en)
+├── content/impressum.md           # Statisches Impressum (wird von SPA geladen)
+├── app/
+│   ├── src/lib/i18n/              # svelte-i18n + activeLocale-Store + Messages
+│   ├── src/lib/nostr/             # Relay-Loader, Translations-Resolving
+│   └── src/lib/components/        # u. a. LanguageSwitcher, LanguageAvailability
+├── publish/                       # Deno-Publish-Pipeline (Blossom + Nostr)
+├── preview/spa-mini/              # Vanilla-HTML-Mini-Spike (historisch)
 ├── scripts/
-│   └── deploy-svelte.sh       # FTPS-Deploy, Targets: svelte/staging/prod
+│   └── deploy-svelte.sh           # FTPS-Deploy, Targets: svelte/staging/prod
 ├── docs/
-│   ├── STATUS.md              # Dieses Dokument
-│   ├── HANDOFF.md             # Wie man hier weitermacht
+│   ├── STATUS.md                  # Dieses Dokument
+│   ├── HANDOFF.md                 # Wie man hier weitermacht
 │   ├── redaktion-bild-metadaten.md
 │   ├── wiki-entwurf-nostr-bild-metadaten.md
 │   ├── wiki-draft-nostr-image-metadata.md
 │   ├── github-ci-setup.md
 │   └── superpowers/
-│       ├── specs/             # SPA + Publish-Pipeline + Bild-Metadaten-Konvention
-│       └── plans/
-│           ├── 2026-04-15-spa-sveltekit.md       # erledigt
-│           └── 2026-04-16-publish-pipeline.md    # erledigt
-├── .github/workflows/         # publish.yml (Forgejo→GitHub Push-Mirror-Trigger)
+│       ├── specs/                 # SPA, Publish-Pipeline, Bild-Metadaten, Multilingual
+│       └── plans/                 # Alle Pläne erledigt (SPA, Pipeline, 3× Multilingual)
+├── .github/workflows/             # publish.yml (Forgejo→GitHub Push-Mirror-Trigger)
 ├── .claude/
-│   ├── skills/                # Repo-spezifischer Claude-Skill
-│   └── settings.local.json    # Claude-Session-State (gitignored)
-└── .env.local                 # Gitignored: FTP-Creds, Bunker-URL, Publish-Pipeline-Keys
+│   ├── skills/                    # Repo-spezifischer Claude-Skill
+│   └── settings.local.json        # Claude-Session-State (gitignored)
+├── CLAUDE.md                      # Einstiegspunkt für Claude-Sessions
+└── .env.local                     # Gitignored: FTP-Creds, Bunker-URL, Publish-Pipeline-Keys
 ```
 
 ## Branch-Layout (Git)
@@ -93,10 +105,11 @@ Einmalig manuell erledigt (gitignored in `.env.local`):
 Nach Priorität:
 1. **Postfach `webmaster@joerg-lohrer.de`** als Weiterleitung in KAS anlegen.
 2. **SPA respektiert NIP-09-Deletion-Events** (defensiver kind:5-Filter).
-3. **Mehrsprachigkeit** — parallele `lang:en`-Versionen bei Bedarf anlegen,
-   per `a`-Tag als `translation_of` verlinken (NIP-32-Grundlage steht).
-4. **Self-hosted CI** (Woodpecker / Cron auf Optiplex), weg von GitHub.
-5. **5 UNKNOWN-Einträge** im VR-Post zur späteren Recherche.
+3. **Self-hosted CI** (Woodpecker / Cron auf Optiplex), weg von GitHub.
+4. **5 UNKNOWN-Einträge** im VR-Post zur späteren Recherche.
+5. **Weitere Übersetzungen** nach Bedarf — Framework ist sprach-agnostisch,
+   neuer Sprach-Unterordner (z. B. `content/posts/fr/`) genügt, UI-i18n-
+   Messages ergänzen.
 
 ## Erledigt (chronologisch seit 2026-04-15)
 
@@ -126,6 +139,20 @@ Nach Priorität:
   nutzt stabile Bunker-Identität via `CLIENT_SECRET_HEX`.
 - ✅ **NIP-32 Sprach-Tags** in `buildKind30023` (Default `de`, über
   `lang:`-Frontmatter überschreibbar).
+- ✅ **Multilinguale Posts (2026-04-21)** — drei sequentielle Pläne
+  (Pipeline, SPA-Resolving, UI-i18n) abgeschlossen:
+  - Publish-Pipeline traversiert `content/posts/<lang>/<slug>/`, akzeptiert
+    `a:`-Tags im Frontmatter und schreibt sie als NIP-33-Koordinaten mit
+    Marker `translation` ins Event.
+  - SPA löst `a`-Tags auf, zeigt kompakten Switcher im Post (`📖 DE | EN`),
+    Klick setzt globalen Locale-State und navigiert zur Sprach-Variante.
+  - UI-Chrome via `svelte-i18n`, `activeLocale`-Store mit `localStorage`-
+    Persistenz, Listen-Seiten nach aktivem Locale gefiltert.
+  - Erste englische Übersetzung `bible-selfies` existiert als lebendes
+    Referenzbeispiel.
+  - Zwei Publisher-Pipeline-Bugfixes (`contentRoot`-Pfad-Handling) und
+    ein Route-Refresh-Bug (`onMount` → `$effect`) dabei nebenbei
+    bereinigt — GitHub-Action re-publisht nun wirklich auf Content-Änderung.
 
 ## Live-Verifikation
 
