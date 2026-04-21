@@ -37,6 +37,11 @@ export function buildKind30023(args: BuildArgs): UnsignedEvent {
     tags.push(['l', lang, 'ISO-639-1'])
   }
   if (clientTag) tags.push(['client', clientTag])
+  if (Array.isArray(fm.a)) {
+    for (const coord of fm.a) {
+      tags.push(['a', coord, '', 'translation'])
+    }
+  }
   if (additionalTags) tags.push(...additionalTags)
   return {
     kind: 30023,

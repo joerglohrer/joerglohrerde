@@ -92,3 +92,47 @@ Deno.test('buildKind30023: leerer clientTag wird weggelassen', () => {
   })
   assertEquals(ev.tags.some((t) => t[0] === 'client'), false)
 })
+
+Deno.test('buildKind30023: schreibt a-tags aus frontmatter mit marker "translation"', () => {
+  const fm = {
+    title: 'T',
+    slug: 'abc',
+    date: new Date('2024-01-01T00:00:00Z'),
+    lang: 'de',
+    a: [
+      '30023:0123456789abcdef:other-slug',
+      '30023:0123456789abcdef:third-slug',
+    ],
+  } as Frontmatter
+  const ev = buildKind30023({
+    fm,
+    rewrittenBody: 'body',
+    coverUrl: undefined,
+    pubkeyHex: '0123456789abcdef',
+    clientTag: '',
+    nowSeconds: 1700000000,
+  })
+  const aTags = ev.tags.filter((t) => t[0] === 'a')
+  assertEquals(aTags, [
+    ['a', '30023:0123456789abcdef:other-slug', '', 'translation'],
+    ['a', '30023:0123456789abcdef:third-slug', '', 'translation'],
+  ])
+})
+
+Deno.test('buildKind30023: ohne a im frontmatter keine a-tags im event', () => {
+  const fm = {
+    title: 'T',
+    slug: 'abc',
+    date: new Date('2024-01-01T00:00:00Z'),
+    lang: 'de',
+  } as Frontmatter
+  const ev = buildKind30023({
+    fm,
+    rewrittenBody: 'body',
+    coverUrl: undefined,
+    pubkeyHex: '0123456789abcdef',
+    clientTag: '',
+    nowSeconds: 1700000000,
+  })
+  assertEquals(ev.tags.filter((t) => t[0] === 'a'), [])
+})
