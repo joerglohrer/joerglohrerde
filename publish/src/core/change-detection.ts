@@ -7,22 +7,24 @@ function escapeRegex(s: string): string {
 export function filterPostDirs(lines: string[], contentRoot: string): string[] {
   const root = contentRoot.replace(/\/$/, '')
   const prefix = root + '/'
-  const indexRe = new RegExp(`^${escapeRegex(prefix)}([^/]+)/index\\.md$`)
-  const assetRe = new RegExp(`^${escapeRegex(prefix)}([^/]+)/`)
-  const drafts = prefix + '_'
+  const indexRe = new RegExp(`^${escapeRegex(prefix)}([a-z]{2})/([^/]+)/index\\.md$`)
+  const assetRe = new RegExp(`^${escapeRegex(prefix)}([a-z]{2})/([^/]+)/`)
   const dirs = new Set<string>()
   for (const line of lines) {
     const l = line.trim()
     if (!l) continue
-    if (l.startsWith(drafts)) continue
     const indexMatch = l.match(indexRe)
     if (indexMatch) {
-      dirs.add(`${prefix}${indexMatch[1]}`)
+      const [, lang, slug] = indexMatch
+      if (slug.startsWith('_')) continue
+      dirs.add(`${prefix}${lang}/${slug}`)
       continue
     }
     const assetMatch = l.match(assetRe)
     if (assetMatch && !l.endsWith('.md')) {
-      dirs.add(`${prefix}${assetMatch[1]}`)
+      const [, lang, slug] = assetMatch
+      if (slug.startsWith('_')) continue
+      dirs.add(`${prefix}${lang}/${slug}`)
     }
   }
   return [...dirs].sort()

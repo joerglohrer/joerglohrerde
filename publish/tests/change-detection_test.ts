@@ -7,35 +7,35 @@ import {
 
 Deno.test('filterPostDirs: extrahiert post-ordner aus dateipfaden (content/posts)', () => {
   const lines = [
-    'content/posts/a/index.md',
-    'content/posts/b/image.png',
-    'content/posts/c/other.md',
+    'content/posts/de/a/index.md',
+    'content/posts/de/b/image.png',
+    'content/posts/de/c/other.md',
     'README.md',
     'app/src/lib/x.ts',
   ]
   assertEquals(
     filterPostDirs(lines, 'content/posts').sort(),
-    ['content/posts/a', 'content/posts/b'],
+    ['content/posts/de/a', 'content/posts/de/b'],
   )
 })
 
 Deno.test('filterPostDirs: respektiert alternativen root (blog/)', () => {
   const lines = [
-    'blog/x/index.md',
-    'blog/y/pic.png',
-    'content/posts/z/index.md',
+    'blog/de/x/index.md',
+    'blog/en/y/pic.png',
+    'content/posts/de/z/index.md',
     'README.md',
   ]
-  assertEquals(filterPostDirs(lines, 'blog').sort(), ['blog/x', 'blog/y'])
+  assertEquals(filterPostDirs(lines, 'blog').sort(), ['blog/de/x', 'blog/en/y'])
 })
 
 Deno.test('filterPostDirs: ignoriert _drafts und non-index.md', () => {
   const lines = [
-    'content/posts/a/index.md',
-    'content/posts/a/extra.md',
-    'content/posts/_drafts/x/index.md',
+    'content/posts/de/a/index.md',
+    'content/posts/de/a/extra.md',
+    'content/posts/de/_drafts/x/index.md',
   ]
-  assertEquals(filterPostDirs(lines, 'content/posts'), ['content/posts/a'])
+  assertEquals(filterPostDirs(lines, 'content/posts'), ['content/posts/de/a'])
 })
 
 Deno.test('changedPostDirs: nutzt git diff --name-only A..B', async () => {
@@ -43,7 +43,7 @@ Deno.test('changedPostDirs: nutzt git diff --name-only A..B', async () => {
     assertEquals(args[0], 'diff')
     assertEquals(args[1], '--name-only')
     assertEquals(args[2], 'HEAD~1..HEAD')
-    return Promise.resolve('content/posts/x/index.md\nREADME.md\n')
+    return Promise.resolve('content/posts/de/x/index.md\nREADME.md\n')
   }
   const dirs = await changedPostDirs({
     from: 'HEAD~1',
@@ -51,7 +51,7 @@ Deno.test('changedPostDirs: nutzt git diff --name-only A..B', async () => {
     contentRoot: 'content/posts',
     runner,
   })
-  assertEquals(dirs, ['content/posts/x'])
+  assertEquals(dirs, ['content/posts/de/x'])
 })
 
 Deno.test('filterPostDirs: extrahiert post-ordner mit sprach-ebene', () => {
