@@ -6,6 +6,7 @@
 	import ReplyList from './ReplyList.svelte';
 	import ReplyComposer from './ReplyComposer.svelte';
 	import ExternalClientLinks from './ExternalClientLinks.svelte';
+	import LanguageAvailability from './LanguageAvailability.svelte';
 
 	interface Props {
 		event: NostrEvent;
@@ -59,6 +60,8 @@
 		</div>
 	{/if}
 </div>
+
+<LanguageAvailability {event} />
 
 {#if image}
 	<p class="cover"><img src={image} alt="Cover-Bild" /></p>
