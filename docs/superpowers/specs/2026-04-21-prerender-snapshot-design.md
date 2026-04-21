@@ -51,9 +51,11 @@ Laufzeit-Funktionen (Sprach-Switcher, Navigation, Reply-Loader).
   HTTP-Request.
 - **Keine Edge-Function, kein VPS, kein PHP-Shim.** Lösung funktioniert
   auf jedem Static-Hoster.
-- **Kein Prerender für Listen-Seiten** (Homepage, Archiv) in dieser
-  Iteration. Sie bleiben SPA-gerendert. Geteilt werden Artikel, nicht
-  Listen.
+- **Kein Prerender für Listen-Seiten** (Homepage, Archiv, `/tag/<name>/`)
+  in dieser Iteration. Sie bleiben SPA-gerendert über den
+  `adapter-static`-`fallback: 'index.html'`-Mechanismus (Crawler auf
+  `/tag/nostr/` → bekommen `index.html`, Seite rendert nach Hydration).
+  Geteilt werden Artikel, nicht Listen.
 - **Keine Änderung am Publish-Flow.** `publish`-Pipeline bleibt exakt
   wie heute (Git-MD → Nostr-Event).
 
@@ -108,6 +110,8 @@ Neues Deno-Modul. Verzeichnis: `snapshot/` als Geschwister zu `publish/`.
 - `--min-events <n>` (Plausibilitätsschwelle, absolute Zahl; ohne Flag:
   Last-known-good-Count aus Cache minus 2; ohne Cache: `1`)
 - `--cache <path>` (default: `<out>/.last-snapshot.json`)
+- `--allow-shrink` (Override des Drop-Checks, für Fälle in denen bewusst
+  massiv gelöscht wurde und kein `kind:5` als Signal existiert)
 
 **Algorithmus:**
 
@@ -122,14 +126,38 @@ Neues Deno-Modul. Verzeichnis: `snapshot/` als Geschwister zu `publish/`.
 5. **Plausibilitätscheck:**
    - mindestens `ceil(N × 0.6)` der N Read-Relays müssen geantwortet haben
      (bei 5 Relays: 3, bei 3 Relays: 2) → sonst Hard-Fail
-   - Event-Count ≥ `--min-events` → sonst Hard-Fail
-   - Event-Count-Drop > 20 % gegenüber Cache → Hard-Fail
+   - Event-Count ≥ `--min-events` → sonst Hard-Fail. Beim allerersten
+     Lauf ohne Cache und ohne explizites Flag ist die Default-Schwelle `1`
+     (d.h. mindestens ein Event muss vorhanden sein) — der Drop-Check
+     greift erst beim zweiten Lauf.
+   - Event-Count-Drop > 20 % gegenüber Cache → Hard-Fail, **außer**:
+     - seit letztem Snapshot neue `kind:5`-Deletions von genau so vielen
+       Events wurden erkannt (Drop ist bewusst) → Check wird übersprungen
+     - `--allow-shrink` ist gesetzt → Check wird übersprungen
 6. **Cover-Bild-Probe.** HEAD-Request auf `og:image`-Kandidat. Bei 200:
    als `url` schreiben. Bei Fehler: Fallback-Blossom prüfen, als `url`
    schreiben wenn verfügbar. Beide tot: primäre URL trotzdem schreiben +
    Warnung loggen (Blossom ist content-addressed, URL wird später wieder
    erreichbar sein).
-7. **JSON-Output schreiben.**
+7. **Markdown-zu-HTML-Rendering.** Body des Events wird mit `marked`
+   gerendert, dann mit `DOMPurify` gemäß gemeinsamer Policy sanitized,
+   dann Code-Blöcke mit `highlight.js` hervorgehoben. Gemeinsame
+   Konfiguration (Allowlist, Syntax-Sprachen) liegt als Konstanten-Modul
+   in `shared/markdown-policy.ts` und wird von Snapshot **und** SPA
+   identisch importiert. Ergebnis wird als `content_html` ins JSON
+   geschrieben. Das rohe `content_markdown` bleibt ebenfalls im JSON
+   (Debuggability, alternative Renderer, die der HTML-Sanitization nicht
+   trauen).
+8. **Fallback-Politik für fehlende Felder:**
+   - fehlt `summary` im Event → aus `content_markdown` die ersten 200
+     Zeichen (Whitespace normalisiert, abgeschnitten an Wortgrenze,
+     Suffix `…`) extrahieren und als `summary` schreiben
+   - fehlt `image` im Event → `cover_image` ist `null`; der Prerender
+     nutzt ein Site-Default-OG-Bild (definiert in `app/static/`, z.B.
+     Profilbild oder Logo-Banner, als `og:image` bei null-Cover)
+   - fehlt `published_at`-Tag → `created_at` wird als
+     `published_at` übernommen
+9. **JSON-Output schreiben.**
 
 **Output-Format:**
 
@@ -170,12 +198,13 @@ Neues Deno-Modul. Verzeichnis: `snapshot/` als Geschwister zu `publish/`.
     "alt": "Alt-Text",
     "mime": "image/jpeg"
   },
-  "content_markdown": "…full markdown…",
+  "content_html": "<p>…sanitized HTML with highlighted code blocks…</p>",
+  "content_markdown": "…full markdown, raw, for debugging or alternative renderers…",
   "tags": ["Nostr", "Bibel"],
   "naddr": "naddr1...",
   "habla_url": "https://habla.news/a/naddr1...",
   "translations": [
-    { "lang": "en", "slug": "bible-selfies" }
+    { "lang": "en", "slug": "bible-selfies", "title": "Bible-Selfies" }
   ]
 }
 ```
@@ -184,8 +213,27 @@ Neues Deno-Modul. Verzeichnis: `snapshot/` als Geschwister zu `publish/`.
 - `url` → primäre Bild-URL, wird vom Prerender als `og:image`-Wert in
   den HTML-Head geschrieben. Crawler sehen nur diese URL.
 - `fallback_url` → zweiter Blossom-Server mit demselben Hash (Blossom
-  ist content-addressed). Informativ, kann von JS-Clients als Fallback
-  genutzt werden. Nicht Teil der OG-Tags.
+  ist content-addressed). Nicht Teil der OG-Tags. Nutzungsszenario:
+  Falls der Snapshot-HTML ein `<img>`-Element im Post-Body erzeugt, das
+  auf `url` zeigt, kann ein client-seitiger `onerror`-Handler bei
+  Ladefehler auf `fallback_url` umschalten. Ist das nicht gewünscht
+  (YAGNI), wird das Feld entfernt — Entscheidung in der Planungsphase.
+
+**Semantik von `created_at` vs. `published_at`:**
+- `published_at` → Redaktions-Zeitpunkt (menschlich), aus `published_at`-
+  Tag des Events. Ändert sich nicht bei Re-Publish. Wird als
+  `article:published_time` in OG-Tags gerendert. Hauptanzeige-Datum.
+- `created_at` → technischer Event-Zeitstempel, ändert sich bei jedem
+  Update (z.B. bei Korrekturen). Kann als „zuletzt aktualisiert"
+  angezeigt werden. In OG nicht verwendet.
+- Fehlt `published_at`-Tag im Event, wird `created_at` übernommen
+  (siehe Algorithmus, Schritt 8).
+
+**Semantik der `translations[]`-Einträge:**
+- Jeder Eintrag enthält `lang`, `slug` **und** `title` der fremdsprachlichen
+  Version. Prerender nutzt `lang`/`slug` für `hreflang`-Links, und
+  `title` für den SPA-Sprach-Switcher (📖 DE | EN). Damit entfällt ein
+  Runtime-Relay-Fetch beim Switcher.
 
 **CLI:**
 ```sh
@@ -194,6 +242,7 @@ deno task snapshot                            # default
 deno task snapshot --out ./out                # alternatives Ziel
 deno task snapshot --min-events 20            # Schwelle
 deno task snapshot --cache ./.last.json       # Vergleich
+deno task snapshot --allow-shrink             # Drop-Check aus
 ```
 
 ### Stufe 3 — `build+deploy`
@@ -241,8 +290,12 @@ Die Route rendert den Snapshot-Content statt Relay-Fetch. Im
 - `<script type="application/ld+json">` mit `Article`-Schema
 - `<html lang="...">` aus `snapshot.lang` (via Layout)
 
-Post-Content wird aus `snapshot.content_markdown` gerendert.
+Post-Body wird direkt aus `snapshot.content_html` eingesetzt
+(`{@html …}`), da der HTML bereits im Snapshot-Schritt sanitized ist.
 `ReplyList`/`ReplyComposer` bleiben clientseitig unverändert.
+
+Der SPA-interne Sprach-Switcher liest `snapshot.translations[]` direkt
+aus Page-Data — kein Relay-Fetch zur Laufzeit mehr nötig.
 
 **3.3 Deploy-Script `scripts/deploy-svelte.sh`:**
 
@@ -251,6 +304,20 @@ Posts (die nicht mehr im Build-Output stehen) auch auf dem Server
 entfernt werden. Für die Site-Root wird `--exclude-glob` gesetzt, damit
 nicht versehentlich Favicons/Hero-Bild gelöscht werden, die nicht Teil
 des SvelteKit-Builds sind.
+
+**Upload-Reihenfolge (kritisch wegen Hash-benannten JS-Bundles):**
+
+1. Zuerst **Assets** hochladen (`_app/immutable/**`, Bilder, CSS) —
+   `lftp mirror` ohne `--delete`, nur Upload
+2. Danach **HTML-Seiten** hochladen (`index.html`, `<slug>/index.html`,
+   `404.html`), ebenfalls ohne Delete
+3. **Zum Schluss** `lftp mirror --delete --only-missing` auf das
+   Top-Level, um obsolete Dateien zu entfernen (alte Hash-Bundles,
+   gelöschte Post-HTMLs)
+
+Damit ist zu keinem Zeitpunkt ein inkonsistenter Zustand auf dem Server:
+Neue HTMLs referenzieren stets bereits vorhandene Asset-Hashes; alte
+Assets werden erst nach erfolgreichem Upload gelöscht.
 
 Kein weiteres Verhalten ändert sich.
 
@@ -275,9 +342,13 @@ nur die UI-Sprache (weich, umschaltbar).
 |---|---|
 | < 40 % Relays down | Snapshot mergt, was da ist, fährt fort |
 | ≥ 40 % Relays down | Hard-Fail, Output nicht überschrieben |
-| Event-Count-Drop > 20 % | Hard-Fail |
+| Event-Count-Drop > 20 % ohne korrespondierende `kind:5` | Hard-Fail (Override via `--allow-shrink`) |
+| Event-Count-Drop > 20 % mit korrespondierenden `kind:5` | Check übersprungen, fährt fort |
 | Blossom-Cover nicht erreichbar | Warnung loggen, URL trotzdem schreiben |
+| Event ohne `summary` | `summary` aus Body-Anfang abgeleitet |
+| Event ohne `image` | `cover_image: null`, Prerender nutzt Site-Default-OG-Bild |
 | NIP-09-gelöschter Post | Aus Katalog weggelassen, Deploy-Sync löscht HTML |
+| Repo-Post mit allen Relay-Events via NIP-09 gelöscht | Delete gewinnt: Post wird nicht gerendert, `<slug>/index.html` wird entfernt. Crawler erhalten 404. Gewolltes Verhalten — Relays sind Ort der Wahrheit. |
 | Nostr-first-Post nicht im Repo | Wird trotzdem snapshot'd + gerendert |
 | Alle Relays down | Hard-Fail, letzter Snapshot-Stand bleibt liegen |
 
@@ -294,15 +365,26 @@ der ersten Implementierung).
 
 ## Migrations-Weg
 
-Inkrementell, jeder Schritt einzeln testbar und rollback-bar:
+Inkrementell, jeder Schritt einzeln testbar und rollback-bar. Jeder
+Schritt hat eine eigene Rollback-Strategie, sodass die Gesamtänderung
+an keiner Stelle einen Big-Bang bildet:
 
-1. **Snapshot-Modul ergänzen.** `snapshot/` mit Deno-Task, CLI, Tests.
-   Keine Änderung an SPA.
-2. **Snapshot in CI einbauen.** GitHub-Actions-Schritt vor SvelteKit-Build.
-3. **SvelteKit-Route auf Prerender umstellen.** `[...slug]/+page.ts`
+1. **`shared/markdown-policy.ts` ergänzen.** Gemeinsame marked- +
+   DOMPurify- + highlight.js-Konfiguration als importierbares Modul.
+   Rollback: Datei löschen.
+2. **Snapshot-Modul ergänzen.** `snapshot/` mit Deno-Task, CLI, Tests.
+   Keine Änderung an SPA. Rollback: Verzeichnis löschen.
+3. **Snapshot in CI einbauen.** GitHub-Actions-Schritt vor SvelteKit-Build.
+   Rollback: Workflow-Schritt entfernen.
+4. **SvelteKit-Route auf Prerender umstellen.** `[...slug]/+page.ts`
    bekommt `prerender = true` + `entries()` + Load aus JSON.
-4. **Cutover.** Laufzeit-Relay-Fetch in der Detail-Seite abschalten.
-5. **Deploy-Script erweitern.** `lftp mirror --delete` für Sync.
+   `+page.svelte` rendert aus Snapshot. Rollback: Commit revert, alte
+   Runtime-Logik kommt zurück.
+5. **SPA-Relay-Fetch in Detail-Seite komplett abschalten.** Nur noch
+   Snapshot-Content. Rollback: Commit revert.
+6. **Deploy-Script erweitern.** `lftp mirror --delete` mit
+   Upload-Reihenfolge. Rollback: Script revert — Site bleibt, nur
+   Obsolete-Cleanup fehlt.
 
 ## Blaupausen-Anforderungen
 
@@ -323,10 +405,13 @@ Damit das Tool als Vorlage für andere Nostr-Sites dient:
 
 ## Offene Punkte
 
-- Ob `--delete` des Deploy-Scripts auch den SvelteKit-Bundle-Hash-Mix
-  sauber abbildet (wird `lftp` alte Hash-benannte JS-Bundles als
-  „unbekannt" löschen und dabei einen halb-hochgeladenen Zustand
-  produzieren?). Zu klären in der Implementierung.
 - Ob der SvelteKit-Prerender deterministisch identische HTML für
   unveränderte Inputs produziert (für Diff-Builds / Cache-Invalidation).
   Vermutlich ja, nachprüfen.
+- Ob `fallback_url` im `cover_image` tatsächlich gebraucht wird. Wenn
+  der Snapshot-HTML keine `onerror`-Substitution implementiert, ist
+  das Feld toter Code. Entscheidung: mit `fallback_url` starten, bei
+  fehlender Nutzung in der SPA wieder entfernen (YAGNI).
+- Site-Default-OG-Bild: welches konkret? Vermutlich Profilbild oder
+  Logo-Banner mit Überschrift „Jörg Lohrer". Entscheidung in
+  Planungsphase unter Abgleich mit vorhandenen `static/`-Assets.
