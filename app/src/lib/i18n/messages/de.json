@@ -20,7 +20,6 @@
     "back_to_overview": "← Zurück zur Übersicht",
     "untitled": "(ohne Titel)",
     "published_on": "Veröffentlicht am {date}",
-    "also_available_in": "Auch verfügbar in:",
     "not_found": "Post \"{slug}\" nicht gefunden.",
     "unknown_error": "Unbekannter Fehler"
   },
@@ -28,8 +27,6 @@
     "doc_title": "Impressum – Jörg Lohrer"
   },
   "lang": {
-    "de": "Deutsch",
-    "en": "English",
     "switch_aria": "Sprache wechseln"
   }
 }

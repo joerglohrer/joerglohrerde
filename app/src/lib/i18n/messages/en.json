@@ -20,7 +20,6 @@
     "back_to_overview": "← Back to overview",
     "untitled": "(untitled)",
     "published_on": "Published on {date}",
-    "also_available_in": "Also available in:",
     "not_found": "Post \"{slug}\" not found.",
     "unknown_error": "Unknown error"
   },
@@ -28,8 +27,6 @@
     "doc_title": "Imprint – Jörg Lohrer"
   },
   "lang": {
-    "de": "German",
-    "en": "English",
     "switch_aria": "Switch language"
   }
 }
