@@ -2,7 +2,11 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
 	import { bootstrapReadRelays } from '$lib/stores/readRelays';
+	import { initI18n, t } from '$lib/i18n';
+	import LanguageSwitcher from '$lib/components/LanguageSwitcher.svelte';
 	import CcZeroBadge from '$lib/components/CcZeroBadge.svelte';
+
+	initI18n();
 
 	let { children } = $props();
 
@@ -23,11 +27,12 @@
 
 <header class="site-header">
 	<div class="header-inner">
-		<a href="/" class="brand" aria-label="Zur Startseite">Jörg Lohrer</a>
-		<nav aria-label="Hauptnavigation">
-			<a href="/" class:active={isActive('/')}>Home</a>
-			<a href="/archiv/" class:active={isActive('/archiv/')}>Archiv</a>
-			<a href="/impressum/" class:active={isActive('/impressum/')}>Impressum</a>
+		<a href="/" class="brand" aria-label={$t('nav.brand_aria')}>Jörg Lohrer</a>
+		<nav aria-label={$t('nav.brand_aria')}>
+			<a href="/" class:active={isActive('/')}>{$t('nav.home')}</a>
+			<a href="/archiv/" class:active={isActive('/archiv/')}>{$t('nav.archive')}</a>
+			<a href="/impressum/" class:active={isActive('/impressum/')}>{$t('nav.imprint')}</a>
+			<LanguageSwitcher />
 		</nav>
 	</div>
 </header>
@@ -52,7 +57,7 @@
 			Jörg Lohrer
 		</span>
 		<span class="footer-sep">·</span>
-		<a href="/impressum/">Impressum</a>
+		<a href="/impressum/">{$t('nav.imprint')}</a>
 		<span class="footer-sep">·</span>
 		<a
 			href="https://github.com/joerglohrer/joerglohrerde"
