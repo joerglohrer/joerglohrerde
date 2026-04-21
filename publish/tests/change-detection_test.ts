@@ -85,6 +85,30 @@ Deno.test('filterPostDirs: _drafts unter sprach-ebene wird ignoriert', () => {
   assertEquals(filterPostDirs(lines, 'content/posts'), ['content/posts/de/real'])
 })
 
+Deno.test('changedPostDirs: normalisiert contentRoot mit ../-präfix', async () => {
+  const runner: GitRunner = () =>
+    Promise.resolve('content/posts/de/alpha/index.md\ncontent/posts/en/beta/index.md\n')
+  const dirs = await changedPostDirs({
+    from: 'HEAD~1',
+    to: 'HEAD',
+    contentRoot: '../content/posts',
+    runner,
+  })
+  assertEquals(dirs.sort(), ['content/posts/de/alpha', 'content/posts/en/beta'])
+})
+
+Deno.test('changedPostDirs: normalisiert contentRoot mit mehrfachem ../-präfix', async () => {
+  const runner: GitRunner = () =>
+    Promise.resolve('content/posts/de/alpha/index.md\n')
+  const dirs = await changedPostDirs({
+    from: 'HEAD~1',
+    to: 'HEAD',
+    contentRoot: '../../content/posts',
+    runner,
+  })
+  assertEquals(dirs, ['content/posts/de/alpha'])
+})
+
 Deno.test('allPostDirs: findet posts in sprach-unterordnern', async () => {
   const tmp = await Deno.makeTempDir()
   try {

@@ -4,6 +4,10 @@ function escapeRegex(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
 
+function stripParentSegments(path: string): string {
+  return path.replace(/^(\.\.\/)+/, '')
+}
+
 export function filterPostDirs(lines: string[], contentRoot: string): string[] {
   const root = contentRoot.replace(/\/$/, '')
   const prefix = root + '/'
@@ -49,7 +53,8 @@ export interface DiffArgs {
 export async function changedPostDirs(args: DiffArgs): Promise<string[]> {
   const runner = args.runner ?? defaultRunner
   const stdout = await runner(['diff', '--name-only', `${args.from}..${args.to}`])
-  return filterPostDirs(stdout.split('\n'), args.contentRoot)
+  const normalizedRoot = stripParentSegments(args.contentRoot)
+  return filterPostDirs(stdout.split('\n'), normalizedRoot)
 }
 
 export async function allPostDirs(contentRoot: string): Promise<string[]> {
