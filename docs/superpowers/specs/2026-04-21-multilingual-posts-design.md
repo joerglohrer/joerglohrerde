@@ -10,7 +10,7 @@ Posts können in beliebigen Sprachen existieren. Posts, die inhaltlich dasselbe 
 
 ## Scope
 
-- **In Scope:** Verzeichnisstruktur `content/posts/<lang>/<slug>/` inkl. Anpassung der Build-Logik und der SvelteKit-Repräsentation (Routing, Datenquellen); Frontmatter-Erweiterung um `lang` und optional `a`-tag-Verweise; Anpassung des Deno-Publish-Skripts; UI-Lokalisierung (Chrome-Strings) mit `svelte-i18n`; Sprachwahl und Fallback-Verhalten in der SPA; Migration der 8 bereits publizierten Posts (nur `l=de` ergänzen, kein `d`-tag-Change).
+- **In Scope:** Verzeichnisstruktur `content/posts/<lang>/<slug>/` inkl. Anpassung der Build-Logik und der SvelteKit-Repräsentation (Routing, Datenquellen); Frontmatter-Erweiterung um `lang` und optional `a`-tag-Verweise; Anpassung des Deno-Publish-Skripts; UI-Lokalisierung (Chrome-Strings) mit `svelte-i18n`; Sprachwahl und Fallback-Verhalten in der SPA; Migration der 26 bereits publizierten Posts (nur `l=de` ergänzen, kein `d`-tag-Change).
 - **Out of Scope:** Übersetzungs-Automatik (LLM-basiert); Community-Contribution-Workflow (PR-Template, Review-Guidelines) — später, wenn Grundlage steht; **sprachspezifische Pfad-Präfixe in URLs** (z. B. `/en/posts/...`) — die Content-Struktur unter `content/posts/<lang>/` ist explizit In Scope, nur das URL-Schema bleibt slug-basiert ohne Locale-Präfix.
 
 ## Architektur
@@ -95,7 +95,7 @@ Das bestehende Skript wird angepasst, nicht neu geschrieben. Änderungen:
 
 ### Migration bestehender Posts
 
-Die 8 bereits publizierten Posts tragen den `l=de`-Tag vermutlich bereits auf Event-Ebene (Beispiel `["L","ISO-639-1"]` + `["l","de","ISO-639-1"]` im Export). Die Migration ist daher primär eine Repo-Reorganisation:
+Die 26 bereits publizierten Posts tragen den `l=de`-Tag vermutlich bereits auf Event-Ebene (Beispiel `["L","ISO-639-1"]` + `["l","de","ISO-639-1"]` im Export). Die Migration ist daher primär eine Repo-Reorganisation:
 
 1. Alle Posts aus `content/posts/<slug>/` nach `content/posts/de/<slug>/` verschieben.
 2. Frontmatter um `lang: de` ergänzen; auskommentierten `a`-Platzhalter anlegen.
