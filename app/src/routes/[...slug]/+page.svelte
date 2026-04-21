@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import type { NostrEvent } from '$lib/nostr/loaders';
 	import { loadPost } from '$lib/nostr/loaders';
 	import { AUTHOR_PUBKEY_HEX } from '$lib/nostr/config';
@@ -22,19 +21,27 @@
 		})
 	);
 
-	onMount(async () => {
-		try {
-			const p = await loadPost(dtag);
-			loading = false;
-			if (!p) {
-				error = `Post "${dtag}" nicht gefunden.`;
-			} else {
-				post = p;
-			}
-		} catch (e) {
-			loading = false;
-			error = e instanceof Error ? e.message : 'Unbekannter Fehler';
-		}
+	$effect(() => {
+		const currentDtag = dtag;
+		post = null;
+		loading = true;
+		error = null;
+		loadPost(currentDtag)
+			.then((p) => {
+				if (currentDtag !== dtag) return;
+				if (!p) {
+					error = `Post "${currentDtag}" nicht gefunden.`;
+				} else {
+					post = p;
+				}
+			})
+			.catch((e) => {
+				if (currentDtag !== dtag) return;
+				error = e instanceof Error ? e.message : 'Unbekannter Fehler';
+			})
+			.finally(() => {
+				if (currentDtag === dtag) loading = false;
+			});
 	});
 </script>
 
