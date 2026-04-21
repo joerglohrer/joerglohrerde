@@ -139,15 +139,16 @@ Neues Deno-Modul. Verzeichnis: `snapshot/` als Geschwister zu `publish/`.
    schreiben wenn verfügbar. Beide tot: primäre URL trotzdem schreiben +
    Warnung loggen (Blossom ist content-addressed, URL wird später wieder
    erreichbar sein).
-7. **Markdown-zu-HTML-Rendering.** Body des Events wird mit `marked`
-   gerendert, dann mit `DOMPurify` gemäß gemeinsamer Policy sanitized,
-   dann Code-Blöcke mit `highlight.js` hervorgehoben. Gemeinsame
-   Konfiguration (Allowlist, Syntax-Sprachen) liegt als Konstanten-Modul
-   in `shared/markdown-policy.ts` und wird von Snapshot **und** SPA
-   identisch importiert. Ergebnis wird als `content_html` ins JSON
-   geschrieben. Das rohe `content_markdown` bleibt ebenfalls im JSON
-   (Debuggability, alternative Renderer, die der HTML-Sanitization nicht
-   trauen).
+7. **Kein Markdown-Rendering im Snapshot.** Body des Events wird als
+   rohes `content_markdown` ins JSON geschrieben. Das Rendering zu HTML
+   übernimmt der SvelteKit-Prerender-Schritt mit dem bereits existierenden
+   `$lib/render/markdown.ts`-Modul (marked + DOMPurify + highlight.js).
+   **Begründung:** Der SvelteKit-Build führt `renderMarkdown()` ohnehin
+   aus; eine Duplikation in Deno wäre doppelter Code-Pfad mit identischer
+   Policy. Für Blaupausen-Nutzung ist rohes Markdown zudem portabler —
+   jeder andere Renderer (Astro, Eleventy, …) bringt seinen eigenen
+   Markdown-Prozessor mit und würde fertiges HTML eher als Bürde
+   empfinden.
 8. **Fallback-Politik für fehlende Felder:**
    - fehlt `summary` im Event → aus `content_markdown` die ersten 200
      Zeichen (Whitespace normalisiert, abgeschnitten an Wortgrenze,
@@ -198,8 +199,7 @@ Neues Deno-Modul. Verzeichnis: `snapshot/` als Geschwister zu `publish/`.
     "alt": "Alt-Text",
     "mime": "image/jpeg"
   },
-  "content_html": "<p>…sanitized HTML with highlighted code blocks…</p>",
-  "content_markdown": "…full markdown, raw, for debugging or alternative renderers…",
+  "content_markdown": "…full markdown body, raw — Renderer sanitizes und rendert on demand…",
   "tags": ["Nostr", "Bibel"],
   "naddr": "naddr1...",
   "habla_url": "https://habla.news/a/naddr1...",
@@ -290,8 +290,11 @@ Die Route rendert den Snapshot-Content statt Relay-Fetch. Im
 - `<script type="application/ld+json">` mit `Article`-Schema
 - `<html lang="...">` aus `snapshot.lang` (via Layout)
 
-Post-Body wird direkt aus `snapshot.content_html` eingesetzt
-(`{@html …}`), da der HTML bereits im Snapshot-Schritt sanitized ist.
+Post-Body wird aus `snapshot.content_markdown` per `renderMarkdown()`
+zur Build-Zeit zu HTML gerendert und dann via `{@html …}` eingesetzt.
+Die bestehende `$lib/render/markdown.ts` wird so angepasst, dass sie
+im Node-Build-Kontext funktioniert (Umstellung auf
+`isomorphic-dompurify` oder äquivalente Build-Zeit-DOM-Bereitstellung).
 `ReplyList`/`ReplyComposer` bleiben clientseitig unverändert.
 
 Der SPA-interne Sprach-Switcher liest `snapshot.translations[]` direkt
@@ -369,17 +372,19 @@ Inkrementell, jeder Schritt einzeln testbar und rollback-bar. Jeder
 Schritt hat eine eigene Rollback-Strategie, sodass die Gesamtänderung
 an keiner Stelle einen Big-Bang bildet:
 
-1. **`shared/markdown-policy.ts` ergänzen.** Gemeinsame marked- +
-   DOMPurify- + highlight.js-Konfiguration als importierbares Modul.
-   Rollback: Datei löschen.
+1. **`renderMarkdown` Node-kompatibel machen.** DOM-Abhängigkeit auf
+   `isomorphic-dompurify` umstellen, sodass das Modul sowohl im Browser
+   als auch im SvelteKit-Build-Node-Kontext funktioniert.
+   Unit-Test-Verhalten gegen Regression sichern. Rollback: Commit revert.
 2. **Snapshot-Modul ergänzen.** `snapshot/` mit Deno-Task, CLI, Tests.
-   Keine Änderung an SPA. Rollback: Verzeichnis löschen.
+   Schreibt JSON mit `content_markdown`, keine HTML-Erzeugung. Keine
+   Änderung an SPA. Rollback: Verzeichnis löschen.
 3. **Snapshot in CI einbauen.** GitHub-Actions-Schritt vor SvelteKit-Build.
    Rollback: Workflow-Schritt entfernen.
 4. **SvelteKit-Route auf Prerender umstellen.** `[...slug]/+page.ts`
    bekommt `prerender = true` + `entries()` + Load aus JSON.
-   `+page.svelte` rendert aus Snapshot. Rollback: Commit revert, alte
-   Runtime-Logik kommt zurück.
+   `+page.svelte` rendert `content_markdown` per `renderMarkdown()` zur
+   Build-Zeit. Rollback: Commit revert, alte Runtime-Logik kommt zurück.
 5. **SPA-Relay-Fetch in Detail-Seite komplett abschalten.** Nur noch
    Snapshot-Content. Rollback: Commit revert.
 6. **Deploy-Script erweitern.** `lftp mirror --delete` mit
