@@ -14,8 +14,8 @@ tags:
   - relilab
 lang: de
 license: https://creativecommons.org/publicdomain/zero/1.0/deed.de
-# a:
-#   - "30023:4fa5d1c413e2b45e10d40bf3562ab701a5331206e359c90baae0e99bfd6c6e41:<slug-der-anderssprachigen-variante>"
+a:
+  - "30023:4fa5d1c413e2b45e10d40bf3562ab701a5331206e359c90baae0e99bfd6c6e41:bible-selfies"
 ---
 
 # Bibel-Selfies

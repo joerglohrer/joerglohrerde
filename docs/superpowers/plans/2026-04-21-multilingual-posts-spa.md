@@ -88,7 +88,7 @@ describe('smoke', () => {
 
 Run:
 ```bash
-cd /Users/joerglohrer/repositories/joerglohrerde/app && npm test
+cd /Users/joerglohrer/repositories/joerglohrerde/app && npm run test:unit
 ```
 
 Expected: Grüne Ausgabe, 1 passed.
@@ -179,7 +179,7 @@ describe('parseTranslationRefs', () => {
 
 Run:
 ```bash
-cd /Users/joerglohrer/repositories/joerglohrerde/app && npm test
+cd /Users/joerglohrer/repositories/joerglohrerde/app && npm run test:unit
 ```
 
 Expected: FAIL — Modul `./translations` existiert noch nicht.
@@ -222,7 +222,7 @@ export function parseTranslationRefs(event: NostrEvent): TranslationRef[] {
 
 Run:
 ```bash
-cd /Users/joerglohrer/repositories/joerglohrerde/app && npm test
+cd /Users/joerglohrer/repositories/joerglohrerde/app && npm run test:unit
 ```
 
 Expected: 4 passed.
@@ -269,7 +269,7 @@ describe('displayLanguage', () => {
 
 Run:
 ```bash
-cd /Users/joerglohrer/repositories/joerglohrerde/app && npm test
+cd /Users/joerglohrer/repositories/joerglohrerde/app && npm run test:unit
 ```
 
 Expected: FAIL.
@@ -294,7 +294,7 @@ export function displayLanguage(code: string): string {
 
 Run:
 ```bash
-cd /Users/joerglohrer/repositories/joerglohrerde/app && npm test
+cd /Users/joerglohrer/repositories/joerglohrerde/app && npm run test:unit
 ```
 
 Expected: 8 passed (4 neue + 4 aus Task 2).
@@ -400,7 +400,7 @@ describe('resolveTranslationsFromRefs', () => {
 
 Run:
 ```bash
-cd /Users/joerglohrer/repositories/joerglohrerde/app && npm test
+cd /Users/joerglohrer/repositories/joerglohrerde/app && npm run test:unit
 ```
 
 Expected: FAIL — Funktion `resolveTranslationsFromRefs` nicht exportiert.
@@ -471,7 +471,7 @@ export async function loadTranslations(
 
 Run:
 ```bash
-cd /Users/joerglohrer/repositories/joerglohrerde/app && npm test
+cd /Users/joerglohrer/repositories/joerglohrerde/app && npm run test:unit
 ```
 
 Expected: 12 passed.
@@ -746,7 +746,7 @@ Der Push triggert die Action; sie sollte die beiden geänderten/neuen Posts iden
 
 Run:
 ```bash
-cd /Users/joerglohrer/repositories/joerglohrerde/app && npm test
+cd /Users/joerglohrer/repositories/joerglohrerde/app && npm run test:unit
 ```
 
 Expected: Alle grün (inkl. der 12 neuen Tests aus diesem Plan).
