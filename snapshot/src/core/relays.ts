@@ -70,6 +70,11 @@ export const defaultEventFetcher: EventFetcher = async (relay, pubkey) => {
         error: () => resolve(out),
         complete: () => resolve(out),
       })
+    // Belt-and-suspenders: falls subscribe-callback weder error noch
+    // complete feuert (z.B. timeout-operator wird intern verschluckt),
+    // schliessen wir nach timeout+1s manuell. Resolve() kommt dann nicht
+    // mehr durch (Promise schon settled), aber der Relay-Handle wird
+    // entsorgt — kein leak.
     setTimeout(() => sub.unsubscribe(), 11_000)
   })
 }

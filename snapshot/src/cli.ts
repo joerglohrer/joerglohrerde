@@ -92,12 +92,17 @@ async function main(): Promise<number> {
     posts: postJsons,
   })
 
-  const allDeletedCoords = deletions.flatMap((d) =>
+  const currentDeletedCoords = deletions.flatMap((d) =>
     d.tags.filter((t) => t[0] === 'a' && t[1]).map((t) => t[1] as string)
   )
+  // Cache akkumuliert deletedCoords ueber alle bisherigen runs — nicht
+  // ersetzen: wenn ein relay beim naechsten run die alten kind:5-events
+  // nicht mehr liefert (GC, relay-tausch), wuerde sonst der vergleich
+  // gegen previousDeletedCoords im naechsten lauf wieder als "neu"
+  // werten und einen false-positive hard-fail ausloesen.
   const newCache: CacheState = {
     lastKnownGoodCount: filtered.length,
-    deletedCoords: [...new Set(allDeletedCoords)],
+    deletedCoords: [...new Set([...(cache?.deletedCoords ?? []), ...currentDeletedCoords])],
   }
   await writeCache(cachePath, newCache)
 
