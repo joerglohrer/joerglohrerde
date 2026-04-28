@@ -75,6 +75,10 @@ export function buildPostJson(
     identifier: slug,
   })
 
+  // TODO multi-lang: aktuell ableitung "andere sprache = en wenn lang=de, sonst de"
+  // funktioniert nur fuer den 2-sprachen-fall. Bei 3+ sprachen muss die lang aus dem
+  // referenzierten event ausgelesen werden — dafuer braucht buildPostJson zugriff
+  // auf den event-pool, nicht nur auf titleByDtag.
   const translations: TranslationRef[] = []
   for (const tag of ev.tags) {
     if (tag[0] !== 'a') continue
