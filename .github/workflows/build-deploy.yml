@@ -1,0 +1,139 @@
+name: Build + Deploy SPA
+
+# Manuell auslösen via "Actions" → "Build + Deploy SPA" → "Run workflow".
+# Bewusst kein Auto-Trigger: kontrolle bleibt beim Menschen, wer wann auf
+# welche subdomain deployt. Default-Target ist 'svelte' (= entwicklung,
+# https://svelte.joerg-lohrer.de/), niemals stumm prod.
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Deploy-Target'
+        required: true
+        type: choice
+        default: svelte
+        options:
+          - svelte
+          - staging
+          - prod
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: app/package-lock.json
+
+      - name: Resolve target-config
+        id: target
+        run: |
+          case "${{ inputs.target }}" in
+            svelte)
+              echo "site_url=https://svelte.joerg-lohrer.de" >> "$GITHUB_OUTPUT"
+              echo "ftp_host_secret=SVELTE_FTP_HOST" >> "$GITHUB_OUTPUT"
+              echo "ftp_user_secret=SVELTE_FTP_USER" >> "$GITHUB_OUTPUT"
+              echo "ftp_pass_secret=SVELTE_FTP_PASS" >> "$GITHUB_OUTPUT"
+              echo "ftp_path_secret=SVELTE_FTP_REMOTE_PATH" >> "$GITHUB_OUTPUT"
+              ;;
+            staging)
+              echo "site_url=https://staging.joerg-lohrer.de" >> "$GITHUB_OUTPUT"
+              echo "ftp_host_secret=STAGING_FTP_HOST" >> "$GITHUB_OUTPUT"
+              echo "ftp_user_secret=STAGING_FTP_USER" >> "$GITHUB_OUTPUT"
+              echo "ftp_pass_secret=STAGING_FTP_PASS" >> "$GITHUB_OUTPUT"
+              echo "ftp_path_secret=STAGING_FTP_REMOTE_PATH" >> "$GITHUB_OUTPUT"
+              ;;
+            prod)
+              # prod nutzt staging-ftp-creds (cutover-webroot joerglohrer26),
+              # aber site-url zeigt auf hauptdomain. Identisch zur lokalen
+              # logik in scripts/deploy-svelte.sh.
+              echo "site_url=https://joerg-lohrer.de" >> "$GITHUB_OUTPUT"
+              echo "ftp_host_secret=STAGING_FTP_HOST" >> "$GITHUB_OUTPUT"
+              echo "ftp_user_secret=STAGING_FTP_USER" >> "$GITHUB_OUTPUT"
+              echo "ftp_pass_secret=STAGING_FTP_PASS" >> "$GITHUB_OUTPUT"
+              echo "ftp_path_secret=STAGING_FTP_REMOTE_PATH" >> "$GITHUB_OUTPUT"
+              ;;
+          esac
+
+      - name: Snapshot
+        working-directory: ./snapshot
+        env:
+          AUTHOR_PUBKEY_HEX: ${{ secrets.AUTHOR_PUBKEY_HEX }}
+          BOOTSTRAP_RELAY: ${{ secrets.BOOTSTRAP_RELAY }}
+        run: |
+          deno run --allow-env --allow-read --allow-write --allow-net src/cli.ts
+
+      - name: Install + build SPA
+        working-directory: ./app
+        run: |
+          npm ci
+          npm run build
+
+      - name: Patch __SITE_URL__
+        env:
+          SITE_URL: ${{ steps.target.outputs.site_url }}
+        run: |
+          find app/build -type f -name "*.html" -print0 | while IFS= read -r -d '' html; do
+            sed -i "s|__SITE_URL__|$SITE_URL|g" "$html"
+          done
+
+      - name: Patch __HTML_LANG__ pro detail-HTML
+        run: |
+          find app/build -type f -name "index.html" -print0 | while IFS= read -r -d '' html; do
+            rel="${html#app/build/}"
+            slug="${rel%/index.html}"
+            lang_file="snapshot/output/posts/${slug}.json"
+            if [ -f "$lang_file" ]; then
+              lang=$(grep -o '"lang": *"[a-z][a-z]"' "$lang_file" | head -1 | sed 's/.*"\([a-z][a-z]\)".*/\1/')
+            else
+              lang="de"
+            fi
+            sed -i "s|__HTML_LANG__|${lang:-de}|g" "$html"
+          done
+
+      - name: FTPS-Upload (curl pro datei, TLS 1.2)
+        env:
+          FTP_HOST: ${{ secrets[steps.target.outputs.ftp_host_secret] }}
+          FTP_USER: ${{ secrets[steps.target.outputs.ftp_user_secret] }}
+          FTP_PASS: ${{ secrets[steps.target.outputs.ftp_pass_secret] }}
+          FTP_PATH: ${{ secrets[steps.target.outputs.ftp_path_secret] }}
+        run: |
+          if [ -z "$FTP_HOST" ] || [ -z "$FTP_USER" ] || [ -z "$FTP_PASS" ] || [ -z "$FTP_PATH" ]; then
+            echo "FEHLER: FTP-Secrets fuer target '${{ inputs.target }}' nicht gesetzt." >&2
+            exit 1
+          fi
+          # Identisch zur lokalen logik (curl --tls-max 1.2: All-Inkl
+          # schliesst TLS-1.3-data-connections mit "426 Transfer aborted")
+          find app/build -type f -print0 | while IFS= read -r -d '' local_file; do
+            rel="${local_file#app/build/}"
+            remote="ftp://${FTP_HOST}${FTP_PATH%/}/${rel}"
+            echo "  → $rel"
+            curl -sSf --ssl-reqd --tls-max 1.2 --ftp-create-dirs \
+              --retry 3 --retry-delay 2 --retry-all-errors \
+              --connect-timeout 15 \
+              --user "$FTP_USER:$FTP_PASS" \
+              -T "$local_file" "$remote"
+          done
+
+      - name: Live-check
+        env:
+          SITE_URL: ${{ steps.target.outputs.site_url }}
+        run: |
+          curl -sIL "$SITE_URL/" | head -3
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: snapshot-output-${{ inputs.target }}
+          path: ./snapshot/output/
+          retention-days: 7
