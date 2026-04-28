@@ -73,6 +73,12 @@ jobs:
         run: |
           deno run --allow-env --allow-read --allow-write --allow-net src/cli.ts
 
+      - name: Snapshot-JSONs in app/static kopieren
+        run: |
+          rm -rf app/static/snapshot-data
+          mkdir -p app/static/snapshot-data
+          cp -r snapshot/output/posts app/static/snapshot-data/posts
+
       - name: Install + build SPA
         working-directory: ./app
         run: |

@@ -25,3 +25,6 @@ vite.config.ts.timestamp-*
 # npm
 *.log
 test-results/
+
+# Snapshot-data wird vor dem build aus snapshot/output/ reinkopiert
+static/snapshot-data/

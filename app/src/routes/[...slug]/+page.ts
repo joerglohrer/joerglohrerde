@@ -55,7 +55,7 @@ export const entries: EntryGenerator = async () => {
   return idx.posts.map((p) => ({ slug: p.slug }))
 }
 
-export const load: PageLoad = async ({ url }) => {
+export const load: PageLoad = async ({ url, fetch }) => {
   const pathname = url.pathname
 
   const legacyDtag = parseLegacyUrl(pathname)
@@ -75,5 +75,18 @@ export const load: PageLoad = async ({ url }) => {
     return { dtag, snapshot }
   }
 
-  throw error(404, 'Post nicht gefunden')
+  // Im Browser: snapshot per fetch von /snapshot-data/posts/<slug>.json laden.
+  // Beim Hard-Reload einer prerenderten URL nutzt SvelteKit das ins HTML
+  // serialisierte page-data; bei clientseitiger Navigation kommt der
+  // request hier durch und holt das fehlende JSON. 404 vom server (slug
+  // nicht im snapshot) → kein post.
+  try {
+    const resp = await fetch(`/snapshot-data/posts/${dtag}.json`)
+    if (!resp.ok) throw error(404, 'Post nicht gefunden')
+    const snapshot = (await resp.json()) as PostJson
+    return { dtag, snapshot }
+  } catch (err) {
+    if (err && typeof err === 'object' && 'status' in err) throw err
+    throw error(404, 'Post nicht gefunden')
+  }
 }
