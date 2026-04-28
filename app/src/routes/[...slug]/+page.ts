@@ -71,8 +71,9 @@ export const load: PageLoad = async ({ url }) => {
 
   if (!browser) {
     const snapshot = await readPost(dtag)
-    if (snapshot) return { dtag, snapshot }
+    if (!snapshot) throw error(404, 'Post nicht gefunden')
+    return { dtag, snapshot }
   }
 
-  return { dtag, snapshot: null }
+  throw error(404, 'Post nicht gefunden')
 }
