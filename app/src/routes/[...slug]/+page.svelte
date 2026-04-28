@@ -112,7 +112,7 @@
       <link rel="alternate" hreflang={alt.lang} href={`${siteUrl}/${alt.slug}/`} />
     {/each}
     <link rel="alternate" hreflang="x-default" href={canonical} />
-    <script type="application/ld+json">{jsonLd}</script>
+    {@html `<script type="application/ld+json">${jsonLd.replace(/<\/script>/gi, '<\\/script>')}</script>`}
   {/if}
 </svelte:head>
 
