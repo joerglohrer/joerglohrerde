@@ -14,6 +14,11 @@ hljs.registerLanguage('bash', bash);
 hljs.registerLanguage('sh', bash);
 hljs.registerLanguage('json', json);
 
+/**
+ * Lokaler Marked-Instance, damit die globale `marked`-Singleton nicht
+ * mutiert wird — andere Module können `marked` unbeeinflusst weiterverwenden.
+ * (Spec §3: lokale Ersetzbarkeit der Engine.)
+ */
 const markedInstance = new Marked({
 	breaks: true,
 	gfm: true,
