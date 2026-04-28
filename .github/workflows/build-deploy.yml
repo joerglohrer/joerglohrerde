@@ -108,6 +108,13 @@ jobs:
           FTP_PASS: ${{ secrets[steps.target.outputs.ftp_pass_secret] }}
           FTP_PATH: ${{ secrets[steps.target.outputs.ftp_path_secret] }}
         run: |
+          # Trim secrets: GitHub-secrets behalten manchmal trailing-newlines,
+          # die beim copy-paste reingerutscht sind. tr -d '\r\n' entfernt
+          # alle CR/LF, gegen "URL using bad/illegal format" beim curl.
+          FTP_HOST=$(printf '%s' "$FTP_HOST" | tr -d '\r\n')
+          FTP_USER=$(printf '%s' "$FTP_USER" | tr -d '\r\n')
+          FTP_PASS=$(printf '%s' "$FTP_PASS" | tr -d '\r\n')
+          FTP_PATH=$(printf '%s' "$FTP_PATH" | tr -d '\r\n')
           if [ -z "$FTP_HOST" ] || [ -z "$FTP_USER" ] || [ -z "$FTP_PASS" ] || [ -z "$FTP_PATH" ]; then
             echo "FEHLER: FTP-Secrets fuer target '${{ inputs.target }}' nicht gesetzt." >&2
             exit 1
