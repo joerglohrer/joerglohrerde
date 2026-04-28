@@ -13,12 +13,31 @@
   const snapshot = $derived(data.snapshot)
 
   const siteUrl = '__SITE_URL__'
+
+  // Site-default-OG-bild aus app/static. Dimensionen sind hartcodiert,
+  // weil das asset stabil ist (siehe spec §Algorithmus-Schritt 8).
+  const DEFAULT_OG_IMAGE = `${siteUrl}/joerg-profil-2024.webp`
+  const DEFAULT_OG_IMAGE_WIDTH = 512
+  const DEFAULT_OG_IMAGE_HEIGHT = 512
+
   const canonical = $derived(`${siteUrl}/${snapshot?.slug ?? dtag}/`)
-  const ogImage = $derived(
-    snapshot?.cover_image?.url ?? `${siteUrl}/joerg-profil-2024.webp`,
-  )
+  const ogImage = $derived(snapshot?.cover_image?.url ?? DEFAULT_OG_IMAGE)
   const ogImageAlt = $derived(
     snapshot?.cover_image?.alt ?? snapshot?.title ?? 'Jörg Lohrer',
+  )
+  const ogImageWidth = $derived(
+    snapshot?.cover_image?.width ?? (snapshot?.cover_image ? undefined : DEFAULT_OG_IMAGE_WIDTH),
+  )
+  const ogImageHeight = $derived(
+    snapshot?.cover_image?.height ?? (snapshot?.cover_image ? undefined : DEFAULT_OG_IMAGE_HEIGHT),
+  )
+  // x-default zeigt auf die DE-variante, weil der autor DE-first arbeitet.
+  // Bei EN-posts: DE-slug aus translations[] suchen; sonst (DE-post)
+  // bleibt x-default = canonical.
+  const xDefaultHref = $derived(
+    snapshot?.lang === 'en'
+      ? `${siteUrl}/${snapshot.translations.find((tr) => tr.lang === 'de')?.slug ?? snapshot.slug}/`
+      : canonical,
   )
   const bodyHtmlPrerendered = $derived(
     snapshot ? renderMarkdown(snapshot.content_markdown) : '',
@@ -59,11 +78,11 @@
     <meta property="og:locale" content={snapshot.lang === 'de' ? 'de_DE' : 'en_US'} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:alt" content={ogImageAlt} />
-    {#if snapshot.cover_image?.width}
-      <meta property="og:image:width" content={String(snapshot.cover_image.width)} />
+    {#if ogImageWidth}
+      <meta property="og:image:width" content={String(ogImageWidth)} />
     {/if}
-    {#if snapshot.cover_image?.height}
-      <meta property="og:image:height" content={String(snapshot.cover_image.height)} />
+    {#if ogImageHeight}
+      <meta property="og:image:height" content={String(ogImageHeight)} />
     {/if}
     <meta property="article:published_time" content={new Date(snapshot.published_at * 1000).toISOString()} />
     <meta name="twitter:card" content="summary_large_image" />
@@ -73,7 +92,7 @@
     {#each snapshot.translations as alt}
       <link rel="alternate" hreflang={alt.lang} href={`${siteUrl}/${alt.slug}/`} />
     {/each}
-    <link rel="alternate" hreflang="x-default" href={canonical} />
+    <link rel="alternate" hreflang="x-default" href={xDefaultHref} />
     {@html `<script type="application/ld+json">${jsonLd.replace(/<\/script>/gi, '<\\/script>')}</script>`}
   {/if}
 </svelte:head>
