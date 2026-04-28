@@ -20,3 +20,9 @@ Deno.test('loadConfig wirft bei ungueltigem hex', () => {
   Deno.env.set('BOOTSTRAP_RELAY', 'wss://relay.primal.net')
   assertThrows(() => loadConfig(), Error, '64 hex')
 })
+
+Deno.test('loadConfig wirft bei ungueltigem BOOTSTRAP_RELAY (kein wss://)', () => {
+  Deno.env.set('AUTHOR_PUBKEY_HEX', '4fa5d1c413e2b45e10d40bf3562ab701a5331206e359c90baae0e99bfd6c6e41')
+  Deno.env.set('BOOTSTRAP_RELAY', 'http://relay.example.com')
+  assertThrows(() => loadConfig(), Error, 'wss://')
+})

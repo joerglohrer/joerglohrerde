@@ -11,5 +11,8 @@ export function loadConfig(): Config {
     throw new Error('AUTHOR_PUBKEY_HEX muss 64 hex chars sein')
   }
   if (!bootstrapRelay) throw new Error('BOOTSTRAP_RELAY fehlt in env')
+  if (!bootstrapRelay.startsWith('wss://') && !bootstrapRelay.startsWith('ws://')) {
+    throw new Error('BOOTSTRAP_RELAY muss eine wss:// (oder ws://) URL sein')
+  }
   return { authorPubkeyHex, bootstrapRelay }
 }
