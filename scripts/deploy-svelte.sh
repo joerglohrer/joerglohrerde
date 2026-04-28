@@ -110,6 +110,23 @@ find "$BUILD_DIR" -type f -name "*.html" -print0 | while IFS= read -r -d '' html
   sed -i '' "s|__SITE_URL__|$SITE_URL|g" "$html_file"
 done
 
+# __HTML_LANG__-Platzhalter pro detail-HTML aus dem snapshot-JSON ableiten:
+# /<slug>/index.html → snapshot/output/posts/<slug>.json → .lang
+# Alle anderen HTMLs (index, archiv/, impressum/, tag/) bekommen den
+# default 'de' — die SPA setzt activeLocale clientseitig nach.
+echo "Patche __HTML_LANG__ pro HTML aus snapshot/output …"
+find "$BUILD_DIR" -type f -name "index.html" -print0 | while IFS= read -r -d '' html_file; do
+  rel="${html_file#$BUILD_DIR/}"
+  slug="${rel%/index.html}"
+  lang_file="$SNAPSHOT_DIR/posts/${slug}.json"
+  if [ -f "$lang_file" ]; then
+    lang=$(grep -o '"lang": *"[a-z][a-z]"' "$lang_file" | head -1 | sed 's/.*"\([a-z][a-z]\)".*/\1/')
+  else
+    lang="de"
+  fi
+  sed -i '' "s|__HTML_LANG__|${lang:-de}|g" "$html_file"
+done
+
 echo "Ziel: $TARGET ($PUBLIC_URL)"
 echo "Lade Build von $BUILD_DIR nach ftp://$FTP_HOST$FTP_REMOTE_PATH"
 
