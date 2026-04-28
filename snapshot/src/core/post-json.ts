@@ -38,7 +38,9 @@ function tagValue(ev: SignedEvent, name: string): string | undefined {
 }
 
 function tagsAll(ev: SignedEvent, name: string): string[] {
-  return ev.tags.filter((t) => t[0] === name).map((t) => t[1])
+  return ev.tags
+    .filter((t) => t[0] === name && typeof t[1] === 'string')
+    .map((t) => t[1] as string)
 }
 
 function deriveSummary(content: string): string {

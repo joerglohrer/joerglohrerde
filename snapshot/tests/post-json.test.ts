@@ -81,3 +81,19 @@ Deno.test('buildPostJson: lang default de wenn keine l-tags', () => {
   const json = buildPostJson(ev, new Map())
   assertEquals(json.lang, 'de')
 })
+
+Deno.test('buildPostJson: malformed t-tag ohne value wird ignoriert', () => {
+  const ev: SignedEvent = {
+    id: 'event-malformed', pubkey: PUBKEY, created_at: 1700000000, kind: 30023,
+    sig: 'sig', content: 'x',
+    tags: [
+      ['d', 'malformed'],
+      ['title', 'X'],
+      ['t', 'gut'],
+      ['t'], // malformed: kein value
+      ['t', 'auch-gut'],
+    ],
+  }
+  const json = buildPostJson(ev, new Map())
+  assertEquals(json.tags, ['gut', 'auch-gut'])
+})
