@@ -1,9 +1,14 @@
 # Prerender-Snapshot für Nostr-Langform-Posts — Design
 
-**Stand:** 2026-04-21
+**Datum:** 2026-04-21
+**Status:** Entwurf
 **Scope:** SEO- und Social-Media-Tauglichkeit der Post-Detailseiten.
 Post-URLs sollen beim ersten Request echtes HTML mit OG-Metadaten liefern —
 ohne Runtime-Relay-Fetch, ohne Node-/Go-Server auf dem Hosting.
+
+Plan-Pendant unter `docs/superpowers/plans/archive/2026-04-21-prerender-snapshot.md`
+liegt unbearbeitet vor — die Umsetzung ist eingefroren bis zur Entscheidung,
+ob das Vorhaben weiterverfolgt wird.
 
 Schwester-Specs:
 - [`2026-04-15-nostr-page-design.md`](2026-04-15-nostr-page-design.md) — SPA

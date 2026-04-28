@@ -1,7 +1,7 @@
 # Konvention: Bild-Metadaten im Post-Frontmatter (Phase 1)
 
 **Datum:** 2026-04-16
-**Status:** Phase-1-Minimal — fokussiert auf sichere Attribution und `alt`-Vollständigkeit. Caption-Rendering, Reverse-Routine, License-Katalog und strikte Validierung sind explizit Phase 2.
+**Status:** Umgesetzt — Phase 1 (live seit 2026-04-18). Phase 2 (Caption-Rendering, Reverse-Routine, License-Katalog, strikte Validierung) ist offen.
 **Scope:** YAML-Frontmatter-Schema für Bildmetadaten in Markdown-Posts. Wird von der Publish-Pipeline in `kind:30023`-Events (NIP-23) plus `imeta`-Tags (NIP-92) + `license`-Tag abgebildet.
 
 ## Ziele

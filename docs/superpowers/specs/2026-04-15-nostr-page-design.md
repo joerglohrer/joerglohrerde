@@ -1,7 +1,7 @@
 # Nostr-Page auf Basis von Events — Design-Spec
 
 **Datum:** 2026-04-15
-**Status:** Entwurf, ausstehende User-Freigabe
+**Status:** Umgesetzt (live seit 2026-04-18)
 **Scope:** Ablösung der Hugo-Seite `joerg-lohrer.de` durch eine SvelteKit-SPA, die Blog-Posts live aus Nostr-Events rendert. Diese Spec beschreibt **nur die SPA und den Event-/URL-Kontrakt**. Publish-Pipeline (Markdown → Event → Relays + Assets-Upload) ist separate Spec.
 
 ---

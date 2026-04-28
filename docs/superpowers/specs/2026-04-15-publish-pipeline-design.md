@@ -1,7 +1,7 @@
 # Publish-Pipeline für Nostr-Events — Design-Spec
 
 **Datum:** 2026-04-15 (aktualisiert 2026-04-16: Blossom für alle Bilder, kein All-Inkl-rsync-Pfad mehr)
-**Status:** Entwurf, ausstehende User-Freigabe
+**Status:** Umgesetzt (live seit 2026-04-18)
 **Scope:** Toolchain, die Markdown-Posts aus `content/posts/*/index.md` in signierte Nostr-Events (`kind:30023`, NIP-23) umwandelt, zu Relays publiziert, und die zugehörigen Bilder zu Blossom hochlädt.
 
 **Designentscheidung 2026-04-16:** Alle Bilder (auch die der 18 Altposts) werden zu Blossom hochgeladen. Kein rsync-Legacy-Pfad, kein `image_source`-Flag im Frontmatter. Die SPA rendert alle Posts über denselben Code-Pfad (Event-Text → Bild-URLs aus Blossom). Repo = Source-of-Truth für Content, Pipeline = Nostr-Export-Routine.
