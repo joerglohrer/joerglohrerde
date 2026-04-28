@@ -17,3 +17,18 @@ Deno.test('writeCache + readCache: round-trip', async () => {
   const out = await readCache(path)
   assertEquals(out, state)
 })
+
+Deno.test('readCache wirft bei korruptem cache-file', async () => {
+  const dir = await Deno.makeTempDir()
+  const path = join(dir, 'cache.json')
+  await Deno.writeTextFile(path, '{"unsinn": 42}')
+  let threw = false
+  try {
+    await readCache(path)
+  } catch (err) {
+    threw = true
+    if (!(err instanceof Error)) throw err
+    if (!err.message.includes('Cache-File')) throw err
+  }
+  if (!threw) throw new Error('readCache haette werfen sollen')
+})
