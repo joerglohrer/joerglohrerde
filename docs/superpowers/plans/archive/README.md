@@ -1,9 +1,8 @@
 # Plan-Archiv
 
-Diese Pläne sind abgearbeitet (5) oder zu Eis gelegt (1). Checkboxen
-spiegeln nicht den realen Umsetzungsstand wider — sie wurden während
-der Umsetzung nicht nachgepflegt. Verbindlicher Stand ist `docs/STATUS.md`
-und die jeweilige Spec.
+Diese Pläne sind abgearbeitet oder durch einen neueren Plan abgelöst.
+Checkboxen spiegeln nicht in jedem Fall den realen Umsetzungsstand
+wider. Verbindlicher Stand ist `docs/STATUS.md` und die jeweilige Spec.
 
 | Plan | Spec | Stand |
 |---|---|---|
@@ -12,4 +11,5 @@ und die jeweilige Spec.
 | 2026-04-21-multilingual-posts-pipeline | multilingual-posts-design | umgesetzt 2026-04-21 |
 | 2026-04-21-multilingual-posts-spa | multilingual-posts-design | umgesetzt 2026-04-21 |
 | 2026-04-21-multilingual-posts-i18n | multilingual-posts-design | umgesetzt 2026-04-21 |
-| 2026-04-21-prerender-snapshot | prerender-snapshot-design | eingefroren |
+| 2026-04-21-prerender-snapshot | prerender-snapshot-design | abgelöst durch 2026-04-28-prerender-snapshot |
+| 2026-04-28-prerender-snapshot | prerender-snapshot-design | umgesetzt 2026-04-28 |
