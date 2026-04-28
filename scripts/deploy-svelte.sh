@@ -76,6 +76,18 @@ for pair in "$FTP_HOST_KEY:$FTP_HOST" "$FTP_USER_KEY:$FTP_USER" \
 done
 
 BUILD_DIR="$ROOT/app/build"
+SNAPSHOT_DIR="$ROOT/snapshot/output"
+
+echo "Ziehe Snapshot von Relays …"
+(cd "$ROOT/snapshot" && deno task snapshot) || {
+  echo "FEHLER: Snapshot fehlgeschlagen. 'cd snapshot && deno task snapshot' manuell ausführen zum Debuggen." >&2
+  exit 1
+}
+
+if [ ! -f "$SNAPSHOT_DIR/index.json" ]; then
+  echo "FEHLER: $SNAPSHOT_DIR/index.json fehlt nach snapshot." >&2
+  exit 1
+fi
 
 echo "Baue SvelteKit …"
 (cd "$ROOT/app" && npm run build >/dev/null 2>&1) || {
