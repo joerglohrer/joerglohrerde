@@ -79,7 +79,17 @@ mit `../content/posts/...`. Git-Diff liefert aber repo-root-relative
 Pfade (`content/posts/...`). `changedPostDirs` normalisiert beides —
 wenn `posts=0` obwohl Änderungen vorliegen, ist das der Hotspot.
 
-### 5. Publish-Pipeline erwartet `content/posts/<lang>/<slug>/`
+### 5. Snapshot-Output muss vor `npm run build` da sein
+
+SvelteKit prerendert `[...slug]/+page.{ts,svelte}` aus
+`snapshot/output/`-JSONs (`index.json` + `posts/<slug>.json`). Lokal
+buildst du nicht direkt mit `npm run build`, sondern via
+`./scripts/deploy-svelte.sh` — das ruft vorher `deno task snapshot`
+auf. Wer `cd app && npm run build` direkt nach dem Clone macht, ohne
+vorher `cd snapshot && deno task snapshot` auszuführen, scheitert
+mit `ENOENT snapshot/output/index.json`.
+
+### 6. Publish-Pipeline erwartet `content/posts/<lang>/<slug>/`
 
 Die Zwei-Ebenen-Struktur ist Teil der Traversierung. Wer einen Post
 versehentlich in `content/posts/<slug>/` (ohne Sprach-Ordner) anlegt,
@@ -96,6 +106,9 @@ wird von der Pipeline ignoriert.
 | `app/src/routes/` | SvelteKit-Routen (Layout, Home, Archiv, Post, Impressum) |
 | `publish/src/` | Deno-Publish-Pipeline (Deno-Tasks in `publish/deno.jsonc`) |
 | `publish/tests/` | Deno-Tests für die Pipeline |
+| `snapshot/src/` | Deno-Snapshot-Tool (Relays → JSON für Prerender) |
+| `snapshot/tests/` | Deno-Tests für den Snapshot |
+| `snapshot/output/` | (gitignored) build-zeit-JSON, wird vom SvelteKit-Prerender konsumiert |
 | `docs/superpowers/specs/` | Produktdesigns, Konventionen |
 | `docs/superpowers/plans/archive/` | Umgesetzte Implementierungspläne (Geschichte) |
 | `scripts/deploy-svelte.sh` | FTPS-Deploy |
