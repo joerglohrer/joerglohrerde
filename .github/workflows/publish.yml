@@ -55,3 +55,18 @@ jobs:
           name: publish-log
           path: ./publish/logs/publish-*.json
           retention-days: 30
+
+      - name: Snapshot
+        working-directory: ./snapshot
+        env:
+          AUTHOR_PUBKEY_HEX: ${{ secrets.AUTHOR_PUBKEY_HEX }}
+          BOOTSTRAP_RELAY: ${{ secrets.BOOTSTRAP_RELAY }}
+        run: |
+          deno run --allow-env --allow-read --allow-write --allow-net src/cli.ts
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: snapshot-output
+          path: ./snapshot/output/
+          retention-days: 30
