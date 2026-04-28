@@ -1734,7 +1734,7 @@ Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>"
       <link rel="alternate" hreflang={alt.lang} href={`${siteUrl}/${alt.slug}/`} />
     {/each}
     <link rel="alternate" hreflang="x-default" href={canonical} />
-    {@html `<script type="application/ld+json">${jsonLd}</script>`}
+    <script type="application/ld+json">{jsonLd}</script>
   </svelte:head>
 {/if}
 
