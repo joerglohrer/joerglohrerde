@@ -5,10 +5,15 @@
   import { buildHablaLink } from '$lib/nostr/naddr'
   import PostView from '$lib/components/PostView.svelte'
   import LoadingOrError from '$lib/components/LoadingOrError.svelte'
+  import Reactions from '$lib/components/Reactions.svelte'
+  import ReplyList from '$lib/components/ReplyList.svelte'
+  import ReplyComposer from '$lib/components/ReplyComposer.svelte'
+  import ExternalClientLinks from '$lib/components/ExternalClientLinks.svelte'
   import { renderMarkdown } from '$lib/render/markdown'
   import { t } from '$lib/i18n'
   import { get } from 'svelte/store'
   import { onMount } from 'svelte'
+  import type { SignedEvent } from '$lib/nostr/signer'
 
   let { data } = $props()
   const dtag = $derived(data.dtag)
@@ -56,6 +61,11 @@
         if (currentDtag === dtag) loading = false
       })
   })
+
+  let optimisticReplies: NostrEvent[] = $state([])
+  function handlePublished(signed: SignedEvent) {
+    optimisticReplies = [...optimisticReplies, signed as unknown as NostrEvent]
+  }
 
   const jsonLd = $derived(
     snapshot
@@ -111,6 +121,16 @@
 {#if snapshot}
   <article class="post">
     <h1 class="post-title">{snapshot.title}</h1>
+    {#if snapshot.translations.length > 0}
+      <p class="lang-switch" role="group" aria-label="Article language">
+        <span class="icon" aria-hidden="true">📖</span>
+        <span class="btn active" aria-current="true">{snapshot.lang.toUpperCase()}</span>
+        {#each [...snapshot.translations].sort((a, b) => a.lang.localeCompare(b.lang)) as alt}
+          <span class="sep" aria-hidden="true">|</span>
+          <a class="btn" href={`/${alt.slug}/`}>{alt.lang.toUpperCase()}</a>
+        {/each}
+      </p>
+    {/if}
     {#if snapshot.cover_image}
       <p class="cover">
         <img src={snapshot.cover_image.url} alt={snapshot.cover_image.alt ?? ''} />
@@ -120,6 +140,17 @@
       <p class="summary">{snapshot.summary}</p>
     {/if}
     <div class="body">{@html bodyHtmlPrerendered}</div>
+    {#if snapshot.tags.length > 0}
+      <div class="tags">
+        {#each snapshot.tags as tag}
+          <a class="tag" href={`/tag/${encodeURIComponent(tag)}/`}>{tag}</a>
+        {/each}
+      </div>
+    {/if}
+    <Reactions dtag={snapshot.slug} />
+    <ExternalClientLinks dtag={snapshot.slug} />
+    <ReplyComposer dtag={snapshot.slug} eventId={snapshot.event_id} onPublished={handlePublished} />
+    <ReplyList dtag={snapshot.slug} optimistic={optimisticReplies} />
   </article>
 {:else}
   <LoadingOrError {loading} {error} {hablaLink} />
@@ -205,5 +236,53 @@
     padding: 0 0 0 1rem;
     margin: 1rem 0;
     color: var(--muted);
+  }
+  .lang-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.88rem;
+    color: var(--muted);
+    margin: 0.25rem 0 1rem;
+  }
+  .icon {
+    font-size: 1rem;
+    line-height: 1;
+  }
+  .btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 3px;
+    padding: 1px 7px;
+    font-size: 0.8rem;
+    font-family: inherit;
+    text-decoration: none;
+  }
+  .btn:hover:not(.active) {
+    color: var(--fg);
+  }
+  .btn.active {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .sep {
+    opacity: 0.4;
+  }
+  .tags {
+    margin-top: 1.5rem;
+  }
+  .tag {
+    display: inline-block;
+    background: var(--code-bg);
+    border-radius: 3px;
+    padding: 1px 7px;
+    margin: 0 4px 4px 0;
+    font-size: 0.85em;
+    color: var(--fg);
+    text-decoration: none;
+  }
+  .tag:hover {
+    background: var(--border);
   }
 </style>
