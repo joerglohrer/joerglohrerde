@@ -1,35 +1,16 @@
 <script lang="ts">
   import type { NostrEvent } from '$lib/nostr/loaders'
-  import { loadPost } from '$lib/nostr/loaders'
-  import { AUTHOR_PUBKEY_HEX } from '$lib/nostr/config'
-  import { buildHablaLink } from '$lib/nostr/naddr'
-  import PostView from '$lib/components/PostView.svelte'
-  import LoadingOrError from '$lib/components/LoadingOrError.svelte'
   import Reactions from '$lib/components/Reactions.svelte'
   import ReplyList from '$lib/components/ReplyList.svelte'
   import ReplyComposer from '$lib/components/ReplyComposer.svelte'
   import ExternalClientLinks from '$lib/components/ExternalClientLinks.svelte'
   import { renderMarkdown } from '$lib/render/markdown'
   import { t } from '$lib/i18n'
-  import { get } from 'svelte/store'
-  import { onMount } from 'svelte'
   import type { SignedEvent } from '$lib/nostr/signer'
 
   let { data } = $props()
   const dtag = $derived(data.dtag)
   const snapshot = $derived(data.snapshot)
-
-  let post: NostrEvent | null = $state(null)
-  let loading = $state(false)
-  let error: string | null = $state(null)
-
-  const hablaLink = $derived(
-    buildHablaLink({
-      pubkey: AUTHOR_PUBKEY_HEX,
-      kind: 30023,
-      identifier: dtag,
-    }),
-  )
 
   const siteUrl = '__SITE_URL__'
   const canonical = $derived(`${siteUrl}/${snapshot?.slug ?? dtag}/`)
@@ -42,25 +23,6 @@
   const bodyHtmlPrerendered = $derived(
     snapshot ? renderMarkdown(snapshot.content_markdown) : '',
   )
-
-  onMount(() => {
-    if (snapshot) return
-    loading = true
-    const currentDtag = dtag
-    loadPost(currentDtag)
-      .then((p) => {
-        if (currentDtag !== dtag) return
-        if (!p) error = get(t)('post.not_found', { values: { slug: currentDtag } })
-        else post = p
-      })
-      .catch((e) => {
-        if (currentDtag !== dtag) return
-        error = e instanceof Error ? e.message : get(t)('post.unknown_error')
-      })
-      .finally(() => {
-        if (currentDtag === dtag) loading = false
-      })
-  })
 
   let optimisticReplies: NostrEvent[] = $state([])
   function handlePublished(signed: SignedEvent) {
@@ -152,11 +114,6 @@
     <ReplyComposer dtag={snapshot.slug} eventId={snapshot.event_id} onPublished={handlePublished} />
     <ReplyList dtag={snapshot.slug} optimistic={optimisticReplies} />
   </article>
-{:else}
-  <LoadingOrError {loading} {error} {hablaLink} />
-  {#if post}
-    <PostView event={post} />
-  {/if}
 {/if}
 
 <style>
