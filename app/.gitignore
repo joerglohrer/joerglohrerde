@@ -23,6 +23,5 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
 # npm
-package-lock.json
 *.log
 test-results/
