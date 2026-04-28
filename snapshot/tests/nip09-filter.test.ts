@@ -28,3 +28,30 @@ Deno.test('filterDeleted ignoriert kind:5 fremder pubkeys', () => {
   const out = filterDeleted([post('alive', 'a')], [fremde], 'P')
   assertEquals(out.length, 1)
 })
+
+Deno.test('filterDeleted: re-publizierter post (post.created_at > deletion.created_at) bleibt erhalten', () => {
+  const oldDelete: SignedEvent = {
+    id: 'del', pubkey: 'P', created_at: 100, kind: 5, sig: 's', content: '',
+    tags: [['a', '30023:P:resurrected']],
+  }
+  const newPost: SignedEvent = {
+    id: 'new', pubkey: 'P', created_at: 200, kind: 30023, sig: 's', content: '',
+    tags: [['d', 'resurrected']],
+  }
+  const out = filterDeleted([newPost], [oldDelete], 'P')
+  assertEquals(out.length, 1)
+  assertEquals(out[0].id, 'new')
+})
+
+Deno.test('filterDeleted: post mit created_at <= deletion.created_at wird entfernt', () => {
+  const newDelete: SignedEvent = {
+    id: 'del', pubkey: 'P', created_at: 200, kind: 5, sig: 's', content: '',
+    tags: [['a', '30023:P:dead']],
+  }
+  const oldPost: SignedEvent = {
+    id: 'old', pubkey: 'P', created_at: 100, kind: 30023, sig: 's', content: '',
+    tags: [['d', 'dead']],
+  }
+  const out = filterDeleted([oldPost], [newDelete], 'P')
+  assertEquals(out.length, 0)
+})
