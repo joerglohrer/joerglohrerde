@@ -1,5 +1,10 @@
 # joerg-lohrer.de
 
+> **Rolle dieses Dokuments:** Außensicht — was ist das Repo, wie funktioniert
+> es grob, wo geht's weiter. Für interne Arbeit siehe
+> [`docs/STATUS.md`](docs/STATUS.md) (Logbuch) und
+> [`docs/HANDOFF.md`](docs/HANDOFF.md) (Konventionen, Workflows).
+
 Persönliche Webseite. Nach einer Transition von einer Hugo-basierten,
 statischen Seite läuft `joerg-lohrer.de` jetzt als SvelteKit-SPA, die
 Blog-Posts live aus signierten Nostr-Events (NIP-23, `kind:30023`) rendert.
@@ -45,13 +50,8 @@ Identität und Assets:
 - 🤖 **Claude-Einstieg:** [`CLAUDE.md`](CLAUDE.md) (Agent-Konventionen, Deploy-Falle, Commit-Stil)
 - 📐 **SPA-Spec:** [`docs/superpowers/specs/2026-04-15-nostr-page-design.md`](docs/superpowers/specs/2026-04-15-nostr-page-design.md)
 - 📐 **Publish-Pipeline-Spec:** [`docs/superpowers/specs/2026-04-15-publish-pipeline-design.md`](docs/superpowers/specs/2026-04-15-publish-pipeline-design.md)
-- 📐 **Bild-Metadaten-Konvention:** [`docs/superpowers/specs/2026-04-16-image-metadata-convention.md`](docs/superpowers/specs/2026-04-16-image-metadata-convention.md)
 - 📐 **Multilinguale Posts:** [`docs/superpowers/specs/2026-04-21-multilingual-posts-design.md`](docs/superpowers/specs/2026-04-21-multilingual-posts-design.md)
-- 🛠 **SvelteKit-SPA-Plan:** [`docs/superpowers/plans/2026-04-15-spa-sveltekit.md`](docs/superpowers/plans/2026-04-15-spa-sveltekit.md) (35 Tasks, erledigt)
-- 🛠 **Publish-Pipeline-Plan:** [`docs/superpowers/plans/2026-04-16-publish-pipeline.md`](docs/superpowers/plans/2026-04-16-publish-pipeline.md) (24 Tasks, erledigt)
-- 🛠 **Multilingual 1/3 — Pipeline:** [`docs/superpowers/plans/2026-04-21-multilingual-posts-pipeline.md`](docs/superpowers/plans/2026-04-21-multilingual-posts-pipeline.md) (10 Tasks, erledigt)
-- 🛠 **Multilingual 2/3 — SPA-Auflösung:** [`docs/superpowers/plans/2026-04-21-multilingual-posts-spa.md`](docs/superpowers/plans/2026-04-21-multilingual-posts-spa.md) (8 Tasks, erledigt)
-- 🛠 **Multilingual 3/3 — UI-i18n:** [`docs/superpowers/plans/2026-04-21-multilingual-posts-i18n.md`](docs/superpowers/plans/2026-04-21-multilingual-posts-i18n.md) (11 Tasks, erledigt)
+- 🗄 **Plan-Archiv:** [`docs/superpowers/plans/archive/`](docs/superpowers/plans/archive/) (alle umgesetzten Pläne als Geschichte)
 - 🤖 **Claude-Workflow-Skill:** [`.claude/skills/joerglohrerde-workflow.md`](.claude/skills/joerglohrerde-workflow.md)
 
 ## Branches

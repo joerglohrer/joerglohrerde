@@ -1,7 +1,20 @@
 # Handoff — Nächste Session
 
+> **Rolle dieses Dokuments:** Konventions-Handbuch — wie hier gearbeitet
+> wird (Posts, Übersetzungen, Deploys, Stolperfallen). Aktueller Stand
+> steht in [`STATUS.md`](STATUS.md), Außensicht in [`../README.md`](../README.md).
+
 Du (Claude, nächste Session) oder ich (Jörg, später) kommen hier zurück.
 Dieses Dokument sagt: was ist der Zustand, was wartet, wo liegen die Fäden.
+
+## Single Source of Truth
+
+Damit nichts an mehreren Stellen pflegen werden muss:
+
+- **Live-URLs, Setup-Stand, Erledigt-Chronologie** → [`STATUS.md`](STATUS.md).
+- **Frontmatter-Konventionen, Workflows, Stolperfallen** → dieses Dokument.
+- **Spec-Liste** → `docs/superpowers/specs/`. README und CLAUDE.md
+  verlinken nur die für ihre Zielgruppe relevanten.
 
 ## Zustand (Details in `STATUS.md`)
 

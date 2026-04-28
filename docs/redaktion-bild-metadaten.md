@@ -1,5 +1,7 @@
 # Redaktion: Bild-Metadaten-Durchgang
 
+**Status:** Schnappschuss vom 2026-04-18 — als Hilfsmittel für die Migrations-Sitzung erstellt, kein laufender Workflow. Bleibt als Referenz erhalten.
+
 **Zweck:** 91 Bilder in 18 Posts visuell prüfen und Alt-Texte, Lizenzen, Autor:innen-Angaben gegen das echte Bild abgleichen.
 
 **Arbeitsweise:**

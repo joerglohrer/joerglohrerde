@@ -1,5 +1,7 @@
 # GitHub-CI-Setup für die Publish-Pipeline
 
+**Status:** Aktuell genutzt; mittelfristig zu ersetzen durch self-hosted CI (siehe `HANDOFF.md` → Option D).
+
 **Kontext:** Das primäre Repo liegt in **Forgejo** (self-hosted). Für CI nutzen
 wir GitHub als **Push-Mirror-Ziel**, weil Forgejo keine Woodpecker-Integration
 hat. GitHub Actions triggert automatisch bei Push auf `main` mit Änderungen

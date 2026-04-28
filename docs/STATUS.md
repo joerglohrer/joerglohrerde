@@ -1,5 +1,8 @@
 # Projekt-Status: joerg-lohrer.de → Nostr-basierte SPA
 
+> **Rolle dieses Dokuments:** Logbuch — aktueller Stand und Erledigt-Chronologie.
+> Konventionen und Workflows stehen in [`HANDOFF.md`](HANDOFF.md).
+
 **Stand:** 2026-04-21 (Mehrsprachigkeit live)
 
 ## Kurzfassung
@@ -70,8 +73,9 @@ joerglohrerde/
 │   ├── wiki-draft-nostr-image-metadata.md
 │   ├── github-ci-setup.md
 │   └── superpowers/
-│       ├── specs/                 # SPA, Publish-Pipeline, Bild-Metadaten, Multilingual
-│       └── plans/                 # Alle Pläne erledigt (SPA, Pipeline, 3× Multilingual)
+│       ├── specs/                 # SPA, Publish-Pipeline, Bild-Metadaten, Multilingual, Prerender (Entwurf)
+│       └── plans/
+│           └── archive/           # Umgesetzte Pläne (Geschichte) + eingefrorener Prerender-Plan
 ├── .github/workflows/             # publish.yml (Forgejo→GitHub Push-Mirror-Trigger)
 ├── .claude/
 │   ├── skills/                    # Repo-spezifischer Claude-Skill

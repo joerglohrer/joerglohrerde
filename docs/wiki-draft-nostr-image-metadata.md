@@ -1,6 +1,6 @@
 # Structured Image Metadata for Markdown-Sourced Nostr Long-Form Content
 
-**Status:** Working draft — a practice convention, not (yet) a NIP.
+**Status:** Frozen 2026-04-25 — finalised draft for external publication (NIP proposal / nostrbook.dev). Until published, this in-repo copy serves as a reference and historical record. Practice convention, not (yet) a NIP.
 **Scope:** Authors who maintain Markdown long-form posts (`kind:30023`, NIP-23) in a git repository and publish them to Nostr via a build pipeline. The convention defines how image metadata (author, license, source, alt text, caption) lives in the repository, how it becomes `imeta` tags (NIP-92) in the event, and how to round-trip between the two.
 **Goal:** Zero data loss between repository and event. Human-readable in raw Markdown. Machine-readable in the published event. Safe defaults against accidental misattribution.
 

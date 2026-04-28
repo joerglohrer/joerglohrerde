@@ -1,5 +1,9 @@
 # CLAUDE.md — Einstieg für Claude-Sessions
 
+> **Rolle dieses Dokuments:** Session-Einstieg — Lese-Reihenfolge,
+> Tonfall, kritische Fallstricke. Logbuch in [`docs/STATUS.md`](docs/STATUS.md),
+> Konventionen in [`docs/HANDOFF.md`](docs/HANDOFF.md).
+
 Dieser Einstieg ist für Claude-Code-Sessions gedacht. Für den inhaltlichen
 Projektstand siehe [`docs/STATUS.md`](docs/STATUS.md) und
 [`docs/HANDOFF.md`](docs/HANDOFF.md).
@@ -93,7 +97,7 @@ wird von der Pipeline ignoriert.
 | `publish/src/` | Deno-Publish-Pipeline (Deno-Tasks in `publish/deno.jsonc`) |
 | `publish/tests/` | Deno-Tests für die Pipeline |
 | `docs/superpowers/specs/` | Produktdesigns, Konventionen |
-| `docs/superpowers/plans/` | Implementierungspläne (alle erledigt) |
+| `docs/superpowers/plans/archive/` | Umgesetzte Implementierungspläne (Geschichte) |
 | `scripts/deploy-svelte.sh` | FTPS-Deploy |
 
 ## Quick-Links
@@ -102,4 +106,5 @@ wird von der Pipeline ignoriert.
 - [Produktspezifikation Publish-Pipeline](docs/superpowers/specs/2026-04-15-publish-pipeline-design.md)
 - [Bild-Metadaten-Konvention](docs/superpowers/specs/2026-04-16-image-metadata-convention.md)
 - [Multilingual-Design](docs/superpowers/specs/2026-04-21-multilingual-posts-design.md)
+- [Prerender-Snapshot-Design](docs/superpowers/specs/2026-04-21-prerender-snapshot-design.md) (Entwurf, eingefroren)
 - [Repo-Workflow-Skill](.claude/skills/joerglohrerde-workflow.md) (ausführlicher, mit Kommandos)

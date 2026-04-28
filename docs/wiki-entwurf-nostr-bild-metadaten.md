@@ -1,6 +1,6 @@
 # Strukturierte Bild-Metadaten für Markdown-basierte Nostr-Langform-Beiträge
 
-**Status:** Arbeitsentwurf — eine Praxis-Konvention, (noch) kein NIP.
+**Status:** Eingefroren am 2026-04-25 — fertiger Entwurf für externe Veröffentlichung (NIP-Proposal / nostrbook.dev). Solange nicht publiziert, dient diese Repo-Kopie als Referenz und Geschichts-Dokument. Praxis-Konvention, (noch) kein NIP.
 **Scope:** Eine Inline-Markdown-Konvention zur Bildattribution (Urheber, Lizenz, Quelle, Bearbeitung), die in jedem Markdown-Editor direkt nutzbar ist und sich verlustfrei auf NIP-92-`imeta`-Tags in `kind:30023`-Events abbilden lässt.
 **Ziel:** Ein einheitliches, menschlich lesbares und maschinell parsbares Attributions-Format für Bilder in Nostr-Langform-Beiträgen. TULLU-BA-konform. Zero-Tool: funktioniert ohne Build-Pipeline. Zero-Loss: bidirektional konvertierbar zu `imeta`-Tags, sobald Publishing dazukommt.
 
