@@ -159,8 +159,9 @@ Neues Deno-Modul. Verzeichnis: `snapshot/` als Geschwister zu `publish/`.
      Zeichen (Whitespace normalisiert, abgeschnitten an Wortgrenze,
      Suffix `…`) extrahieren und als `summary` schreiben
    - fehlt `image` im Event → `cover_image` ist `null`; der Prerender
-     nutzt ein Site-Default-OG-Bild (definiert in `app/static/`, z.B.
-     Profilbild oder Logo-Banner, als `og:image` bei null-Cover)
+     nutzt das Site-Default-OG-Bild `app/static/joerg-profil-2024.webp`
+     als `og:image`. Dimensionen werden zur Build-Zeit aus der Datei
+     bestimmt und mit `og:image:width`/`og:image:height` ausgegeben.
    - fehlt `published_at`-Tag → `created_at` wird als
      `published_at` übernommen
 9. **JSON-Output schreiben.**
@@ -198,7 +199,6 @@ Neues Deno-Modul. Verzeichnis: `snapshot/` als Geschwister zu `publish/`.
   "lang": "de",
   "cover_image": {
     "url": "https://blossom.edufeed.org/<hash>.jpg",
-    "fallback_url": "https://blossom.primal.net/<hash>.jpg",
     "width": 1600,
     "height": 900,
     "alt": "Alt-Text",
@@ -216,13 +216,12 @@ Neues Deno-Modul. Verzeichnis: `snapshot/` als Geschwister zu `publish/`.
 
 **Semantik der `cover_image`-Felder:**
 - `url` → primäre Bild-URL, wird vom Prerender als `og:image`-Wert in
-  den HTML-Head geschrieben. Crawler sehen nur diese URL.
-- `fallback_url` → zweiter Blossom-Server mit demselben Hash (Blossom
-  ist content-addressed). Nicht Teil der OG-Tags. Nutzungsszenario:
-  Falls der Snapshot-HTML ein `<img>`-Element im Post-Body erzeugt, das
-  auf `url` zeigt, kann ein client-seitiger `onerror`-Handler bei
-  Ladefehler auf `fallback_url` umschalten. Ist das nicht gewünscht
-  (YAGNI), wird das Feld entfernt — Entscheidung in der Planungsphase.
+  den HTML-Head geschrieben. Crawler sehen nur diese URL. Blossom ist
+  content-addressed; ein Ausfall des primären Servers ist seltener und
+  rechtfertigt zum jetzigen Stand keinen zweiten URL-Slot. Falls in der
+  Praxis Bedarf entsteht (z.B. anhaltende Ausfälle), kann ein
+  `fallback_url`-Feld nachgereicht werden — dann mit konkretem Konsumenten,
+  nicht spekulativ.
 
 **Semantik von `created_at` vs. `published_at`:**
 - `published_at` → Redaktions-Zeitpunkt (menschlich), aus `published_at`-
@@ -364,7 +363,7 @@ nur die UI-Sprache (weich, umschaltbar).
 | Event-Count-Drop > 20 % mit korrespondierenden `kind:5` | Check übersprungen, fährt fort |
 | Blossom-Cover nicht erreichbar | Warnung loggen, URL trotzdem schreiben |
 | Event ohne `summary` | `summary` aus Body-Anfang abgeleitet |
-| Event ohne `image` | `cover_image: null`, Prerender nutzt Site-Default-OG-Bild |
+| Event ohne `image` | `cover_image: null`, Prerender nutzt `app/static/joerg-profil-2024.webp` |
 | NIP-09-gelöschter Post | Aus Katalog weggelassen, Deploy-Sync löscht HTML |
 | Repo-Post mit allen Relay-Events via NIP-09 gelöscht | Delete gewinnt: Post wird nicht gerendert, `<slug>/index.html` wird entfernt. Crawler erhalten 404. Gewolltes Verhalten — Relays sind Ort der Wahrheit. |
 | Nostr-first-Post nicht im Repo | Wird trotzdem snapshot'd + gerendert |
@@ -399,12 +398,14 @@ an keiner Stelle einen Big-Bang bildet:
 4. **SvelteKit-Route auf Prerender umstellen, mit Laufzeit-Fallback.**
    `[...slug]/+page.ts` bekommt `prerender = true` + `entries()` + Load
    aus JSON. `+page.svelte` rendert `content_markdown` per
-   `renderMarkdown()` zur Build-Zeit. Der bisherige Runtime-Relay-Fetch
-   bleibt in diesem Schritt noch als Fallback bestehen — falls ein Slug
-   zur Build-Zeit nicht im Snapshot war (z.B. ganz frisch Nostr-first
-   publiziert), kann die SPA ihn über `adapter-static`-`fallback`
-   weiterhin rendern. Rollback: Commit revert, alte Runtime-Logik kommt
-   vollständig zurück.
+   `renderMarkdown()` zur Build-Zeit. Slugs, die zur Build-Zeit im
+   Snapshot stehen, erzeugen statische `<slug>/index.html`-Dateien;
+   Slugs außerhalb des Snapshots (z.B. ganz frisch Nostr-first publiziert)
+   landen über `adapter-static`-`fallback: 'index.html'` weiterhin auf
+   der SPA-Shell, die ihren bisherigen Runtime-Relay-Fetch ausführt.
+   Beide Pfade leben damit parallel — kein Workaround, das ist das
+   Default-Verhalten von `adapter-static` mit Fallback. Rollback:
+   Commit revert, alle Slugs gehen zurück auf reine SPA-Hydration.
 5. **Runtime-Relay-Fetch der Detail-Seite entfernen.** Wenn Schritt 4
    sich stabil zeigt, wird der Fallback-Code-Pfad abgebaut. Die
    Detail-Seite lebt dann ausschließlich vom Snapshot. Neue Nostr-first-
@@ -436,10 +437,7 @@ Damit das Tool als Vorlage für andere Nostr-Sites dient:
 - Ob der SvelteKit-Prerender deterministisch identische HTML für
   unveränderte Inputs produziert (für Diff-Builds / Cache-Invalidation).
   Vermutlich ja, nachprüfen.
-- Ob `fallback_url` im `cover_image` tatsächlich gebraucht wird. Wenn
-  der Snapshot-HTML keine `onerror`-Substitution implementiert, ist
-  das Feld toter Code. Entscheidung: mit `fallback_url` starten, bei
-  fehlender Nutzung in der SPA wieder entfernen (YAGNI).
-- Site-Default-OG-Bild: welches konkret? Vermutlich Profilbild oder
-  Logo-Banner mit Überschrift „Jörg Lohrer". Entscheidung in
-  Planungsphase unter Abgleich mit vorhandenen `static/`-Assets.
+- `ReplyList`/`ReplyComposer` müssen auf Prerender-Seiten weiterhin
+  clientseitig hydrieren und Live-Relay-Fetch ausführen. Erwartung: ja,
+  weil `<svelte:head>` statisch und Reaktions-Komponenten Client-Bound
+  sind; im Plan-Schritt 4 als Teil der Verifikation prüfen.
