@@ -1,5 +1,5 @@
 import { Marked } from 'marked';
-import DOMPurify from 'dompurify';
+import DOMPurify from 'isomorphic-dompurify';
 import hljs from 'highlight.js/lib/core';
 import javascript from 'highlight.js/lib/languages/javascript';
 import bash from 'highlight.js/lib/languages/bash';
@@ -34,20 +34,7 @@ const markedInstance = new Marked({
 	}
 });
 
-/**
- * Rendert einen Markdown-String zu sanitized HTML.
- * Einziger Export des Moduls — so bleibt Austausch der Engine lokal.
- *
- * Nur im Browser/jsdom aufrufen: DOMPurify braucht ein DOM. Die SPA
- * hat SSR global ausgeschaltet (`+layout.ts: ssr = false`), Vitest läuft
- * in jsdom — beide Szenarien sind abgedeckt. Ein Aufruf in reiner
- * Node-Umgebung würde hier laut fehlschlagen statt stumm unsicher
- * durchzulaufen.
- */
 export function renderMarkdown(md: string): string {
-	if (typeof window === 'undefined') {
-		throw new Error('renderMarkdown: DOM-Kontext erforderlich (Browser oder jsdom).');
-	}
 	const raw = markedInstance.parse(md, { async: false }) as string;
 	return DOMPurify.sanitize(raw);
 }

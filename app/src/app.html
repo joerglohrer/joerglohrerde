@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de">
+<html lang="__HTML_LANG__">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -10,6 +10,13 @@
 		<meta property="og:description" content="Jörg Lohrer – Blog (Nostr-basiert)" />
 		<link rel="canonical" href="__SITE_URL__/" />
 		<meta name="robots" content="index, follow" />
+		<!--
+			Detail-seiten (prerender=true) haengen via SvelteKit-head-injection
+			ihre eigenen og:title/description/url/canonical hinten an. Last-wins
+			gilt fuer LinkedIn/Mastodon/Browser; Facebook/Twitter nehmen
+			tendenziell first-wins — fuer perfekte OG-tags muesste die
+			homepage auch prerendered werden (separate aufgabe).
+		-->
 		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
 		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />

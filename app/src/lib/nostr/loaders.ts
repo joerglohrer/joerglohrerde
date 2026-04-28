@@ -6,7 +6,6 @@ import type { Filter as ApplesauceFilter } from 'applesauce-core/helpers/filter'
 import { pool } from './pool';
 import { readRelays } from '$lib/stores/readRelays';
 import { AUTHOR_PUBKEY_HEX, RELAY_HARD_TIMEOUT_MS } from './config';
-import type { TranslationRef } from './translations';
 
 /** Re-export als sprechenden Alias */
 export type { NostrEvent };
@@ -87,21 +86,6 @@ export async function loadPostList(
     );
     return bp - ap;
   });
-}
-
-/** Einzelpost per d-Tag */
-export async function loadPost(dtag: string): Promise<NostrEvent | null> {
-  const relays = get(readRelays);
-  const events = await collectEvents(relays, {
-    kinds: [30023],
-    authors: [AUTHOR_PUBKEY_HEX],
-    '#d': [dtag],
-    limit: 1
-  });
-  if (events.length === 0) return null;
-  return events.reduce((best, cur) =>
-    cur.created_at > best.created_at ? cur : best
-  );
 }
 
 /**
@@ -189,56 +173,4 @@ export async function loadReactions(dtag: string): Promise<ReactionSummary[]> {
   return [...counts.entries()]
     .map(([content, count]) => ({ content, count }))
     .sort((a, b) => b.count - a.count);
-}
-
-export interface TranslationInfo {
-  lang: string;
-  slug: string;
-  title: string;
-}
-
-/**
- * Pure Variante für Tests — erhält die Events via Fetcher statt Relays.
- */
-export async function resolveTranslationsFromRefs(
-  refs: TranslationRef[],
-  fetcher: (ref: TranslationRef) => Promise<NostrEvent[]>
-): Promise<TranslationInfo[]> {
-  if (refs.length === 0) return [];
-  const results = await Promise.all(refs.map(fetcher));
-  const infos: TranslationInfo[] = [];
-  for (let i = 0; i < refs.length; i++) {
-    const evs = results[i];
-    if (evs.length === 0) continue;
-    const latest = evs.reduce((best, cur) =>
-      cur.created_at > best.created_at ? cur : best
-    );
-    const lang = latest.tags.find((t) => t[0] === 'l')?.[1];
-    if (!lang) continue;
-    const slug = latest.tags.find((t) => t[0] === 'd')?.[1] ?? refs[i].dtag;
-    const title = latest.tags.find((t) => t[0] === 'title')?.[1] ?? '';
-    infos.push({ lang, slug, title });
-  }
-  return infos;
-}
-
-/**
- * Loader: findet die anderssprachigen Varianten eines Posts.
- * Liefert leere Liste, wenn keine a-Tags mit marker "translation" vorhanden.
- */
-export async function loadTranslations(
-  event: NostrEvent
-): Promise<TranslationInfo[]> {
-  const { parseTranslationRefs } = await import('./translations');
-  const refs = parseTranslationRefs(event);
-  if (refs.length === 0) return [];
-  const relays = get(readRelays);
-  return resolveTranslationsFromRefs(refs, (ref) =>
-    collectEvents(relays, {
-      kinds: [ref.kind],
-      authors: [ref.pubkey],
-      '#d': [ref.dtag],
-      limit: 1
-    })
-  );
 }

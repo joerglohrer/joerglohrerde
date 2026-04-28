@@ -1707,8 +1707,8 @@ Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>"
   )
 </script>
 
-{#if snapshot}
-  <svelte:head>
+<svelte:head>
+  {#if snapshot}
     <title>{snapshot.title} – Jörg Lohrer</title>
     <meta name="description" content={snapshot.summary} />
     <link rel="canonical" href={canonical} />
@@ -1735,8 +1735,8 @@ Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>"
     {/each}
     <link rel="alternate" hreflang="x-default" href={canonical} />
     <script type="application/ld+json">{jsonLd}</script>
-  </svelte:head>
-{/if}
+  {/if}
+</svelte:head>
 
 <nav class="breadcrumb"><a href="/">{$t('post.back_to_overview')}</a></nav>
 

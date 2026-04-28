@@ -221,6 +221,14 @@ cd publish && deno task test                           # tests
 
 ## Bekannte Stolperfallen
 
+- **Snapshot vor Build:** `app/build` braucht zur Build-Zeit
+  `snapshot/output/index.json` und `snapshot/output/posts/<slug>.json`.
+  `./scripts/deploy-svelte.sh` zieht den Snapshot automatisch vor dem
+  Build. Wer `cd app && npm run build` direkt aufruft, ohne vorher
+  `cd snapshot && deno task snapshot` auszuführen, scheitert mit
+  ENOENT auf `index.json`. Frische Posts erscheinen erst nach einem
+  Snapshot-Re-Run, weil die Detail-Route ausschließlich aus dem
+  Snapshot rendert (kein Runtime-Relay-Fetch mehr).
 - **Amber-Bunker:** bei neuer Bunker-URL müssen die zwei Permissions
   (`get_public_key`, `sign_event`) in Amber auf „Allow + Always" gesetzt
   werden, bevor Publish-Requests verarbeitet werden. Siehe

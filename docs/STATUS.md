@@ -3,7 +3,7 @@
 > **Rolle dieses Dokuments:** Logbuch — aktueller Stand und Erledigt-Chronologie.
 > Konventionen und Workflows stehen in [`HANDOFF.md`](HANDOFF.md).
 
-**Stand:** 2026-04-21 (Mehrsprachigkeit live)
+**Stand:** 2026-04-28 (Prerender-Snapshot live auf svelte-subdomain)
 
 ## Kurzfassung
 
@@ -11,6 +11,14 @@
 signierten Nostr-Events (NIP-23, `kind:30023`) auf 5 Public-Relays rendert.
 Bilder liegen content-addressed auf 2 Blossom-Servern. Die Hugo-basierte
 Altseite ist als `hugo-archive`-Branch eingefroren.
+
+**Seit 2026-04-28 prerender-snapshot:** Post-Detailseiten werden zur
+Build-Zeit prerendered, mit vollen OG-/Twitter-/JSON-LD-Tags. Ein Deno-
+Tool (`snapshot/`) liest die Events von den Relays und schreibt sie als
+JSON-Artefakte; SvelteKit baut daraus `<slug>/index.html` mit korrekten
+Meta-Tags. Crawler und Social-Media-Vorschauen sehen jetzt echte Titel,
+Beschreibungen, Cover-Bilder. Live verifiziert auf `svelte.joerg-lohrer.de`,
+prod-merge ausstehend.
 
 **Seit 2026-04-21 multilingual:** UI-Chrome (Menü, Footer, Post-Meta)
 in Deutsch und Englisch via `svelte-i18n`, mit Browser-Locale-Default,
@@ -59,9 +67,10 @@ joerglohrerde/
 ├── content/impressum.md           # Statisches Impressum (wird von SPA geladen)
 ├── app/
 │   ├── src/lib/i18n/              # svelte-i18n + activeLocale-Store + Messages
-│   ├── src/lib/nostr/             # Relay-Loader, Translations-Resolving
-│   └── src/lib/components/        # u. a. LanguageSwitcher, LanguageAvailability
+│   ├── src/lib/nostr/             # Relay-Loader (Listen, Replies, Reactions, Profile)
+│   └── src/lib/components/        # u. a. LanguageSwitcher, Reactions, ReplyComposer
 ├── publish/                       # Deno-Publish-Pipeline (Blossom + Nostr)
+├── snapshot/                      # Deno-Snapshot-Tool (Relays → JSON für Prerender)
 ├── preview/spa-mini/              # Vanilla-HTML-Mini-Spike (historisch)
 ├── scripts/
 │   └── deploy-svelte.sh           # FTPS-Deploy, Targets: svelte/staging/prod
@@ -73,9 +82,9 @@ joerglohrerde/
 │   ├── wiki-draft-nostr-image-metadata.md
 │   ├── github-ci-setup.md
 │   └── superpowers/
-│       ├── specs/                 # SPA, Publish-Pipeline, Bild-Metadaten, Multilingual, Prerender (Entwurf)
+│       ├── specs/                 # SPA, Publish-Pipeline, Bild-Metadaten, Multilingual, Prerender, Docs-Cleanup
 │       └── plans/
-│           └── archive/           # Umgesetzte Pläne (Geschichte) + eingefrorener Prerender-Plan
+│           └── archive/           # Umgesetzte Pläne (Geschichte) + Prerender-Plan (durch 2026-04-28 ersetzt)
 ├── .github/workflows/             # publish.yml (Forgejo→GitHub Push-Mirror-Trigger)
 ├── .claude/
 │   ├── skills/                    # Repo-spezifischer Claude-Skill
@@ -117,6 +126,20 @@ Nach Priorität:
 
 ## Erledigt (chronologisch seit 2026-04-15)
 
+- ✅ **Prerender-Snapshot (2026-04-28)** — Post-Detailseiten werden zur
+  Build-Zeit prerendered, nicht mehr live aus Relays. Sechs Etappen:
+  - `renderMarkdown` auf `isomorphic-dompurify` (node-fähig).
+  - Neues `snapshot/`-Modul (Deno) mit 32 Tests, liest Events von
+    Relays und schreibt JSON-Artefakte (NIP-09-aware, Plausibilitäts-
+    Checks, Cover-Probe, Cache mit akkumulierten deletedCoords).
+  - GitHub-Action zieht Snapshot nach jedem Publish als Artifact.
+  - SvelteKit-Detail-Route auf `prerender=true` mit `<svelte:head>` für
+    OG/Twitter/JSON-LD/hreflang. `<html lang>` + `og:image:width/height`
+    pro Post korrekt gesetzt; `x-default` zeigt auf DE-Slug.
+  - Runtime-Relay-Fetch der Detail-Route entfernt.
+  - Deploy-Skript ruft Snapshot vor SvelteKit-Build auf.
+  - Toten Code aus Pre-Prerender-Ära entfernt (PostView, LanguageAvailability,
+    loadPost, loadTranslations, translations.ts).
 - ✅ Content-Migration: alle 18 Posts haben strukturierte `images:`-Liste
   im Frontmatter (91 Bilder, mit Alt-Text, Lizenz, Autor:innen, ggf.
   Caption und Modifications).

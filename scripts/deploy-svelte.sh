@@ -76,6 +76,18 @@ for pair in "$FTP_HOST_KEY:$FTP_HOST" "$FTP_USER_KEY:$FTP_USER" \
 done
 
 BUILD_DIR="$ROOT/app/build"
+SNAPSHOT_DIR="$ROOT/snapshot/output"
+
+echo "Ziehe Snapshot von Relays …"
+(cd "$ROOT/snapshot" && deno task snapshot) || {
+  echo "FEHLER: Snapshot fehlgeschlagen. 'cd snapshot && deno task snapshot' manuell ausführen zum Debuggen." >&2
+  exit 1
+}
+
+if [ ! -f "$SNAPSHOT_DIR/index.json" ]; then
+  echo "FEHLER: $SNAPSHOT_DIR/index.json fehlt nach snapshot." >&2
+  exit 1
+fi
 
 echo "Baue SvelteKit …"
 (cd "$ROOT/app" && npm run build >/dev/null 2>&1) || {
@@ -96,6 +108,23 @@ echo "Patche __SITE_URL__ → $SITE_URL in HTML-Dateien …"
 find "$BUILD_DIR" -type f -name "*.html" -print0 | while IFS= read -r -d '' html_file; do
   # sed -i '' für macOS-kompatibilität (bsd sed braucht leeres backup-arg)
   sed -i '' "s|__SITE_URL__|$SITE_URL|g" "$html_file"
+done
+
+# __HTML_LANG__-Platzhalter pro detail-HTML aus dem snapshot-JSON ableiten:
+# /<slug>/index.html → snapshot/output/posts/<slug>.json → .lang
+# Alle anderen HTMLs (index, archiv/, impressum/, tag/) bekommen den
+# default 'de' — die SPA setzt activeLocale clientseitig nach.
+echo "Patche __HTML_LANG__ pro HTML aus snapshot/output …"
+find "$BUILD_DIR" -type f -name "index.html" -print0 | while IFS= read -r -d '' html_file; do
+  rel="${html_file#$BUILD_DIR/}"
+  slug="${rel%/index.html}"
+  lang_file="$SNAPSHOT_DIR/posts/${slug}.json"
+  if [ -f "$lang_file" ]; then
+    lang=$(grep -o '"lang": *"[a-z][a-z]"' "$lang_file" | head -1 | sed 's/.*"\([a-z][a-z]\)".*/\1/')
+  else
+    lang="de"
+  fi
+  sed -i '' "s|__HTML_LANG__|${lang:-de}|g" "$html_file"
 done
 
 echo "Ziel: $TARGET ($PUBLIC_URL)"
