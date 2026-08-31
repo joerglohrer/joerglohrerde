@@ -1,5 +1,10 @@
 import { assertEquals } from '@std/assert'
-import { extractReadRelays, type RelayListLoader, loadReadRelays } from '../src/core/relays.ts'
+import {
+  extractReadRelays,
+  type RelayListLoader,
+  loadReadRelays,
+  normalizeRelayUrl,
+} from '../src/core/relays.ts'
 import type { SignedEvent } from '../src/core/types.ts'
 
 const KIND_10002: SignedEvent = {
@@ -26,8 +31,37 @@ Deno.test('loadReadRelays: nutzt fallback wenn kein kind:10002', async () => {
   assertEquals(relays, ['wss://fallback1', 'wss://fallback2'])
 })
 
-Deno.test('loadReadRelays: nutzt kind:10002 wenn vorhanden', async () => {
+Deno.test('loadReadRelays: kind:10002-relays stehen vorn, fallback haengt an', async () => {
   const loader: RelayListLoader = async () => KIND_10002
   const relays = await loadReadRelays('wss://bootstrap', 'P', loader, ['wss://fallback'])
-  assertEquals(relays, ['wss://relay.damus.io', 'wss://nos.lol'])
+  assertEquals(relays, ['wss://relay.damus.io', 'wss://nos.lol', 'wss://fallback'])
+})
+
+Deno.test('normalizeRelayUrl: trailing slash und case werden vereinheitlicht', () => {
+  assertEquals(normalizeRelayUrl('wss://NOS.lol/'), 'wss://nos.lol')
+  assertEquals(normalizeRelayUrl('wss://nos.lol'), 'wss://nos.lol')
+  assertEquals(normalizeRelayUrl('  wss://nos.lol/  '), 'wss://nos.lol')
+})
+
+Deno.test('loadReadRelays: union aus kind:10002 UND fallback', async () => {
+  // Regression fuer den 404 von protocol-anthropology: das event lag nur auf
+  // einem relay, das je nach codepfad nicht abgefragt wurde. Union statt
+  // entweder-oder.
+  const loader: RelayListLoader = async () => KIND_10002
+  const relays = await loadReadRelays('wss://bootstrap', 'P', loader, [
+    'wss://relay.primal.net',
+    'wss://nos.lol',
+  ])
+  assertEquals(relays, [
+    'wss://relay.damus.io',
+    'wss://nos.lol',
+    'wss://relay.primal.net',
+  ])
+})
+
+Deno.test('loadReadRelays: union dedupliziert ueber normalisierung', async () => {
+  const withSlash: SignedEvent = { ...KIND_10002, tags: [['r', 'wss://nos.lol/']] }
+  const loader: RelayListLoader = async () => withSlash
+  const relays = await loadReadRelays('wss://bootstrap', 'P', loader, ['wss://nos.lol'])
+  assertEquals(relays, ['wss://nos.lol'])
 })

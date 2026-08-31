@@ -1,6 +1,8 @@
 export interface CheckInput {
   relaysQueried: number
   relaysResponded: number
+  /** Relays, die mindestens ein event geliefert haben (nicht nur geantwortet). */
+  relaysWithEvents: number
   eventCount: number
   minEvents: number
   lastKnownGoodCount: number | undefined
@@ -8,12 +10,22 @@ export interface CheckInput {
   allowShrink: boolean
 }
 
+/** Untergrenze: unter zwei quellen ist der abgleich keine bestaetigung mehr. */
+export const MIN_RELAYS_WITH_EVENTS = 2
+
 export function runChecks(input: CheckInput): void {
-  const quorum = Math.ceil(input.relaysQueried * 0.6)
-  if (input.relaysResponded < quorum) {
+  // Frueher: 60% der angefragten relays mussten antworten. Zwei probleme —
+  // (1) der fetcher resolved bei timeout mit leerem array und zaehlt damit
+  // als "geantwortet", die quote misst also erreichbarkeit statt daten;
+  // (2) mit der groesseren union-liste aus loadReadRelays liefern regulaer
+  // mehrere relays 0 events (gemessen 2026-08-31: 6 von 11), was die quote
+  // ohne echten fehler reissen wuerde. Stattdessen absolute untergrenze an
+  // relays, die wirklich events geliefert haben.
+  if (input.relaysWithEvents < MIN_RELAYS_WITH_EVENTS) {
     throw new Error(
-      `Relay-Quorum nicht erreicht: ${input.relaysResponded}/${input.relaysQueried} ` +
-        `(brauche mindestens ${quorum})`,
+      `Relay-Quorum nicht erreicht: nur ${input.relaysWithEvents} relay(s) mit events ` +
+        `(von ${input.relaysResponded}/${input.relaysQueried} antwortenden, ` +
+        `brauche mindestens ${MIN_RELAYS_WITH_EVENTS})`,
     )
   }
   if (input.eventCount < input.minEvents) {

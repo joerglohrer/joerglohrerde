@@ -38,8 +38,13 @@ async function main(): Promise<number> {
   const fetched = await fetchEvents(readRelays, cfg.authorPubkeyHex)
   console.log(
     `snapshot: ${fetched.responded.length}/${fetched.queried.length} relays geantwortet, ` +
+      `${fetched.withEvents.length} davon mit events, ` +
       `${fetched.events.length} events roh`,
   )
+  const silent = fetched.queried.filter((r) => !fetched.withEvents.includes(r))
+  if (silent.length > 0) {
+    console.log(`snapshot: ohne events = ${silent.join(', ')}`)
+  }
 
   const posts: SignedEvent[] = []
   const deletions: SignedEvent[] = []
@@ -59,6 +64,7 @@ async function main(): Promise<number> {
   runChecks({
     relaysQueried: fetched.queried.length,
     relaysResponded: fetched.responded.length,
+    relaysWithEvents: fetched.withEvents.length,
     eventCount: filtered.length,
     minEvents,
     lastKnownGoodCount: cache?.lastKnownGoodCount,

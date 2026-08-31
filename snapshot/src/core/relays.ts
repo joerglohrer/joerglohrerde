@@ -13,7 +13,22 @@ export const FALLBACK_READ_RELAYS = [
   'wss://relay.primal.net',
   'wss://relay.tchncs.de',
   'wss://relay.edufeed.org',
+  // Host-varianten aus der echten NIP-65-liste des autors: 'primal.net' und
+  // 'relay-rpi.edufeed.org' sind ANDERE hosts als 'relay.primal.net' und
+  // 'relay.edufeed.org', keine schreibweisen. Beide abfragen, sonst haengt
+  // es vom codepfad ab, welche haelfte der posts gefunden wird.
+  'wss://primal.net',
+  'wss://relay-rpi.edufeed.org',
 ]
+
+/**
+ * Vereinheitlicht relay-URLs fuer den set-vergleich: trailing slash weg,
+ * lowercase, umgebende whitespaces weg. Ohne das zaehlen 'wss://nos.lol/'
+ * und 'wss://nos.lol' als zwei relays und werden doppelt abgefragt.
+ */
+export function normalizeRelayUrl(url: string): string {
+  return url.trim().toLowerCase().replace(/\/+$/, '')
+}
 
 export function extractReadRelays(kind10002: SignedEvent): string[] {
   const out: string[] = []
@@ -39,6 +54,17 @@ export const defaultRelayListLoader: RelayListLoader = async (bootstrap, pubkey)
   }
 }
 
+/**
+ * Liefert die VEREINIGUNGSMENGE aus NIP-65-liste und fallback, normalisiert
+ * und dedupliziert, NIP-65-eintraege zuerst.
+ *
+ * Frueher war das ein entweder-oder: NIP-65 wenn vorhanden, sonst fallback.
+ * Das hat den 404 von 'protocol-anthropology' erzeugt — das event lag nur
+ * auf relay.primal.net, waehrend nos.lol und relay.tchncs.de die uebrigen
+ * 27 posts hielten und primal die nicht lieferte. Je nachdem, welche liste
+ * griff, fehlte entweder der neue post oder fast alle alten. Union statt
+ * oder: ein einzelnes relay, das nur ein event kennt, reicht jetzt aus.
+ */
 export async function loadReadRelays(
   bootstrapRelay: string,
   authorPubkey: string,
@@ -46,15 +72,29 @@ export async function loadReadRelays(
   fallback: string[] = FALLBACK_READ_RELAYS,
 ): Promise<string[]> {
   const ev = await loader(bootstrapRelay, authorPubkey)
-  if (!ev) return fallback
-  const list = extractReadRelays(ev)
-  return list.length > 0 ? list : fallback
+  const fromList = ev ? extractReadRelays(ev) : []
+  const seen = new Set<string>()
+  const out: string[] = []
+  for (const url of [...fromList, ...fallback]) {
+    const normalized = normalizeRelayUrl(url)
+    if (!normalized || seen.has(normalized)) continue
+    seen.add(normalized)
+    out.push(normalized)
+  }
+  return out
 }
 
 export interface FetchEventsResult {
   events: SignedEvent[]
   responded: string[]
   queried: string[]
+  /**
+   * Relays, die tatsaechlich mindestens ein event geliefert haben.
+   * Getrennt von `responded`, weil der fetcher bei timeout mit leerem
+   * array resolved — "hat geantwortet" heisst also nur "hat nicht
+   * geworfen" und ist als gesundheitsmass wertlos.
+   */
+  withEvents: string[]
 }
 
 export type EventFetcher = (relay: string, pubkey: string) => Promise<SignedEvent[]>
@@ -99,6 +139,7 @@ export async function fetchEvents(
   return {
     events,
     responded: results.filter((r) => r.ok).map((r) => r.url),
+    withEvents: results.filter((r) => r.events.length > 0).map((r) => r.url),
     queried: relays,
   }
 }
