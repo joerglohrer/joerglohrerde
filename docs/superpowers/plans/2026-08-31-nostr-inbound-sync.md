@@ -1,8 +1,25 @@
 # Plan: Inbound-Sync — Nostr-native Posts im Blog und im Repo
 
-> Status: Entwurf, noch nicht umgesetzt.
+> **Stand 2026-08-31:** Phase 1 umgesetzt und gepusht (`bcd3585`), aber
+> **noch nicht deployt** — die Live-Seite läuft weiter mit dem alten
+> Snapshot. Phase 2 offen.
 > Auslöser: `protocol-anthropology` (naddr…70xst) erschien in der Übersicht,
 > lieferte unter `/protocol-anthropology/` aber 404.
+
+## Nächster Schritt
+
+GitHub → Actions → **Build + Deploy SPA** → *Run workflow* mit `target: prod`.
+Vorher die 30–90 s des Forgejo→GitHub-Mirrors abwarten, sonst baut die Action
+gegen den alten Commit.
+
+Kontrolle danach:
+
+```sh
+curl -s https://joerg-lohrer.de/protocol-anthropology/ | grep -o "<title>[^<]*</title>"
+```
+
+Erwartet: `The Theological Anthropology Built Into the Protocol – Jörg Lohrer`.
+Kommt weiterhin nur `Jörg Lohrer`, lief der Build gegen den alten Stand.
 
 ## Problem
 
@@ -45,7 +62,7 @@ Relay-Abdeckung gescheitert.
 2. Sie landen zusätzlich als `.md` im Repo — über einen PR, nicht per
    Direkt-Commit (Phase 2).
 
-## Phase 1 — Relay-Union (behebt den 404)
+## Phase 1 — Relay-Union (behebt den 404) — ERLEDIGT (`bcd3585`)
 
 ### 1.1 `loadReadRelays` auf Vereinigungsmenge umstellen
 
@@ -88,10 +105,29 @@ als `ok`. Das Quorum misst damit Erreichbarkeit, nicht Vollständigkeit.
 - Viele tote Relays + 2 mit Events → kein Fail.
 - 1 Relay mit Events → Fail.
 
-### 1.4 Verifikation
+### 1.4 Verifikation — durchgeführt
 
-`deno task snapshot` lokal; erwartet ≥ 28 Posts inklusive
-`protocol-anthropology.json` und `warum-dein-ki-gedaechtnis-luegen-muss.json`.
+`deno task snapshot` lokal:
+
+```
+snapshot: 7/7 relays geantwortet, 5 davon mit events, 146 events roh
+snapshot: ohne events = wss://relay.primal.net, wss://primal.net
+snapshot: 28 posts geschrieben
+```
+
+28 statt 27 Posts, `protocol-anthropology.json` vorhanden. `npm run build`
+erzeugt `build/protocol-anthropology/index.html` mit korrektem Titel und
+Inhalt. 36 Tests grün.
+
+Zusätzlich implementiert (nicht im Entwurf vorgesehen): `fetchEvents` liefert
+jetzt `withEvents` neben `responded`, und die CLI loggt, welche Relays stumm
+blieben. Ohne diese Trennung ließe sich das neue Quorum nicht berechnen.
+
+**Erwartung, die sich nicht bestätigt hat:** Der Entwurf nahm an, auch
+`warum-dein-ki-gedaechtnis-luegen-muss` würde erscheinen. Tut er nicht — der
+Post ist committet (`dcabc5f`), liegt aber auf keinem Relay. Die zugehörigen
+Bilder sind noch untracked, die Publish-Action dürfte deshalb nicht
+durchgelaufen sein. Das ist der Outbound-Pfad und von diesem Plan unberührt.
 
 ## Phase 2 — Rückschreibung als PR
 
@@ -192,12 +228,25 @@ verwaltet, das Repo ist Archiv.* Wer ihn aus dem Frontmatter entfernt,
 
 ## Reihenfolge
 
-Phase 1 ist eigenständig wertvoll und behebt den 404 sofort. Phase 2 baut
-darauf auf, ist aber unabhängig testbar. Empfehlung: Phase 1 umsetzen und
-deployen, den Effekt live prüfen, dann Phase 2.
+Phase 1 ist erledigt, aber erst nach dem Deploy wirksam (siehe „Nächster
+Schritt" oben). Phase 2 baut darauf auf und ist unabhängig testbar.
+Empfehlung: erst deployen und den Effekt live prüfen, dann Phase 2.
 
 ## Offene Punkte
 
+- **`lang: de` bei englischem Post.** `protocol-anthropology.json` trägt
+  `lang: de`, obwohl der Text englisch ist: Der Nostr-Editor (Ditto) setzt
+  kein `l`-Tag, und `buildPostJson` defaultet auf `de`. Wirkt sich auf
+  `<html lang>`, `og:locale` und die Sprachumschaltung aus. Gehört inhaltlich
+  zu Phase 2 (dort wird `lang` ins Frontmatter geschrieben), lässt sich aber
+  vorziehen. Zu klären: raten (Heuristik über den Text) oder ohne `l`-Tag
+  bewusst `unknown` führen — Raten kann bei zweisprachigen Posts falsch
+  liegen.
+- **Bootstrap-Relay liefert selbst keine Events.** `BOOTSTRAP_RELAY` ist
+  `wss://relay.primal.net`; im Lauf vom 2026-08-31 stand es unter „ohne
+  events", obwohl dieselbe URL in der Einzelmessung kurz zuvor das
+  gesuchte Event lieferte. Für kind:10002 reicht es, erklärt aber die
+  brüchige Abdeckung. Ein stabileres Bootstrap-Relay wäre zu erwägen.
 - **Löschungen.** Wird ein Nostr-Post per kind:5 gelöscht, verschwindet er aus
   dem Snapshot, das `.md` bleibt. Vorschlag: zunächst bewusst so lassen (Repo
   = Archiv), im PR-Body vermerken.
@@ -208,3 +257,24 @@ deployen, den Effekt live prüfen, dann Phase 2.
 - **Relay-Hygiene.** `relay.plebstr.com` steht an erster Stelle der
   NIP-65-Liste, liefert aber nichts. Unabhängig von diesem Plan wäre die
   kind:10002-Liste eine Aktualisierung wert.
+- **`deno fmt` ist im Repo nicht durchgesetzt.** 11 von 20 Dateien unter
+  `snapshot/` weichen ab, auch unberührte. Beim Arbeiten daher gezielt
+  einzelne Dateien prüfen statt `deno fmt --check` über den Baum — sonst
+  entstehen Diffs an Zeilen, die nichts mit der Änderung zu tun haben.
+
+## Messdaten (2026-08-31, für spätere Vergleiche)
+
+kind:30023-Events pro Relay, Autor `4fa5d1c4…`:
+
+| Relay | Events | `protocol-anthropology` |
+|---|---|---|
+| relay.primal.net | 1 | ja |
+| nos.lol | 27 | nein |
+| relay.tchncs.de | 27 | nein |
+| relay.damus.io | 0 | nein |
+| relay.edufeed.org | 0 | nein |
+| relay.plebstr.com | 0 | nein |
+
+NIP-65-Liste (kind:10002 vom 2026-04-24): plebstr, nos.lol, nostr.wine,
+nostr.bitcoiner.social, relay.nostr.band, nostr-pub.wellorder.net,
+offchain.pub, purplepag.es, relay.damus.io, primal.net, relay-rpi.edufeed.org.
