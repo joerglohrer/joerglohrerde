@@ -135,10 +135,26 @@ done
 echo "Ziel: $TARGET ($PUBLIC_URL)"
 echo "Lade Build von $BUILD_DIR nach ftp://$FTP_HOST$FTP_REMOTE_PATH"
 
+# Percent-encodiert jedes Pfadsegment, lässt '/' stehen. Nötig, weil Tag-Ordner
+# wie "tag/Eric Carle/" Leerzeichen und Umlaute enthalten und curl sonst mit
+# "URL using bad/illegal format" abbricht. curl dekodiert FTP-Pfade serverseitig
+# wieder, auf dem Server landet also der Originalname.
+urlencode_path() {
+  local LC_ALL=C s="$1" out="" i c
+  for ((i=0; i<${#s}; i++)); do
+    c="${s:i:1}"
+    case "$c" in
+      [a-zA-Z0-9./_~-]) out+="$c" ;;
+      *) out+=$(printf '%%%02X' "'$c") ;;
+    esac
+  done
+  printf '%s' "$out"
+}
+
 # pro Datei ein curl-Upload (zuverlässig auf macOS ohne lftp)
 find "$BUILD_DIR" -type f -print0 | while IFS= read -r -d '' local_file; do
   rel="${local_file#$BUILD_DIR/}"
-  remote="ftp://$FTP_HOST${FTP_REMOTE_PATH%/}/$rel"
+  remote="ftp://$FTP_HOST${FTP_REMOTE_PATH%/}/$(urlencode_path "$rel")"
   echo "  → $rel"
   # --tls-max 1.2: All-Inkl/Kasserver FTPS schließt bei TLS 1.3 die Data-
   # Connection mit "426 Transfer aborted" — mit 1.2 läuft es sauber durch.
