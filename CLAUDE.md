@@ -81,13 +81,21 @@ wenn `posts=0` obwohl Änderungen vorliegen, ist das der Hotspot.
 
 ### 5. Snapshot-Output muss vor `npm run build` da sein
 
-SvelteKit prerendert `[...slug]/+page.{ts,svelte}` aus
-`snapshot/output/`-JSONs (`index.json` + `posts/<slug>.json`). Lokal
-buildst du nicht direkt mit `npm run build`, sondern via
-`./scripts/deploy-svelte.sh` — das ruft vorher `deno task snapshot`
-auf. Wer `cd app && npm run build` direkt nach dem Clone macht, ohne
-vorher `cd snapshot && deno task snapshot` auszuführen, scheitert
-mit `ENOENT snapshot/output/index.json`.
+SvelteKit prerendert **alle** Seiten (Start, Archiv, Tag, Post, Impressum)
+sowie `/snapshot-data/index.json` und `/snapshot-data/posts/<slug>.json`
+aus `snapshot/output/` (siehe `app/src/lib/snapshot/read.server.ts` und
+`app/src/routes/snapshot-data/`). Markdown → HTML passiert dabei nur zur
+Build-Zeit; der Browser bekommt fertiges HTML. Lokal buildst du nicht
+direkt mit `npm run build`, sondern via `./scripts/deploy-svelte.sh` —
+das ruft vorher `deno task snapshot` auf. Wer `cd app && npm run build`
+direkt nach dem Clone macht, ohne vorher `cd snapshot && deno task snapshot`
+auszuführen, scheitert mit `ENOENT snapshot/output/index.json`.
+
+Der SPA-Fallback für unbekannte Pfade heißt `200.html` (nicht
+`index.html`, das ist die prerenderte Startseite); `.htaccess` leitet
+dorthin. Start- und Archivseite gleichen die Liste nach dem Laden einmal
+live mit den Relays ab (`app/src/lib/nostr/live.ts`), damit ein frisch
+publizierter Post auch vor dem nächsten Deploy erscheint.
 
 ### 6. Publish-Pipeline erwartet `content/posts/<lang>/<slug>/`
 
@@ -100,8 +108,9 @@ wird von der Pipeline ignoriert.
 | Pfad | Inhalt |
 |---|---|
 | `content/posts/<lang>/<slug>/index.md` | Markdown-Posts pro Sprache |
-| `app/src/lib/i18n/` | UI-Lokalisierung (svelte-i18n, activeLocale-Store) |
+| `app/src/lib/i18n/` | UI-Lokalisierung (eigener `t`-Store + JSON-Messages, activeLocale-Store) |
 | `app/src/lib/nostr/` | Relay-Loader, Translations-Resolving |
+| `app/src/lib/snapshot/` | Typen und Zugriff auf die Snapshot-JSONs (build-zeit + browser) |
 | `app/src/lib/components/` | Svelte-5-Runes-Komponenten |
 | `app/src/routes/` | SvelteKit-Routen (Layout, Home, Archiv, Post, Impressum) |
 | `publish/src/` | Deno-Publish-Pipeline (Deno-Tasks in `publish/deno.jsonc`) |

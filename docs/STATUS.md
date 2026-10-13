@@ -126,6 +126,26 @@ Nach Priorität:
 
 ## Erledigt (chronologisch seit 2026-04-15)
 
+- ✅ **Review, Performance und Styling (2026-10-13)** — Branch
+  `review-perf-style`:
+  - Alle Seiten prerendert (Start, Archiv, Tag, Impressum, Post); Snapshot
+    liefert dafür Profil (kind:0) und Listen-Metadaten in `index.json`.
+    Listen gleichen sich im Browser einmal live mit den Relays ab.
+  - Markdown → HTML nur noch zur Build-Zeit (`/snapshot-data/*.json` als
+    prerenderte Endpunkte mit `content_html`); marked, highlight.js und
+    DOMPurify sind aus dem Client-Bundle raus, svelte-i18n durch einen
+    eigenen `t`-Store ersetzt, Relay-Code (applesauce/rxjs) wird erst nach
+    der Hydration nachgeladen. Initiales JS pro Seite ≈ 110 KB statt
+    330–400 KB, Inhalt steht ohne Relay-Roundtrip.
+  - Fehler behoben: doppelter `<title>` (Browser zeigten auf Post-Seiten nur
+    „Jörg Lohrer“), doppelte og:/canonical-Tags, Relay-Timeout verwarf
+    bereits empfangene Events, Store-Subscriptions ohne Cleanup, fehlende
+    `Cache-Control`-Header, SPA-Fallback lieferte HTML statt 404 für
+    fehlende JSON/Assets.
+  - Styling dezent überarbeitet: warme Neutraltöne, Design-Tokens in
+    `app.html`, Syntax-Highlighting-Farben, Tabellen/Blockquote/Code im
+    Artikel, Datum auf der Post-Seite, eigene 404-Seite, Fokus-Ringe.
+
 - ✅ **Prerender-Snapshot (2026-04-28)** — Post-Detailseiten werden zur
   Build-Zeit prerendered, nicht mehr live aus Relays. Sechs Etappen:
   - `renderMarkdown` auf `isomorphic-dompurify` (node-fähig).

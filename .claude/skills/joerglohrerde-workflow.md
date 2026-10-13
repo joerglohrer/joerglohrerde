@@ -7,7 +7,7 @@ description: Repo-spezifischer Skill für joerglohrerde. Nutze ihn bei jedem Ses
 
 Dieses Repo ist die persönliche Webseite von Jörg Lohrer: eine dezentrale
 Nostr-basierte SvelteKit-SPA, die NIP-23-Langform-Events live von Public-
-Relays rendert. Seit 2026-04-21 mehrsprachig (DE/EN) via `svelte-i18n` +
+Relays rendert. Seit 2026-04-21 mehrsprachig (DE/EN) via eigenem i18n-Store +
 NIP-33-`a`-Tags.
 
 ## Beim Session-Start IMMER zuerst
@@ -151,10 +151,11 @@ nak req -k 30023 -a 4fa5d1c413e2b45e10d40bf3562ab701a5331206e359c90baae0e99bfd6c
    Action läuft auf GitHub (nachdem Forgejo gespiegelt hat). Push → Mirror →
    Action braucht typisch 1–2 Minuten.
 
-7. **svelte-i18n + activeLocale:** `$t('key')` in Templates, `get(t)('key')`
-   in imperativem Script-Code. `activeLocale` ist der projekteigene Store
-   (persistiert via `localStorage`), `locale` aus svelte-i18n wird
-   automatisch synchronisiert.
+7. **i18n + activeLocale:** `$t('key')` bzw. `$t('key', { name: wert })`
+   in Templates, `get(t)('key')` in imperativem Script-Code. Kein
+   svelte-i18n mehr: `app/src/lib/i18n/index.ts` ist ein `derived`-Store
+   über `activeLocale` (persistiert via `localStorage`) mit den
+   JSON-Messages in `messages/`.
 
 8. **zsh-Globbing:** Pfade mit eckigen Klammern (z. B. `app/src/routes/[...slug]/`)
    müssen in `git add` in einfachen Anführungszeichen stehen, sonst

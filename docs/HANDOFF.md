@@ -21,7 +21,7 @@ Damit nichts an mehreren Stellen pflegen werden muss:
 **Cutover + Reimport 2026-04-18, Mehrsprachigkeit live seit 2026-04-21.**
 `joerg-lohrer.de` läuft als SvelteKit-SPA, rendert 27 Nostr-Langform-Posts
 (26 DE + 1 EN) live aus 5 Relays, Bilder auf Blossom. UI-Chrome via
-`svelte-i18n` in DE/EN, Header-Switcher, Listen-Filter nach aktivem Locale,
+eigenem `t`-Store in DE/EN, Header-Switcher, Listen-Filter nach aktivem Locale,
 bidirektionale Sprach-Verlinkung der Posts via NIP-33 `a`-Tag mit Marker
 `translation`. Repo ist alleinige Quelle der Wahrheit. Pipeline-
 Subcommands `publish` + `delete` decken den kompletten Content-Lifecycle ab.
@@ -226,9 +226,17 @@ cd publish && deno task test                           # tests
   `./scripts/deploy-svelte.sh` zieht den Snapshot automatisch vor dem
   Build. Wer `cd app && npm run build` direkt aufruft, ohne vorher
   `cd snapshot && deno task snapshot` auszuführen, scheitert mit
-  ENOENT auf `index.json`. Frische Posts erscheinen erst nach einem
-  Snapshot-Re-Run, weil die Detail-Route ausschließlich aus dem
-  Snapshot rendert (kein Runtime-Relay-Fetch mehr).
+  ENOENT auf `index.json`. Seit 2026-10-13 werden auch Start-, Archiv-
+  und Tag-Seiten aus dem Snapshot prerendert (`index.json` enthält
+  dafür Profil, Summary, Cover, Tags). Detailseiten rendern
+  ausschließlich aus dem Snapshot; die Listen gleichen sich nach dem
+  Laden einmal live mit den Relays ab, ein frischer Post erscheint also
+  in den Listen sofort, als eigene Seite erst nach dem nächsten Deploy.
+- **SPA-Fallback heißt `200.html`:** `index.html` ist die prerenderte
+  Startseite. `.htaccess` schickt unbekannte Pfade auf `200.html`;
+  fehlende Dateien unter `/_app/` und `/snapshot-data/` sind echte 404s.
+- **E2E-Tests laufen mit `locale: de-DE`** (Playwright-Config), weil die
+  UI `navigator.language` folgt und die Tests deutsche Labels prüfen.
 - **Amber-Bunker:** bei neuer Bunker-URL müssen die zwei Permissions
   (`get_public_key`, `sign_event`) in Amber auf „Allow + Always" gesetzt
   werden, bevor Publish-Requests verarbeitet werden. Siehe
