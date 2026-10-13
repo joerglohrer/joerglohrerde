@@ -103,7 +103,7 @@ export const defaultEventFetcher: EventFetcher = async (relay, pubkey) => {
   const out: SignedEvent[] = []
   const r = new Relay(relay)
   return await new Promise<SignedEvent[]>((resolve) => {
-    const sub = r.request({ kinds: [30023, 5], authors: [pubkey] })
+    const sub = r.request({ kinds: [30023, 5, 0], authors: [pubkey] })
       .pipe(timeout({ first: 10_000 }))
       .subscribe({
         next: (ev) => out.push(ev as SignedEvent),
