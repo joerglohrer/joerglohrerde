@@ -3,44 +3,63 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="description" content="Jörg Lohrer – Blog (Nostr-basiert)" />
-		<meta property="og:title" content="Jörg Lohrer – Blog" />
-		<meta property="og:type" content="website" />
-		<meta property="og:url" content="__SITE_URL__/" />
-		<meta property="og:description" content="Jörg Lohrer – Blog (Nostr-basiert)" />
-		<link rel="canonical" href="__SITE_URL__/" />
-		<meta name="robots" content="index, follow" />
+		<meta name="color-scheme" content="light dark" />
+		<meta name="theme-color" content="#fbfaf8" media="(prefers-color-scheme: light)" />
+		<meta name="theme-color" content="#151412" media="(prefers-color-scheme: dark)" />
 		<!--
-			Detail-seiten (prerender=true) haengen via SvelteKit-head-injection
-			ihre eigenen og:title/description/url/canonical hinten an. Last-wins
-			gilt fuer LinkedIn/Mastodon/Browser; Facebook/Twitter nehmen
-			tendenziell first-wins — fuer perfekte OG-tags muesste die
-			homepage auch prerendered werden (separate aufgabe).
+			Titel, description, canonical und og:*-tags setzt jede route selbst
+			in <svelte:head> (alle seiten sind prerendered). Hier bewusst keine
+			defaults: browser nehmen den ERSTEN <title>, crawler mit first-wins
+			(Facebook, X) die ersten og:-tags — ein default hier wuerde die
+			route-spezifischen werte ueberdecken.
 		-->
-		<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+		<link rel="icon" href="/favicon.ico" sizes="32x32" />
 		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-		<link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
-		<link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png" />
-		<title>Jörg Lohrer</title>
 		<style>
 			:root {
-				--fg: #1f2937;
-				--muted: #6b7280;
-				--bg: #fafaf9;
-				--accent: #2563eb;
-				--code-bg: #f3f4f6;
-				--border: #e5e7eb;
+				color-scheme: light dark;
+				/* warmes papier statt neutralgrau — dezent, nicht beige */
+				--bg: #fbfaf8;
+				--surface: #f3f1ec;
+				--fg: #1f1d1a;
+				--muted: #6f6a62;
+				--border: #e5e1da;
+				--accent: #2f5fb3;
+				--on-accent: #ffffff;
+				--danger: #9f2a2a;
+				--danger-bg: #fbecec;
+				--success: #1f6b4f;
+				--code-keyword: #7a3e9d;
+				--code-string: #2e6d4a;
+				--code-number: #b15c0f;
+				--code-title: #2f5fb3;
+				--radius: 6px;
+				--radius-lg: 10px;
+				--measure: 720px;
+				--font-sans:
+					-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+					sans-serif;
+				--font-mono:
+					ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
 			}
 			@media (prefers-color-scheme: dark) {
 				:root {
-					--fg: #e5e7eb;
-					--muted: #9ca3af;
-					--bg: #18181b;
-					--accent: #60a5fa;
-					--code-bg: #27272a;
-					--border: #3f3f46;
+					--bg: #151412;
+					--surface: #1f1d1a;
+					--fg: #e9e5de;
+					--muted: #9a948b;
+					--border: #2e2b26;
+					--accent: #8fb1f5;
+					--on-accent: #0f1a33;
+					--danger: #f0a0a0;
+					--danger-bg: #3a1a1a;
+					--success: #8fd3b0;
+					--code-keyword: #c79bf0;
+					--code-string: #8fd3a8;
+					--code-number: #f0b36e;
+					--code-title: #8fb1f5;
 				}
 			}
 			* {
@@ -51,18 +70,50 @@
 				margin: 0;
 				padding: 0;
 			}
+			html {
+				-webkit-text-size-adjust: 100%;
+				scroll-padding-top: 4rem;
+			}
 			body {
-				font:
-					17px/1.55 -apple-system,
-					BlinkMacSystemFont,
-					'Segoe UI',
-					Roboto,
-					sans-serif;
+				font: 17px/1.6 var(--font-sans);
+				font-feature-settings: 'kern', 'liga';
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
 				color: var(--fg);
 				background: var(--bg);
 			}
+			h1,
+			h2,
+			h3,
+			h4 {
+				font-weight: 650;
+				text-wrap: balance;
+			}
 			a {
 				color: var(--accent);
+				text-decoration-thickness: 1px;
+				text-underline-offset: 0.16em;
+				text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
+				transition: text-decoration-color 120ms;
+			}
+			a:hover {
+				text-decoration-color: currentColor;
+			}
+			:focus-visible {
+				outline: 2px solid var(--accent);
+				outline-offset: 2px;
+				border-radius: 3px;
+			}
+			::selection {
+				background: color-mix(in srgb, var(--accent) 22%, transparent);
+			}
+			img {
+				max-width: 100%;
+			}
+			@media (prefers-reduced-motion: no-preference) {
+				html {
+					scroll-behavior: smooth;
+				}
 			}
 		</style>
 		%sveltekit.head%

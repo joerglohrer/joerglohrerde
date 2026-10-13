@@ -1,14 +1,15 @@
 import { parseArgs } from '@std/cli'
 import { join, resolve } from '@std/path'
 import { loadConfig } from './core/config.ts'
-import { loadReadRelays, fetchEvents } from './core/relays.ts'
+import { fetchEvents, loadReadRelays } from './core/relays.ts'
 import { dedupByDtag } from './core/dedup.ts'
 import { filterDeleted } from './core/nip09-filter.ts'
 import { runChecks } from './core/checks.ts'
 import { buildPostJson } from './core/post-json.ts'
 import { probeCover } from './core/cover-probe.ts'
 import { writeOutput } from './core/output.ts'
-import { readCache, writeCache, type CacheState } from './core/cache.ts'
+import { extractProfile } from './core/profile.ts'
+import { type CacheState, readCache, writeCache } from './core/cache.ts'
 import type { SignedEvent } from './core/types.ts'
 
 async function main(): Promise<number> {
@@ -28,8 +29,8 @@ async function main(): Promise<number> {
   const minEvents = args['min-events']
     ? parseInt(String(args['min-events']), 10)
     : cache
-      ? Math.max(1, cache.lastKnownGoodCount - 2)
-      : 1
+    ? Math.max(1, cache.lastKnownGoodCount - 2)
+    : 1
 
   console.log('snapshot: bootstrap relay =', cfg.bootstrapRelay)
   const readRelays = await loadReadRelays(cfg.bootstrapRelay, cfg.authorPubkeyHex)
@@ -52,14 +53,19 @@ async function main(): Promise<number> {
     if (ev.kind === 30023) posts.push(ev)
     else if (ev.kind === 5) deletions.push(ev)
   }
+  const profile = extractProfile(fetched.events, cfg.authorPubkeyHex)
+  console.log(`snapshot: profil (kind:0) ${profile ? 'gefunden' : 'NICHT gefunden'}`)
 
   const dedupedPosts = dedupByDtag(posts)
   const filtered = filterDeleted(dedupedPosts, deletions, cfg.authorPubkeyHex)
 
   const previousDeletedCoords = new Set(cache?.deletedCoords ?? [])
-  const newlyDeletedCount = deletions.flatMap((d) =>
-    d.tags.filter((t) => t[0] === 'a' && t[1] && !previousDeletedCoords.has(t[1])).map((t) => t[1])
-  ).length
+  const newlyDeletedCount =
+    deletions.flatMap((d) =>
+      d.tags.filter((t) => t[0] === 'a' && t[1] && !previousDeletedCoords.has(t[1])).map((t) =>
+        t[1]
+      )
+    ).length
 
   runChecks({
     relaysQueried: fetched.queried.length,
@@ -96,6 +102,7 @@ async function main(): Promise<number> {
     relaysQueried: fetched.queried,
     relaysResponded: fetched.responded,
     posts: postJsons,
+    profile,
   })
 
   const currentDeletedCoords = deletions.flatMap((d) =>

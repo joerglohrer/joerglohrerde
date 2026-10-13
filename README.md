@@ -30,10 +30,11 @@ Detailliert in [`docs/STATUS.md`](docs/STATUS.md).
    (content-addressed) und publiziert signierte `kind:30023`-Events via
    NIP-46-Bunker (Amber) auf 5 Relays — inkl. NIP-32 `l`-Tag (Sprache) und
    NIP-33 `a`-Tag (Verlinkung zu anderssprachigen Varianten).
-3. **SvelteKit-SPA** (`app/`) lädt diese Events zur Laufzeit und rendert
-   Post-Liste + Detailseiten. UI-Chrome via `svelte-i18n` (DE/EN), Browser-
-   Locale als Default, Listen nach aktivem Locale gefiltert. Keine
-   Server-Komponente, Static-Hosting reicht.
+3. **SvelteKit-SPA** (`app/`) prerendert alle Seiten zur Build-Zeit aus
+   einem Relay-Snapshot (`snapshot/`) und gleicht die Listen im Browser
+   einmal live mit den Relays ab; Reaktionen und Kommentare kommen live.
+   UI-Chrome in DE/EN, Browser-Locale als Default, Listen nach aktivem
+   Locale gefiltert. Keine Server-Komponente, Static-Hosting reicht.
 4. **CI**: GitHub Actions triggert die Publish-Pipeline bei Push auf `main`
    (via Forgejo→GitHub Push-Mirror).
 
@@ -67,7 +68,8 @@ Identität und Assets:
 content/posts/<lang>/<slug>/    Markdown-Posts pro Sprache (26× de, 1× en)
 content/impressum.md            Statisches Impressum (wird von SPA geladen)
 app/                            SvelteKit-SPA (Laufzeit-Renderer)
-  src/lib/i18n/                 UI-Lokalisierung (svelte-i18n + Messages)
+  src/lib/i18n/                 UI-Lokalisierung (eigener t-Store + Messages)
+  src/lib/snapshot/             Zugriff auf die Snapshot-JSONs (Build-Zeit + Browser)
   src/lib/nostr/                Relay-Loader, Translations-Resolving
 publish/                        Deno-Publish-Pipeline (Blossom + Nostr)
 preview/spa-mini/               Vanilla-HTML-Mini-Spike (historische Referenz)

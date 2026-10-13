@@ -7,8 +7,10 @@ import { FALLBACK_READ_RELAYS } from '$lib/nostr/config';
  * Initial = FALLBACK_READ_RELAYS, damit die SPA sofort abfragen kann;
  * sobald loadOutboxRelays() fertig ist, wird der Store aktualisiert.
  *
- * Singleton-Initialisierung: bootstrapReadRelays() wird genau einmal beim ersten
- * Import aufgerufen.
+ * Singleton-Initialisierung: bootstrapReadRelays() ist idempotent und wird
+ * vom ersten relay-zugriff (loaders, reply-composer) angestossen — nicht
+ * mehr vom layout, damit der relay-code nicht auf jeder seite im
+ * initialen bundle haengt.
  */
 const store = writable<string[]>([...FALLBACK_READ_RELAYS]);
 let bootstrapped = false;

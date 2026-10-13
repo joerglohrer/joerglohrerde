@@ -12,9 +12,11 @@ const config = {
 		adapter: adapter({
 			pages: 'build',
 			assets: 'build',
-			fallback: 'index.html',
+			// `/` ist selbst prerendered (build/index.html), der SPA-fallback
+			// fuer unbekannte pfade heisst deshalb 200.html (siehe .htaccess).
+			fallback: '200.html',
 			precompress: false,
-			strict: false
+			strict: true
 		}),
 		alias: {
 			$lib: 'src/lib'

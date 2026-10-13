@@ -1,46 +1,35 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { NostrEvent } from '$lib/nostr/loaders';
-	import { loadPostList } from '$lib/nostr/loaders';
+	import type { PostSummary } from '$lib/snapshot/types';
+	import { fetchLivePosts, mergePosts } from '$lib/nostr/live';
 	import PostCard from '$lib/components/PostCard.svelte';
-	import LoadingOrError from '$lib/components/LoadingOrError.svelte';
 	import { t, activeLocale } from '$lib/i18n';
-	import { get } from 'svelte/store';
 
-	let posts: NostrEvent[] = $state([]);
-	let loading = $state(true);
-	let error: string | null = $state(null);
+	let { data } = $props();
 
-	onMount(async () => {
-		try {
-			posts = await loadPostList();
-			loading = false;
-			if (posts.length === 0) {
-				error = get(t)('home.empty');
-			}
-		} catch (e) {
-			loading = false;
-			error = e instanceof Error ? e.message : get(t)('post.unknown_error');
-		}
+	let livePosts: PostSummary[] | null = $state(null);
+	const posts = $derived(livePosts ?? data.posts);
+
+	onMount(() => {
+		let cancelled = false;
+		fetchLivePosts().then((live) => {
+			if (cancelled) return;
+			const merged = mergePosts(data.posts, live);
+			if (merged) livePosts = merged;
+		});
+		return () => {
+			cancelled = true;
+		};
 	});
 
-	let currentLocale = $state('de');
-	activeLocale.subscribe((v) => (currentLocale = v));
+	const filtered = $derived(posts.filter((p) => p.lang === $activeLocale));
 
-	const filtered = $derived.by(() =>
-		posts.filter((p) => {
-			const l = p.tags.find((tag) => tag[0] === 'l')?.[1];
-			return (l ?? 'de') === currentLocale;
-		})
-	);
-
-	// Posts nach Jahr gruppieren (neueste zuerst)
-	type YearGroup = { year: number; posts: NostrEvent[] };
+	// Posts nach Jahr gruppieren (neueste zuerst; posts sind bereits sortiert)
+	type YearGroup = { year: number; posts: PostSummary[] };
 	const groupsByYear = $derived.by<YearGroup[]>(() => {
-		const byYear = new Map<number, NostrEvent[]>();
+		const byYear = new Map<number, PostSummary[]>();
 		for (const p of filtered) {
-			const ts = Number(p.tags.find((t) => t[0] === 'published_at')?.[1] ?? p.created_at);
-			const year = new Date(ts * 1000).getUTCFullYear();
+			const year = new Date(p.published_at * 1000).getUTCFullYear();
 			if (!byYear.has(year)) byYear.set(year, []);
 			byYear.get(year)!.push(p);
 		}
@@ -52,18 +41,24 @@
 
 <svelte:head>
 	<title>{$t('archive.doc_title')}</title>
+	<meta name="description" content={$t('archive.subtitle')} />
+	<link rel="canonical" href="__SITE_URL__/archiv/" />
+	<meta property="og:title" content={$t('archive.doc_title')} />
+	<meta property="og:url" content="__SITE_URL__/archiv/" />
 </svelte:head>
 
 <h1 class="title">{$t('archive.title')}</h1>
 <p class="meta">{$t('archive.subtitle')}</p>
 
-<LoadingOrError {loading} {error} />
+{#if filtered.length === 0}
+	<p class="status">{$t('home.empty')}</p>
+{/if}
 
 {#each groupsByYear as group (group.year)}
 	<section class="year-group">
 		<h2 class="year">{group.year}</h2>
-		{#each group.posts as post (post.id)}
-			<PostCard event={post} />
+		{#each group.posts as post (post.slug)}
+			<PostCard {post} />
 		{/each}
 	</section>
 {/each}
@@ -72,20 +67,29 @@
 	.title {
 		margin: 0 0 0.3rem;
 		font-size: 1.8rem;
+		letter-spacing: -0.02em;
 	}
 	.meta {
 		color: var(--muted);
 		margin: 0 0 2rem;
 		font-size: 0.95rem;
 	}
+	.status {
+		padding: 1rem;
+		border-radius: var(--radius);
+		background: var(--surface);
+		color: var(--muted);
+		text-align: center;
+	}
 	.year-group {
 		margin-bottom: 2.5rem;
 	}
 	.year {
-		font-size: 1.2rem;
+		font-size: 0.8rem;
 		font-weight: 600;
-		margin: 0 0 1rem;
-		padding-bottom: 0.3rem;
+		letter-spacing: 0.12em;
+		margin: 0 0 0.5rem;
+		padding-bottom: 0.4rem;
 		border-bottom: 1px solid var(--border);
 		color: var(--muted);
 	}

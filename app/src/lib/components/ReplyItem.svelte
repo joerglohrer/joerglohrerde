@@ -3,13 +3,15 @@
 	import type { NostrEvent, Profile } from '$lib/nostr/loaders';
 	import { getProfile } from '$lib/nostr/profileCache';
 	import { buildNjumpProfileUrl } from '$lib/nostr/naddr';
+	import { activeLocale } from '$lib/i18n';
+	import { formatDateTime } from '$lib/i18n/date';
 
 	interface Props {
 		event: NostrEvent;
 	}
 	let { event }: Props = $props();
 
-	const date = $derived(new Date(event.created_at * 1000).toLocaleString('de-DE'));
+	const date = $derived(formatDateTime(event.created_at, $activeLocale));
 	const npubPrefix = $derived(event.pubkey.slice(0, 12) + '…');
 	const profileUrl = $derived(buildNjumpProfileUrl(event.pubkey));
 
@@ -29,7 +31,7 @@
 <li class="reply">
 	<a class="header" href={profileUrl} target="_blank" rel="noopener">
 		{#if profile?.picture}
-			<img class="avatar" src={profile.picture} alt={displayName} />
+			<img class="avatar" src={profile.picture} alt="" loading="lazy" decoding="async" width="32" height="32" />
 		{:else}
 			<div class="avatar avatar-placeholder" aria-hidden="true"></div>
 		{/if}
@@ -54,12 +56,12 @@
 		margin-bottom: 0.4rem;
 		color: inherit;
 		text-decoration: none;
-		border-radius: 4px;
+		border-radius: var(--radius);
 		padding: 2px;
 		margin-left: -2px;
 	}
 	.header:hover {
-		background: var(--code-bg);
+		background: var(--surface);
 	}
 	.header:hover .name {
 		color: var(--accent);
@@ -70,7 +72,8 @@
 		height: 32px;
 		border-radius: 50%;
 		object-fit: cover;
-		background: var(--code-bg);
+		background: var(--surface);
+		border: 1px solid var(--border);
 	}
 	.avatar-placeholder {
 		display: block;

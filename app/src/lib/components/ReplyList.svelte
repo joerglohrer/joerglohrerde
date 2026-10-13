@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import type { NostrEvent } from '$lib/nostr/loaders';
 	import { loadReplies } from '$lib/nostr/loaders';
+	import { t } from '$lib/i18n';
 	import ReplyItem from './ReplyItem.svelte';
 
 	interface Props {
@@ -34,11 +35,11 @@
 </script>
 
 <section class="replies">
-	<h3>Kommentare ({merged.length})</h3>
+	<h3>{$t('post.comments')} ({merged.length})</h3>
 	{#if loading}
-		<p class="hint">Lade Kommentare …</p>
+		<p class="hint">{$t('post.comments_loading')}</p>
 	{:else if merged.length === 0}
-		<p class="hint">Noch keine Kommentare.</p>
+		<p class="hint">{$t('post.comments_none')}</p>
 	{:else}
 		<ul>
 			{#each merged as reply (reply.id)}

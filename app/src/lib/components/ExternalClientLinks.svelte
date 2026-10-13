@@ -1,26 +1,25 @@
 <script lang="ts">
-	import { externalClientLinks } from '$lib/nostr/naddr';
-	import { AUTHOR_PUBKEY_HEX } from '$lib/nostr/config';
+	import { t } from '$lib/i18n';
 
 	interface Props {
-		dtag: string;
+		/** naddr1…-Bech32 des posts (aus dem snapshot; kein nostr-tools noetig). */
+		naddr: string;
 	}
-	let { dtag }: Props = $props();
+	let { naddr }: Props = $props();
 
-	const links = $derived(
-		externalClientLinks({
-			pubkey: AUTHOR_PUBKEY_HEX,
-			kind: 30023,
-			identifier: dtag
-		})
-	);
+	// EduFeed zuerst — OER/OEP-Bildungscommunity, wichtig für Jörgs Zielgruppe.
+	const links = $derived([
+		{ label: 'EduFeed', url: `https://edufeed.org/${naddr}` },
+		{ label: 'Habla', url: `https://habla.news/a/${naddr}` },
+		{ label: 'Yakihonne', url: `https://yakihonne.com/article/${naddr}` }
+	]);
 </script>
 
 <section class="external">
-	<span class="label">In Nostr-Client öffnen (für Threads, Reactions, Teilen):</span>
+	<span class="label">{$t('post.open_in_client')}</span>
 	<ul>
-		{#each links as l}
-			<li><a href={l.url} target="_blank" rel="noopener">{l.label}</a></li>
+		{#each links as l (l.url)}
+			<li><a href={l.url} target="_blank" rel="noopener">{l.label} ↗</a></li>
 		{/each}
 	</ul>
 </section>
@@ -29,8 +28,9 @@
 	.external {
 		margin: 2rem 0 1rem;
 		padding: 0.8rem 1rem;
-		background: var(--code-bg);
-		border-radius: 4px;
+		background: var(--surface);
+		border: 1px solid var(--border);
+		border-radius: var(--radius-lg);
 		font-size: 0.9rem;
 	}
 	.label {
@@ -44,11 +44,11 @@
 		margin: 0;
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0.8rem;
+		gap: 1rem;
 	}
 	li a {
-		color: var(--accent);
 		text-decoration: none;
+		font-weight: 500;
 	}
 	li a:hover {
 		text-decoration: underline;

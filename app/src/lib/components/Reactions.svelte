@@ -27,7 +27,7 @@
 
 {#if reactions.length > 0}
 	<div class="reactions">
-		{#each reactions as r}
+		{#each reactions as r (r.content)}
 			<span class="reaction">
 				<span class="emoji">{displayChar(r.content)}</span>
 				<span class="count">{r.count}</span>
@@ -46,13 +46,15 @@
 	.reaction {
 		display: inline-flex;
 		align-items: center;
-		gap: 0.3rem;
-		padding: 0.2rem 0.6rem;
-		background: var(--code-bg);
+		gap: 0.35rem;
+		padding: 0.15rem 0.65rem;
+		border: 1px solid var(--border);
+		background: var(--surface);
 		border-radius: 999px;
 		font-size: 0.9rem;
 	}
 	.count {
 		color: var(--muted);
+		font-variant-numeric: tabular-nums;
 	}
 </style>

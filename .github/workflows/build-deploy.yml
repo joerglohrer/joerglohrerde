@@ -31,7 +31,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
           cache-dependency-path: app/package-lock.json
 
@@ -72,12 +72,6 @@ jobs:
           BOOTSTRAP_RELAY: ${{ secrets.BOOTSTRAP_RELAY }}
         run: |
           deno run --allow-env --allow-read --allow-write --allow-net src/cli.ts
-
-      - name: Snapshot-JSONs in app/static kopieren
-        run: |
-          rm -rf app/static/snapshot-data
-          mkdir -p app/static/snapshot-data
-          cp -r snapshot/output/posts app/static/snapshot-data/posts
 
       - name: Install + build SPA
         working-directory: ./app
@@ -127,9 +121,25 @@ jobs:
           fi
           # Identisch zur lokalen logik (curl --tls-max 1.2: All-Inkl
           # schliesst TLS-1.3-data-connections mit "426 Transfer aborted")
+          # Percent-encodiert jedes Pfadsegment, lässt '/' stehen. Nötig, weil Tag-Ordner
+          # wie "tag/Eric Carle/" Leerzeichen und Umlaute enthalten und curl sonst mit
+          # "URL using bad/illegal format" abbricht. curl dekodiert FTP-Pfade serverseitig
+          # wieder, auf dem Server landet also der Originalname.
+          urlencode_path() {
+            local LC_ALL=C s="$1" out="" i c
+            for ((i=0; i<${#s}; i++)); do
+              c="${s:i:1}"
+              case "$c" in
+                [a-zA-Z0-9./_~-]) out+="$c" ;;
+                *) out+=$(printf '%%%02X' "'$c") ;;
+              esac
+            done
+            printf '%s' "$out"
+          }
+
           find app/build -type f -print0 | while IFS= read -r -d '' local_file; do
             rel="${local_file#app/build/}"
-            remote="ftp://${FTP_HOST}${FTP_PATH%/}/${rel}"
+            remote="ftp://${FTP_HOST}${FTP_PATH%/}/$(urlencode_path "$rel")"
             echo "  → $rel"
             curl -sSf --ssl-reqd --tls-max 1.2 --ftp-create-dirs \
               --retry 3 --retry-delay 2 --retry-all-errors \

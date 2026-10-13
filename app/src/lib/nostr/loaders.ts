@@ -1,10 +1,10 @@
 import { get } from 'svelte/store';
-import { lastValueFrom, timeout, toArray, EMPTY, tap } from 'rxjs';
+import { lastValueFrom, timer, takeUntil, toArray, EMPTY, tap } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import type { NostrEvent } from 'applesauce-core/helpers/event';
 import type { Filter as ApplesauceFilter } from 'applesauce-core/helpers/filter';
 import { pool } from './pool';
-import { readRelays } from '$lib/stores/readRelays';
+import { readRelays, bootstrapReadRelays } from '$lib/stores/readRelays';
 import { AUTHOR_PUBKEY_HEX, RELAY_HARD_TIMEOUT_MS } from './config';
 
 /** Re-export als sprechenden Alias */
@@ -32,16 +32,23 @@ interface CollectOpts {
 /**
  * Startet eine Request-Subscription und sammelt alle gelieferten Events
  * bis EOSE (pool.request completes nach EOSE) oder Hard-Timeout.
+ *
+ * `takeUntil(timer)` statt `timeout()`: der timeout-operator wirft einen
+ * fehler und verwirft damit ALLE bereits gesammelten events, sobald ein
+ * einzelnes langsames relay die EOSE ueber das budget hinaus verzoegert.
+ * Mit takeUntil wird der stream sauber beendet und was bis dahin da ist,
+ * wird geliefert.
  */
 async function collectEvents(
   relays: string[],
   filter: Filter,
   opts: CollectOpts = {}
 ): Promise<NostrEvent[]> {
+  bootstrapReadRelays();
   const events = await lastValueFrom(
     pool.request(relays, filter).pipe(
       tap((ev: NostrEvent) => opts.onEvent?.(ev)),
-      timeout(opts.hardTimeoutMs ?? RELAY_HARD_TIMEOUT_MS),
+      takeUntil(timer(opts.hardTimeoutMs ?? RELAY_HARD_TIMEOUT_MS)),
       toArray(),
       catchError(() => EMPTY)
     ),
