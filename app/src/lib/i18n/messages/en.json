@@ -3,7 +3,8 @@
     "home": "Home",
     "archive": "Archive",
     "imprint": "Imprint",
-    "brand_aria": "Go to homepage"
+    "brand_aria": "Go to homepage",
+    "main_aria": "Main navigation"
   },
   "home": {
     "greeting": "Hi 🖖 Welcome to my blog 🤗",
@@ -16,12 +17,38 @@
     "subtitle": "All posts, grouped by year.",
     "doc_title": "Archive – Jörg Lohrer"
   },
+  "tag": {
+    "empty": "No posts tagged “{tag}”.",
+    "doc_title": "#{tag} – Jörg Lohrer"
+  },
   "post": {
     "back_to_overview": "← Back to overview",
     "untitled": "(untitled)",
     "published_on": "Published on {date}",
     "not_found": "Post \"{slug}\" not found.",
-    "unknown_error": "Unknown error"
+    "unknown_error": "Unknown error",
+    "language": "Article language",
+    "open_in_client": "Open in a Nostr client (threads, reactions, sharing):",
+    "comments": "Comments",
+    "comments_loading": "Loading comments …",
+    "comments_none": "No comments yet.",
+    "comment_placeholder": "Your comment …",
+    "comment_send": "Send comment",
+    "comment_sending": "Sending …",
+    "comment_sent": "Comment sent ({ok}/{total} relays).",
+    "comment_empty": "Empty comment – nothing to send.",
+    "comment_no_pubkey": "The Nostr extension did not return a public key.",
+    "comment_rejected": "Signature was rejected or failed.",
+    "comment_no_relay": "No relay accepted the comment.",
+    "nip07_hint": "To comment you need a Nostr extension – or reply directly in a Nostr client."
+  },
+  "status": {
+    "loading": "Loading from Nostr relays …"
+  },
+  "error": {
+    "not_found_title": "Page not found",
+    "not_found_hint": "There is nothing at this address (anymore).",
+    "generic_title": "Something went wrong"
   },
   "imprint": {
     "doc_title": "Imprint – Jörg Lohrer"

@@ -1,43 +1,26 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import type { NostrEvent } from '$lib/nostr/loaders';
-	import { loadPostsByTag } from '$lib/nostr/loaders';
 	import PostCard from '$lib/components/PostCard.svelte';
-	import LoadingOrError from '$lib/components/LoadingOrError.svelte';
+	import { t } from '$lib/i18n';
 
 	let { data } = $props();
 	const tagName = $derived(data.tagName);
-
-	let posts: NostrEvent[] = $state([]);
-	let loading = $state(true);
-	let error: string | null = $state(null);
-
-	onMount(async () => {
-		try {
-			posts = await loadPostsByTag(tagName);
-			loading = false;
-			if (posts.length === 0) {
-				error = `Keine Posts mit Tag "${tagName}" gefunden.`;
-			}
-		} catch (e) {
-			loading = false;
-			error = e instanceof Error ? e.message : 'Unbekannter Fehler';
-		}
-	});
-
-	$effect(() => {
-		document.title = `#${tagName} – Jörg Lohrer`;
-	});
 </script>
 
-<nav class="breadcrumb"><a href="/">← Zurück zur Übersicht</a></nav>
+<svelte:head>
+	<title>{$t('tag.doc_title', { tag: tagName })}</title>
+	<meta name="robots" content="noindex, follow" />
+</svelte:head>
+
+<nav class="breadcrumb"><a href="/">{$t('post.back_to_overview')}</a></nav>
 
 <h1 class="tag-title">#{tagName}</h1>
 
-<LoadingOrError {loading} {error} />
+{#if data.posts.length === 0}
+	<p class="status">{$t('tag.empty', { tag: tagName })}</p>
+{/if}
 
-{#each posts as post (post.id)}
-	<PostCard event={post} />
+{#each data.posts as post (post.slug)}
+	<PostCard {post} />
 {/each}
 
 <style>
@@ -46,7 +29,6 @@
 		margin-bottom: 1rem;
 	}
 	.breadcrumb a {
-		color: var(--accent);
 		text-decoration: none;
 	}
 	.breadcrumb a:hover {
@@ -55,5 +37,13 @@
 	.tag-title {
 		margin: 0 0 1.5rem;
 		font-size: 1.6rem;
+		letter-spacing: -0.02em;
+	}
+	.status {
+		padding: 1rem;
+		border-radius: var(--radius);
+		background: var(--surface);
+		color: var(--muted);
+		text-align: center;
 	}
 </style>

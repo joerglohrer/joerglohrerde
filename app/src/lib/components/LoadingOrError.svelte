@@ -1,40 +1,29 @@
 <script lang="ts">
+	import { t } from '$lib/i18n';
+
 	interface Props {
 		loading: boolean;
 		error: string | null;
-		hablaLink?: string;
 	}
-	let { loading, error, hablaLink }: Props = $props();
+	let { loading, error }: Props = $props();
 </script>
 
 {#if loading && !error}
-	<p class="status">Lade von Nostr-Relays …</p>
+	<p class="status">{$t('status.loading')}</p>
 {:else if error}
-	<p class="status status-error">
-		{error}
-		{#if hablaLink}
-			<br />
-			<a href={hablaLink} target="_blank" rel="noopener"> In Habla.news öffnen </a>
-		{/if}
-	</p>
+	<p class="status status-error">{error}</p>
 {/if}
 
 <style>
 	.status {
 		padding: 1rem;
-		border-radius: 4px;
-		background: var(--code-bg);
+		border-radius: var(--radius);
+		background: var(--surface);
 		color: var(--muted);
 		text-align: center;
 	}
 	.status-error {
-		background: #fee2e2;
-		color: #991b1b;
-	}
-	@media (prefers-color-scheme: dark) {
-		.status-error {
-			background: #450a0a;
-			color: #fca5a5;
-		}
+		background: var(--danger-bg);
+		color: var(--danger);
 	}
 </style>

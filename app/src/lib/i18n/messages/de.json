@@ -3,7 +3,8 @@
     "home": "Home",
     "archive": "Archiv",
     "imprint": "Impressum",
-    "brand_aria": "Zur Startseite"
+    "brand_aria": "Zur Startseite",
+    "main_aria": "Hauptnavigation"
   },
   "home": {
     "greeting": "Hi 🖖 Willkommen auf meinem Blog 🤗",
@@ -16,12 +17,38 @@
     "subtitle": "Alle Beiträge, nach Jahr gruppiert.",
     "doc_title": "Archiv – Jörg Lohrer"
   },
+  "tag": {
+    "empty": "Keine Beiträge mit dem Tag „{tag}“.",
+    "doc_title": "#{tag} – Jörg Lohrer"
+  },
   "post": {
     "back_to_overview": "← Zurück zur Übersicht",
     "untitled": "(ohne Titel)",
     "published_on": "Veröffentlicht am {date}",
     "not_found": "Post \"{slug}\" nicht gefunden.",
-    "unknown_error": "Unbekannter Fehler"
+    "unknown_error": "Unbekannter Fehler",
+    "language": "Sprache des Beitrags",
+    "open_in_client": "In Nostr-Client öffnen (für Threads, Reaktionen, Teilen):",
+    "comments": "Kommentare",
+    "comments_loading": "Lade Kommentare …",
+    "comments_none": "Noch keine Kommentare.",
+    "comment_placeholder": "Dein Kommentar …",
+    "comment_send": "Kommentar senden",
+    "comment_sending": "Sende …",
+    "comment_sent": "Kommentar gesendet ({ok}/{total} Relays).",
+    "comment_empty": "Leerer Kommentar – nichts zu senden.",
+    "comment_no_pubkey": "Die Nostr-Extension hat keinen Public Key geliefert.",
+    "comment_rejected": "Signatur wurde abgelehnt oder ist fehlgeschlagen.",
+    "comment_no_relay": "Kein Relay hat den Kommentar angenommen.",
+    "nip07_hint": "Zum Kommentieren brauchst du eine Nostr-Extension – oder du antwortest direkt in einem Nostr-Client."
+  },
+  "status": {
+    "loading": "Lade von Nostr-Relays …"
+  },
+  "error": {
+    "not_found_title": "Seite nicht gefunden",
+    "not_found_hint": "Diese Adresse gibt es hier nicht (mehr).",
+    "generic_title": "Da ist etwas schiefgelaufen"
   },
   "imprint": {
     "doc_title": "Impressum – Jörg Lohrer"

@@ -89,14 +89,10 @@ if [ ! -f "$SNAPSHOT_DIR/index.json" ]; then
   exit 1
 fi
 
-# Snapshot-JSONs ins SvelteKit-static-verzeichnis kopieren, damit sie
-# im build-output unter /snapshot-data/posts/<slug>.json gehostet sind.
-# Browser-load() macht dann einen fetch auf diesen pfad bei
-# clientseitiger navigation zwischen detail-seiten.
-echo "Kopiere snapshot/output/posts/ → app/static/snapshot-data/posts/ …"
+# Die snapshot-JSONs werden nicht mehr nach app/static kopiert: SvelteKit
+# prerendert /snapshot-data/index.json und /snapshot-data/posts/<slug>.json
+# selbst (app/src/routes/snapshot-data/), inkl. fertig gerendertem HTML.
 rm -rf "$ROOT/app/static/snapshot-data"
-mkdir -p "$ROOT/app/static/snapshot-data"
-cp -r "$SNAPSHOT_DIR/posts" "$ROOT/app/static/snapshot-data/posts"
 
 echo "Baue SvelteKit …"
 (cd "$ROOT/app" && npm run build >/dev/null 2>&1) || {

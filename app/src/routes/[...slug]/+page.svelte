@@ -1,15 +1,9 @@
 <script lang="ts">
-  import type { NostrEvent } from '$lib/nostr/loaders'
-  import Reactions from '$lib/components/Reactions.svelte'
-  import ReplyList from '$lib/components/ReplyList.svelte'
-  import ReplyComposer from '$lib/components/ReplyComposer.svelte'
-  import ExternalClientLinks from '$lib/components/ExternalClientLinks.svelte'
-  import { renderMarkdown } from '$lib/render/markdown'
-  import { t } from '$lib/i18n'
-  import type { SignedEvent } from '$lib/nostr/signer'
+  import PostInteractions from '$lib/components/PostInteractions.svelte'
+  import { t, activeLocale } from '$lib/i18n'
+  import { formatDate } from '$lib/i18n/date'
 
   let { data } = $props()
-  const dtag = $derived(data.dtag)
   const snapshot = $derived(data.snapshot)
 
   const siteUrl = '__SITE_URL__'
@@ -20,245 +14,370 @@
   const DEFAULT_OG_IMAGE_WIDTH = 512
   const DEFAULT_OG_IMAGE_HEIGHT = 512
 
-  const canonical = $derived(`${siteUrl}/${snapshot?.slug ?? dtag}/`)
-  const ogImage = $derived(snapshot?.cover_image?.url ?? DEFAULT_OG_IMAGE)
-  const ogImageAlt = $derived(
-    snapshot?.cover_image?.alt ?? snapshot?.title ?? 'Jörg Lohrer',
-  )
+  const canonical = $derived(`${siteUrl}/${snapshot.slug}/`)
+  const ogImage = $derived(snapshot.cover_image?.url ?? DEFAULT_OG_IMAGE)
+  const ogImageAlt = $derived(snapshot.cover_image?.alt ?? snapshot.title ?? 'Jörg Lohrer')
   const ogImageWidth = $derived(
-    snapshot?.cover_image?.width ?? (snapshot?.cover_image ? undefined : DEFAULT_OG_IMAGE_WIDTH),
+    snapshot.cover_image?.width ?? (snapshot.cover_image ? undefined : DEFAULT_OG_IMAGE_WIDTH),
   )
   const ogImageHeight = $derived(
-    snapshot?.cover_image?.height ?? (snapshot?.cover_image ? undefined : DEFAULT_OG_IMAGE_HEIGHT),
+    snapshot.cover_image?.height ?? (snapshot.cover_image ? undefined : DEFAULT_OG_IMAGE_HEIGHT),
   )
   // x-default zeigt auf die DE-variante, weil der autor DE-first arbeitet.
   // Bei EN-posts: DE-slug aus translations[] suchen; sonst (DE-post)
   // bleibt x-default = canonical.
   const xDefaultHref = $derived(
-    snapshot?.lang === 'en'
+    snapshot.lang === 'en'
       ? `${siteUrl}/${snapshot.translations.find((tr) => tr.lang === 'de')?.slug ?? snapshot.slug}/`
       : canonical,
   )
-  const bodyHtmlPrerendered = $derived(
-    snapshot ? renderMarkdown(snapshot.content_markdown) : '',
+  const publishedIso = $derived(new Date(snapshot.published_at * 1000).toISOString())
+  const publishedLabel = $derived(formatDate(snapshot.published_at, $activeLocale))
+  const translations = $derived(
+    [...snapshot.translations].sort((a, b) => a.lang.localeCompare(b.lang)),
   )
 
-  let optimisticReplies: NostrEvent[] = $state([])
-  function handlePublished(signed: SignedEvent) {
-    optimisticReplies = [...optimisticReplies, signed as unknown as NostrEvent]
-  }
-
   const jsonLd = $derived(
-    snapshot
-      ? JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'Article',
-          headline: snapshot.title,
-          description: snapshot.summary,
-          datePublished: new Date(snapshot.published_at * 1000).toISOString(),
-          dateModified: new Date(snapshot.created_at * 1000).toISOString(),
-          author: { '@type': 'Person', name: 'Jörg Lohrer' },
-          inLanguage: snapshot.lang,
-          image: ogImage,
-          mainEntityOfPage: canonical,
-        })
-      : '',
+    JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: snapshot.title,
+      description: snapshot.summary,
+      datePublished: publishedIso,
+      dateModified: new Date(snapshot.created_at * 1000).toISOString(),
+      author: { '@type': 'Person', name: 'Jörg Lohrer' },
+      inLanguage: snapshot.lang,
+      image: ogImage,
+      mainEntityOfPage: canonical,
+    }).replace(/<\/script>/gi, '<\\/script>'),
   )
 </script>
 
 <svelte:head>
-  {#if snapshot}
-    <title>{snapshot.title} – Jörg Lohrer</title>
-    <meta name="description" content={snapshot.summary} />
-    <link rel="canonical" href={canonical} />
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content={snapshot.title} />
-    <meta property="og:description" content={snapshot.summary} />
-    <meta property="og:url" content={canonical} />
-    <meta property="og:locale" content={snapshot.lang === 'de' ? 'de_DE' : 'en_US'} />
-    <meta property="og:image" content={ogImage} />
-    <meta property="og:image:alt" content={ogImageAlt} />
-    {#if ogImageWidth}
-      <meta property="og:image:width" content={String(ogImageWidth)} />
-    {/if}
-    {#if ogImageHeight}
-      <meta property="og:image:height" content={String(ogImageHeight)} />
-    {/if}
-    <meta property="article:published_time" content={new Date(snapshot.published_at * 1000).toISOString()} />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={snapshot.title} />
-    <meta name="twitter:description" content={snapshot.summary} />
-    <meta name="twitter:image" content={ogImage} />
-    {#each snapshot.translations as alt}
-      <link rel="alternate" hreflang={alt.lang} href={`${siteUrl}/${alt.slug}/`} />
-    {/each}
-    <link rel="alternate" hreflang="x-default" href={xDefaultHref} />
-    {@html `<script type="application/ld+json">${jsonLd.replace(/<\/script>/gi, '<\\/script>')}</script>`}
+  <title>{snapshot.title} – Jörg Lohrer</title>
+  <meta name="description" content={snapshot.summary} />
+  <link rel="canonical" href={canonical} />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content={snapshot.title} />
+  <meta property="og:description" content={snapshot.summary} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:locale" content={snapshot.lang === 'de' ? 'de_DE' : 'en_US'} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:alt" content={ogImageAlt} />
+  {#if ogImageWidth}
+    <meta property="og:image:width" content={String(ogImageWidth)} />
   {/if}
+  {#if ogImageHeight}
+    <meta property="og:image:height" content={String(ogImageHeight)} />
+  {/if}
+  <meta property="article:published_time" content={publishedIso} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={snapshot.title} />
+  <meta name="twitter:description" content={snapshot.summary} />
+  <meta name="twitter:image" content={ogImage} />
+  {#each snapshot.translations as alt (alt.slug)}
+    <link rel="alternate" hreflang={alt.lang} href={`${siteUrl}/${alt.slug}/`} />
+  {/each}
+  <link rel="alternate" hreflang="x-default" href={xDefaultHref} />
+  {@html `<script type="application/ld+json">${jsonLd}</script>`}
 </svelte:head>
 
 <nav class="breadcrumb"><a href="/">{$t('post.back_to_overview')}</a></nav>
 
-{#if snapshot}
-  <article class="post">
-    <h1 class="post-title">{snapshot.title}</h1>
-    {#if snapshot.translations.length > 0}
-      <p class="lang-switch" role="group" aria-label="Article language">
-        <span class="icon" aria-hidden="true">📖</span>
-        <span class="btn active" aria-current="true">{snapshot.lang.toUpperCase()}</span>
-        {#each [...snapshot.translations].sort((a, b) => a.lang.localeCompare(b.lang)) as alt}
-          <span class="sep" aria-hidden="true">|</span>
-          <a class="btn" href={`/${alt.slug}/`}>{alt.lang.toUpperCase()}</a>
-        {/each}
-      </p>
-    {/if}
-    {#if snapshot.cover_image}
-      <p class="cover">
-        <img src={snapshot.cover_image.url} alt={snapshot.cover_image.alt ?? ''} />
-      </p>
-    {/if}
-    {#if snapshot.summary}
-      <p class="summary">{snapshot.summary}</p>
-    {/if}
-    <div class="body">{@html bodyHtmlPrerendered}</div>
-    {#if snapshot.tags.length > 0}
-      <div class="tags">
-        {#each snapshot.tags as tag}
-          <a class="tag" href={`/tag/${encodeURIComponent(tag)}/`}>{tag}</a>
-        {/each}
-      </div>
-    {/if}
-    <Reactions dtag={snapshot.slug} />
-    <ExternalClientLinks dtag={snapshot.slug} />
-    <ReplyComposer dtag={snapshot.slug} eventId={snapshot.event_id} onPublished={handlePublished} />
-    <ReplyList dtag={snapshot.slug} optimistic={optimisticReplies} />
-  </article>
-{/if}
+<article class="post" lang={snapshot.lang}>
+  <header class="post-header">
+    <h1 class="post-title">{snapshot.title || $t('post.untitled')}</h1>
+    <p class="post-meta">
+      <time datetime={publishedIso}>{$t('post.published_on', { date: publishedLabel })}</time>
+      {#if translations.length > 0}
+        <span class="lang-switch" role="group" aria-label={$t('post.language')}>
+          <span class="btn active" aria-current="true">{snapshot.lang.toUpperCase()}</span>
+          {#each translations as alt (alt.slug)}
+            <a class="btn" href={`/${alt.slug}/`} hreflang={alt.lang} title={alt.title}>{alt.lang.toUpperCase()}</a>
+          {/each}
+        </span>
+      {/if}
+    </p>
+  </header>
+  {#if snapshot.cover_image}
+    <figure class="cover">
+      <img
+        src={snapshot.cover_image.url}
+        alt={snapshot.cover_image.alt ?? ''}
+        width={snapshot.cover_image.width}
+        height={snapshot.cover_image.height}
+        fetchpriority="high"
+        decoding="async"
+      />
+    </figure>
+  {/if}
+  {#if snapshot.summary}
+    <p class="summary">{snapshot.summary}</p>
+  {/if}
+  <div class="body">{@html snapshot.content_html}</div>
+  {#if snapshot.tags.length > 0}
+    <ul class="tags" aria-label="Tags">
+      {#each snapshot.tags as tag (tag)}
+        <li><a class="tag" href={`/tag/${encodeURIComponent(tag)}/`}>{tag}</a></li>
+      {/each}
+    </ul>
+  {/if}
+  <PostInteractions
+    dtag={snapshot.slug}
+    eventId={snapshot.event_id}
+    naddr={snapshot.naddr}
+  />
+</article>
 
 <style>
   .breadcrumb {
     font-size: 0.9rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
   }
   .breadcrumb a {
-    color: var(--accent);
+    color: var(--muted);
     text-decoration: none;
   }
   .breadcrumb a:hover {
-    text-decoration: underline;
+    color: var(--accent);
+  }
+  .post-header {
+    margin-bottom: 1.25rem;
   }
   .post-title {
-    font-size: 1.5rem;
-    line-height: 1.25;
-    margin: 0 0 0.4rem;
-    word-wrap: break-word;
+    font-size: 1.65rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.5rem;
+    overflow-wrap: anywhere;
+    text-wrap: balance;
   }
   @media (min-width: 640px) {
     .post-title {
-      font-size: 2rem;
-      line-height: 1.2;
+      font-size: 2.1rem;
     }
   }
-  .cover {
-    max-width: 480px;
-    margin: 1rem auto 1.5rem;
-  }
-  .cover img {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 4px;
-  }
-  .summary {
-    font-style: italic;
-    color: var(--muted);
-  }
-  .body :global(img) {
-    max-width: 100%;
-    height: auto;
-    border-radius: 4px;
-  }
-  .body :global(a) {
-    color: var(--accent);
-    word-break: break-word;
-  }
-  .body :global(pre) {
-    background: var(--code-bg);
-    padding: 0.8rem;
-    border-radius: 4px;
-    overflow-x: auto;
-    font-size: 0.88em;
-    max-width: 100%;
-  }
-  .body :global(code) {
-    background: var(--code-bg);
-    padding: 1px 4px;
-    border-radius: 3px;
-    font-size: 0.92em;
-    word-break: break-word;
-  }
-  .body :global(pre code) {
-    padding: 0;
-    background: none;
-    word-break: normal;
-  }
-  .body :global(hr) {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 2rem 0;
-  }
-  .body :global(blockquote) {
-    border-left: 3px solid var(--border);
-    padding: 0 0 0 1rem;
-    margin: 1rem 0;
+  .post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 1rem;
+    margin: 0;
+    font-size: 0.88rem;
     color: var(--muted);
   }
   .lang-switch {
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
-    font-size: 0.88rem;
-    color: var(--muted);
-    margin: 0.25rem 0 1rem;
-  }
-  .icon {
-    font-size: 1rem;
-    line-height: 1;
+    gap: 0.3rem;
   }
   .btn {
-    background: transparent;
     border: 1px solid var(--border);
     color: var(--muted);
-    border-radius: 3px;
-    padding: 1px 7px;
-    font-size: 0.8rem;
-    font-family: inherit;
+    border-radius: 999px;
+    padding: 0 0.55em;
+    font-size: 0.75rem;
+    line-height: 1.6;
+    letter-spacing: 0.04em;
     text-decoration: none;
   }
   .btn:hover:not(.active) {
     color: var(--fg);
+    border-color: var(--muted);
   }
   .btn.active {
     color: var(--accent);
     border-color: var(--accent);
   }
-  .sep {
-    opacity: 0.4;
+  .cover {
+    max-width: 520px;
+    margin: 1.25rem auto 1.75rem;
   }
+  .cover img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .summary {
+    font-size: 1.08rem;
+    line-height: 1.5;
+    color: var(--muted);
+    margin: 0 0 1.5rem;
+    padding-left: 1rem;
+    border-left: 3px solid var(--accent);
+    text-wrap: pretty;
+  }
+
+  /* ---- Markdown-body ----------------------------------------------- */
+  .body {
+    text-wrap: pretty;
+  }
+  .body :global(h1),
+  .body :global(h2) {
+    font-size: 1.4rem;
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+    margin: 2.2rem 0 0.7rem;
+  }
+  .body :global(h3) {
+    font-size: 1.15rem;
+    margin: 1.8rem 0 0.5rem;
+  }
+  .body :global(h4) {
+    font-size: 1rem;
+    margin: 1.5rem 0 0.4rem;
+  }
+  .body :global(p),
+  .body :global(ul),
+  .body :global(ol) {
+    margin: 0 0 1.1rem;
+  }
+  .body :global(li) {
+    margin-bottom: 0.3rem;
+  }
+  .body :global(img) {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+  }
+  .body :global(a) {
+    overflow-wrap: anywhere;
+  }
+  .body :global(pre) {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 0.9rem 1rem;
+    border-radius: var(--radius-lg);
+    overflow-x: auto;
+    font-size: 0.86em;
+    line-height: 1.5;
+    max-width: 100%;
+    margin: 0 0 1.2rem;
+  }
+  .body :global(code) {
+    font-family: var(--font-mono);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 0.05em 0.35em;
+    border-radius: 4px;
+    font-size: 0.9em;
+    overflow-wrap: anywhere;
+  }
+  .body :global(pre code) {
+    padding: 0;
+    border: 0;
+    background: none;
+    font-size: inherit;
+    overflow-wrap: normal;
+  }
+  .body :global(hr) {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2.2rem auto;
+    width: 40%;
+  }
+  .body :global(blockquote) {
+    border-left: 3px solid var(--border);
+    padding: 0.1rem 0 0.1rem 1rem;
+    margin: 1.2rem 0;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .body :global(blockquote p:last-child) {
+    margin-bottom: 0;
+  }
+  .body :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92em;
+    margin: 0 0 1.2rem;
+    display: block;
+    overflow-x: auto;
+  }
+  .body :global(th),
+  .body :global(td) {
+    text-align: left;
+    padding: 0.45rem 0.6rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .body :global(th) {
+    font-weight: 600;
+    color: var(--muted);
+    font-size: 0.85em;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .body :global(figure) {
+    margin: 1.5rem 0;
+  }
+  .body :global(figcaption) {
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 0.4rem;
+  }
+
+  /* highlight.js — dezente palette auf den design-tokens */
+  .body :global(.hljs-comment),
+  .body :global(.hljs-quote) {
+    color: var(--muted);
+    font-style: italic;
+  }
+  .body :global(.hljs-keyword),
+  .body :global(.hljs-selector-tag),
+  .body :global(.hljs-built_in),
+  .body :global(.hljs-meta) {
+    color: var(--code-keyword);
+  }
+  .body :global(.hljs-string),
+  .body :global(.hljs-attr),
+  .body :global(.hljs-template-variable),
+  .body :global(.hljs-addition) {
+    color: var(--code-string);
+  }
+  .body :global(.hljs-number),
+  .body :global(.hljs-literal),
+  .body :global(.hljs-regexp) {
+    color: var(--code-number);
+  }
+  .body :global(.hljs-title),
+  .body :global(.hljs-function),
+  .body :global(.hljs-section),
+  .body :global(.hljs-name) {
+    color: var(--code-title);
+  }
+  .body :global(.hljs-deletion) {
+    color: var(--code-number);
+    text-decoration: line-through;
+  }
+
   .tags {
-    margin-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    list-style: none;
+    padding: 0;
+    margin: 1.75rem 0 0;
   }
   .tag {
     display: inline-block;
-    background: var(--code-bg);
-    border-radius: 3px;
-    padding: 1px 7px;
-    margin: 0 4px 4px 0;
-    font-size: 0.85em;
-    color: var(--fg);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.1rem 0.7rem;
+    font-size: 0.82rem;
+    color: var(--muted);
     text-decoration: none;
+    transition:
+      color 120ms,
+      border-color 120ms;
   }
   .tag:hover {
-    background: var(--border);
+    color: var(--accent);
+    border-color: var(--accent);
   }
 </style>

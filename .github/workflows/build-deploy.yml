@@ -31,7 +31,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
           cache-dependency-path: app/package-lock.json
 
@@ -72,12 +72,6 @@ jobs:
           BOOTSTRAP_RELAY: ${{ secrets.BOOTSTRAP_RELAY }}
         run: |
           deno run --allow-env --allow-read --allow-write --allow-net src/cli.ts
-
-      - name: Snapshot-JSONs in app/static kopieren
-        run: |
-          rm -rf app/static/snapshot-data
-          mkdir -p app/static/snapshot-data
-          cp -r snapshot/output/posts app/static/snapshot-data/posts
 
       - name: Install + build SPA
         working-directory: ./app

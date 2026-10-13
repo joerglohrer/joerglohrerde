@@ -1,7 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { page } from '$app/state';
-	import { bootstrapReadRelays } from '$lib/stores/readRelays';
 	import { initI18n, t } from '$lib/i18n';
 	import LanguageSwitcher from '$lib/components/LanguageSwitcher.svelte';
 	import CcZeroBadge from '$lib/components/CcZeroBadge.svelte';
@@ -17,10 +15,6 @@
 		const normalized = path.replace(/\/$/, '') || '/';
 		return currentPath === normalized;
 	}
-
-	onMount(() => {
-		bootstrapReadRelays();
-	});
 </script>
 
 <!-- favicon-Tags liegen in src/app.html — hier nichts nötig. -->
@@ -28,10 +22,10 @@
 <header class="site-header">
 	<div class="header-inner">
 		<a href="/" class="brand" aria-label={$t('nav.brand_aria')}>Jörg Lohrer</a>
-		<nav aria-label={$t('nav.brand_aria')}>
-			<a href="/" class:active={isActive('/')}>{$t('nav.home')}</a>
-			<a href="/archiv/" class:active={isActive('/archiv/')}>{$t('nav.archive')}</a>
-			<a href="/impressum/" class:active={isActive('/impressum/')}>{$t('nav.imprint')}</a>
+		<nav aria-label={$t('nav.main_aria')}>
+			<a href="/" class:active={isActive('/')} aria-current={isActive('/') ? 'page' : undefined}>{$t('nav.home')}</a>
+			<a href="/archiv/" class:active={isActive('/archiv/')} aria-current={isActive('/archiv/') ? 'page' : undefined}>{$t('nav.archive')}</a>
+			<a href="/impressum/" class:active={isActive('/impressum/')} aria-current={isActive('/impressum/') ? 'page' : undefined}>{$t('nav.imprint')}</a>
 			<LanguageSwitcher />
 		</nav>
 	</div>
@@ -71,14 +65,15 @@
 <style>
 	.site-header {
 		border-bottom: 1px solid var(--border);
-		background: var(--bg);
+		background: color-mix(in srgb, var(--bg) 84%, transparent);
 		position: sticky;
 		top: 0;
 		z-index: 10;
-		backdrop-filter: blur(8px);
+		-webkit-backdrop-filter: saturate(160%) blur(10px);
+		backdrop-filter: saturate(160%) blur(10px);
 	}
 	.header-inner {
-		max-width: 720px;
+		max-width: var(--measure);
 		margin: 0 auto;
 		padding: 0.75rem 1rem;
 		display: flex;
@@ -89,14 +84,25 @@
 	.brand {
 		font-weight: 700;
 		font-size: 1.05rem;
+		letter-spacing: -0.01em;
 		color: var(--fg);
 		text-decoration: none;
 		white-space: nowrap;
 	}
 	nav {
 		display: flex;
+		align-items: center;
+		justify-content: flex-end;
 		gap: 1rem;
 		flex-wrap: wrap;
+	}
+	@media (max-width: 479px) {
+		nav {
+			gap: 0.75rem;
+		}
+		nav a {
+			font-size: 0.9rem;
+		}
 	}
 	nav a {
 		color: var(--muted);
@@ -104,25 +110,27 @@
 		font-size: 0.95rem;
 		padding: 0.25rem 0;
 		border-bottom: 2px solid transparent;
-		transition: color 120ms, border-color 120ms;
+		transition:
+			color 120ms,
+			border-color 120ms;
 	}
 	nav a:hover {
 		color: var(--fg);
 	}
 	nav a.active {
-		color: var(--accent);
+		color: var(--fg);
 		border-bottom-color: var(--accent);
 	}
 
 	main {
-		max-width: 720px;
+		max-width: var(--measure);
 		margin: 0 auto;
-		padding: 1.5rem 1rem;
+		padding: 1.75rem 1rem;
 		min-height: calc(100vh - 200px);
 	}
 	@media (min-width: 640px) {
 		main {
-			padding: 1.5rem;
+			padding: 2.25rem 1.5rem;
 		}
 	}
 
@@ -131,9 +139,9 @@
 		margin-top: 3rem;
 	}
 	.footer-inner {
-		max-width: 720px;
+		max-width: var(--measure);
 		margin: 0 auto;
-		padding: 1rem;
+		padding: 1.25rem 1rem;
 		color: var(--muted);
 		font-size: 0.85rem;
 		display: flex;

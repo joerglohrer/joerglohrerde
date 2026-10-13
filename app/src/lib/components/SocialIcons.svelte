@@ -2,8 +2,7 @@
 	// Inline-SVGs als kleine social-icon-leiste. bewusst keine zusätzlichen
 	// image-requests, kein icon-font. hover-color via currentColor + fill=currentColor.
 
-	const AUTHOR_PUBKEY_HEX =
-		'4fa5d1c413e2b45e10d40bf3562ab701a5331206e359c90baae0e99bfd6c6e41';
+	import { AUTHOR_PUBKEY_HEX } from '$lib/nostr/config';
 
 	type Entry = { label: string; href: string; icon: 'nostr' | 'mastodon' | 'linkedin' | 'bluesky' | 'mail' | 'orcid' };
 
